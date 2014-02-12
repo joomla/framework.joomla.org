@@ -13,7 +13,7 @@ error_reporting(-1);
 define('JPATH_ROOT',      dirname(__DIR__));
 define('JPATH_TEMPLATES', JPATH_ROOT . '/templates');
 
-// Load the Composer autoloader
+// Ensure we've initialized Composer
 if (!file_exists(JPATH_ROOT . '/vendor/autoload.php'))
 {
 	header('HTTP/1.1 500 Internal Server Error', null, 500);
@@ -24,6 +24,22 @@ if (!file_exists(JPATH_ROOT . '/vendor/autoload.php'))
 
 require JPATH_ROOT . '/vendor/autoload.php';
 
+// Wrap in a try/catch so we can display an error if need be
+try
+{
+	$container = (new Joomla\DI\Container)
+		->registerServiceProvider(new Joomla\Status\Service\ConfigurationProvider)
+		->registerServiceProvider(new Joomla\Status\Service\DatabaseProvider);
+}
+catch (\Exception $e)
+{
+	header('HTTP/1.1 500 Internal Server Error', null, 500);
+	echo '<html><head><title>Container Initialization Error</title></head><body><h1>Container Initialization Error</h1><p>An error occurred while creating the DI container: ' . $e->getMessage() . '</p></body></html>';
+
+	exit(500);
+}
+
+// Execute the application
 (new Joomla\Status\Application)
-	->setContainer(new Joomla\DI\Container)
+	->setContainer($container)
 	->execute();

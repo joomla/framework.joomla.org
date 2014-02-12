@@ -1,5 +1,8 @@
 .idea
 /vendor/
 
-# Don't push reports to repo
+# Don't push reports to repo #
 /coverage/
+
+# Don't push the local config #
+/etc/config.json

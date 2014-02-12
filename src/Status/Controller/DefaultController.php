@@ -114,7 +114,7 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 		}
 
 		/* @type  \Joomla\Status\View\AbstractHtmlView  $view */
-		$view = new $vClass($this->getApplication(), new $mClass(), $paths);
+		$view = new $vClass($this->getApplication(), new $mClass($this->getContainer()->get('db')), $paths);
 		$view->setLayout($vName . '.' . $lName);
 
 		try

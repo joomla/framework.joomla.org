@@ -8,13 +8,13 @@
 
 namespace Joomla\Status\Model;
 
-use Joomla\Model\AbstractModel;
+use Joomla\Model\AbstractDatabaseModel;
 
 /**
  * Default model class for the application
  *
  * @since  1.0
  */
-class DefaultModel extends AbstractModel
+class DefaultModel extends AbstractDatabaseModel
 {
 }
