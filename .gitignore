@@ -1,2 +1,5 @@
 .idea
 /vendor/
+
+# Don't push reports to repo
+/coverage/

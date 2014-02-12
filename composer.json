@@ -47,6 +47,8 @@
 		"joomla/uri"        : "~1.0",
 		"joomla/utilities"  : "~1.0",
 		"joomla/view"       : "~1.0",
+		"phpunit/phpunit"   : "3.7.*",
+		"phpunit/dbunit"    : "1.3.*",
 		"twig/twig"         : "1.*@stable"
 	},
 	"require-dev"      : {

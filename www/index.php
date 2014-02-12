@@ -21,6 +21,7 @@ if (!file_exists(JPATH_ROOT . '/vendor/autoload.php'))
 
 	exit(500);
 }
+
 require JPATH_ROOT . '/vendor/autoload.php';
 
 (new Joomla\Status\Application)
