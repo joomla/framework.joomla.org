@@ -57,10 +57,9 @@
 	},
 	"autoload"   : {
 		"psr-4": {
-			"Joomla\\": [
-				"src/",
-				"renderer/"
-			]
+			"Joomla\\": "renderer/",
+			"Joomla\\Status\\": "src/",
+			"Joomla\\StatusCli\\": "cli/"
 		}
 	}
 }
