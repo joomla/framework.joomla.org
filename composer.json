@@ -32,6 +32,7 @@
 		"joomla/input"      : "~1.0",
 		"joomla/keychain"   : "~1.0",
 		"joomla/language"   : "~1.0",
+		"joomla/ldap"       : "~1.0",
 		"joomla/linkedin"   : "~1.0",
 		"joomla/log"        : "~1.0",
 		"joomla/model"      : "~1.0",
