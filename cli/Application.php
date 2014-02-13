@@ -15,6 +15,7 @@ use Joomla\DI\ContainerAwareInterface;
 
 use Joomla\Status\Service\ConfigurationProvider;
 use Joomla\Status\Service\DatabaseProvider;
+use Joomla\StatusCli\Command\Install;
 use Joomla\StatusCli\Command\RunTests;
 
 use Monolog\Handler\StreamHandler;
@@ -73,7 +74,16 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 	 */
 	protected function doExecute()
 	{
-		(new RunTests($this))->execute();
+		// If --install option provided, run the install routine to set up the database
+		if ($this->input->getBool('install', false))
+		{
+			(new Install($this))->execute();
+		}
+		// Otherwise execute the normal routine
+		else
+		{
+			(new RunTests($this))->execute();
+		}
 	}
 
 	/**
