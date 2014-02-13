@@ -18,9 +18,9 @@
                     <th># of Assertions</th>
                     <th>Tests with Failures</th>
                     <th>Tests with Errors</th>
-                    <th>Build Status</th>
+                    <th>Miscellaneous</th>
                 </tr>
-                {% for item in items %}
+                {% for package, item in items %}
                 <tr>
                     <td>{{ item.displayName }}</td>
                     <td>{{ item.version }}</td>
@@ -36,6 +36,9 @@
                         <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
                             <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
                         </a>
+                        {% if item.id %}
+                        <a href="{{ uri.base.path }}coverage/{{ package }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

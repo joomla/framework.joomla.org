@@ -3,6 +3,7 @@
 
 # Don't push reports to repo #
 /coverage/
+/www/coverage/
 
 # Don't push the local config #
 /etc/config.json
