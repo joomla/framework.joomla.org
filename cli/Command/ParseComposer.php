@@ -8,6 +8,7 @@
 
 namespace Joomla\StatusCli\Command;
 
+use Joomla\Status\Helper;
 use Joomla\StatusCli\Application;
 
 /**
@@ -67,22 +68,8 @@ class ParseComposer
 		// Display status
 		$this->app->out('Parsing the Composer data.');
 
-		// Data container
-		$packages = array();
-
-		// Read the installed.json file
-		$installed = json_decode(file_get_contents(JPATH_ROOT . '/vendor/composer/installed.json'));
-
-		// Loop through and extract the package name and version for all Joomla! Framework packages
-		foreach ($installed as $package)
-		{
-			if (strpos($package->name, 'joomla') !== 0)
-			{
-				continue;
-			}
-
-			$packages[str_replace('joomla/', '', $package->name)] = ['version' => $package->version];
-		}
+		// Get the Composer data
+		$packages = Helper::parseComposer();
 
 		// Insert the records into the database now
 		foreach ($packages as $name => $package)

@@ -8,6 +8,8 @@
 
 namespace Joomla\Status\Model;
 
+use Joomla\Status\Helper;
+
 /**
  * Default model class for the application
  *
@@ -15,23 +17,18 @@ namespace Joomla\Status\Model;
  */
 class DashboardModel extends DefaultModel
 {
+	/**
+	 * Fetches the requested data
+	 *
+	 * @return  array
+	 *
+	 * @since   1.0
+	 */
 	public function getItems()
 	{
 		// Parse installed.json to get the currently installed packages, should always be the latest version
-		$packages  = array();
+		$packages  = Helper::parseComposer();
 		$reports   = array();
-		$installed = json_decode(file_get_contents(JPATH_ROOT . '/vendor/composer/installed.json'));
-
-		// Loop through and extract the package name and version for all Joomla! Framework packages
-		foreach ($installed as $package)
-		{
-			if (strpos($package->name, 'joomla') !== 0)
-			{
-				continue;
-			}
-
-			$packages[str_replace('joomla/', '', $package->name)] = ['version' => $package->version];
-		}
 
 		// Get the package data for each of our packages
 		$db = $this->getDb();
@@ -68,41 +65,8 @@ class DashboardModel extends DefaultModel
 				$result = new \stdClass;
 			}
 
-			// Special handling for the display name in the grid
-			if ($pack->package == 'di')
-			{
-				$result->displayName = 'DI';
-			}
-			elseif ($pack->package == 'github')
-			{
-				$result->displayName = 'GitHub';
-			}
-			elseif ($pack->package == 'http')
-			{
-				$result->displayName = 'HTTP';
-			}
-			elseif ($pack->package == 'ldap')
-			{
-				$result->displayName = 'LDAP';
-			}
-			elseif ($pack->package == 'linkedin')
-			{
-				$result->displayName = 'LinkedIn';
-			}
-			elseif ($pack->package == 'oauth1')
-			{
-				$result->displayName = 'OAuth1';
-			}
-			elseif ($pack->package == 'oauth2')
-			{
-				$result->displayName = 'OAuth2';
-			}
-			else
-			{
-				$result->displayName = ucfirst($pack->package);
-			}
-
-			$result->version = $pack->version;
+			$result->displayName = Helper::getPackageDisplayName($pack->package);
+			$result->version     = $pack->version;
 
 			// For repos with -api appended, handle separately
 			if (in_array($pack->package, ['facebook', 'github', 'google', 'linkedin', 'twitter']))
