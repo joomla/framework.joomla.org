@@ -16,6 +16,7 @@ use Joomla\DI\ContainerAwareInterface;
 use Joomla\Status\Service\ConfigurationProvider;
 use Joomla\Status\Service\DatabaseProvider;
 use Joomla\StatusCli\Command\Install;
+use Joomla\StatusCli\Command\ParseComposer;
 use Joomla\StatusCli\Command\RunTests;
 
 use Monolog\Handler\StreamHandler;
@@ -82,6 +83,7 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 		// Otherwise execute the normal routine
 		else
 		{
+			(new ParseComposer($this))->execute();
 			(new RunTests($this))->execute();
 		}
 	}
