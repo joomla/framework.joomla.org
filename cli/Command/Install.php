@@ -111,7 +111,8 @@ class Install
 		}
 
 		// Perform the installation
-		$this->processSql()->out('<ok>Installer has terminated successfully.</ok>');
+		$this->processSql();
+		$this->app->out('Installer has terminated successfully.');
 	}
 
 	/**
