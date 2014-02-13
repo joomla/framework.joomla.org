@@ -24,22 +24,15 @@ if (!file_exists(JPATH_ROOT . '/vendor/autoload.php'))
 
 require JPATH_ROOT . '/vendor/autoload.php';
 
-// Wrap in a try/catch so we can display an error if need be
+// Execute the application
 try
 {
-	$container = (new Joomla\DI\Container)
-		->registerServiceProvider(new Joomla\Status\Service\ConfigurationProvider)
-		->registerServiceProvider(new Joomla\Status\Service\DatabaseProvider);
+	(new Joomla\StatusCli\Application)->execute();
 }
 catch (\Exception $e)
 {
-	header('HTTP/1.1 500 Internal Server Error', null, 500);
-	fwrite(STDOUT, "An error occurred while creating the DI container: " . $e->getMessage() . "\n");
+	fwrite(STDOUT, "\nERROR: " . $e->getMessage() . "\n");
+	fwrite(STDOUT, "\n" . $e->getTraceAsString() . "\n");
 
-	exit(500);
+	exit($e->getCode() ? : 255);
 }
-
-// Execute the application
-(new Joomla\StatusCli\Application)
-	->setContainer($container)
-	->execute();

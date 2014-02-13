@@ -46,9 +46,6 @@ class RunTests
 	 */
 	public function execute()
 	{
-		// Need to debug - Serialization of 'Closure' is not allowed
-		return;
-
 		// Use a DirectoryIterator object to loop over each package
 		$iterator = new \DirectoryIterator(JPATH_ROOT . '/vendor/joomla');
 

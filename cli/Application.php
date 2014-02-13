@@ -13,6 +13,8 @@ use Joomla\Application\Cli\Output\Processor\ColorProcessor;
 use Joomla\DI\Container;
 use Joomla\DI\ContainerAwareInterface;
 
+use Joomla\Status\Service\ConfigurationProvider;
+use Joomla\Status\Service\DatabaseProvider;
 use Joomla\StatusCli\Command\RunTests;
 
 use Monolog\Handler\StreamHandler;
@@ -48,6 +50,12 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 	 */
 	public function __construct()
 	{
+		$container = (new Container)
+			->registerServiceProvider(new ConfigurationProvider)
+			->registerServiceProvider(new DatabaseProvider);
+
+		$this->setContainer($container);
+
 		parent::__construct();
 
 		// Set up the output processor
