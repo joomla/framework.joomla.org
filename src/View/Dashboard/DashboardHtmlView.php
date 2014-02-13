@@ -8,7 +8,7 @@
 
 namespace Joomla\Status\View\Dashboard;
 
-use Joomla\Status\Model\DefaultModel;
+use Joomla\Status\Model\DashboardModel;
 use Joomla\Status\View\DefaultHtmlView;
 
 /**
@@ -21,8 +21,23 @@ class DashboardHtmlView extends DefaultHtmlView
 	/**
 	 * The model object, redeclared here for proper typehinting
 	 *
-	 * @var    DefaultModel
+	 * @var    DashboardModel
 	 * @since  1.0
 	 */
 	protected $model;
+
+	/**
+	 * Method to render the view
+	 *
+	 * @return  string  The rendered view
+	 *
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public function render()
+	{
+		$this->getRenderer()->set('items', $this->model->getItems());
+
+		return parent::render();
+	}
 }
