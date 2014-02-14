@@ -8,6 +8,7 @@
 
 namespace Joomla\StatusCli\Command;
 
+use Joomla\Status\Helper;
 use Joomla\StatusCli\Application;
 
 /**
@@ -131,6 +132,8 @@ class RunTests
 					$command->run($options, false);
 
 					$this->recordResults($directory->getFilename());
+
+					$this->sanitizePaths($directory->getFilename());
 				}
 				else
 				{
@@ -160,6 +163,16 @@ class RunTests
 		)->loadResult();
 	}
 
+	/**
+	 * Parses the unit test results and records them into the database
+	 *
+	 * @param   string  $package  Package name
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 * @throws  \UnexpectedValueException
+	 */
 	private function recordResults($package)
 	{
 		// Initialize variables.
@@ -218,5 +231,36 @@ class RunTests
 					. ', ' . $this->db->quote($report['total_lines']) . ', ' . $this->db->quote($report['lines_covered'])
 				)
 		)->execute();
+	}
+
+	/**
+	 * Sanitize the system file path from the HTML coverage reports
+	 *
+	 * @param   string  $package  Package name
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	private function sanitizePaths($package)
+	{
+		// Get the files
+		$files = new \DirectoryIterator(JPATH_ROOT . '/www/coverage/' . $package);
+
+		/* @type  $file  \DirectoryIterator */
+		foreach ($files as $file)
+		{
+			// Only process HTML files
+			if (!$file->isDot() && $file->getExtension() == 'html')
+			{
+				$data = file_get_contents(JPATH_ROOT . '/www/coverage/' . $package . '/' . $file->getFilename());
+
+				// Clean out the path now
+				$data = str_replace(JPATH_ROOT . '/vendor/joomla/' . $package, '', $data);
+
+				// Write the sanitized file back
+				file_put_contents(JPATH_ROOT . '/www/coverage/' . $package . '/' . $file->getFilename(), $data);
+			}
+		}
 	}
 }
