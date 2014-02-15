@@ -29,9 +29,6 @@
                     <td>{{ item.assertions }}</td>
                     <td>{{ item.failures }}</td>
                     <td>{{ item.errors }}</td>
-                    {% else %}
-                    <td colspan="4" class="text-center">This package does not have a test report</td>
-                    {% endif %}
                     <td>
                         <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
                             <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
@@ -40,6 +37,16 @@
                         <a href="{{ uri.base.path }}coverage/{{ package }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
                         {% endif %}
                     </td>
+                    {% elseif package == 'compat' or package == 'test' %}
+                    <td colspan="5" class="text-center">This package is not unit tested</td>
+                    {% else %}
+                    <td colspan="4" class="text-center">This package does not have a test report</td>
+                    <td>
+                        <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
+                            <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
+                        </a>
+                    </td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </table>
