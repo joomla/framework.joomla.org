@@ -101,7 +101,7 @@ class RunTests
 		{
 			if (!$directory->isDot() && $directory->isDir())
 			{
-				$this->app->out('Processing the ' . $directory->getFilename() . ' package.');
+				$this->app->out('Processing the ' . Helper::getPackageDisplayName($directory->getFilename()) . ' package.');
 
 				// Get the package ID
 				$this->getPackageId($directory->getFilename());
@@ -112,7 +112,7 @@ class RunTests
 					$this->app->out(
 						sprintf(
 							'A test report already exists for the %s package at version %s.',
-							$directory->getFilename(),
+							Helper::getPackageDisplayName($directory->getFilename()),
 							$this->packages[$directory->getFilename()]['version']
 						)
 					);
@@ -137,7 +137,7 @@ class RunTests
 				}
 				else
 				{
-					$this->app->out('No test config exists for the ' . $directory->getFilename() . ' package.');
+					$this->app->out('No test config exists for the ' . Helper::getPackageDisplayName($directory->getFilename()) . ' package.');
 				}
 			}
 		}
@@ -184,13 +184,16 @@ class RunTests
 		// Make sure the files exist.
 		if (!file_exists(JPATH_ROOT . '/coverage/logs/clover.' . $package . '.xml'))
 		{
-			throw new \UnexpectedValueException('The clover test report for the ' . $package . ' package is missing.');
+			throw new \UnexpectedValueException('The clover test report for the ' . Helper::getPackageDisplayName($package) . ' package is missing.');
 		}
 
 		if (!file_exists(JPATH_ROOT . '/coverage/logs/junit.' . $package . '.xml'))
 		{
-			throw new \UnexpectedValueException('The junit test report for the ' . $package . ' package is missing.');
+			throw new \UnexpectedValueException('The junit test report for the ' . Helper::getPackageDisplayName($package) . ' package is missing.');
 		}
+
+		// Display update to console
+		$this->app->out('Parsing test results for the ' . Helper::getPackageDisplayName($package) . ' package and recording to the database.');
 
 		// Load the Clover XML file.
 		$xml = simplexml_load_file(JPATH_ROOT . '/coverage/logs/clover.' . $package . '.xml');
@@ -244,6 +247,9 @@ class RunTests
 	 */
 	private function sanitizePaths($package)
 	{
+		// Display update to console
+		$this->app->out('Sanitizing the file paths for the ' . Helper::getPackageDisplayName($package) . ' package code coverage report.');
+
 		// Get the files
 		$files = new \DirectoryIterator(JPATH_ROOT . '/www/coverage/' . $package);
 

@@ -86,6 +86,8 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 			$packages = (new ParseComposer($this))->execute();
 			(new RunTests($this, $packages))->execute();
 		}
+
+		$this->out('Finished!');
 	}
 
 	/**
