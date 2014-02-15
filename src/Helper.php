@@ -54,6 +54,10 @@ abstract class Helper
 		{
 			return 'OAuth2';
 		}
+		elseif ($package == 'uri')
+		{
+			return 'URI';
+		}
 		else
 		{
 			return ucfirst($package);
