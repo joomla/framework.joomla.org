@@ -36,6 +36,14 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 	protected $defaultView = 'dashboard';
 
 	/**
+	 * State object to inject into the model
+	 *
+	 * @var    \Joomla\Registry\Registry
+	 * @since  1.0
+	 */
+	protected $modelState = null;
+
+	/**
 	 * Execute the controller
 	 *
 	 * This is a generic method to execute and render a view and is not suitable for tasks
@@ -113,8 +121,11 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 			$paths[] = $path;
 		}
 
+		// If the controller has anything to inject into the model, do it here via the state
+		$this->initializeModel();
+
 		/* @type  \Joomla\Status\View\AbstractHtmlView  $view */
-		$view = new $vClass($this->getApplication(), new $mClass($this->getContainer()->get('db')), $paths);
+		$view = new $vClass($this->getApplication(), new $mClass($this->getContainer()->get('db'), $this->modelState), $paths);
 		$view->setLayout($vName . '.' . $lName);
 
 		try
@@ -140,6 +151,18 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 	public function getContainer()
 	{
 		return $this->container;
+	}
+
+	/**
+	 * Method to initialize data to inject into the model via the state
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	protected function initializeModel()
+	{
+		return;
 	}
 
 	/**
