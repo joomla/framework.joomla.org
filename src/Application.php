@@ -12,6 +12,9 @@ use Joomla\Application\AbstractWebApplication;
 use Joomla\DI\Container;
 use Joomla\DI\ContainerAwareInterface;
 
+use Joomla\Status\Model\DefaultModel;
+use Joomla\Status\View\DefaultHtmlView;
+
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -68,7 +71,23 @@ final class Application extends AbstractWebApplication implements ContainerAware
 					break;
 			}
 
-			$this->setBody($exception->getMessage());
+			// Render the message based on the format
+			switch (strtolower($this->input->getWord('format', 'html')))
+			{
+				case 'html' :
+				default :
+					// Build a default view object and render with the exception layout
+					$view = new DefaultHtmlView($this, new DefaultModel($this->container->get('db')), [JPATH_TEMPLATES]);
+
+					$view->setLayout('exception')
+						->getRenderer()->set('exception', $exception);
+
+					$body = $view->render();
+
+					break;
+			}
+
+			$this->setBody($body);
 		}
 	}
 
