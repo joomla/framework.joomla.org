@@ -1,5 +1,6 @@
 .idea
 /vendor/
+/current_SHA
 
 # Don't push reports to repo #
 /coverage/

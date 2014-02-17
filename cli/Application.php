@@ -19,6 +19,7 @@ use Joomla\StatusCli\Command\Install;
 use Joomla\StatusCli\Command\ParseComposer;
 use Joomla\StatusCli\Command\RunTests;
 
+use Joomla\StatusCli\Command\UpdateServer;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -80,6 +81,11 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 		{
 			(new Install($this))->execute();
 		}
+		// If --updateserver option provided, run the update routine
+		elseif ($this->input->getBool('updateserver', false))
+		{
+			(new UpdateServer($this))->execute();
+		}
 		// Otherwise execute the normal routine
 		else
 		{
@@ -115,6 +121,38 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 		$logger->pushHandler(new StreamHandler(JPATH_ROOT . '/logs/cron.log'));
 
 		$this->setLogger($logger);
+	}
+
+	/**
+	 * Execute a command on the server.
+	 *
+	 * @param   string  $command  The command to execute.
+	 *
+	 * @return  string  Return data from the command
+	 *
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public function runCommand($command)
+	{
+		$lastLine = system($command, $status);
+
+		if ($status)
+		{
+			// Command exited with a status != 0
+			if ($lastLine)
+			{
+				$this->out($lastLine);
+
+				throw new \RuntimeException($lastLine);
+			}
+
+			$this->out('An unknown error occurred');
+
+			throw new \RuntimeException('An unknown error occurred');
+		}
+
+		return $lastLine;
 	}
 
 	/**
