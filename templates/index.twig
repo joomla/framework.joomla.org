@@ -5,7 +5,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Joomla! Framework Status{% endblock %}</title>
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,8 +36,15 @@
         <div class="container">
             {% block content %}{% endblock %}
         </div>
+        <footer>
+            <hr />
+            <div class="container">
+                <p class="text-center">This <a href="https://github.com/mbabker/framework-status" target="_blank">status application</a> is powered by the <a href="http://framework.joomla.org">Joomla! Framework</a> and tools like <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> and <a href="http://phpunit.de/" target="_blank">PHPUnit</a>.</p>
+                <p class="text-center">This application is managed by the Production Leadership Team.  If you are experiencing any issues, please <a href="https://github.com/mbabker/framework-status/issues/new?title=[FW Status Application]&amp;body=Please state the nature of your development emergency">report it to us</a>.</p>
+            </div>
+        </footer>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     </body>
 </html>
