@@ -24,11 +24,26 @@
                 <tr>
                     <td>{{ item.version }}</td>
                     {% if item.id %}
-                    <td>{{ item.tests }}</td>
-                    <td>{{ item.assertions }}</td>
+                    <td>
+                        {{ item.tests }}
+                        {% if item.newTests %}
+                            <span class="pull-right label label-{{ item.newTests > 0 ? 'success' : 'danger' }}">{{ item.newTests }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ item.assertions }}
+                        {% if item.newAssertions %}
+                            <span class="pull-right label label-{{ item.newAssertions > 0 ? 'success' : 'danger' }}">{{ item.newAssertions }}</span>
+                        {% endif %}
+                    </td>
                     <td>{{ item.failures }}</td>
                     <td>{{ item.errors }}</td>
-                    <td>{{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage ~ '%)' }}<br /></td>
+                    <td>
+                        {{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage ~ '%)' }}
+                        {% if item.addedCoverage %}
+                            <span class="pull-right label label-{{ item.addedCoverage > 0 ? 'success' : 'danger' }}">{{ item.addedCoverage ~ '%' }}</span>
+                        {% endif %}
+                    </td>
                     <td>
                         <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
                             <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ item.version }}" alt="Build Status"/>

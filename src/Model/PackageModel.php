@@ -8,10 +8,8 @@
 
 namespace Joomla\Status\Model;
 
-use Joomla\Status\Helper;
-
 /**
- * Default model class for the application
+ * Model class for the package view
  *
  * @since  1.0
  */
@@ -46,6 +44,8 @@ class PackageModel extends DefaultModel
 		}
 
 		// Loop through the packs and get the reports
+		$i = 0;
+
 		foreach ($packs as $pack)
 		{
 			$query->clear()
@@ -73,8 +73,7 @@ class PackageModel extends DefaultModel
 				}
 			}
 
-			$result->displayName = Helper::getPackageDisplayName($pack->package);
-			$result->version     = $pack->version;
+			$result->version = $pack->version;
 
 			// For repos with -api appended, handle separately
 			if (in_array($pack->package, ['facebook', 'github', 'google', 'linkedin', 'twitter']))
@@ -86,9 +85,23 @@ class PackageModel extends DefaultModel
 				$result->repoName = $pack->package;
 			}
 
-			// TODO - Logic to compute delta between versions
+			// Compute the delta to the previous build
+			if ($i !== 0)
+			{
+				$previous = $reports[$i - 1];
 
-			$reports[] = $result;
+				// Number of new tests
+				$result->newTests = $result->tests - $previous->tests;
+
+				// Number of new assertions
+				$result->newAssertions = $result->assertions - $previous->assertions;
+
+				// Added line coverage
+				$result->addedCoverage = $result->lines_percentage - $previous->lines_percentage;
+			}
+
+			$reports[$i] = $result;
+			$i++;
 		}
 
 		return $reports;

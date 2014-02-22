@@ -11,7 +11,7 @@ namespace Joomla\Status\Model;
 use Joomla\Status\Helper;
 
 /**
- * Default model class for the application
+ * Model class for the application dashboard
  *
  * @since  1.0
  */
