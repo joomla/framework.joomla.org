@@ -39,6 +39,9 @@
         <footer>
             <hr />
             <div class="container">
+                {% if build.time %}
+                <p class="text-center">This build report was generated on {{ build.time }} using PHPUnit {{ build.phpunit }} on a PHP {{ build.php }} system.</p>
+                {% endif %}
                 <p class="text-center">This <a href="https://github.com/mbabker/framework-status" target="_blank">status application</a> is powered by the <a href="http://framework.joomla.org">Joomla! Framework</a> and tools like <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> and <a href="http://phpunit.de/" target="_blank">PHPUnit</a>.</p>
                 <p class="text-center">This application is managed by the Production Leadership Team.  If you are experiencing any issues, please <a href="https://github.com/mbabker/framework-status/issues/new?title=[FW Status Application]&amp;body=Please state the nature of your development emergency">report it to us</a>.</p>
             </div>

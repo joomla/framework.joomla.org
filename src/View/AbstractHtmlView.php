@@ -68,6 +68,17 @@ abstract class AbstractHtmlView extends AbstractView
 			$renderer->setTemplatesPaths($templatePaths, true);
 		}
 
+		// Add build data if available
+		if (file_exists(JPATH_ROOT . '/last_build.json'))
+		{
+			$data = json_decode(file_get_contents(JPATH_ROOT . '/last_build.json'));
+			$renderer->set('build', $data);
+		}
+		else
+		{
+			$renderer->set('build', '');
+		}
+
 		$this->setRenderer($renderer);
 
 		parent::__construct($model);

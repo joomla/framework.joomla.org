@@ -141,6 +141,9 @@ class RunTests
 				}
 			}
 		}
+
+		// Write environment information for the report
+		$this->storeEnvironmentData();
 	}
 
 	/**
@@ -267,6 +270,31 @@ class RunTests
 				// Write the sanitized file back
 				file_put_contents(JPATH_ROOT . '/www/coverage/' . $package . '/' . $file->getFilename(), $data);
 			}
+		}
+	}
+
+	/**
+	 * Stores the environment information for this build
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 * @throws  \DomainException
+	 */
+	private function storeEnvironmentData()
+	{
+		// Build the container
+		$data = [
+			'phpunit' => \PHPUnit_Runner_Version::id(),
+			'php'     => PHP_VERSION,
+		    'time'    => (new \DateTime)->format('D, M d, Y \a\t H:i:s T')
+		];
+
+		if (!file_put_contents(JPATH_ROOT . '/last_build.json', json_encode($data)))
+		{
+			$this->app->out('Can not write to path: ', JPATH_ROOT);
+
+			throw new \DomainException('Can not write to path: ' . JPATH_ROOT . '/last_build.json');
 		}
 	}
 }
