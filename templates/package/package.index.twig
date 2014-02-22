@@ -17,6 +17,7 @@
                     <th># of Assertions</th>
                     <th>Tests with Failures</th>
                     <th>Tests with Errors</th>
+                    <th>Lines Covered</th>
                     <th>Miscellaneous</th>
                 </tr>
                 {% for item in items %}
@@ -27,6 +28,7 @@
                     <td>{{ item.assertions }}</td>
                     <td>{{ item.failures }}</td>
                     <td>{{ item.errors }}</td>
+                    <td>{{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage ~ '%)' }}<br /></td>
                     <td>
                         <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
                             <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ item.version }}" alt="Build Status"/>

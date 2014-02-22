@@ -18,6 +18,7 @@
                     <th># of Assertions</th>
                     <th>Tests with Failures</th>
                     <th>Tests with Errors</th>
+                    <th>Lines Covered</th>
                     <th>Miscellaneous</th>
                 </tr>
                 {% for package, item in items %}
@@ -30,17 +31,20 @@
                     <td>{{ item.failures }}</td>
                     <td>{{ item.errors }}</td>
                     <td>
-                        <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                            <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
-                        </a>
+                        {{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage ~ '%)' }}<br />
                         {% if item.id %}
                         <a href="{{ uri.base.path }}coverage/{{ package }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
                         {% endif %}
                     </td>
+                    <td>
+                        <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
+                            <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
+                        </a>
+                    </td>
                     {% elseif package == 'compat' or package == 'test' %}
-                    <td colspan="5" class="text-center">This package is not unit tested</td>
+                    <td colspan="6" class="text-center">This package is not unit tested</td>
                     {% else %}
-                    <td colspan="4" class="text-center">This package does not have a test report</td>
+                    <td colspan="5" class="text-center">This package does not have a test report</td>
                     <td>
                         <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
                             <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>

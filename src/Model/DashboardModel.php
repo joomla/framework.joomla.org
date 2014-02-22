@@ -64,6 +64,18 @@ class DashboardModel extends DefaultModel
 			{
 				$result = new \stdClass;
 			}
+			// Otherwise compute report percentages
+			else
+			{
+				if ($result->total_lines > 0)
+				{
+					$result->lines_percentage = round($result->lines_covered / $result->total_lines * 100, 2);
+				}
+				else
+				{
+					$result->lines_percentage = 0;
+				}
+			}
 
 			$result->displayName = Helper::getPackageDisplayName($pack->package);
 			$result->version     = $pack->version;
