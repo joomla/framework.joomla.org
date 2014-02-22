@@ -91,9 +91,6 @@ class PackageModel extends DefaultModel
 			$reports[] = $result;
 		}
 
-		// Add the display name for the package here to set it in the view
-		$reports['displayName'] = Helper::getPackageDisplayName($package);
-
 		return $reports;
 	}
 }

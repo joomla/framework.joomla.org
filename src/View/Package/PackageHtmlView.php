@@ -8,6 +8,7 @@
 
 namespace Joomla\Status\View\Package;
 
+use Joomla\Status\Helper;
 use Joomla\Status\Model\PackageModel;
 use Joomla\Status\View\DefaultHtmlView;
 
@@ -36,14 +37,8 @@ class PackageHtmlView extends DefaultHtmlView
 	 */
 	public function render()
 	{
-		$items = $this->model->getItems();
-
-		$this->getRenderer()->set('package', $items['displayName']);
-
-		// Unset the displayName element now
-		unset($items['displayName']);
-
-		$this->getRenderer()->set('items', $items);
+		$this->getRenderer()->set('items', $this->model->getItems());
+		$this->getRenderer()->set('package', Helper::getPackageDisplayName($this->model->getState()->get('package.name')));
 
 		return parent::render();
 	}
