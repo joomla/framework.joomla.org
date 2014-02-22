@@ -179,10 +179,7 @@ class RunTests
 	private function recordResults($package)
 	{
 		// Initialize variables.
-		$report = array(
-			'loc'         => 0,
-			'loc_covered' => 0
-		);
+		$report = array();
 
 		// Make sure the files exist.
 		if (!file_exists(JPATH_ROOT . '/coverage/logs/clover.' . $package . '.xml'))
