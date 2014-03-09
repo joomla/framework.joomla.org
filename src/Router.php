@@ -23,7 +23,7 @@ class Router extends JoomlaRouter
 	/**
 	 * Application object to inject into controllers
 	 *
-	 * @var    StatusApplication
+	 * @var    Application
 	 * @since  1.0
 	 */
 	protected $app;
