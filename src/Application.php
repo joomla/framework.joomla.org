@@ -75,6 +75,17 @@ final class Application extends AbstractWebApplication implements ContainerAware
 			// Render the message based on the format
 			switch (strtolower($this->input->getWord('format', 'html')))
 			{
+				case 'json' :
+					$data = [
+						'code'    => $exception->getCode(),
+						'message' => $exception->getMessage(),
+						'error'   => true
+					];
+
+					$body = json_encode($data);
+
+					break;
+
 				case 'html' :
 				default :
 					// Build a default view object and render with the exception layout
@@ -117,6 +128,19 @@ final class Application extends AbstractWebApplication implements ContainerAware
 		$logger->pushHandler(new StreamHandler(JPATH_ROOT . '/logs/activity.log'));
 
 		$this->setLogger($logger);
+
+		// Set the MIME for the application based on format
+		switch (strtolower($this->input->getWord('format', 'html')))
+		{
+			case 'json' :
+				$this->mimeType = 'application/json';
+
+				break;
+
+			// Don't need to do anything for the default case
+			default :
+				break;
+		}
 	}
 
 	/**

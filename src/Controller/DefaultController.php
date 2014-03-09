@@ -62,7 +62,7 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 
 		// Get some data from the request
 		$vName   = $input->getWord('view', $this->defaultView);
-		$vFormat = $input->getWord('format', 'html');
+		$vFormat = strtolower($input->getWord('format', 'html'));
 
 		if (is_null($input->get('layout')))
 		{
@@ -95,7 +95,7 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 			// If there still isn't a class, panic.
 			if (!class_exists($mClass))
 			{
-				throw new \RuntimeException(sprintf('No model found for view %s', $vName));
+				throw new \RuntimeException(sprintf('No model found for view %s', $vName), 500);
 			}
 		}
 
@@ -107,7 +107,7 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 			// If there still isn't a class, panic.
 			if (!class_exists($vClass))
 			{
-				throw new \RuntimeException(sprintf('View class %s not found', $vClass));
+				throw new \RuntimeException(sprintf('A view class was not found for the %s format.', $vFormat), 500);
 			}
 		}
 
@@ -124,9 +124,13 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 		// If the controller has anything to inject into the model, do it here via the state
 		$this->initializeModel();
 
-		/* @type  \Joomla\Status\View\AbstractHtmlView  $view */
 		$view = new $vClass($this->getApplication(), new $mClass($this->getContainer()->get('db'), $this->modelState), $paths);
-		$view->setLayout($vName . '.' . $lName);
+
+		// If this is a HTML view, set the layout
+		if ($vFormat == 'html')
+		{
+			$view->setLayout($vName . '.' . $lName);
+		}
 
 		try
 		{
