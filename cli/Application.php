@@ -39,14 +39,6 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 	private $container = null;
 
 	/**
-	 * Event Dispatcher
-	 *
-	 * @var    Dispatcher
-	 * @since  1.0
-	 */
-	private $dispatcher;
-
-	/**
 	 * Class constructor
 	 *
 	 * @since   1.0
