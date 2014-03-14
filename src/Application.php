@@ -11,6 +11,7 @@ namespace Joomla\Status;
 use Joomla\Application\AbstractWebApplication;
 use Joomla\DI\Container;
 use Joomla\DI\ContainerAwareInterface;
+use Joomla\Router\Router;
 
 use Joomla\Status\Model\DefaultModel;
 use Joomla\Status\View\DefaultHtmlView;
@@ -45,7 +46,7 @@ final class Application extends AbstractWebApplication implements ContainerAware
 		try
 		{
 			// Instantiate the router
-			$router = (new Router($this->input, $this))
+			$router = (new Router($this->input))
 				->setControllerPrefix('\\Joomla\\Status')
 				->setDefaultController('\\Controller\\DefaultController')
 				->addMap('/package/:package', '\\Controller\\PackageController');
@@ -54,7 +55,14 @@ final class Application extends AbstractWebApplication implements ContainerAware
 			/* @type  \Joomla\Controller\AbstractController  $controller */
 			$controller = $router->getController($this->get('uri.route'));
 
-			$controller->execute();
+			// If the controller is ContainerAware, inject the DI container
+			if ($controller instanceof ContainerAwareInterface)
+			{
+				$controller->setContainer($this->getContainer());
+			}
+
+			// Inject the application into the controller and execute it
+			$controller->setApplication($this)->execute();
 		}
 		catch (\Exception $exception)
 		{
