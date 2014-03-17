@@ -61,15 +61,8 @@
         </tr>
         {% endfor %}
     </table>
+    {% if build.time %}
+    <p>This build report was generated on {{ build.time }} using PHPUnit {{ build.phpunit }} on a PHP {{ build.php }} system.</p>
+    {% endif %}
 </section>
-{% endblock %}
-
-{% block footerContent %}
-<div class="container clearfix">
-    <aside class="resources">
-        {% if build.time %}
-        <p>This build report was generated on {{ build.time }} using PHPUnit {{ build.phpunit }} on a PHP {{ build.php }} system.</p>
-        {% endif %}
-    </aside>
-</div>
 {% endblock %}
