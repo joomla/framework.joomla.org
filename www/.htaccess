@@ -12,6 +12,15 @@ RewriteEngine On
 
 
 ###########################################
+# ======= No directory listings =======
+
+IndexIgnore *
+Options +FollowSymLinks All -Indexes
+
+###########################################
+
+
+###########################################
 # ======== Remove multiple slashes ========
 
 RewriteCond %{HTTP_HOST} !=""

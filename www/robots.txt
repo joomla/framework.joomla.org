@@ -1,0 +1,5 @@
+###
+# For domain: http://framework.joomla.org
+###
+
+User-agent: *

@@ -1,0 +1,153 @@
+/*!
+ * Bootstrap v3.0.0
+ *
+ * Copyright 2013 Twitter, Inc
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world by @mdo and @fat.
+ */
+
+// Core variables and mixins
+@import "variables.less";
+@import "mixins.less";
+
+// Reset
+@import "normalize.less";
+@import "print.less";
+
+// Core CSS
+@import "scaffolding.less";
+@import "type.less";
+//@import "code.less";
+@import "grid.less";
+@import "tables.less";
+@import "forms.less";
+@import "buttons.less";
+
+// Components
+//@import "component-animations.less";
+@import "glyphicons.less";
+//@import "dropdowns.less";
+//@import "button-groups.less";
+//@import "input-groups.less";
+//@import "navs.less";
+//@import "navbar.less";
+//@import "breadcrumbs.less";
+//import "pagination.less";
+//@import "pager.less";
+@import "labels.less";
+@import "badges.less";
+//@import "jumbotron.less";
+@import "thumbnails.less";
+//@import "alerts.less";
+//@import "progress-bars.less";
+//@import "media.less";
+//@import "list-group.less";
+@import "panels.less";
+//@import "wells.less";
+//@import "close.less";
+
+// Components w/ JavaScript
+//@import "modals.less";
+//@import "tooltip.less";
+//@import "popovers.less";
+//@import "carousel.less";
+
+// Site Body Styles
+.container{
+	max-width: 1170px;
+	margin:0 auto;
+}
+.center {display:block; margin:0 auto;}
+a {.transition(all 0.3s ease-out;) }
+h2 {text-align:center;}
+.glyphicon {color:@icon-color;
+    &.mega {color:#fff;font-size:170px; margin-top:-20px;}
+}
+section.team div.row {margin-bottom: 10px;}
+.rochen {background: url(../images/rochen.png) no-repeat;
+height: 42px;
+width: 84px;
+text-indent: -9999px;
+display: inline-block;
+position: relative;
+top: -10px;
+}
+nav {background:@darkerblack; color:#ffffff;height:45px;padding:8px 0;font-size:21px;position:fixed;width:100%;z-index:9999;
+  	a {color:#fff;
+  	    &:hover {text-decoration:none; color:@brand-info;}
+  	}
+  	.glyphicon {font-size:27px; padding-right:8px;}
+  	ul {margin:0;padding:0;list-style:none; text-align:center;
+  	    li {display:inline; line-height: 1.5; margin-left:5.5%;
+  	    &:first-child {margin-left:0;}
+  	        span {vertical-align:top;}
+  	    }
+  	}
+}
+main {padding:45px 0 20px;}
+.go {background:url(../images/j-framework-full.png) no-repeat center center; -webkit-background-size: cover; -moz-background-size: cover;  -o-background-size: cover;  background-size: cover; /* min-height:800px; */text-align:center;  padding:10px; font-size:34px; color:#fff;
+    h1 {font-size:110px; margin:0; line-height:100%;}
+    h2 {font-size:85px; color:@go-h2; margin:-10px 0 0;}
+    .cta {max-width:767px; margin:0 auto;
+        .btn {width:40%; font-size:24px;}
+    }
+}
+.marker {color:@marker-color; font-size:100px; display:block; text-align: center;}
+.involved-chunks div {width:21%; margin:2%; padding:2%; float:left; background:@gray-lighter;}
+footer {background:@darkerblack;color:@footer-gray;
+    aside {float:left;width:50%;}
+}
+
+//template responsive
+@media screen and (max-width: 1200px) {
+ .go {background-image:url(../images/j-framework-1200.png); margin:0 -10px;}
+ main, footer {padding-left:10px; padding-right:10px;}
+}
+@media screen and (max-width: 980px) {
+ .go { font-size:31px;
+      .glyphicon.mega {font-size:180px;}
+     h1 {font-size:90px;}
+     h2 {font-size:80px;}
+     .cta .btn {width:40%; font-size:19px;}
+ }
+ .involved-chunks div {width:46%;
+    &:nth-child(2n+1) {clear:both;}
+ }
+}
+@media (min-width: 767) and (max-width: 980) {
+
+}
+@media screen and (max-width: 767px) {
+ .go {background-image:url(../images/j-framework-767.png);font-size:27px;
+ .glyphicon.mega {font-size:160px;}
+     h1 {font-size:50px;}
+     h2 {font-size:40px;}
+     .cta .btn {width:40%; font-size:17px;}
+ }
+ .title {display:none;}
+ nav ul li {margin-left:15%;
+    &:first-child {margin-left:0;}
+ }
+ footer p {font-size:12px;}
+}
+@media screen and (max-width: 500px) {
+     .go {background-image:url(../images/j-framework-500.png);font-size:27px;
+     .glyphicon.mega {font-size:150px;}
+     h1 {font-size:35px;}
+     h2 {font-size:30px;}
+     .cta .btn {width: 100%;float: none!important;margin: 20px 0;font-size: 15px;}
+ }
+  .involved-chunks div {width:96%; margin:3px 0; padding:0 2%;}
+   nav ul li {margin-left:8%;
+    &:first-child {margin-left:0;}
+ }
+ .structure {display:none;}
+ footer aside {width:100%;}
+}
+
+
+// Utility classes
+@import "utilities.less";
+@import "responsive-utilities.less";

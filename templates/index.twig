@@ -1,53 +1,85 @@
 {% set firstPart = uri.route|split("/")|first %}
 
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Joomla! Framework Status{% endblock %}</title>
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- For Responsive -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" href="{{ uri.base.path }}css/template.css" type="text/css">
+        <!-- End for Responsive -->
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!-- For SEO -->
+        <title>{% block title %}Joomla! Framework{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="description" content="The Joomla! Framework provides a structurally sound foundation on which to build web applications, which is easy to adapt to and extend. Let's find out more:">
+        <meta name="author" content="Open Source Matters">
+        <!-- End for SEO -->
+
+        <!-- For Misc -->
+        <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.ico">
+        <link href="https://plus.google.com/b/109167715749846214365/" rel="publisher" />
+        <!-- End for misc -->
+
+        {% block headJavaScript %}
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <script src="{{ uri.base.path }}js/html5shiv.js"></script>
+        <script src="{{ uri.base.path }}js/respond.min.js"></script>
         <![endif]-->
+        {% endblock %}
+        <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-544070-32', 'joomla.org');
+            ga('send', 'pageview');
+        </script>
     </head>
-    <body>
-        <!-- Static navbar -->
-        <div class="navbar navbar-default navbar-static-top" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand">Joomla! Framework Status</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li{{ "" == uri.route or "dashboard" == firstPart ? " class=\"active\"" : "" }}><a href="{{ uri.base.path }}">Dashboard</a></li>
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
-        </div>
-        <div class="container">
+    <body id="go">
+        {% block bodyNavigation %}{% endblock %}
+        <main>
             {% block content %}{% endblock %}
-        </div>
-        <footer>
-            <hr />
+        </main>
+        <footer class="footer clearfix" role="contentinfo" id="resources">
+            {% block footerContent %}{% endblock %}
+
             <div class="container">
-                {% if build.time %}
-                <p class="text-center">This build report was generated on {{ build.time }} using PHPUnit {{ build.phpunit }} on a PHP {{ build.php }} system.</p>
-                {% endif %}
-                <p class="text-center">This <a href="https://github.com/mbabker/framework-status" target="_blank">status application</a> is powered by the <a href="http://framework.joomla.org">Joomla! Framework</a> and tools like <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> and <a href="http://phpunit.de/" target="_blank">PHPUnit</a>.</p>
-                <p class="text-center">This application is managed by the Production Leadership Team.  If you are experiencing any issues, please <a href="https://github.com/mbabker/framework-status/issues/new?title=[FW Status Application]&amp;body=Please state the nature of your development emergency">report it to us</a>.</p>
+                <p>&nbsp;</p>
+                <a href="#go" class="pull-right">Back to top</a>
+                <p>&copy; 2005 - {{ now|date("Y") }} Open Source Matters, Inc. All rights reserved.<br />
+                The Joomla!&reg; name and symbol, Joomla! Framework&#8482 and symbol, The Joomla! Project&#8480 and Joomla! CMS&#8482 are all trademarks and service marks of Open Source Matters, Inc. in the United States and other countries.</p>
+                <p>This site is managed by the Production Leadership Team.  If you are experiencing any issues, please <a href="https://github.com/joomla/joomla-framework/issues/new?title=[FW Site]&body=Please state the nature of your development emergency">report it to us</a>.</p>
+                <p><a href="http://www.rochenhost.com/joomla-hosting" target="_blank">Joomla! Hosting by</a> <a href="http://www.rochenhost.com/joomla-hosting" target="_blank" class="rochen">Rochen Ltd.</a></p>
             </div>
         </footer>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="{{ uri.base.path }}js/jquery.js"></script>
+        <script>
+            $(function() {
+                $('a[href*=#]:not([href=#])').click(function() {
+                    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                        var target = $(this.hash);
+                        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                        if (target.length) {
+                            $('html,body').animate({
+                                scrollTop: target.offset().top
+                            }, 1000);
+                            return false;
+                        }
+                    }
+                });
+            });
+        </script>
+        {% block bodyJavaScript %}{% endblock %}
     </body>
 </html>

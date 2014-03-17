@@ -1,60 +1,75 @@
 {% extends "index.twig" %}
 
-{% block content %}
-<div class="page-header">
-    <h2>Latest Build Status</h2>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Unit Test Report</h3>
-            </div>
-            <table class="table table-striped table-bordered table-condensed">
-                <tr>
-                    <th>Package</th>
-                    <th>Version</th>
-                    <th># of Tests</th>
-                    <th># of Assertions</th>
-                    <th>Tests with Failures</th>
-                    <th>Tests with Errors</th>
-                    <th>Lines Covered</th>
-                    <th>Miscellaneous</th>
-                </tr>
-                {% for package, item in items %}
-                <tr>
-                    <td><a href="{{ uri.base.path }}package/{{ package }}">{{ item.displayName }}</a></td>
-                    <td>{{ item.version }}</td>
-                    {% if item.id %}
-                    <td>{{ item.tests }}</td>
-                    <td>{{ item.assertions }}</td>
-                    <td>{{ item.failures }}</td>
-                    <td>{{ item.errors }}</td>
-                    <td>
-                        {{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage ~ '%)' }}<br />
-                        {% if item.id %}
-                        <a href="{{ uri.base.path }}coverage/{{ package }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                            <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
-                        </a>
-                    </td>
-                    {% elseif package == 'compat' or package == 'test' %}
-                    <td colspan="6" class="text-center">This package is not unit tested</td>
-                    {% else %}
-                    <td colspan="5" class="text-center">This package does not have a test report</td>
-                    <td>
-                        <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                            <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
-                        </a>
-                    </td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
+{% block title %}Joomla! Framework Status{% endblock %}
+
+{% block bodyNavigation %}
+<nav>
+    <div class="container">
+        <ul>
+            <li><a href="{{ uri.base.path }}"><span class="glyphicon glyphicon-cog"></span><span class="title">Framework</span></a></li>
+            <li><a href="{{ uri.base.path }}about"><span class="glyphicon glyphicon-user"></span><span class="title">Team</span></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-wrench"></span><span class="title">Status</span></a></li>
+        </ul>
     </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="status container">
+    <h1>Latest Build Status</h1>
+    <table class="table table-striped table-bordered table-condensed">
+        <tr>
+            <th>Package</th>
+            <th>Version</th>
+            <th># of Tests</th>
+            <th># of Assertions</th>
+            <th>Tests with Failures</th>
+            <th>Tests with Errors</th>
+            <th>Lines Covered</th>
+            <th>Miscellaneous</th>
+        </tr>
+        {% for package, item in items %}
+        <tr>
+            <td><a href="{{ uri.base.path }}status/{{ package }}">{{ item.displayName }}</a></td>
+            <td>{{ item.version }}</td>
+            {% if item.id %}
+            <td>{{ item.tests }}</td>
+            <td>{{ item.assertions }}</td>
+            <td>{{ item.failures }}</td>
+            <td>{{ item.errors }}</td>
+            <td>
+                {{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage ~ '%)' }}<br />
+                {% if item.id %}
+                <a href="{{ uri.base.path }}coverage/{{ package }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
+                {% endif %}
+            </td>
+            <td>
+                <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
+                    <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
+                </a>
+            </td>
+            {% elseif package == 'compat' or package == 'test' %}
+            <td colspan="6" class="text-center">This package is not unit tested</td>
+            {% else %}
+            <td colspan="5" class="text-center">This package does not have a test report</td>
+            <td>
+                <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
+                    <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
+                </a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</section>
+{% endblock %}
+
+{% block footerContent %}
+<div class="container clearfix">
+    <aside class="resources">
+        {% if build.time %}
+        <p>This build report was generated on {{ build.time }} using PHPUnit {{ build.phpunit }} on a PHP {{ build.php }} system.</p>
+        {% endif %}
+    </aside>
 </div>
 {% endblock %}

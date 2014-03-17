@@ -1,5 +1,19 @@
 {% extends "index.twig" %}
 
+{% block title %}{{ exception.code ? exception.code ~ ' - ' : '' }}Error{% endblock %}
+
+{% block bodyNavigation %}
+<nav>
+    <div class="container">
+        <ul>
+            <li><a href="{{ uri.base.path }}"><span class="glyphicon glyphicon-cog"></span><span class="title">Framework</span></a></li>
+            <li><a href="{{ uri.base.path }}about"><span class="glyphicon glyphicon-user"></span><span class="title">Team</span></a></li>
+            <li><a href="{{ uri.base.path }}status"><span class="glyphicon glyphicon-wrench"></span><span class="title">Status</span></a></li>
+        </ul>
+    </div>
+</nav>
+{% endblock %}
+
 {% block content %}
     <div class="alert alert-danger">
         <h4>{{ exception.code ? : "0" }} - {{ exception|get_class }}</h4>
