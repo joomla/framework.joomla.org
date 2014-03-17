@@ -49,7 +49,9 @@ final class Application extends AbstractWebApplication implements ContainerAware
 			$router = (new Router($this->input))
 				->setControllerPrefix('\\Joomla\\Status')
 				->setDefaultController('\\Controller\\DefaultController')
-				->addMap('/package/:package', '\\Controller\\PackageController');
+				->addMap('/about', '\\Controller\\AboutController')
+				->addMap('/status', '\\Controller\\DashboardController')
+				->addMap('/status/:package', '\\Controller\\PackageController');
 
 			// Fetch the controller
 			/* @type  \Joomla\Controller\AbstractController  $controller */
@@ -66,6 +68,7 @@ final class Application extends AbstractWebApplication implements ContainerAware
 		}
 		catch (\Exception $exception)
 		{
+			// Set the appropriate HTTP response
 			switch ($exception->getCode())
 			{
 				case 404 :

@@ -33,7 +33,7 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $defaultView = 'dashboard';
+	protected $defaultView = 'landing';
 
 	/**
 	 * State object to inject into the model

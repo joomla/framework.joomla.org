@@ -11,7 +11,7 @@ namespace Joomla\Status\Controller;
 use Joomla\Registry\Registry;
 
 /**
- * Default controller class for the application
+ * Controller class for the package view of the application
  *
  * @since  1.0
  */
