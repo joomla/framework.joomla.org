@@ -9,8 +9,8 @@
 namespace Joomla\Status;
 
 use Joomla\Application\AbstractWebApplication;
-use Joomla\DI\Container;
 use Joomla\DI\ContainerAwareInterface;
+use Joomla\DI\ContainerAwareTrait;
 use Joomla\Router\Router;
 
 use Joomla\Status\Model\DefaultModel;
@@ -26,13 +26,7 @@ use Monolog\Logger;
  */
 final class Application extends AbstractWebApplication implements ContainerAwareInterface
 {
-	/**
-	 * DI Container
-	 *
-	 * @var    Container
-	 * @since  1.0
-	 */
-	private $container;
+	use ContainerAwareTrait;
 
 	/**
 	 * Method to run the application routines
@@ -115,18 +109,6 @@ final class Application extends AbstractWebApplication implements ContainerAware
 	}
 
 	/**
-	 * Get the DI container
-	 *
-	 * @return  Container
-	 *
-	 * @since   1.0
-	 */
-	public function getContainer()
-	{
-		return $this->container;
-	}
-
-	/**
 	 * Custom initialisation method
 	 *
 	 * @return  void
@@ -152,21 +134,5 @@ final class Application extends AbstractWebApplication implements ContainerAware
 			default :
 				break;
 		}
-	}
-
-	/**
-	 * Set the DI container
-	 *
-	 * @param   Container  $container  The DI container
-	 *
-	 * @return  mixed
-	 *
-	 * @since   1.0
-	 */
-	public function setContainer(Container $container)
-	{
-		$this->container = $container;
-
-		return $this;
 	}
 }

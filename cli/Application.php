@@ -12,6 +12,7 @@ use Joomla\Application\AbstractCliApplication;
 use Joomla\Application\Cli\Output\Processor\ColorProcessor;
 use Joomla\DI\Container;
 use Joomla\DI\ContainerAwareInterface;
+use Joomla\DI\ContainerAwareTrait;
 
 use Joomla\Status\Service\ConfigurationProvider;
 use Joomla\Status\Service\DatabaseProvider;
@@ -30,13 +31,7 @@ use Monolog\Logger;
  */
 class Application extends AbstractCliApplication implements ContainerAwareInterface
 {
-	/**
-	 * DI Container
-	 *
-	 * @var    Container
-	 * @since  1.0
-	 */
-	private $container = null;
+	use ContainerAwareTrait;
 
 	/**
 	 * Class constructor
@@ -89,18 +84,6 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 	}
 
 	/**
-	 * Get the DI container
-	 *
-	 * @return  Container
-	 *
-	 * @since   1.0
-	 */
-	public function getContainer()
-	{
-		return $this->container;
-	}
-
-	/**
 	 * Custom initialisation method
 	 *
 	 * @return  void
@@ -145,21 +128,5 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 		}
 
 		return $lastLine;
-	}
-
-	/**
-	 * Set the DI container
-	 *
-	 * @param   Container  $container  The DI container
-	 *
-	 * @return  mixed
-	 *
-	 * @since   1.0
-	 */
-	public function setContainer(Container $container)
-	{
-		$this->container = $container;
-
-		return $this;
 	}
 }

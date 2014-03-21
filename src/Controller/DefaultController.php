@@ -10,7 +10,7 @@ namespace Joomla\Status\Controller;
 
 use Joomla\Controller\AbstractController;
 use Joomla\DI\ContainerAwareInterface;
-use Joomla\DI\Container;
+use Joomla\DI\ContainerAwareTrait;
 
 /**
  * Default controller class for the application
@@ -19,13 +19,7 @@ use Joomla\DI\Container;
  */
 class DefaultController extends AbstractController implements ContainerAwareInterface
 {
-	/**
-	 * DI Container
-	 *
-	 * @var    Container
-	 * @since  1.0
-	 */
-	private $container;
+	use ContainerAwareTrait;
 
 	/**
 	 * The default view for the application
@@ -146,18 +140,6 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 	}
 
 	/**
-	 * Get the DI container
-	 *
-	 * @return  Container
-	 *
-	 * @since   1.0
-	 */
-	public function getContainer()
-	{
-		return $this->container;
-	}
-
-	/**
 	 * Method to initialize data to inject into the model via the state
 	 *
 	 * @return  void
@@ -167,21 +149,5 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 	protected function initializeModel()
 	{
 		return;
-	}
-
-	/**
-	 * Set the DI container
-	 *
-	 * @param   Container  $container  The DI container
-	 *
-	 * @return  $this  Method allows chaining
-	 *
-	 * @since   1.0
-	 */
-	public function setContainer(Container $container)
-	{
-		$this->container = $container;
-
-		return $this;
 	}
 }
