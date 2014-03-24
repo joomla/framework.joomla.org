@@ -47,9 +47,6 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 		$this->setContainer($container);
 
 		parent::__construct();
-
-		// Set up the output processor
-		$this->getOutput()->setProcessor(new ColorProcessor);
 	}
 
 	/**
