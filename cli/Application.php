@@ -9,7 +9,6 @@
 namespace Joomla\StatusCli;
 
 use Joomla\Application\AbstractCliApplication;
-use Joomla\Application\Cli\Output\Processor\ColorProcessor;
 use Joomla\DI\Container;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\ContainerAwareTrait;
