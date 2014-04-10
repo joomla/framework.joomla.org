@@ -6,9 +6,6 @@
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-// Set error reporting for development - @TODO Move to config in app startup
-error_reporting(-1);
-
 // Application constants
 define('JPATH_ROOT',      dirname(__DIR__));
 define('JPATH_TEMPLATES', JPATH_ROOT . '/templates');
@@ -30,6 +27,10 @@ try
 	$container = (new Joomla\DI\Container)
 		->registerServiceProvider(new Joomla\Status\Service\ConfigurationProvider)
 		->registerServiceProvider(new Joomla\Status\Service\DatabaseProvider);
+
+	// Set error reporting based on config
+	$errorReporting = (int) $container->get('config')->get('errorReporting', 0);
+	error_reporting($errorReporting);
 }
 catch (\Exception $e)
 {
