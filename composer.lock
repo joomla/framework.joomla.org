@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "341c580309d07b022aaaf23d2b3d8885",
+    "hash": "9394fea433d80f2cb710d9e6f00cb354",
     "packages": [
         {
             "name": "ircmaxell/password-compat",
@@ -582,20 +582,19 @@
         },
         {
             "name": "joomla/filesystem",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/filesystem.git",
-                "reference": "1bc9fbe9962e1de5db4d0f633e5721eb356bfbb5"
+                "reference": "31884adf5470baf14de74bfd36482fd18ae048ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/filesystem/zipball/1bc9fbe9962e1de5db4d0f633e5721eb356bfbb5",
-                "reference": "1bc9fbe9962e1de5db4d0f633e5721eb356bfbb5",
+                "url": "https://api.github.com/repos/joomla-framework/filesystem/zipball/31884adf5470baf14de74bfd36482fd18ae048ad",
+                "reference": "31884adf5470baf14de74bfd36482fd18ae048ad",
                 "shasum": ""
             },
             "require": {
-                "joomla/log": "~1.0",
                 "php": ">=5.3.10"
             },
             "type": "joomla-package",
@@ -616,7 +615,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2014-02-09 01:43:50"
+            "time": "2014-04-10 02:54:58"
         },
         {
             "name": "joomla/filter",
@@ -1010,20 +1009,19 @@
         },
         {
             "name": "joomla/ldap",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/ldap.git",
-                "reference": "bf3591d21dfe614cbd29eb97becd5eee5d97b8ad"
+                "reference": "91c3827a7f6d7164a3bf49eede27419321e4dcbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/ldap/zipball/bf3591d21dfe614cbd29eb97becd5eee5d97b8ad",
-                "reference": "bf3591d21dfe614cbd29eb97becd5eee5d97b8ad",
+                "url": "https://api.github.com/repos/joomla-framework/ldap/zipball/91c3827a7f6d7164a3bf49eede27419321e4dcbc",
+                "reference": "91c3827a7f6d7164a3bf49eede27419321e4dcbc",
                 "shasum": ""
             },
             "require": {
-                "joomla/log": "~1.0",
                 "php": ">=5.3.10"
             },
             "type": "joomla-package",
@@ -1044,7 +1042,7 @@
                 "joomla",
                 "ldap"
             ],
-            "time": "2014-02-09 18:52:06"
+            "time": "2014-04-10 03:07:59"
         },
         {
             "name": "joomla/linkedin",
@@ -1092,16 +1090,16 @@
         },
         {
             "name": "joomla/log",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/log.git",
-                "reference": "4063dae71919deeb9005a955d109c22c5e78f564"
+                "reference": "a266f3b4826690257288fe95c91ccbe12e4f0fda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/log/zipball/4063dae71919deeb9005a955d109c22c5e78f564",
-                "reference": "4063dae71919deeb9005a955d109c22c5e78f564",
+                "url": "https://api.github.com/repos/joomla-framework/log/zipball/a266f3b4826690257288fe95c91ccbe12e4f0fda",
+                "reference": "a266f3b4826690257288fe95c91ccbe12e4f0fda",
                 "shasum": ""
             },
             "require": {
@@ -1131,7 +1129,7 @@
                 "joomla",
                 "log"
             ],
-            "time": "2014-02-09 08:39:26"
+            "time": "2014-04-10 02:23:01"
         },
         {
             "name": "joomla/model",
@@ -1393,22 +1391,25 @@
         },
         {
             "name": "joomla/session",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "target-dir": "Joomla/Session",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/session.git",
-                "reference": "ba9a354be1522390bd32cef21bae8fc8c33d212d"
+                "reference": "0657610e7fe2dda15ae6ed23be64616e5c616b0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/session/zipball/ba9a354be1522390bd32cef21bae8fc8c33d212d",
-                "reference": "ba9a354be1522390bd32cef21bae8fc8c33d212d",
+                "url": "https://api.github.com/repos/joomla-framework/session/zipball/0657610e7fe2dda15ae6ed23be64616e5c616b0d",
+                "reference": "0657610e7fe2dda15ae6ed23be64616e5c616b0d",
                 "shasum": ""
             },
             "require": {
                 "joomla/filter": "~1.0",
                 "php": ">=5.3.10"
+            },
+            "require-dev": {
+                "joomla/test": "~1.0"
             },
             "suggest": {
                 "joomla/database": "Install joomla/database if you want to use Database session storage."
@@ -1424,13 +1425,13 @@
                 "GPL-2.0+"
             ],
             "description": "Joomla Session Package",
-            "homepage": "https://github.com/joomla/joomla-framework-session",
+            "homepage": "https://github.com/joomla-framework/session",
             "keywords": [
                 "framework",
                 "joomla",
                 "session"
             ],
-            "time": "2014-01-16 04:24:36"
+            "time": "2014-04-09 02:23:29"
         },
         {
             "name": "joomla/string",
