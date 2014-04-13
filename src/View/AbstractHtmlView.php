@@ -8,12 +8,10 @@
 
 namespace Joomla\Status\View;
 
-use Joomla\Status\View\Renderer\TwigExtension;
+use BabDev\Renderer\RendererInterface;
 
-use Joomla\Application\AbstractApplication;
 use Joomla\Model\ModelInterface;
 use Joomla\View\AbstractView;
-use Joomla\View\Renderer\RendererInterface;
 use Joomla\View\Renderer\Twig;
 
 /**
@@ -24,137 +22,127 @@ use Joomla\View\Renderer\Twig;
 abstract class AbstractHtmlView extends AbstractView
 {
 	/**
-	 * The view layout
+	 * The data array to pass to the renderer engine
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	private $data = array();
+
+	/**
+	 * The name of the layout to render
 	 *
 	 * @var    string
 	 * @since  1.0
 	 */
-	private $layout = 'index';
+	private $layout;
 
 	/**
-	 * The view template engine
+	 * The renderer object
 	 *
 	 * @var    RendererInterface
 	 * @since  1.0
 	 */
-	private $renderer = null;
+	private $renderer;
 
 	/**
-	 * Method to instantiate the view
+	 * Class constructor
 	 *
-	 * @param   AbstractApplication  $app            The application object
-	 * @param   ModelInterface       $model          The model object
-	 * @param   array                $templatePaths  Array of paths for template lookup
+	 * @param   ModelInterface     $model     The model object.
+	 * @param   RendererInterface  $renderer  The renderer object.
 	 *
 	 * @since   1.0
-	 * @throws  \RuntimeException
 	 */
-	public function __construct(AbstractApplication $app, ModelInterface $model, $templatePaths = array())
+	public function __construct(ModelInterface $model, RendererInterface $renderer)
 	{
-		$renderer = new Twig(
-			array(
-				'templates_base_dir' => JPATH_TEMPLATES,
-				'environment'        => array(
-					'debug' => true
-				)
-			)
-		);
-
-		$renderer->addExtension(new TwigExtension($app));
-
-		// Register additional paths.
-		if (!empty($templatePaths))
-		{
-			$renderer->setTemplatesPaths($templatePaths, true);
-		}
-
-		// Add build data if available
-		if (file_exists(JPATH_ROOT . '/last_build.json'))
-		{
-			$data = json_decode(file_get_contents(JPATH_ROOT . '/last_build.json'));
-			$renderer->set('build', $data);
-		}
-		else
-		{
-			$renderer->set('build', '');
-		}
+		parent::__construct($model);
 
 		$this->setRenderer($renderer);
-
-		parent::__construct($model);
 	}
 
 	/**
-	 * Magic toString method that is a proxy for the render method
+	 * Retrieves the data array
+	 *
+	 * @return  array
+	 *
+	 * @since   1.0
+	 */
+	public function getData()
+	{
+		return $this->data;
+	}
+
+	/**
+	 * Retrieves the layout name
 	 *
 	 * @return  string
 	 *
 	 * @since   1.0
-	 */
-	public function __toString()
-	{
-		return $this->render();
-	}
-
-	/**
-	 * Method to escape output
-	 *
-	 * @param   string  $output  The output to escape
-	 *
-	 * @return  string  The escaped output
-	 *
-	 * @see     ViewInterface::escape()
-	 * @since   1.0
-	 */
-	public function escape($output)
-	{
-		// Escape the output.
-		return htmlspecialchars($output, ENT_COMPAT, 'UTF-8');
-	}
-
-	/**
-	 * Method to get the view layout
-	 *
-	 * @return  string  The layout name
-	 *
-	 * @since   1.0
+	 * @throws  \RuntimeException
 	 */
 	public function getLayout()
 	{
+		if (is_null($this->layout))
+		{
+			throw new \RuntimeException('The layout name is not set.');
+		}
+
 		return $this->layout;
 	}
 
 	/**
-	 * Method to get the renderer object
+	 * Retrieves the renderer object
 	 *
-	 * @return  RendererInterface  The renderer object
+	 * @return  RendererInterface
 	 *
 	 * @since   1.0
+	 * @throws  \RuntimeException
 	 */
 	public function getRenderer()
 	{
+		if (is_null($this->renderer))
+		{
+			throw new \RuntimeException('The renderer object is not set.');
+		}
+
 		return $this->renderer;
 	}
 
 	/**
-	 * Method to render the view
+	 * Method to render the view.
 	 *
-	 * @return  string  The rendered view
+	 * @return  string  The rendered view.
 	 *
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
 	public function render()
 	{
-		return $this->renderer->render($this->layout);
+		return $this->getRenderer()->render($this->getLayout(), $this->getData());
 	}
 
 	/**
-	 * Method to set the view layout
+	 * Sets the data array
 	 *
-	 * @param   string  $layout  The layout name
+	 * @param   array  $data  The data array.
 	 *
-	 * @return  $this  Method supports chaining
+	 * @return  $this  Method allows chaining
+	 *
+	 * @since   1.0
+	 */
+	public function setData(array $data)
+	{
+		$this->data = $data;
+
+		return $this;
+	}
+
+	/**
+	 * Sets the layout name
+	 *
+	 * @param   string  $layout  The layout name.
+	 *
+	 * @return  $this  Method allows chaining
 	 *
 	 * @since   1.0
 	 */
@@ -166,11 +154,11 @@ abstract class AbstractHtmlView extends AbstractView
 	}
 
 	/**
-	 * Method to set the renderer object
+	 * Sets the renderer object
 	 *
-	 * @param   RendererInterface  $renderer  The renderer object
+	 * @param   RendererInterface  $renderer  The renderer object.
 	 *
-	 * @return  $this  Method supports chaining
+	 * @return  $this  Method allows chaining
 	 *
 	 * @since   1.0
 	 */

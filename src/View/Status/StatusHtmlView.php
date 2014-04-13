@@ -36,7 +36,7 @@ class StatusHtmlView extends DefaultHtmlView
 	 */
 	public function render()
 	{
-		$this->getRenderer()->set('items', $this->model->getItems());
+		$this->setData(['items' => $this->model->getItems()]);
 
 		return parent::render();
 	}

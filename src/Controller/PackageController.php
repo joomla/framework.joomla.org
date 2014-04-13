@@ -26,16 +26,19 @@ class PackageController extends DefaultController
 	protected $defaultView = 'package';
 
 	/**
-	 * Method to initialize data to inject into the model via the state
+	 * Method to initialize the model object
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
+	 * @throws  \RuntimeException
 	 */
 	protected function initializeModel()
 	{
 		$this->modelState = new Registry;
 
 		$this->modelState->set('package.name', $this->getInput()->getWord('package'));
+
+		parent::initializeModel();
 	}
 }

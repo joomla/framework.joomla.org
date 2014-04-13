@@ -13,11 +13,9 @@ use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\ContainerAwareTrait;
 use Joomla\Router\Router;
 
+use Joomla\Status\Controller\DefaultController;
 use Joomla\Status\Model\DefaultModel;
 use Joomla\Status\View\DefaultHtmlView;
-
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 
 /**
  * Web application class
@@ -61,49 +59,8 @@ final class Application extends AbstractWebApplication implements ContainerAware
 		}
 		catch (\Exception $exception)
 		{
-			// Set the appropriate HTTP response
-			switch ($exception->getCode())
-			{
-				case 404 :
-					$this->setHeader('HTTP/1.1 404 Not Found', 404, true);
-
-					break;
-
-				case 500 :
-				default  :
-					$this->setHeader('HTTP/1.1 500 Internal Server Error', 500, true);
-
-					break;
-			}
-
-			// Render the message based on the format
-			switch (strtolower($this->input->getWord('format', 'html')))
-			{
-				case 'json' :
-					$data = [
-						'code'    => $exception->getCode(),
-						'message' => $exception->getMessage(),
-						'error'   => true
-					];
-
-					$body = json_encode($data);
-
-					break;
-
-				case 'html' :
-				default :
-					// Build a default view object and render with the exception layout
-					$view = new DefaultHtmlView($this, new DefaultModel($this->container->get('db')), [JPATH_TEMPLATES]);
-
-					$view->setLayout('exception')
-						->getRenderer()->set('exception', $exception);
-
-					$body = $view->render();
-
-					break;
-			}
-
-			$this->setBody($body);
+			$this->setErrorHeaderResponse($exception);
+			$this->setErrorOutput($exception);
 		}
 	}
 
@@ -116,11 +73,6 @@ final class Application extends AbstractWebApplication implements ContainerAware
 	 */
 	protected function initialise()
 	{
-		$logger = new Logger('Joomla-Framework-Status');
-		$logger->pushHandler(new StreamHandler(JPATH_ROOT . '/logs/activity.log'));
-
-		$this->setLogger($logger);
-
 		// Set the MIME for the application based on format
 		switch (strtolower($this->input->getWord('format', 'html')))
 		{
@@ -131,6 +83,73 @@ final class Application extends AbstractWebApplication implements ContainerAware
 
 			// Don't need to do anything for the default case
 			default :
+				break;
+		}
+	}
+
+	/**
+	 * Set the body for error conditions
+	 *
+	 * @param   \Exception  $exception  The Exception object
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	private function setErrorOutput(\Exception $exception)
+	{
+		switch (strtolower($this->input->getWord('format', 'html')))
+		{
+			case 'json' :
+				$data = [
+					'code'    => $exception->getCode(),
+					'message' => $exception->getMessage(),
+					'error'   => true
+				];
+
+				$body = json_encode($data);
+
+				break;
+
+			case 'html' :
+			default :
+				// Need the default controller in order to fetch the renderer
+				$controller = (new DefaultController($this->input, $this))->setContainer($this->getContainer());
+
+				// Build a default view object and render with the exception layout
+				$controller->initializeRenderer();
+				$view = new DefaultHtmlView(new DefaultModel($this->getContainer()->get('db')), $this->getContainer()->get('renderer'));
+
+				$body = $view->setLayout('exception')->setData(['exception' => $exception])->render();
+
+				break;
+		}
+
+		$this->setBody($body);
+	}
+
+	/**
+	 * Set the HTTP Header response for error conditions
+	 *
+	 * @param   \Exception  $exception  The Exception object
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	private function setErrorHeaderResponse(\Exception $exception)
+	{
+		switch ($exception->getCode())
+		{
+			case 404 :
+				$this->setHeader('HTTP/1.1 404 Not Found', 404, true);
+
+				break;
+
+			case 500 :
+			default  :
+				$this->setHeader('HTTP/1.1 500 Internal Server Error', 500, true);
+
 				break;
 		}
 	}

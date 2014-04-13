@@ -49,17 +49,13 @@
 		"joomla/uri"           : ">=1.1,<2.0",
 		"joomla/utilities"     : ">=1.1,<2.0",
 		"joomla/view"          : ">=1.1,<2.0",
+		"babdev/renderer"      : "dev-master",
 		"phpunit/phpunit"      : "4.0.*",
 		"phpunit/dbunit"       : "1.3.*",
 		"twig/twig"            : "1.*"
 	},
-	"require-dev": {
-		"monolog/monolog": "1.7.*",
-		"filp/whoops"    : "1.0.*"
-	},
 	"autoload"   : {
 		"psr-4": {
-			"Joomla\\"           : "renderer/",
 			"Joomla\\Status\\"   : "src/",
 			"Joomla\\StatusCli\\": "cli/"
 		}

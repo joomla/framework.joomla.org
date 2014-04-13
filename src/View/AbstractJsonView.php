@@ -19,18 +19,4 @@ use Joomla\View\AbstractView;
  */
 abstract class AbstractJsonView extends AbstractView
 {
-	/**
-	 * Method to instantiate the view
-	 *
-	 * @param   AbstractApplication  $app            The application object
-	 * @param   ModelInterface       $model          The model object
-	 * @param   array                $templatePaths  Array of paths for template lookup
-	 *
-	 * @since   1.0
-	 * @throws  \RuntimeException
-	 */
-	public function __construct(AbstractApplication $app, ModelInterface $model, $templatePaths = array())
-	{
-		parent::__construct($model);
-	}
 }

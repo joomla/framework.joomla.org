@@ -1,16 +1,17 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! CMS Download Repository Application
  *
  * @copyright  Copyright (C) 2014 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\Controller;
+namespace Joomla\Repository\Controller;
 
 use Joomla\Controller\AbstractController;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\ContainerAwareTrait;
+use Joomla\Registry\Registry;
 
 /**
  * Default controller class for the application
@@ -27,7 +28,7 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 	 * @var    string
 	 * @since  1.0
 	 */
-	protected $defaultView = 'landing';
+	protected $defaultView = 'dashboard';
 
 	/**
 	 * State object to inject into the model
@@ -65,7 +66,6 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 		}
 	}
 
-
 	/**
 	 * Method to initialize the model object
 	 *
@@ -76,12 +76,12 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 	 */
 	protected function initializeModel()
 	{
-		$model = '\\Joomla\\Status\\Model\\' . ucfirst($this->getInput()->getWord('view', $this->defaultView)) . 'Model';
+		$model = '\\Joomla\\Repository\\Model\\' . ucfirst($this->getInput()->getWord('view')) . 'Model';
 
 		// If a model doesn't exist for our view, revert to the default model
 		if (!class_exists($model))
 		{
-			$model = '\\Joomla\\Status\\Model\\DefaultModel';
+			$model = '\\Joomla\\Repository\\Model\\DefaultModel';
 
 			// If there still isn't a class, panic.
 			if (!class_exists($model))
@@ -90,9 +90,14 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 			}
 		}
 
-		$object = new $model($this->getContainer()->get('db'), $this->modelState);
+		$object = $this->getContainer()->buildObject($model);
 
-		$this->getContainer()->set($model, $object)->alias('Joomla\\Model\\ModelInterface', $model);
+		if ($this->modelState instanceof Registry)
+		{
+			$object->setState($this->modelState);
+		}
+
+		$this->getContainer()->alias('Joomla\\Model\\ModelInterface', $model);
 	}
 
 	/**
@@ -105,22 +110,19 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 	 */
 	public function initializeRenderer()
 	{
-		// Add the provider to the DI container if it doesn't exist
-		if (!$this->getContainer()->exists('renderer'))
+		$type = $this->getContainer()->get('config')->get('template.renderer');
+
+		// Set the class name for the renderer's service provider
+		$class = '\\Joomla\\Repository\\Service\\' . ucfirst($type) . 'RendererProvider';
+
+		// Sanity check
+		if (!class_exists($class))
 		{
-			$type = $this->getContainer()->get('config')->get('template.renderer');
-
-			// Set the class name for the renderer's service provider
-			$class = '\\Joomla\\Status\\Service\\' . ucfirst($type) . 'RendererProvider';
-
-			// Sanity check
-			if (!class_exists($class))
-			{
-				throw new \RuntimeException(sprintf('Renderer provider for renderer type %s not found.', ucfirst($type)));
-			}
-
-			$this->getContainer()->registerServiceProvider(new $class($this->getApplication()));
+			throw new \RuntimeException(sprintf('Renderer provider for renderer type %s not found.', ucfirst($type)));
 		}
+
+		// Add the provider to the DI container
+		$this->getContainer()->registerServiceProvider(new $class($this));
 	}
 
 	/**
@@ -139,12 +141,12 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 		$view   = ucfirst($this->getInput()->getWord('view', $this->defaultView));
 		$format = ucfirst($this->getInput()->getWord('format', 'html'));
 
-		$class = '\\Joomla\\Status\\View\\' . $view . '\\' . $view . $format . 'View';
+		$class = '\\Joomla\\Repository\\View\\' . $view . $format . 'View';
 
 		// Ensure the class exists, fall back to default otherwise
 		if (!class_exists($class))
 		{
-			$class = '\\Joomla\\Status\\View\\Default' . $format . 'View';
+			$class = '\\Joomla\\Repository\\View\\Default' . $format . 'View';
 
 			// If we still have nothing, abort mission
 			if (!class_exists($class))
@@ -172,9 +174,6 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 
 				// We need to set the layout too
 				$object->setLayout(strtolower($view) . '.' . strtolower($this->getInput()->getWord('layout', 'index')));
-
-				// Add the current view path to the loader's lookup
-				$object->getRenderer()->getLoader()->addPath(JPATH_TEMPLATES . '/' . strtolower($view));
 
 				break;
 		}
