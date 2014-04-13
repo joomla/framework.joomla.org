@@ -43,8 +43,7 @@ final class Application extends AbstractWebApplication implements ContainerAware
 			$router = (new Router($this->input))
 				->setControllerPrefix('\\Joomla\\Status')
 				->setDefaultController('\\Controller\\DefaultController')
-				->addMap('/about', '\\Controller\\AboutController')
-				->addMap('/status', '\\Controller\\DashboardController')
+				->addMap('/:view', '\\Controller\\DefaultController')
 				->addMap('/status/:package', '\\Controller\\PackageController');
 
 			// Fetch the controller

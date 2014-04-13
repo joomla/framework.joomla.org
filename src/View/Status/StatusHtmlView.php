@@ -6,22 +6,22 @@
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\View\Dashboard;
+namespace Joomla\Status\View\Status;
 
-use Joomla\Status\Model\DashboardModel;
-use Joomla\Status\View\AbstractJsonView;
+use Joomla\Status\Model\StatusModel;
+use Joomla\Status\View\DefaultHtmlView;
 
 /**
- * Dashboard JSON view class for the application
+ * Status dashboard HTML view class for the application
  *
  * @since  1.0
  */
-class DashboardJsonView extends AbstractJsonView
+class StatusHtmlView extends DefaultHtmlView
 {
 	/**
 	 * The model object, redeclared here for proper typehinting
 	 *
-	 * @var    DashboardModel
+	 * @var    StatusModel
 	 * @since  1.0
 	 */
 	protected $model;
@@ -36,6 +36,8 @@ class DashboardJsonView extends AbstractJsonView
 	 */
 	public function render()
 	{
-		return json_encode($this->model->getItems());
+		$this->getRenderer()->set('items', $this->model->getItems());
+
+		return parent::render();
 	}
 }

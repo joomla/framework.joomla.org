@@ -11,11 +11,11 @@ namespace Joomla\Status\Model;
 use Joomla\Status\Helper;
 
 /**
- * Model class for the application dashboard
+ * Model class for the status dashboard
  *
  * @since  1.0
  */
-class DashboardModel extends DefaultModel
+class StatusModel extends DefaultModel
 {
 	/**
 	 * Fetches the requested data
