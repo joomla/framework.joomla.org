@@ -118,7 +118,16 @@ abstract class AbstractHtmlView extends AbstractView
 	 */
 	public function render()
 	{
-		return $this->getRenderer()->render($this->getLayout(), $this->getData());
+		// Before rendering, inject the build data into the data array if it exists
+		$data = $this->getData();
+
+		if (file_exists(JPATH_ROOT . '/last_build.json'))
+		{
+			$build = json_decode(file_get_contents(JPATH_ROOT . '/last_build.json'));
+			$data['build'] = $build;
+		}
+
+		return $this->getRenderer()->render($this->getLayout(), $data);
 	}
 
 	/**
