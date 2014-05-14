@@ -20,8 +20,6 @@ use Joomla\StatusCli\Command\ParseComposer;
 use Joomla\StatusCli\Command\RunTests;
 
 use Joomla\StatusCli\Command\UpdateServer;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 
 /**
  * CLI application for the Framework Status Application
@@ -77,21 +75,6 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 		}
 
 		$this->out('Finished!');
-	}
-
-	/**
-	 * Custom initialisation method
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	protected function initialise()
-	{
-		$logger = new Logger('Joomla-Framework-Status');
-		$logger->pushHandler(new StreamHandler(JPATH_ROOT . '/logs/cron.log'));
-
-		$this->setLogger($logger);
 	}
 
 	/**
