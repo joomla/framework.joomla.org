@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "6ae9e1fef68fe744011faaf1dbdd1e2e",
+    "hash": "793db98fe111259b21b125ecaf08934c",
     "packages": [
         {
             "name": "babdev/renderer",
@@ -931,16 +931,16 @@
         },
         {
             "name": "joomla/input",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/input.git",
-                "reference": "34c26858445d13220d492a8c1e870e6778232979"
+                "reference": "3f669bfe88b7fa1009687d7a0ac89ea53fa4e62c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/input/zipball/34c26858445d13220d492a8c1e870e6778232979",
-                "reference": "34c26858445d13220d492a8c1e870e6778232979",
+                "url": "https://api.github.com/repos/joomla-framework/input/zipball/3f669bfe88b7fa1009687d7a0ac89ea53fa4e62c",
+                "reference": "3f669bfe88b7fa1009687d7a0ac89ea53fa4e62c",
                 "shasum": ""
             },
             "require": {
@@ -968,7 +968,7 @@
                 "input",
                 "joomla"
             ],
-            "time": "2014-02-09 02:03:05"
+            "time": "2014-05-20 15:24:15"
         },
         {
             "name": "joomla/keychain",
@@ -1306,6 +1306,50 @@
                 "oauth2"
             ],
             "time": "2014-02-10 22:24:24"
+        },
+        {
+            "name": "joomla/openstreetmap",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joomla-framework/openstreetmap-api.git",
+                "reference": "17c4aeab6ac0bc5b40c81eb895e98e6139b213ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joomla-framework/openstreetmap-api/zipball/17c4aeab6ac0bc5b40c81eb895e98e6139b213ce",
+                "reference": "17c4aeab6ac0bc5b40c81eb895e98e6139b213ce",
+                "shasum": ""
+            },
+            "require": {
+                "joomla/application": "~1.0",
+                "joomla/http": "~1.0",
+                "joomla/input": "~1.0",
+                "joomla/oauth1": "~1.0",
+                "php": ">=5.3.10"
+            },
+            "require-dev": {
+                "joomla/test": "~1.0"
+            },
+            "type": "joomla-package",
+            "autoload": {
+                "psr-4": {
+                    "Joomla\\OpenStreetMap\\": "src/",
+                    "Joomla\\OpenStreetMap\\Tests\\": "Tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "description": "Joomla OpenStreetMap Package",
+            "homepage": "https://github.com/joomla-framework/openstreetmap-api",
+            "keywords": [
+                "OpenStreetMap",
+                "framework",
+                "joomla"
+            ],
+            "time": "2014-05-21 21:41:20"
         },
         {
             "name": "joomla/profiler",

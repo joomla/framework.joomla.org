@@ -39,6 +39,7 @@
 		"joomla/model"         : ">=1.1,<2.0",
 		"joomla/oauth1"        : ">=1.1,<2.0",
 		"joomla/oauth2"        : ">=1.1,<2.0",
+		"joomla/openstreetmap" : "~1.0",
 		"joomla/profiler"      : ">=1.1,<2.0",
 		"joomla/registry"      : ">=1.1,<2.0",
 		"joomla/router"        : ">=1.1,<2.0",
