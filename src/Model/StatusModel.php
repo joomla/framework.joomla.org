@@ -81,7 +81,7 @@ class StatusModel extends DefaultModel
 			$result->version     = $pack->version;
 
 			// For repos with -api appended, handle separately
-			if (in_array($pack->package, ['facebook', 'github', 'google', 'linkedin', 'twitter']))
+			if (in_array($pack->package, ['facebook', 'github', 'google', 'linkedin', 'twitter', 'openstreetmap']))
 			{
 				$result->repoName = $pack->package . '-api';
 			}
