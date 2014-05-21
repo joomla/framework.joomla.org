@@ -43,6 +43,10 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 
 		$this->setContainer($container);
 
+		// Set error reporting based on config
+		$errorReporting = (int) $container->get('config')->get('errorReporting', 0);
+		error_reporting($errorReporting);
+
 		parent::__construct();
 	}
 
