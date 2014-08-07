@@ -12,11 +12,11 @@ use Joomla\Status\Model\StatusModel;
 use Joomla\Status\View\AbstractJsonView;
 
 /**
- * Dashboard JSON view class for the application
+ * Status JSON view class for the application
  *
  * @since  1.0
  */
-class DashboardJsonView extends AbstractJsonView
+class StatusJsonView extends AbstractJsonView
 {
 	/**
 	 * The model object, redeclared here for proper typehinting
