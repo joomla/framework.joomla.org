@@ -33,25 +33,15 @@ class TwigRendererProvider implements ServiceProviderInterface
 	private $app;
 
 	/**
-	 * Configuration instance
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	private $config;
-
-	/**
 	 * Constructor.
 	 *
 	 * @param   AbstractApplication  $app     Application object
-	 * @param   array                $config  Configuration array for the renderer
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(AbstractApplication $app, array $config = array())
+	public function __construct(AbstractApplication $app)
 	{
-		$this->app    = $app;
-		$this->config = $config;
+		$this->app = $app;
 	}
 
 	/**
@@ -70,11 +60,8 @@ class TwigRendererProvider implements ServiceProviderInterface
 				/* @type  \Joomla\Registry\Registry  $config */
 				$config = $container->get('config');
 
-				// Instantiate our extended Twig filesystem loader
-				$loader = new TwigLoader($config->get('template.path'), $config->get('template.extension'));
-
 				// Instantiate the renderer object
-				$renderer = new TwigRenderer($loader, $this->config);
+				$renderer = new TwigRenderer($config->get('template'));
 
 				// Add our Twig extension
 				$renderer->addExtension(new TwigExtension($this->app));
