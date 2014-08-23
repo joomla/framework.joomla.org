@@ -37,7 +37,7 @@ class PackageController extends DefaultController
 	{
 		$this->modelState = new Registry;
 
-		$this->modelState->set('package.name', $this->getInput()->getWord('package'));
+		$this->modelState->set('package.name', $this->getInput()->getString('package'));
 
 		parent::initializeModel();
 	}
