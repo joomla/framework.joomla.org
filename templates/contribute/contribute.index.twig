@@ -1,0 +1,64 @@
+{% extends "index.twig" %}
+
+{% block title %}Contribute - Joomla! Framework{% endblock %}
+
+{% block bodyNavigation %}
+<nav>
+    <div class="container">
+        <ul>
+            <li><a href="{{ uri.base.path }}"><span class="glyphicon glyphicon-cog"></span><span class="title">Framework</span></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span><span class="title">Team</span></a></li>
+            <li><a href="{{ uri.base.path }}status"><span class="glyphicon glyphicon-wrench"></span><span class="title">Status</span></a></li>
+        </ul>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="contribute container">
+    <h2>Contributing to the Joomla! Framework</h2>
+
+    <h3>Issues/Pull Requests</h3>
+    <p>Issue tracking and pull requests are managed via <a href="https://github.com">GitHub</a> in each package's repository. All of the Framework's packages are listed under the <a href="https://github.com/joomla-framework">Joomla! Framework organization</a>. You can find the documentation about how to fork a repository and start contributing to the Joomla! Framework at <a href="https://help.github.com/articles/fork-a-repo">https://help.github.com/articles/fork-a-repo</a>.</p>
+    <p>All contributions are welcome to be submitted for review for inclusion in the Framework, but before they will be accepted, we ask that you follow these simple guidelines:</p>
+    <ul>
+        <li><a href="#joomla-contributor-agreement">Joomla! Contributor Agreement</a></li>
+        <li><a href="#versioning">Versioning</a></li>
+        <li><a href="#coding-standards">Coding Standards</a></li>
+        <li><a href="#unit-testing">Unit Testing</a></li>
+        <li><a href="#documentation">Documentation</a></li>
+    </ul>
+    <p>Please be patient as not all items will be tested or reviewed immediately by a Framework maintainer. Also be receptive to feedback about your changes to the Framework. The maintainer team and other community members may make suggestions or ask questions about your change. This is part of the review process, and helps everyone to understand what is happening, why it is happening, and potentially optimize your code.</p>
+
+    <h3 id="joomla-contributor-agreement">Joomla Contributor Agreement</h3>
+    <p>Ideally, everybody who contributes to the Framework, or any other Open Source Matters (OSM) supported project for that matter, should sign the <a href="http://developer.joomla.org/contributor-agreements.html">Joomla! Contributor Agreement</a> (JCA). But, we are aware that some contributors will not want to take the extra effort, especially for one-time contributors of modest amounts of code. As a compromise, the Joomla! Project requires a JCA from anybody who makes a significant contribution to Joomla! or any other OSM project. "Significant" is, of course, a judgment call. As a general guideline, if you as an individual have contributed or intend to contribute over 100 lines of code to the Joomla! Framework, we will ask for you to sign the JCA. If you are contributing as an employee of a company (that is, the work you are contributing was done on company time) then we need a JCA with your company's signature no matter how small the contribution is.</p>
+
+    <h3 id="versioning">Versioning</h3>
+    <p>When you add new classes, properties or methods, please use <code>__DEPLOY_VERSION__</code> in the <code>@since</code> tags in Docblocks. We'll replace that marker with the actual version the changes are deployed in.</p>
+
+    <h3 id="coding-standards">Coding Standards</h3>
+    <p>All submitted code must be compliant with the Joomla! Coding Standards. This standard is documented at <a href="http://joomla.github.io/coding-standards/">http://joomla.github.io/coding-standards/</a>. There is a tool called <a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a> that allows you to validate your code against the Joomla! Coding Standards.</p>
+
+    <h4>Install & Use</h4>
+    <p>PHP_CodeSniffer can be installed via Composer or PEAR. Please see <a href="https://github.com/squizlabs/PHP_CodeSniffer#installation">https://github.com/squizlabs/PHP_CodeSniffer#installation</a> for instructions on how to install PHP_CodeSniffer</p>
+    <p>To run PHP_CodeSniffer with the Joomla! Coding Standards, you must download the standard. The suggested method of install is to copy this command: <code>git clone http://github.com/joomla/coding-standards.git &lt;/path/to/PHP/CodeSniffer&rt;/Standards/Joomla</code></p>
+    <p>Once PHP_CodeSniffer is installed and the Joomla! Coding Standards are downloaded, you can now check your code against the standard.  Simply run <code>phpcs --standard=Joomla path/to/code/</code></p>
+
+    <h4>IDE Support</h4>
+    <p>Some editors support PHP_CodeSniffer as a plugin or a built in feature. It will allow you to see if your code matches the Joomla! standard directly in your editor. You can find configuration files for many editors from this repository: <a href="https://github.com/joomla/coding-standards/tree/master/IDE">https://github.com/joomla/coding-standards/tree/master/IDE</a>. Download the repository content via the Zip button and import the appropriate <code>.xml</code> file into your editor.</p>
+
+    <h3 id="unit-testing">Unit Testing</h3>
+    <p>Whether your pull request is a bug fix or introduces new classes or methods to the Framework, we ask that you include unit tests for your changes. We understand that not all users submitting pull requests will be proficient with PHPUnit. The maintainers and community as a whole are a helpful group and can help you with writing tests. The PHPUnit manual contains all the documentation you need in order to install it and begin to write unit tests: <a href="http://phpunit.de/manual/current/en/index.html">http://phpunit.de/manual/current/en/index.html</a>.</p>
+
+    <h3 id="documentation">Documentation</h3>
+    <p>Documentation for each package in the Joomla! Framework can be found in the <code>README.md</code> file in the root of the repository. The file uses GitHub Flavored Markdown format. You can find out more about this format at <a href="https://help.github.com/articles/github-flavored-markdown">https://help.github.com/articles/github-flavored-markdown</a>. When contributing new features to existing packages, please add notes about the new features to the existing <code>README.md</code> files in the packages you change. When submitting new packages, documentation in the form of a <code>README.md</code> file will be required with your pull request. The package documentation should explain how a developer should should be able to get started using the code in the package. The documentation should explain an explanation of the classes and/or interfaces and provide several simple examples.</p>
+</section>
+{% endblock %}
+
+{% block footerContent %}
+<div class="container clearfix">
+    <aside class="resources">
+        <h4><a href="{{ uri.base.path }}"><span class="glyphicon glyphicon-book"></span> The Official Framework Page</a></h4>
+    </aside>
+</div>
+{% endblock %}
