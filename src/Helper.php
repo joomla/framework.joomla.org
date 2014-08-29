@@ -78,7 +78,13 @@ abstract class Helper
 	public static function parseComposer()
 	{
 		// Data container
-		$packages = array();
+		static $packages = array();
+
+		// Only process this once
+		if (!empty($packages))
+		{
+			return $packages;
+		}
 
 		// Read the installed.json file
 		$installed = json_decode(file_get_contents(JPATH_ROOT . '/vendor/composer/installed.json'));

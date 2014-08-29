@@ -53,16 +53,15 @@ class RunTests
 	/**
 	 * Class constructor
 	 *
-	 * @param   Application  $app      Application object
-	 * @param   array        $package  Array of package data via Composer
+	 * @param   Application  $app  Application object
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(Application $app, array $packages)
+	public function __construct(Application $app)
 	{
-		$this->app = $app;
-		$this->db  = $this->app->getContainer()->get('db');
-		$this->packages = $packages;
+		$this->app      = $app;
+		$this->db       = $this->app->getContainer()->get('db');
+		$this->packages = Helper::parseComposer();
 	}
 
 	/**

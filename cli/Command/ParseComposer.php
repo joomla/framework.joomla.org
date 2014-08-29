@@ -59,7 +59,7 @@ class ParseComposer
 	/**
 	 * Execute the command
 	 *
-	 * @return  array  Array of
+	 * @return  void
 	 *
 	 * @since   1.0
 	 */
@@ -97,7 +97,5 @@ class ParseComposer
 
 		// Display status
 		$this->app->out('Finished parsing Composer data.');
-
-		return $packages;
 	}
 }

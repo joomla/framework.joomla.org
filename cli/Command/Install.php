@@ -138,7 +138,7 @@ class Install
 				continue;
 			}
 
-			$this->db->setQuery('DROP TABLE IF EXISTS ' . $table)->execute();
+			$this->db->dropTable($table);
 			$this->app->out('.', false);
 		}
 
