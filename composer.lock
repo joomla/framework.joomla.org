@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BabDev/renderer.git",
-                "reference": "425f3b3aaab7b64b61972ae522c4e5a84dcc0087"
+                "reference": "264742e8fbb4b4146b5e85375d6a16fce031c767"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BabDev/renderer/zipball/425f3b3aaab7b64b61972ae522c4e5a84dcc0087",
-                "reference": "425f3b3aaab7b64b61972ae522c4e5a84dcc0087",
+                "url": "https://api.github.com/repos/BabDev/renderer/zipball/264742e8fbb4b4146b5e85375d6a16fce031c767",
+                "reference": "264742e8fbb4b4146b5e85375d6a16fce031c767",
                 "shasum": ""
             },
             "require": {
@@ -27,14 +27,21 @@
                 "league/plates": "~2.0",
                 "mustache/mustache": "~2.0",
                 "squizlabs/php_codesniffer": "1.*",
+                "symfony/templating": "~2.0",
                 "twig/twig": "~1.0"
             },
             "suggest": {
                 "league/plates": "Install ~2.0 if you are using the Plates template engine.",
                 "mustache/mustache": "Install ~2.0 if you are using the Mustache template engine.",
+                "symfony/templating": "Install ~2.0 if you are using Symfony's PHP template component.",
                 "twig/twig": "Install ~1.0 if you are using the Twig template engine."
             },
             "type": "joomla-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "BabDev\\Renderer\\": "src/"
@@ -52,7 +59,7 @@
                 "php",
                 "renderer"
             ],
-            "time": "2014-08-23 19:11:35"
+            "time": "2014-09-10 14:07:41"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -805,16 +812,16 @@
         },
         {
             "name": "joomla/google",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/google-api.git",
-                "reference": "09fa30bf241464022e03bed14dc05299c561ad94"
+                "reference": "a5f41a24e0d4d4f850e3ca8d71e860ac7bc5f7cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/google-api/zipball/09fa30bf241464022e03bed14dc05299c561ad94",
-                "reference": "09fa30bf241464022e03bed14dc05299c561ad94",
+                "url": "https://api.github.com/repos/joomla-framework/google-api/zipball/a5f41a24e0d4d4f850e3ca8d71e860ac7bc5f7cc",
+                "reference": "a5f41a24e0d4d4f850e3ca8d71e860ac7bc5f7cc",
                 "shasum": ""
             },
             "require": {
@@ -826,9 +833,16 @@
             },
             "require-dev": {
                 "joomla/input": "~1.0",
-                "joomla/test": "~1.0"
+                "joomla/test": "~1.0",
+                "phpunit/phpunit": "4.*",
+                "squizlabs/php_codesniffer": "1.*"
             },
             "type": "joomla-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Joomla\\Google\\": "src/",
@@ -846,7 +860,7 @@
                 "google",
                 "joomla"
             ],
-            "time": "2014-02-09 01:57:10"
+            "time": "2014-09-09 13:54:20"
         },
         {
             "name": "joomla/http",
@@ -1398,31 +1412,39 @@
         },
         {
             "name": "joomla/registry",
-            "version": "1.1.3",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/registry.git",
-                "reference": "2be70676835f7457719df0418be89397bfd55900"
+                "reference": "3a8b7837f9466df8e9ad568da31b303e470f3eaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/registry/zipball/2be70676835f7457719df0418be89397bfd55900",
-                "reference": "2be70676835f7457719df0418be89397bfd55900",
+                "url": "https://api.github.com/repos/joomla-framework/registry/zipball/3a8b7837f9466df8e9ad568da31b303e470f3eaa",
+                "reference": "3a8b7837f9466df8e9ad568da31b303e470f3eaa",
                 "shasum": ""
             },
             "require": {
                 "joomla/compat": "~1.0",
+                "joomla/string": "~1.2",
                 "joomla/utilities": "~1.0",
                 "php": ">=5.3.10"
             },
             "require-dev": {
                 "joomla/test": "~1.0",
+                "phpunit/phpunit": "4.*",
+                "squizlabs/php_codesniffer": "1.*",
                 "symfony/yaml": "~2.0"
             },
             "suggest": {
                 "symfony/yaml": "Install 2.* if you require YAML support."
             },
             "type": "joomla-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Joomla\\Registry\\": "src/",
@@ -1440,7 +1462,7 @@
                 "joomla",
                 "registry"
             ],
-            "time": "2014-05-19 19:41:20"
+            "time": "2014-09-03 16:09:19"
         },
         {
             "name": "joomla/router",
@@ -1531,25 +1553,32 @@
         },
         {
             "name": "joomla/string",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/string.git",
-                "reference": "f1152e6cce135ff90f4b0097792e8be23989b143"
+                "reference": "edc67e83f8e603ac7b55bf32b87d5b53fe1acd8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/string/zipball/f1152e6cce135ff90f4b0097792e8be23989b143",
-                "reference": "f1152e6cce135ff90f4b0097792e8be23989b143",
+                "url": "https://api.github.com/repos/joomla-framework/string/zipball/edc67e83f8e603ac7b55bf32b87d5b53fe1acd8a",
+                "reference": "edc67e83f8e603ac7b55bf32b87d5b53fe1acd8a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.10"
             },
             "require-dev": {
-                "joomla/test": "~1.0"
+                "joomla/test": "~1.0",
+                "phpunit/phpunit": "4.*",
+                "squizlabs/php_codesniffer": "1.*"
             },
             "type": "joomla-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Joomla\\String\\": "src/",
@@ -1567,7 +1596,7 @@
                 "joomla",
                 "string"
             ],
-            "time": "2014-08-23 19:33:54"
+            "time": "2014-09-18 12:21:47"
         },
         {
             "name": "joomla/test",
@@ -1694,23 +1723,32 @@
         },
         {
             "name": "joomla/utilities",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/utilities.git",
-                "reference": "de31259372d049f2a3fabe7b1c412cece134ca31"
+                "reference": "f749a9bd6f2fc5ad376687651478273dac105051"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/utilities/zipball/de31259372d049f2a3fabe7b1c412cece134ca31",
-                "reference": "de31259372d049f2a3fabe7b1c412cece134ca31",
+                "url": "https://api.github.com/repos/joomla-framework/utilities/zipball/f749a9bd6f2fc5ad376687651478273dac105051",
+                "reference": "f749a9bd6f2fc5ad376687651478273dac105051",
                 "shasum": ""
             },
             "require": {
                 "joomla/string": "~1.0",
                 "php": ">=5.3.10"
             },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "squizlabs/php_codesniffer": "1.*"
+            },
             "type": "joomla-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Joomla\\Utilities\\": "src/",
@@ -1728,7 +1766,7 @@
                 "joomla",
                 "utilities"
             ],
-            "time": "2014-02-09 02:57:39"
+            "time": "2014-09-03 21:44:44"
         },
         {
             "name": "joomla/view",
@@ -1946,29 +1984,29 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "2.0.10",
+            "version": "2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "6d196af48e8c100a3ae881940123e693da5a9217"
+                "reference": "53603b3c995f5aab6b59c8e08c3a663d2cc810b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/6d196af48e8c100a3ae881940123e693da5a9217",
-                "reference": "6d196af48e8c100a3ae881940123e693da5a9217",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/53603b3c995f5aab6b59c8e08c3a663d2cc810b7",
+                "reference": "53603b3c995f5aab6b59c8e08c3a663d2cc810b7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "phpunit/php-file-iterator": "~1.3.1",
-                "phpunit/php-text-template": "~1.2.0",
-                "phpunit/php-token-stream": "~1.2.2",
-                "sebastian/environment": "~1.0.0",
-                "sebastian/version": "~1.0.3"
+                "phpunit/php-file-iterator": "~1.3",
+                "phpunit/php-text-template": "~1.2",
+                "phpunit/php-token-stream": "~1.3",
+                "sebastian/environment": "~1.0",
+                "sebastian/version": "~1.0"
             },
             "require-dev": {
                 "ext-xdebug": ">=2.1.4",
-                "phpunit/phpunit": "~4.0.14"
+                "phpunit/phpunit": "~4.1"
             },
             "suggest": {
                 "ext-dom": "*",
@@ -2007,7 +2045,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-08-06 06:39:42"
+            "time": "2014-08-31 06:33:04"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2144,45 +2182,44 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.2.2",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32"
+                "reference": "f8d5d08c56de5cfd592b3340424a81733259a876"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/ad4e1e23ae01b483c16f600ff1bebec184588e32",
-                "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/f8d5d08c56de5cfd592b3340424a81733259a876",
+                "reference": "f8d5d08c56de5cfd592b3340424a81733259a876",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
                 "php": ">=5.3.3"
             },
+            "require-dev": {
+                "phpunit/phpunit": "~4.2"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
                 "classmap": [
-                    "PHP/"
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                ""
-            ],
             "license": [
                 "BSD-3-Clause"
             ],
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Wrapper around PHP's tokenizer extension.",
@@ -2190,20 +2227,20 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2014-03-03 05:10:30"
+            "time": "2014-08-31 06:12:13"
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.2.3",
+            "version": "4.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3985cd437c1da2934421c99e54ebdf24f0362a7a"
+                "reference": "c28a790620fe30b049bb693be1ef9cd4e0fe906c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3985cd437c1da2934421c99e54ebdf24f0362a7a",
-                "reference": "3985cd437c1da2934421c99e54ebdf24f0362a7a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c28a790620fe30b049bb693be1ef9cd4e0fe906c",
+                "reference": "c28a790620fe30b049bb693be1ef9cd4e0fe906c",
                 "shasum": ""
             },
             "require": {
@@ -2264,20 +2301,20 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-08-28 13:38:26"
+            "time": "2014-09-14 09:31:24"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "42e589e08bc86e3e9bdf20d385e948347788505b"
+                "reference": "b241b18d87a47093f20fae8b0ba40379b00bd53a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/42e589e08bc86e3e9bdf20d385e948347788505b",
-                "reference": "42e589e08bc86e3e9bdf20d385e948347788505b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/b241b18d87a47093f20fae8b0ba40379b00bd53a",
+                "reference": "b241b18d87a47093f20fae8b0ba40379b00bd53a",
                 "shasum": ""
             },
             "require": {
@@ -2286,7 +2323,7 @@
                 "phpunit/php-text-template": "~1.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.2.*@dev"
+                "phpunit/phpunit": "~4.2"
             },
             "suggest": {
                 "ext-soap": "*"
@@ -2303,9 +2340,6 @@
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                ""
-            ],
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2322,7 +2356,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2014-08-02 13:50:58"
+            "time": "2014-09-06 17:32:37"
         },
         {
             "name": "psr/log",
@@ -2631,17 +2665,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.5.3",
+            "version": "v2.5.4",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "5a75366ae9ca8b4792cd0083e4ca4dff9fe96f1f"
+                "reference": "01a7695bcfb013d0a15c6757e15aae120342986f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/5a75366ae9ca8b4792cd0083e4ca4dff9fe96f1f",
-                "reference": "5a75366ae9ca8b4792cd0083e4ca4dff9fe96f1f",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/01a7695bcfb013d0a15c6757e15aae120342986f",
+                "reference": "01a7695bcfb013d0a15c6757e15aae120342986f",
                 "shasum": ""
             },
             "require": {
@@ -2674,7 +2708,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-08-05 09:00:40"
+            "time": "2014-08-31 03:22:04"
         },
         {
             "name": "twig/twig",
