@@ -261,7 +261,14 @@ class RunTests
 				$data = file_get_contents(JPATH_ROOT . '/www/coverage/' . $package . '/' . $file->getFilename());
 
 				// Clean out the path now
-				$data = str_replace(JPATH_ROOT . '/vendor/joomla/' . $package, '', $data);
+				if ($package == 'datetime')
+				{
+					$data = str_replace(dirname(JPATH_ROOT) . '/Joomla-Framework/' . $package, '', $data);
+				}
+				else
+				{
+					$data = str_replace(JPATH_ROOT . '/vendor/joomla/' . $package, '', $data);
+				}
 
 				// Write the sanitized file back
 				file_put_contents(JPATH_ROOT . '/www/coverage/' . $package . '/' . $file->getFilename(), $data);

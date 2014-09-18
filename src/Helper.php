@@ -26,7 +26,11 @@ abstract class Helper
 	 */
 	public static function getPackageDisplayName($package)
 	{
-		if ($package == 'di')
+		if ($package == 'datetime')
+		{
+			return 'DateTime';
+		}
+		elseif ($package == 'di')
 		{
 			return 'DI';
 		}
@@ -62,10 +66,8 @@ abstract class Helper
 		{
 			return 'URI';
 		}
-		else
-		{
-			return ucfirst($package);
-		}
+
+		return ucfirst($package);
 	}
 
 	/**

@@ -20,6 +20,7 @@
 		"joomla/data"          : ">=1.1,<2.0",
 		"joomla/database"      : ">=1.1,<2.0",
 		"joomla/date"          : ">=1.1,<2.0",
+		"joomla/datetime"      : "~2.0",
 		"joomla/di"            : ">=1.1,<2.0",
 		"joomla/event"         : ">=1.1,<2.0",
 		"joomla/facebook"      : ">=1.1,<2.0",
