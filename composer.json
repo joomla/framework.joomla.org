@@ -31,7 +31,7 @@
 		"joomla/google"        : ">=1.1,<2.0",
 		"joomla/http"          : ">=1.1,<2.0",
 		"joomla/image"         : ">=1.1,<2.0",
-		"joomla/input"         : ">=1.1,<2.0",
+		"joomla/input"         : ">=1.2,<2.0",
 		"joomla/keychain"      : ">=1.1,<2.0",
 		"joomla/language"      : ">=1.1,<2.0",
 		"joomla/ldap"          : ">=1.1,<2.0",
