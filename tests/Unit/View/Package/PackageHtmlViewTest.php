@@ -17,6 +17,8 @@ class PackageHtmlViewTest extends PackageTestCase
 {
 	/**
 	 * Test object
+	 *
+	 * @var  PackageHtmlView
 	 */
 	private $object;
 

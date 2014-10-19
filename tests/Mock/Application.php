@@ -60,7 +60,6 @@ class Application extends BaseMock
 		    'getContainer',
 		    'setContainer',
 		    // \Joomla\Application\AbstractWebApplication
-		    'execute',
 		    'compress',
 		    'respond',
 		    'redirect',

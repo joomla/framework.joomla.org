@@ -17,6 +17,8 @@ class StatusHtmlViewTest extends StatusTestCase
 {
 	/**
 	 * Test object
+	 *
+	 * @var  StatusHtmlView
 	 */
 	private $object;
 

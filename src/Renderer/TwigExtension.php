@@ -58,24 +58,24 @@ class TwigExtension extends \Twig_Extension
 	 */
 	public function getGlobals()
 	{
-		return array(
+		return [
 			'uri' => $this->app->get('uri')
-		);
+		];
 	}
 
 	/**
 	 * Returns a list of functions to add to the existing list
 	 *
-	 * @return  array  An array of functions
+	 * @return  \Twig_SimpleFunction[]  An array of \Twig_SimpleFunction instances
 	 *
 	 * @since   1.0
 	 */
 	public function getFunctions()
 	{
-		$functions = array(
+		$functions = [
 			new \Twig_SimpleFunction('sprintf', 'sprintf'),
 			new \Twig_SimpleFunction('stripJRoot', array($this, 'stripJRoot'))
-		);
+		];
 
 		return $functions;
 	}
@@ -83,7 +83,7 @@ class TwigExtension extends \Twig_Extension
 	/**
 	 * Returns a list of filters to add to the existing list
 	 *
-	 * @return  array  An array of filters
+	 * @return  \Twig_SimpleFilter[]  An array of \Twig_SimpleFilter instances
 	 *
 	 * @since   1.0
 	 */

@@ -22,7 +22,7 @@ use Joomla\Status\View\DefaultHtmlView;
  *
  * @since  1.0
  */
-final class Application extends AbstractWebApplication implements ContainerAwareInterface
+class Application extends AbstractWebApplication implements ContainerAwareInterface
 {
 	use ContainerAwareTrait;
 

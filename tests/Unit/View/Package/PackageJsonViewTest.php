@@ -17,6 +17,8 @@ class PackageJsonViewTest extends PackageTestCase
 {
 	/**
 	 * Test object
+	 *
+	 * @var  PackageJsonView
 	 */
 	private $object;
 

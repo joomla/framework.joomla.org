@@ -17,6 +17,8 @@ class StatusJsonViewTest extends StatusTestCase
 {
 	/**
 	 * Test object
+	 *
+	 * @var  StatusJsonView
 	 */
 	private $object;
 
