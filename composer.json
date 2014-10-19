@@ -65,7 +65,8 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Joomla\\StatusCli\\": "cli/"
+			"Joomla\\StatusCli\\": "cli/",
+			"Joomla\\Status\\Tests": "tests/",
 		}
 	}
 }

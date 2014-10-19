@@ -10,3 +10,7 @@
 
 # Don't push the local config #
 /etc/config.json
+
+# Unit Testing #
+/app-coverage
+/phpunit.xml

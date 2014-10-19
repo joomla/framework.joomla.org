@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" colors="false" backupGlobals="false" strict="true">
+	<testsuites>
+		<testsuite name="Unit">
+			<directory>Tests</directory>
+		</testsuite>
+	</testsuites>
+    <php>
+        <const name="JPATH_ROOT" value="__DIR__" />
+    </php>
+
+	<logging>
+		<log type="coverage-html" target="app-coverage" title="Joomla-Framework-Status-Application" charset="UTF-8" yui="true" highlight="true"
+			lowUpperBound="35" highLowerBound="70" />
+	</logging>
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">src</directory>
+		</whitelist>
+	</filter>
+</phpunit>
