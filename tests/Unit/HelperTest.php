@@ -6,7 +6,7 @@
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\Tests;
+namespace Joomla\Status\Tests\Unit;
 
 use Joomla\Status\Helper;
 
