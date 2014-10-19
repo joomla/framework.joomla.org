@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php" colors="false" backupGlobals="false" strict="true">
 	<testsuites>
+		<testsuite name="Functional">
+			<directory>Tests/Functional</directory>
+		</testsuite>
 		<testsuite name="Unit">
 			<directory>Tests/Unit</directory>
 		</testsuite>

@@ -1,12 +1,12 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE
+ * Joomla! Framework Status Application
+ *
+ * @copyright  Copyright (C) 2014 Open Source Matters, Inc. All rights reserved.
+ * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Input\Tests;
-
-use Joomla\Status\Tests\Mock\BaseMock;
+namespace Joomla\Status\Tests\Mock;
 
 /**
  * Class to create a mock Joomla\Database\DatabaseDriver instance
@@ -21,7 +21,7 @@ class Input extends BaseMock
 	 * @var    array
 	 * @since  1.0
 	 */
-	private $inputs;
+	private static $inputs;
 
 	/**
 	 * Creates an instance of the mock Input object.
@@ -57,10 +57,10 @@ class Input extends BaseMock
 			$test,
 			$mockObject,
 			[
-				'get' => [(is_callable([$this->test, 'mockInputGet']) ? $this->test : $this), 'mockInputGet'],
-				'getArray' => [(is_callable([$this->test, 'mockInputGetArray']) ? $this->test : $this), 'mockInputGetArray'],
-				'getInt' => [(is_callable([$this->test, 'mockInputGetInt']) ? $this->test : $this), 'mockInputGetInt'],
-				'set' => [(is_callable([$this->test, 'mockInputSet']) ? $this->test : $this), 'mockInputSet'],
+				'get' => [(is_callable([$test, 'mockInputGet']) ? $test : get_called_class()), 'mockInputGet'],
+				'getArray' => [(is_callable([$test, 'mockInputGetArray']) ? $test : get_called_class()), 'mockInputGetArray'],
+				'getInt' => [(is_callable([$test, 'mockInputGetInt']) ? $test : get_called_class()), 'mockInputGetInt'],
+				'set' => [(is_callable([$test, 'mockInputSet']) ? $test : get_called_class()), 'mockInputSet'],
 			]
 		);
 
@@ -87,7 +87,7 @@ class Input extends BaseMock
 		$this->assignMockCallbacks(
 			$test,
 			$mockObject,
-			['getRaw' => [(is_callable([$this->test, 'mockInputGetRaw']) ? $this->test : $this), 'mockInputGetRaw']]
+			['getRaw' => [(is_callable([$test, 'mockInputGetRaw']) ? $test : $this), 'mockInputGetRaw']]
 		);
 
 		return $mockObject;
@@ -104,9 +104,9 @@ class Input extends BaseMock
 	 *
 	 * @since   1.0
 	 */
-	public function mockInputGet($name, $default = null, $filter = 'cmd')
+	public static function mockInputGet($name, $default = null, $filter = 'cmd')
 	{
-		return isset($this->inputs[$name]) ? $this->inputs[$name] : $default;
+		return isset(self::$inputs[$name]) ? self::$inputs[$name] : $default;
 	}
 
 	/**
@@ -121,7 +121,7 @@ class Input extends BaseMock
 	 *
 	 * @since   1.0
 	 */
-	public function mockInputGetArray(array $vars = array(), $datasource = null)
+	public static function mockInputGetArray(array $vars = array(), $datasource = null)
 	{
 		return array();
 	}
@@ -136,9 +136,9 @@ class Input extends BaseMock
 	 *
 	 * @since   1.0
 	 */
-	public function mockInputGetInt($name, $default = null)
+	public static function mockInputGetInt($name, $default = null)
 	{
-		return (int) $this->mockInputGet($name, $default);
+		return (int) self::mockInputGet($name, $default);
 	}
 
 	/**
@@ -148,7 +148,7 @@ class Input extends BaseMock
 	 *
 	 * @since   1.0
 	 */
-	public function mockInputGetRaw()
+	public static function mockInputGetRaw()
 	{
 		return '';
 	}
@@ -163,8 +163,8 @@ class Input extends BaseMock
 	 *
 	 * @since   1.0
 	 */
-	public function mockInputSet($name, $value)
+	public static function mockInputSet($name, $value)
 	{
-		$this->inputs[$name] = $value;
+		self::$inputs[$name] = $value;
 	}
 }

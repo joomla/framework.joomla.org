@@ -138,11 +138,11 @@ class DatabaseDriver extends BaseMock
 			$test,
 			$mockObject,
 			[
-				'escape' => [(is_callable([$test, 'mockEscape']) ? $test : __CLASS__), 'mockEscape'],
-				'getQuery' => [(is_callable([$test, 'mockGetQuery']) ? $test : __CLASS__), 'mockGetQuery'],
-				'quote' => [(is_callable([$test, 'mockQuote']) ? $test : __CLASS__), 'mockQuote'],
-				'quoteName' => [(is_callable([$test, 'mockQuoteName']) ? $test : __CLASS__), 'mockQuoteName'],
-				'setQuery' => [(is_callable([$test, 'mockSetQuery']) ? $test : __CLASS__), 'mockSetQuery'],
+				'escape' => [(is_callable([$test, 'mockEscape']) ? $test : get_called_class()), 'mockEscape'],
+				'getQuery' => [(is_callable([$test, 'mockGetQuery']) ? $test : get_called_class()), 'mockGetQuery'],
+				'quote' => [(is_callable([$test, 'mockQuote']) ? $test : get_called_class()), 'mockQuote'],
+				'quoteName' => [(is_callable([$test, 'mockQuoteName']) ? $test : get_called_class()), 'mockQuoteName'],
+				'setQuery' => [(is_callable([$test, 'mockSetQuery']) ? $test : get_called_class()), 'mockSetQuery'],
 			]
 		);
 

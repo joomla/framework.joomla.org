@@ -82,12 +82,6 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 		if (!class_exists($model))
 		{
 			$model = '\\Joomla\\Status\\Model\\DefaultModel';
-
-			// If there still isn't a class, panic.
-			if (!class_exists($model))
-			{
-				throw new \RuntimeException(sprintf('No model found for view %s', $vName), 500);
-			}
 		}
 
 		$object = new $model($this->getContainer()->get('db'), $this->modelState);
