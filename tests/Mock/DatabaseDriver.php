@@ -13,7 +13,7 @@ namespace Joomla\Status\Tests\Mock;
  *
  * @since  1.0
  */
-class DatabaseDriver
+class DatabaseDriver extends BaseMock
 {
 	/**
 	 * A query string or object.
@@ -30,61 +30,6 @@ class DatabaseDriver
 	 * @since  1.0
 	 */
 	public static $dbo;
-
-	/**
-	 * Assigns mock callbacks to methods.
-	 *
-	 * @param   \PHPUnit_Framework_TestCase               $test          A test object.
-	 * @param   \PHPUnit_Framework_MockObject_MockObject  $mockObject  The mock object.
-	 * @param   array|\ArrayAccess                        $array       An array of methods names to mock with callbacks.
-	 *
-	 * @return  void
-	 *
-	 * @note    This method assumes that the mock callback is named {mock}{method name}.
-	 * @since   1.0
-	 */
-	public function assignMockCallbacks($test, $mockObject, $array)
-	{
-		foreach ($array as $index => $method)
-		{
-			if (is_array($method))
-			{
-				$methodName = $index;
-				$callback = $method;
-			}
-			else
-			{
-				$methodName = $method;
-				$callback = array(get_called_class(), 'mock' . $method);
-			}
-
-			$mockObject->expects($test->any())
-				->method($methodName)
-				->willReturnCallback($callback);
-		}
-	}
-
-	/**
-	 * Assigns mock values to methods.
-	 *
-	 * @param   \PHPUnit_Framework_TestCase               $test          A test object.
-	 * @param   \PHPUnit_Framework_MockObject_MockObject  $mockObject  The mock object.
-	 * @param   array|\ArrayAccess                        $array       An associative array of methods to mock with return values:
-	 *                                                                 string (method name) => mixed (return value)
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function assignMockReturns($test, $mockObject, $array)
-	{
-		foreach ($array as $method => $return)
-		{
-			$mockObject->expects($test->any())
-				->method($method)
-				->willReturn($return);
-		}
-	}
 
 	/**
 	 * Creates an instance of the mock DatabaseDriver object.
@@ -193,15 +138,15 @@ class DatabaseDriver
 			$test,
 			$mockObject,
 			[
-				'escape' => array((is_callable(array($test, 'mockEscape')) ? $test : __CLASS__), 'mockEscape'),
-				'getQuery' => array((is_callable(array($test, 'mockGetQuery')) ? $test : __CLASS__), 'mockGetQuery'),
-				'quote' => array((is_callable(array($test, 'mockQuote')) ? $test : __CLASS__), 'mockQuote'),
-				'quoteName' => array((is_callable(array($test, 'mockQuoteName')) ? $test : __CLASS__), 'mockQuoteName'),
-				'setQuery' => array((is_callable(array($test, 'mockSetQuery')) ? $test : __CLASS__), 'mockSetQuery'),
+				'escape' => [(is_callable([$test, 'mockEscape']) ? $test : __CLASS__), 'mockEscape'],
+				'getQuery' => [(is_callable([$test, 'mockGetQuery']) ? $test : __CLASS__), 'mockGetQuery'],
+				'quote' => [(is_callable([$test, 'mockQuote']) ? $test : __CLASS__), 'mockQuote'],
+				'quoteName' => [(is_callable([$test, 'mockQuoteName']) ? $test : __CLASS__), 'mockQuoteName'],
+				'setQuery' => [(is_callable([$test, 'mockSetQuery']) ? $test : __CLASS__), 'mockSetQuery'],
 			]
 		);
 
-		self::$dbo = $mockObject;
+		static::$dbo = $mockObject;
 
 		return $mockObject;
 	}
@@ -231,13 +176,13 @@ class DatabaseDriver
 	 */
 	public static function mockGetQuery($new = false)
 	{
-		if ($new || is_null(self::$lastQuery))
+		if ($new || is_null(static::$lastQuery))
 		{
-			return new DatabaseQuery(self::$dbo);
+			return new DatabaseQuery(static::$dbo);
 		}
 		else
 		{
-			return self::$lastQuery;
+			return static::$lastQuery;
 		}
 	}
 
@@ -257,13 +202,13 @@ class DatabaseDriver
 		{
 			foreach ($value as $k => $v)
 			{
-				$value[$k] = self::mockQuote($v, $escape);
+				$value[$k] = static::mockQuote($v, $escape);
 			}
 
 			return $value;
 		}
 
-		return '\'' . ($escape ? self::mockEscape($value) : $value) . '\'';
+		return '\'' . ($escape ? static::mockEscape($value) : $value) . '\'';
 	}
 
 	/**
@@ -291,8 +236,8 @@ class DatabaseDriver
 	 */
 	public static function mockSetQuery($query)
 	{
-		self::$lastQuery = $query;
+		static::$lastQuery = $query;
 
-		return self::$dbo;
+		return static::$dbo;
 	}
 }
