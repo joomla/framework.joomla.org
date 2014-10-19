@@ -18,7 +18,7 @@ abstract class BaseMock
 	/**
 	 * Assigns mock callbacks to methods.
 	 *
-	 * @param   \PHPUnit_Framework_TestCase               $test          A test object.
+	 * @param   \PHPUnit_Framework_TestCase               $test        A test object.
 	 * @param   \PHPUnit_Framework_MockObject_MockObject  $mockObject  The mock object.
 	 * @param   array|\ArrayAccess                        $array       An array of methods names to mock with callbacks.
 	 *
