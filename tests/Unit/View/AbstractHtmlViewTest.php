@@ -14,6 +14,11 @@ namespace Joomla\Status\Tests\Unit\View;
 class AbstractHtmlViewTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * Mock ModelInterface
+	 */
+	private $mockModel;
+
+	/**
 	 * Mock RendererInterface
 	 */
 	private $mockRenderer;
