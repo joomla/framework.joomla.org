@@ -69,7 +69,8 @@ class ParseComposer
 		$this->app->out('Parsing the Composer data.');
 
 		// Get the Composer data
-		$packages = Helper::parseComposer();
+		$helper = new Helper;
+		$packages = $helper->parseComposer();
 
 		// Insert the records into the database now
 		foreach ($packages as $name => $package)

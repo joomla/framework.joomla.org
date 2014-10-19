@@ -35,6 +35,14 @@ class RunTests
 	private $db;
 
 	/**
+	 * Helper class
+	 *
+	 * @var    Helper
+	 * @since  1.0
+	 */
+	private $helper;
+
+	/**
 	 * Package data from Composer
 	 *
 	 * @var    array
@@ -61,7 +69,8 @@ class RunTests
 	{
 		$this->app      = $app;
 		$this->db       = $this->app->getContainer()->get('db');
-		$this->packages = Helper::parseComposer();
+		$this->helper   = new Helper;
+		$this->packages = $this->helper->parseComposer();
 	}
 
 	/**
@@ -100,7 +109,7 @@ class RunTests
 		{
 			if (!$directory->isDot() && $directory->isDir())
 			{
-				$this->app->out('Processing the ' . Helper::getPackageDisplayName($directory->getFilename()) . ' package.');
+				$this->app->out('Processing the ' . $this->helper->getPackageDisplayName($directory->getFilename()) . ' package.');
 
 				// Get the package ID
 				$this->getPackageId($directory->getFilename());
@@ -111,7 +120,7 @@ class RunTests
 					$this->app->out(
 						sprintf(
 							'A test report already exists for the %s package at version %s.',
-							Helper::getPackageDisplayName($directory->getFilename()),
+							$this->helper->getPackageDisplayName($directory->getFilename()),
 							$this->packages[$directory->getFilename()]['version']
 						)
 					);
@@ -136,7 +145,7 @@ class RunTests
 				}
 				else
 				{
-					$this->app->out('No test config exists for the ' . Helper::getPackageDisplayName($directory->getFilename()) . ' package.');
+					$this->app->out('No test config exists for the ' . $this->helper->getPackageDisplayName($directory->getFilename()) . ' package.');
 				}
 			}
 		}
@@ -183,16 +192,16 @@ class RunTests
 		// Make sure the files exist.
 		if (!file_exists(JPATH_ROOT . '/coverage/logs/clover.' . $package . '.xml'))
 		{
-			throw new \UnexpectedValueException('The clover test report for the ' . Helper::getPackageDisplayName($package) . ' package is missing.');
+			throw new \UnexpectedValueException('The clover test report for the ' . $this->helper->getPackageDisplayName($package) . ' package is missing.');
 		}
 
 		if (!file_exists(JPATH_ROOT . '/coverage/logs/junit.' . $package . '.xml'))
 		{
-			throw new \UnexpectedValueException('The junit test report for the ' . Helper::getPackageDisplayName($package) . ' package is missing.');
+			throw new \UnexpectedValueException('The junit test report for the ' . $this->helper->getPackageDisplayName($package) . ' package is missing.');
 		}
 
 		// Display update to console
-		$this->app->out('Parsing test results for the ' . Helper::getPackageDisplayName($package) . ' package and recording to the database.');
+		$this->app->out('Parsing test results for the ' . $this->helper->getPackageDisplayName($package) . ' package and recording to the database.');
 
 		// Load the Clover XML file.
 		$xml = simplexml_load_file(JPATH_ROOT . '/coverage/logs/clover.' . $package . '.xml');
@@ -247,7 +256,7 @@ class RunTests
 	private function sanitizePaths($package)
 	{
 		// Display update to console
-		$this->app->out('Sanitizing the file paths for the ' . Helper::getPackageDisplayName($package) . ' package code coverage report.');
+		$this->app->out('Sanitizing the file paths for the ' . $this->helper->getPackageDisplayName($package) . ' package code coverage report.');
 
 		// Get the files
 		$files = new \DirectoryIterator(JPATH_ROOT . '/www/coverage/' . $package);

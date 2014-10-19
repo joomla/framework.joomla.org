@@ -39,7 +39,7 @@ class PackageHtmlView extends DefaultHtmlView
 	{
 		$this->setData([
 			'items'   => $this->model->getItems(),
-			'package' => Helper::getPackageDisplayName($this->model->getState()->get('package.name'))
+			'package' => (new Helper)->getPackageDisplayName($this->model->getState()->get('package.name'))
 		]);
 
 		return parent::render();

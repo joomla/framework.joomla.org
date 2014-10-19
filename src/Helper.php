@@ -13,8 +13,16 @@ namespace Joomla\Status;
  *
  * @since  1.0
  */
-abstract class Helper
+class Helper
 {
+	/**
+	 * Data container for the Composer data
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	private static $packages = array();
+
 	/**
 	 * Utility method to retrieve a package's display name
 	 *
@@ -24,50 +32,43 @@ abstract class Helper
 	 *
 	 * @since   1.0
 	 */
-	public static function getPackageDisplayName($package)
+	public function getPackageDisplayName($package)
 	{
-		if ($package == 'datetime')
+		switch ($package)
 		{
-			return 'DateTime';
-		}
-		elseif ($package == 'di')
-		{
-			return 'DI';
-		}
-		elseif ($package == 'github')
-		{
-			return 'GitHub';
-		}
-		elseif ($package == 'http')
-		{
-			return 'HTTP';
-		}
-		elseif ($package == 'ldap')
-		{
-			return 'LDAP';
-		}
-		elseif ($package == 'linkedin')
-		{
-			return 'LinkedIn';
-		}
-		elseif ($package == 'oauth1')
-		{
-			return 'OAuth1';
-		}
-		elseif ($package == 'oauth2')
-		{
-			return 'OAuth2';
-		}
-		elseif ($package == 'openstreetmap')
-		{
-			return 'OpenStreetMap';
-		}
-		elseif ($package == 'uri')
-		{
-			return 'URI';
-		}
+			case 'datetime':
+				return 'DateTime';
 
-		return ucfirst($package);
+			case 'di':
+				return 'DI';
+
+			case 'github':
+				return 'GitHub';
+
+			case 'http':
+				return 'HTTP';
+
+			case 'ldap':
+				return 'LDAP';
+
+			case 'linkedin':
+				return 'LinkedIn';
+
+			case 'oauth1':
+				return 'OAuth1';
+
+			case 'oauth2':
+				return 'OAuth2';
+
+			case 'openstreetmap':
+				return 'OpenStreetMap';
+
+			case 'uri':
+				return 'URI';
+
+			default:
+				return ucfirst($package);
+		}
 	}
 
 	/**
@@ -77,31 +78,26 @@ abstract class Helper
 	 *
 	 * @since   1.0
 	 */
-	public static function parseComposer()
+	public function parseComposer()
 	{
-		// Data container
-		static $packages = array();
-
 		// Only process this once
-		if (!empty($packages))
+		if (empty(self::$packages))
 		{
-			return $packages;
-		}
+			// Read the installed.json file
+			$installed = json_decode(file_get_contents(JPATH_ROOT . '/vendor/composer/installed.json'));
 
-		// Read the installed.json file
-		$installed = json_decode(file_get_contents(JPATH_ROOT . '/vendor/composer/installed.json'));
-
-		// Loop through and extract the package name and version for all Joomla! Framework packages
-		foreach ($installed as $package)
-		{
-			if (strpos($package->name, 'joomla') !== 0)
+			// Loop through and extract the package name and version for all Joomla! Framework packages
+			foreach ($installed as $package)
 			{
-				continue;
-			}
+				if (strpos($package->name, 'joomla') !== 0)
+				{
+					continue;
+				}
 
-			$packages[str_replace('joomla/', '', $package->name)] = ['version' => $package->version];
+				self::$packages[str_replace('joomla/', '', $package->name)] = ['version' => $package->version];
+			}
 		}
 
-		return $packages;
+		return self::$packages;
 	}
 }

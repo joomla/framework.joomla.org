@@ -39,7 +39,7 @@ class PackageJsonView extends AbstractJsonView
 	{
 		$data = [
 			'items'   => $this->model->getItems(),
-			'package' => Helper::getPackageDisplayName($this->model->getState()->get('package.name'))
+			'package' => (new Helper)->getPackageDisplayName($this->model->getState()->get('package.name'))
 		];
 
 		return json_encode($data);

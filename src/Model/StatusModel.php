@@ -27,8 +27,9 @@ class StatusModel extends DefaultModel
 	public function getItems()
 	{
 		// Parse installed.json to get the currently installed packages, should always be the latest version
-		$packages  = Helper::parseComposer();
-		$reports   = array();
+		$helper   = new Helper;
+		$packages = $helper->parseComposer();
+		$reports  = array();
 
 		// Get the package data for each of our packages
 		$db = $this->getDb();
@@ -77,7 +78,7 @@ class StatusModel extends DefaultModel
 				}
 			}
 
-			$result->displayName = Helper::getPackageDisplayName($pack->package);
+			$result->displayName = $helper->getPackageDisplayName($pack->package);
 			$result->version     = $pack->version;
 
 			// For repos with -api appended, handle separately
