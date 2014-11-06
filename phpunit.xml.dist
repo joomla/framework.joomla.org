@@ -8,9 +8,10 @@
 			<directory>Tests/Unit</directory>
 		</testsuite>
 	</testsuites>
-    <php>
-        <const name="JPATH_ROOT" value="__DIR__" />
-    </php>
+	<!-- Replace __DIR__ with the absolute path to the installation -->
+	<php>
+		<const name="JPATH_ROOT" value="__DIR__" />
+	</php>
 
 	<logging>
 		<log type="coverage-html" target="app-coverage" title="Joomla-Framework-Status-Application" charset="UTF-8" yui="true" highlight="true"
