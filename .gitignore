@@ -14,3 +14,4 @@
 # Unit Testing #
 /app-coverage
 /phpunit.xml
+/testconfigs
