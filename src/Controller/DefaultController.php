@@ -168,7 +168,7 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 				$object->setLayout(strtolower($view) . '.' . strtolower($this->getInput()->getWord('layout', 'index')));
 
 				// Add the current view path to the loader's lookup
-				$object->getRenderer()->getLoader()->addPath(JPATH_TEMPLATES . '/' . strtolower($view));
+				$object->getRenderer()->getRenderer()->getLoader()->addPath(JPATH_TEMPLATES . '/' . strtolower($view));
 
 				break;
 		}

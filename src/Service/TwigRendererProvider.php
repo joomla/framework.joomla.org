@@ -64,11 +64,11 @@ class TwigRendererProvider implements ServiceProviderInterface
 				$renderer = new TwigRenderer($config->get('template'));
 
 				// Add our Twig extension
-				$renderer->addExtension(new TwigExtension($this->app));
+				$renderer->getRenderer()->addExtension(new TwigExtension($this->app));
 
 				// Set the Lexer object
-				$renderer->setLexer(
-					new \Twig_Lexer($renderer, ['delimiters' => [
+				$renderer->getRenderer()->setLexer(
+					new \Twig_Lexer($renderer->getRenderer(), ['delimiters' => [
 						'tag_comment'  => ['{#', '#}'],
 						'tag_block'    => ['{%', '%}'],
 						'tag_variable' => ['{{', '}}']
