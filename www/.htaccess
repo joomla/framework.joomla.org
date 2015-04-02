@@ -15,7 +15,8 @@ RewriteEngine On
 # ======= No directory listings =======
 
 IndexIgnore *
-Options +FollowSymLinks All -Indexes
+Options +FollowSymLinks
+Options -Indexes
 
 ###########################################
 

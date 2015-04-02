@@ -4,63 +4,8 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "48a8d590aba30b14773e60b6d5c8b410",
+    "hash": "60b47afbafda0419524bc221ffb247ee",
     "packages": [
-        {
-            "name": "babdev/renderer",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:BabDev/renderer.git",
-                "reference": "38dd02e7099cf0a3e6c0d6eff79caddfb1bc3893"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/BabDev/renderer/zipball/38dd02e7099cf0a3e6c0d6eff79caddfb1bc3893",
-                "reference": "38dd02e7099cf0a3e6c0d6eff79caddfb1bc3893",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.10"
-            },
-            "require-dev": {
-                "league/plates": "~2.0",
-                "mustache/mustache": "~2.0",
-                "squizlabs/php_codesniffer": "1.*",
-                "symfony/templating": "~2.0",
-                "twig/twig": "~1.0"
-            },
-            "suggest": {
-                "league/plates": "Install ~2.0 if you are using the Plates template engine.",
-                "mustache/mustache": "Install ~2.0 if you are using the Mustache template engine.",
-                "symfony/templating": "Install ~2.0 if you are using Symfony's PHP template component.",
-                "twig/twig": "Install ~1.0 if you are using the Twig template engine."
-            },
-            "type": "joomla-package",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Joomla\\Renderer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1+"
-            ],
-            "description": "Joomla Renderer Package",
-            "homepage": "https://github.com/joomla-framework/renderer",
-            "keywords": [
-                "framework",
-                "joomla",
-                "renderer"
-            ],
-            "abandoned": "joomla/renderer",
-            "time": "2015-03-19 02:58:18"
-        },
         {
             "name": "ircmaxell/password-compat",
             "version": "v1.0.4",
@@ -1638,6 +1583,60 @@
             "time": "2015-03-28 17:54:38"
         },
         {
+            "name": "joomla/renderer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joomla-framework/renderer.git",
+                "reference": "38dd02e7099cf0a3e6c0d6eff79caddfb1bc3893"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joomla-framework/renderer/zipball/38dd02e7099cf0a3e6c0d6eff79caddfb1bc3893",
+                "reference": "38dd02e7099cf0a3e6c0d6eff79caddfb1bc3893",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10"
+            },
+            "require-dev": {
+                "league/plates": "~2.0",
+                "mustache/mustache": "~2.0",
+                "squizlabs/php_codesniffer": "1.*",
+                "symfony/templating": "~2.0",
+                "twig/twig": "~1.0"
+            },
+            "suggest": {
+                "league/plates": "Install ~2.0 if you are using the Plates template engine.",
+                "mustache/mustache": "Install ~2.0 if you are using the Mustache template engine.",
+                "symfony/templating": "Install ~2.0 if you are using Symfony's PHP template component.",
+                "twig/twig": "Install ~1.0 if you are using the Twig template engine."
+            },
+            "type": "joomla-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Joomla\\Renderer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1+"
+            ],
+            "description": "Joomla Renderer Package",
+            "homepage": "https://github.com/joomla-framework/renderer",
+            "keywords": [
+                "framework",
+                "joomla",
+                "renderer"
+            ],
+            "time": "2015-03-19 02:58:18"
+        },
+        {
             "name": "joomla/router",
             "version": "1.1.2",
             "source": {
@@ -3176,7 +3175,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "babdev/renderer": 20
+        "joomla/renderer": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

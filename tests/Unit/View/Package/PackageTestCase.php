@@ -53,6 +53,6 @@ abstract class PackageTestCase extends \PHPUnit_Framework_TestCase
 			->method('getItems')
 			->willReturn(array());
 
-		$this->mockRenderer = $this->getMock('\\BabDev\\Renderer\\RendererInterface');
+		$this->mockRenderer = $this->getMock('\\Joomla\\Renderer\\RendererInterface');
 	}
 }

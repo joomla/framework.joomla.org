@@ -43,6 +43,7 @@
 		"joomla/openstreetmap" : "~1.0",
 		"joomla/profiler"      : "~1.1",
 		"joomla/registry"      : "~1.1",
+        "joomla/renderer"      : "~2.0@dev",
 		"joomla/router"        : "~1.1",
 		"joomla/session"       : "~1.2",
 		"joomla/string"        : "~1.1",
@@ -51,7 +52,6 @@
 		"joomla/uri"           : "~1.1",
 		"joomla/utilities"     : "~1.1",
 		"joomla/view"          : "~1.1",
-		"babdev/renderer"      : "dev-master",
 		"twig/twig"            : "~1.0"
 	},
 	"require-dev" : {
