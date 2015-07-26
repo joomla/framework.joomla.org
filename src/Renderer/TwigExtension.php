@@ -64,23 +64,6 @@ class TwigExtension extends \Twig_Extension
 	}
 
 	/**
-	 * Returns a list of functions to add to the existing list
-	 *
-	 * @return  \Twig_SimpleFunction[]  An array of \Twig_SimpleFunction instances
-	 *
-	 * @since   1.0
-	 */
-	public function getFunctions()
-	{
-		$functions = [
-			new \Twig_SimpleFunction('sprintf', 'sprintf'),
-			new \Twig_SimpleFunction('stripJRoot', array($this, 'stripJRoot'))
-		];
-
-		return $functions;
-	}
-
-	/**
 	 * Returns a list of filters to add to the existing list
 	 *
 	 * @return  \Twig_SimpleFilter[]  An array of \Twig_SimpleFilter instances
@@ -89,12 +72,10 @@ class TwigExtension extends \Twig_Extension
 	 */
 	public function getFilters()
 	{
-		return array(
-			new \Twig_SimpleFilter('basename', 'basename'),
+		return [
 			new \Twig_SimpleFilter('get_class', 'get_class'),
-			new \Twig_SimpleFilter('json_decode', 'json_decode'),
-			new \Twig_SimpleFilter('stripJRoot', array($this, 'stripJRoot'))
-		);
+			new \Twig_SimpleFilter('stripJRoot', [$this, 'stripJRoot'])
+		];
 	}
 
 	/**
