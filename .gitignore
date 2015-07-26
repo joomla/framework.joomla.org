@@ -8,6 +8,10 @@
 /coverage/
 /www/coverage/
 
+# App Cache #
+/cache/*
+!/cache/.placeholder
+
 # Don't push the local config #
 /etc/config.json
 

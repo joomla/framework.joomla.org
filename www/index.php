@@ -41,6 +41,6 @@ catch (\Exception $e)
 }
 
 // Execute the application
-(new Joomla\Status\Application)
+(new Joomla\Status\Application(null, $container->get('config')))
 	->setContainer($container)
 	->execute();

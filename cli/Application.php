@@ -15,11 +15,7 @@ use Joomla\DI\ContainerAwareTrait;
 
 use Joomla\Status\Service\ConfigurationProvider;
 use Joomla\Status\Service\DatabaseProvider;
-use Joomla\StatusCli\Command\Install;
-use Joomla\StatusCli\Command\ParseComposer;
-use Joomla\StatusCli\Command\RunTests;
-
-use Joomla\StatusCli\Command\UpdateServer;
+use Joomla\Status\Service\TwigRendererProvider;
 
 /**
  * CLI application for the Framework Status Application
@@ -39,7 +35,8 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 	{
 		$container = (new Container)
 			->registerServiceProvider(new ConfigurationProvider)
-			->registerServiceProvider(new DatabaseProvider);
+			->registerServiceProvider(new DatabaseProvider)
+			->registerServiceProvider(new TwigRendererProvider($this));
 
 		$this->setContainer($container);
 
@@ -47,7 +44,7 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 		$errorReporting = (int) $container->get('config')->get('errorReporting', 0);
 		error_reporting($errorReporting);
 
-		parent::__construct();
+		parent::__construct(null, $container->get('config'));
 	}
 
 	/**
@@ -64,18 +61,23 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 		// If --install option provided, run the install routine to set up the database
 		if ($this->input->getBool('install', false))
 		{
-			(new Install($this))->execute();
+			(new Command\Install($this))->execute();
 		}
 		// If --updateserver option provided, run the update routine
 		elseif ($this->input->getBool('updateserver', false))
 		{
-			(new UpdateServer($this))->execute();
+			(new Command\UpdateServer($this))->execute();
+		}
+		// If --resettwig option provided, reset the Twig cache
+		elseif ($this->input->getBool('resettwig', false))
+		{
+			(new Command\ResetTwigCache($this))->execute();
 		}
 		// Otherwise execute the normal routine
 		else
 		{
-			(new ParseComposer($this))->execute();
-			(new RunTests($this))->execute();
+			(new Command\ParseComposer($this))->execute();
+			(new Command\RunTests($this))->execute();
 		}
 
 		$this->out('Finished!');
