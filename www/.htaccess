@@ -33,6 +33,16 @@ RewriteRule .* http://%{HTTP_HOST}/%1 [R=301,L]
 
 
 ###########################################
+# ======== Redirect HTTP to HTTPS =========
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} ^framework.joomla.org
+RewriteRule ^(.*)$ https://framework.joomla.org/$1 [R=301,L,QSA]
+
+###########################################
+
+
+###########################################
 # ======== SEF URL Routing ========
 
 RewriteCond %{REQUEST_FILENAME} !-f
