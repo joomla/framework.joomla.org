@@ -62,5 +62,10 @@
 		"psr-4": {
 			"Joomla\\Status\\Tests\\": "tests/"
 		}
+	},
+	"config": {
+		"platform": {
+			"php": "5.4.45"
+		}
 	}
 }
