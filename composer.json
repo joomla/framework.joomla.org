@@ -42,14 +42,14 @@
 		"joomla/session"       : "~1.2",
 		"joomla/string"        : "~1.1",
 		"joomla/test"          : "~1.1",
-		"joomla/twitter"       : ">=1.1.1,<2.0",
+		"joomla/twitter"       : "^1.1.1",
 		"joomla/uri"           : "~1.1",
 		"joomla/utilities"     : "~1.1",
 		"joomla/view"          : "~1.1",
-		"twig/twig"            : "~1.0"
+		"twig/twig"            : "~1.23"
 	},
 	"require-dev" : {
-		"phpunit/phpunit": "4.*",
+		"phpunit/phpunit": "~4.8|~5.0",
 		"phpunit/dbunit" : "~1.2"
 	},
 	"autoload"    : {

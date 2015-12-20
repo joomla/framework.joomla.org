@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5f1916b37e8ab7db368d182c76d07d3b",
-    "content-hash": "398a3d9ac5f508c3de91576e3c08d7e3",
+    "hash": "6a2892478bbc4ce51a47a9ce8cb76f6c",
+    "content-hash": "9068d0f74cc89de978367eab0555799f",
     "packages": [
         {
             "name": "joomla/application",
@@ -911,16 +911,16 @@
         },
         {
             "name": "joomla/http",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/http.git",
-                "reference": "09f5ba9d1e3003e53f0b32d12e87fcf860b8c552"
+                "reference": "3b667b4dea6b022fedb296c4e88be3de38fd0327"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/http/zipball/09f5ba9d1e3003e53f0b32d12e87fcf860b8c552",
-                "reference": "09f5ba9d1e3003e53f0b32d12e87fcf860b8c552",
+                "url": "https://api.github.com/repos/joomla-framework/http/zipball/3b667b4dea6b022fedb296c4e88be3de38fd0327",
+                "reference": "3b667b4dea6b022fedb296c4e88be3de38fd0327",
                 "shasum": ""
             },
             "require": {
@@ -958,7 +958,7 @@
                 "http",
                 "joomla"
             ],
-            "time": "2015-09-19 17:57:40"
+            "time": "2015-12-17 22:53:23"
         },
         {
             "name": "joomla/image",
@@ -1659,17 +1659,17 @@
         },
         {
             "name": "joomla/session",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "target-dir": "Joomla/Session",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/session.git",
-                "reference": "6b5d16661213ea41d3ef7dcb8c8d355e18e75d45"
+                "reference": "a91ea38b797f505c8ab20773604b901b567ed0ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/session/zipball/6b5d16661213ea41d3ef7dcb8c8d355e18e75d45",
-                "reference": "6b5d16661213ea41d3ef7dcb8c8d355e18e75d45",
+                "url": "https://api.github.com/repos/joomla-framework/session/zipball/a91ea38b797f505c8ab20773604b901b567ed0ab",
+                "reference": "a91ea38b797f505c8ab20773604b901b567ed0ab",
                 "shasum": ""
             },
             "require": {
@@ -1704,20 +1704,20 @@
                 "joomla",
                 "session"
             ],
-            "time": "2015-07-26 23:44:05"
+            "time": "2015-12-14 18:23:13"
         },
         {
             "name": "joomla/string",
-            "version": "1.3.1",
+            "version": "1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/string.git",
-                "reference": "1a61294f887a95ec3eb2e4dac12ba18ab6b2bf5a"
+                "reference": "1c1ee5a1fd99c978500822638149b9af9e4b7be3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/string/zipball/1a61294f887a95ec3eb2e4dac12ba18ab6b2bf5a",
-                "reference": "1a61294f887a95ec3eb2e4dac12ba18ab6b2bf5a",
+                "url": "https://api.github.com/repos/joomla-framework/string/zipball/1c1ee5a1fd99c978500822638149b9af9e4b7be3",
+                "reference": "1c1ee5a1fd99c978500822638149b9af9e4b7be3",
                 "shasum": ""
             },
             "require": {
@@ -1738,7 +1738,10 @@
                 "psr-4": {
                     "Joomla\\String\\": "src/",
                     "Joomla\\String\\Tests\\": "Tests/"
-                }
+                },
+                "files": [
+                    "src/phputf8/utf8.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1751,7 +1754,7 @@
                 "joomla",
                 "string"
             ],
-            "time": "2015-05-03 16:08:20"
+            "time": "2015-12-13 19:42:40"
         },
         {
             "name": "joomla/test",
@@ -1986,16 +1989,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.1",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "a208865a5aeffc2dbbef2a5b3409887272d93f32"
+                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a208865a5aeffc2dbbef2a5b3409887272d93f32",
-                "reference": "a208865a5aeffc2dbbef2a5b3409887272d93f32",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/d762ee5b099a29044603cd4649851e81aa66cb47",
+                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47",
                 "shasum": ""
             },
             "require": {
@@ -2030,7 +2033,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2015-12-01 02:52:15"
+            "time": "2015-12-10 14:48:13"
         },
         {
             "name": "psr/log",
@@ -2825,16 +2828,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.19",
+            "version": "4.8.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b2caaf8947aba5e002d42126723e9d69795f32b4"
+                "reference": "ea76b17bced0500a28098626b84eda12dbcf119c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b2caaf8947aba5e002d42126723e9d69795f32b4",
-                "reference": "b2caaf8947aba5e002d42126723e9d69795f32b4",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ea76b17bced0500a28098626b84eda12dbcf119c",
+                "reference": "ea76b17bced0500a28098626b84eda12dbcf119c",
                 "shasum": ""
             },
             "require": {
@@ -2893,7 +2896,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-11-30 08:18:59"
+            "time": "2015-12-12 07:45:58"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3017,28 +3020,28 @@
         },
         {
             "name": "sebastian/diff",
-            "version": "1.3.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "863df9687835c62aa423a22412d26fa2ebde3fd3"
+                "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/863df9687835c62aa423a22412d26fa2ebde3fd3",
-                "reference": "863df9687835c62aa423a22412d26fa2ebde3fd3",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/13edfd8706462032c2f52b4b862974dd46b71c9e",
+                "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.2"
+                "phpunit/phpunit": "~4.8"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -3061,11 +3064,11 @@
                 }
             ],
             "description": "Diff implementation",
-            "homepage": "http://www.github.com/sebastianbergmann/diff",
+            "homepage": "https://github.com/sebastianbergmann/diff",
             "keywords": [
                 "diff"
             ],
-            "time": "2015-02-22 15:13:53"
+            "time": "2015-12-08 07:14:41"
         },
         {
             "name": "sebastian/environment",
@@ -3236,16 +3239,16 @@
         },
         {
             "name": "sebastian/recursion-context",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "994d4a811bafe801fb06dccbee797863ba2792ba"
+                "reference": "913401df809e99e4f47b27cdd781f4a258d58791"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/994d4a811bafe801fb06dccbee797863ba2792ba",
-                "reference": "994d4a811bafe801fb06dccbee797863ba2792ba",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/913401df809e99e4f47b27cdd781f4a258d58791",
+                "reference": "913401df809e99e4f47b27cdd781f4a258d58791",
                 "shasum": ""
             },
             "require": {
@@ -3285,7 +3288,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2015-06-21 08:04:50"
+            "time": "2015-11-11 19:50:13"
         },
         {
             "name": "sebastian/version",
