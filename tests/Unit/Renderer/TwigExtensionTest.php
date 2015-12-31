@@ -60,17 +60,6 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @testdox  Verify the return from getGlobals()
-	 *
-	 * @covers   Joomla\Status\Renderer\TwigExtension::getGlobals
-	 * @uses     Joomla\Status\Renderer\TwigExtension::__construct
-	 */
-	public function testVerifyTheReturnFromGetGlobals()
-	{
-		$this->assertArrayHasKey('uri', $this->object->getGlobals());
-	}
-
-	/**
 	 * @testdox  Verify that getFunctions() returns an array containing only Twig_SimpleFunction instances
 	 *
 	 * @covers   Joomla\Status\Renderer\TwigExtension::getFunctions

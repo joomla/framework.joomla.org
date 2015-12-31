@@ -6,9 +6,9 @@
 <nav>
     <div class="container">
         <ul>
-            <li><a href="{{ uri.base.path }}"><span class="glyphicon glyphicon-cog"></span><span class="title">Framework</span></a></li>
-            <li><a href="{{ uri.base.path }}about"><span class="glyphicon glyphicon-user"></span><span class="title">Team</span></a></li>
-            <li><a href="{{ uri.base.path }}status"><span class="glyphicon glyphicon-wrench"></span><span class="title">Status</span></a></li>
+            <li><a href="{{ route() }}"><span class="glyphicon glyphicon-cog"></span><span class="title">Framework</span></a></li>
+            <li><a href="{{ route('about') }}"><span class="glyphicon glyphicon-user"></span><span class="title">Team</span></a></li>
+            <li><a href="{{ route('status') }}"><span class="glyphicon glyphicon-wrench"></span><span class="title">Status</span></a></li>
         </ul>
     </div>
 </nav>

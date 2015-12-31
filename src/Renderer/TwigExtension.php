@@ -15,7 +15,7 @@ use Joomla\Application\AbstractApplication;
  *
  * @since  1.0
  */
-class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
+class TwigExtension extends \Twig_Extension
 {
 	/**
 	 * Application object
@@ -50,20 +50,6 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
 	}
 
 	/**
-	 * Returns a list of global variables to add to the existing list
-	 *
-	 * @return  array  An array of global variables
-	 *
-	 * @since   1.0
-	 */
-	public function getGlobals()
-	{
-		return [
-			'uri' => $this->app->get('uri')
-		];
-	}
-
-	/**
 	 * Returns a list of filters to add to the existing list
 	 *
 	 * @return  \Twig_SimpleFilter[]  An array of \Twig_SimpleFilter instances
@@ -88,7 +74,8 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
 	public function getFunctions()
 	{
 		return [
-			new \Twig_SimpleFunction('asset', [$this, 'getAssetUri'])
+			new \Twig_SimpleFunction('asset', [$this, 'getAssetUri']),
+			new \Twig_SimpleFunction('route', [$this, 'getRouteUri'])
 		];
 	}
 
@@ -104,6 +91,20 @@ class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsIn
 	public function getAssetUri($asset)
 	{
 		return $this->app->get('uri.media.path') . $asset;
+	}
+
+	/**
+	 * Get the URI for a route
+	 *
+	 * @param   string  $route  Route to get the path for
+	 *
+	 * @return  string
+	 *
+	 * @since   1.0
+	 */
+	public function getRouteUri($route = null)
+	{
+		return $this->app->get('uri.base.path') . $route;
 	}
 
 	/**

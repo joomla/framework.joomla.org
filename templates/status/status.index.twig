@@ -6,8 +6,8 @@
 <nav>
     <div class="container">
         <ul>
-            <li><a href="{{ uri.base.path }}"><span class="glyphicon glyphicon-cog"></span><span class="title">Framework</span></a></li>
-            <li><a href="{{ uri.base.path }}about"><span class="glyphicon glyphicon-user"></span><span class="title">Team</span></a></li>
+            <li><a href="{{ route() }}"><span class="glyphicon glyphicon-cog"></span><span class="title">Framework</span></a></li>
+            <li><a href="{{ route('about') }}"><span class="glyphicon glyphicon-user"></span><span class="title">Team</span></a></li>
             <li><a href="#"><span class="glyphicon glyphicon-wrench"></span><span class="title">Status</span></a></li>
         </ul>
     </div>
@@ -30,7 +30,7 @@
         </tr>
         {% for package, item in items %}
         <tr>
-            <td><a href="{{ uri.base.path }}status/{{ package }}">{{ item.displayName }}</a></td>
+            <td><a href="{{ route('status/' ~ package) }}">{{ item.displayName }}</a></td>
             <td>{{ item.version }}</td>
             {% if item.id %}
             <td>{{ item.tests }}</td>
@@ -40,7 +40,7 @@
             <td>
                 {{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage ~ '%)' }}<br />
                 {% if item.id %}
-                <a href="{{ uri.base.path }}coverage/{{ package }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
+                <a href="{{ route('coverage/' ~ package) }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
                 {% endif %}
             </td>
             <td>

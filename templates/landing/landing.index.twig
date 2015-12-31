@@ -8,8 +8,8 @@
             <li><a href="#about"><span class="glyphicon glyphicon-info-sign"></span><span class="title">About</span></a></li>
             <li><a href="#involved"><span class="glyphicon glyphicon-globe"></span><span class="title">Get Involved</span></a></li>
             <li><a href="#resources"><span class="glyphicon glyphicon-book"></span><span class="title">Resources</span></a></li>
-            <li><a href="{{ uri.base.path }}about"><span class="glyphicon glyphicon-user"></span><span class="title">Team</span></a></li>
-            <li><a href="{{ uri.base.path }}status"><span class="glyphicon glyphicon-wrench"></span><span class="title">Status</span></a></li>
+            <li><a href="{{ route('about') }}"><span class="glyphicon glyphicon-user"></span><span class="title">Team</span></a></li>
+            <li><a href="{{ route('status') }}"><span class="glyphicon glyphicon-wrench"></span><span class="title">Status</span></a></li>
         </ul>
     </div>
 </nav>
@@ -66,7 +66,7 @@
         <li>Building both simple and complex command line tools</li>
         <li>Building next generation web applications</li>
     </ul>
-    <p>A great example is the <a href="https://issues.joomla.org/">issue tracker for the Joomla! CMS</a>.</p>
+    <p>A great example is the <a href="https://issues.joomla.org">issue tracker for the Joomla! CMS</a>.</p>
 
     <h3>Framework Architecture</h3>
     <p>The Joomla! Framework has also been designed for maximum flexibility. Breaking the Framework into isolated modular packages allows each package to evolve more easily than if all packages are tied to a single, large package release.</p>
@@ -144,13 +144,13 @@
 <div class="container clearfix">
     <aside class="resources">
         <h3><span class="glyphicon glyphicon-book"></span> Resources</h3>
-        <p><a href="https://packagist.org/packages/joomla/framework">Packagist</a></p>
+        <p><a href="https://packagist.org/packages/joomla/">Packagist</a></p>
         <p><a href="https://getcomposer.org/download/">Download Composer</a></p>
         <p><a href="https://github.com/joomla-framework">GitHub Organization</a></p>
         <p><a href="https://developer.joomla.org/framework/documentation.html">Documentation</a></p>
         <p><a href="https://groups.google.com/group/joomla-dev-framework">Official Group</a></p>
         <p><a href="http://opensourcematters.org/support-joomla.html">Support via OSM</a></p>
-        <p><a href="{{ uri.base.path }}contribute">Contributing to the Framework</a></p>
+        <p><a href="{{ route('contribute') }}">Contributing to the Framework</a></p>
         <p><a href="https://developer.joomla.org/framework/roadmap.html">Roadmap</a></p>
     </aside>
 
@@ -168,7 +168,7 @@
         </form>
 
         <h3>Case Studies</h3>
-        <p>This framework powers Joomla's own issue tracker. See this Framework-based application in operation at <a href="https://issues.joomla.org/">issues.joomla.org/</a></p>
+        <p>This framework powers Joomla's own issue tracker. See this Framework-based application in operation at <a href="https://issues.joomla.org">issues.joomla.org</a></p>
         <p>Also, it already has been adopted by the likes of eBay for internal use. Some of the code offered by Joomla! Framework is already included with the Joomla! CMS. Other packages will be included in future Joomla! CMS versions as needed.</p>
         <p><a href="https://groups.google.com/group/joomla-dev-framework">Join the Google Group</a> and let us know how you have implemented it.</p>
     </aside>
