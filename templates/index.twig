@@ -1,12 +1,10 @@
-{% set firstPart = uri.route|split("/")|first %}
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
     <head>
         <!-- For Responsive -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" href="{{ uri.base.path }}css/template.css" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/template.css') }}" type="text/css">
         <!-- End for Responsive -->
 
         <!-- For SEO -->
@@ -26,8 +24,8 @@
         {% block headJavaScript %}
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
-        <script src="{{ uri.base.path }}js/html5shiv.js"></script>
-        <script src="{{ uri.base.path }}js/respond.min.js"></script>
+        <script src="{{ asset('js/html5shiv.js') }}"></script>
+        <script src="{{ asset('js/respond.min.js') }}"></script>
         <![endif]-->
         {% endblock %}
         <script>
@@ -67,7 +65,7 @@
                 <p><a href="https://www.rochen.com/joomla-hosting" target="_blank">Joomla! Hosting by</a> <a href="https://www.rochen.com/joomla-hosting" target="_blank" class="rochen">Rochen Ltd.</a></p>
             </div>
         </footer>
-        <script src="{{ uri.base.path }}js/jquery.js"></script>
+        <script src="{{ asset('js/jquery.js') }}"></script>
         <script>
             $(function() {
                 $('a[href*=#]:not([href=#])').click(function() {

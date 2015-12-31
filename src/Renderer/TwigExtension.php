@@ -15,7 +15,7 @@ use Joomla\Application\AbstractApplication;
  *
  * @since  1.0
  */
-class TwigExtension extends \Twig_Extension
+class TwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
 	/**
 	 * Application object
@@ -28,7 +28,7 @@ class TwigExtension extends \Twig_Extension
 	/**
 	 * Constructor
 	 *
-	 * @param   AbstractApplication  $container  The application object
+	 * @param   AbstractApplication  $app  The application object
 	 *
 	 * @since   1.0
 	 */
@@ -76,6 +76,34 @@ class TwigExtension extends \Twig_Extension
 			new \Twig_SimpleFilter('get_class', 'get_class'),
 			new \Twig_SimpleFilter('stripJRoot', [$this, 'stripJRoot'])
 		];
+	}
+
+	/**
+	 * Returns a list of functions to add to the existing list.
+	 *
+	 * @return  \Twig_SimpleFunction[]  An array of \Twig_SimpleFunction instances
+	 *
+	 * @since   1.0
+	 */
+	public function getFunctions()
+	{
+		return [
+			new \Twig_SimpleFunction('asset', [$this, 'getAssetUri'])
+		];
+	}
+
+	/**
+	 * Get the URI for an asset
+	 *
+	 * @param   string  $asset  Asset to get the path for
+	 *
+	 * @return  string
+	 *
+	 * @since   1.0
+	 */
+	public function getAssetUri($asset)
+	{
+		return $this->app->get('uri.media.path') . $asset;
 	}
 
 	/**
