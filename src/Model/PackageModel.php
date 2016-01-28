@@ -91,13 +91,13 @@ class PackageModel extends DefaultModel
 				$previous = $reports[$i - 1];
 
 				// Number of new tests
-				$result->newTests = $result->tests - $previous->tests;
+				$result->newTests = isset($result->tests) ? $result->tests - $previous->tests : 0;
 
 				// Number of new assertions
-				$result->newAssertions = $result->assertions - $previous->assertions;
+				$result->newAssertions = isset($result->assertions) ? $result->assertions - $previous->assertions : 0;
 
 				// Added line coverage
-				$result->addedCoverage = $result->lines_percentage - $previous->lines_percentage;
+				$result->addedCoverage = isset($result->lines_percentage) ? $result->lines_percentage - $previous->lines_percentage : 0;
 			}
 
 			$reports[$i] = $result;

@@ -68,8 +68,9 @@
                 {% else %}
                 <td colspan="5" class="text-center">This package does not have a test report</td>
                 <td>
+                    {% set _branch = (item.repoName == 'crypt' or item.repoName == 'form') ? '1.x-dev' : 'master'  %}
                     <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
+                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ _branch }}" alt="Build Status"/>
                     </a>
                 </td>
                 {% endif %}
