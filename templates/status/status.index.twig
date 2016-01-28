@@ -18,48 +18,76 @@
 <section class="status container">
     <h1>Latest Build Status</h1>
     <table class="table table-striped table-bordered table-condensed">
-        <tr>
-            <th>Package</th>
-            <th>Version</th>
-            <th># of Tests</th>
-            <th># of Assertions</th>
-            <th>Tests with Failures</th>
-            <th>Tests with Errors</th>
-            <th>Lines Covered</th>
-            <th>Miscellaneous</th>
-        </tr>
-        {% for package, item in items %}
-        <tr>
-            <td><a href="{{ route('status/' ~ package) }}">{{ item.displayName }}</a></td>
-            <td>{{ item.version }}</td>
-            {% if item.id %}
-            <td>{{ item.tests }}</td>
-            <td>{{ item.assertions }}</td>
-            <td>{{ item.failures }}</td>
-            <td>{{ item.errors }}</td>
-            <td>
-                {{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage ~ '%)' }}<br />
+        <thead>
+            <tr>
+                <th>Package</th>
+                <th>Version</th>
+                <th># of Tests</th>
+                <th># of Assertions</th>
+                <th>Tests with Failures</th>
+                <th>Tests with Errors</th>
+                <th>Lines Covered</th>
+                <th>Miscellaneous</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set _totalTests = 0 %}
+            {% set _totalAssertions = 0 %}
+            {% set _totalFailures = 0 %}
+            {% set _totalErrors = 0 %}
+            {% set _totalCoveredLines = 0 %}
+            {% set _totalLines = 0 %}
+            {% for package, item in items %}
+            <tr>
+                <td><a href="{{ route('status/' ~ package) }}">{{ item.displayName }}</a></td>
+                <td>{{ item.version }}</td>
                 {% if item.id %}
-                <a href="{{ route('coverage/' ~ package) }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
+                {% set _totalTests = _totalTests + item.tests %}
+                {% set _totalAssertions = _totalAssertions + item.assertions %}
+                {% set _totalFailures = _totalFailures + item.failures %}
+                {% set _totalErrors = _totalErrors + item.errors %}
+                {% set _totalCoveredLines = _totalCoveredLines + item.lines_covered %}
+                {% set _totalLines = _totalLines + item.total_lines %}
+                <td>{{ item.tests }}</td>
+                <td>{{ item.assertions }}</td>
+                <td>{{ item.failures }}</td>
+                <td>{{ item.errors }}</td>
+                <td>
+                    {{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage|number_format(2) ~ '%)' }}<br />
+                    {% if item.id %}
+                    <a href="{{ route('coverage/' ~ package) }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
+                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
+                    </a>
+                </td>
+                {% elseif package == 'compat' or package == 'test' %}
+                <td colspan="6" class="text-center">This package is not unit tested</td>
+                {% else %}
+                <td colspan="5" class="text-center">This package does not have a test report</td>
+                <td>
+                    <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
+                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
+                    </a>
+                </td>
                 {% endif %}
-            </td>
-            <td>
-                <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                    <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
-                </a>
-            </td>
-            {% elseif package == 'compat' or package == 'test' %}
-            <td colspan="6" class="text-center">This package is not unit tested</td>
-            {% else %}
-            <td colspan="5" class="text-center">This package does not have a test report</td>
-            <td>
-                <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                    <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
-                </a>
-            </td>
-            {% endif %}
-        </tr>
-        {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Totals</th>
+                <th></th>
+                <th>{{ _totalTests }}</th>
+                <th>{{ _totalAssertions }}</th>
+                <th>{{ _totalFailures }}</th>
+                <th>{{ _totalErrors }}</th>
+                <th>Lines Covered: {{ _totalCoveredLines }}<br />Total Lines: {{ _totalLines }}<br />{{ ((_totalCoveredLines / _totalLines) * 100)|number_format(2) }}% Coverage</th>
+                <th></th>
+            </tr>
+        </tfoot>
     </table>
     {% if build.time %}
     <p>This build report was generated on {{ build.time }} using PHPUnit {{ build.phpunit }} on a PHP {{ build.php }} system.</p>
