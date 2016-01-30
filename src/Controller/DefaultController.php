@@ -11,6 +11,7 @@ namespace Joomla\Status\Controller;
 use Joomla\Controller\AbstractController;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\ContainerAwareTrait;
+use Joomla\Registry\Registry;
 
 /**
  * Default controller class for the application
@@ -84,7 +85,12 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 			$model = '\\Joomla\\Status\\Model\\DefaultModel';
 		}
 
-		$object = new $model($this->getContainer()->get('db'), $this->modelState);
+		$object = $this->getContainer()->buildObject($model);
+
+		if ($this->modelState instanceof Registry)
+		{
+			$object->setState($this->modelState);
+		}
 
 		$this->getContainer()->set($model, $object)->alias('Joomla\\Model\\ModelInterface', $model);
 	}
