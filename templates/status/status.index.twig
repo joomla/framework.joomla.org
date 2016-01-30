@@ -22,12 +22,13 @@
             <tr>
                 <th>Package</th>
                 <th>Version</th>
-                <th># of Tests</th>
-                <th># of Assertions</th>
-                <th>Tests with Failures</th>
-                <th>Tests with Errors</th>
+                <th class="hidden-xs hidden-sm"># of Tests</th>
+                <th class="hidden-xs hidden-sm"># of Assertions</th>
+                <th class="hidden-xs hidden-sm">Tests with Failures</th>
+                <th class="hidden-xs hidden-sm">Tests with Errors</th>
                 <th>Lines Covered</th>
-                <th>Miscellaneous</th>
+                <th>1.x Build Status</th>
+                <th>2.0 Build Status</th>
             </tr>
         </thead>
         <tbody>
@@ -48,10 +49,10 @@
                 {% set _totalErrors = _totalErrors + item.errors %}
                 {% set _totalCoveredLines = _totalCoveredLines + item.lines_covered %}
                 {% set _totalLines = _totalLines + item.total_lines %}
-                <td>{{ item.tests }}</td>
-                <td>{{ item.assertions }}</td>
-                <td>{{ item.failures }}</td>
-                <td>{{ item.errors }}</td>
+                <td class="hidden-xs hidden-sm">{{ item.tests }}</td>
+                <td class="hidden-xs hidden-sm">{{ item.assertions }}</td>
+                <td class="hidden-xs hidden-sm">{{ item.failures }}</td>
+                <td class="hidden-xs hidden-sm">{{ item.errors }}</td>
                 <td>
                     {{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage|number_format(2) ~ '%)' }}<br />
                     {% if item.id %}
@@ -59,19 +60,49 @@
                     {% endif %}
                 </td>
                 <td>
+                    {% if item.repoName == 'datetime' or item.repoName == 'renderer' %}
+                    N/A
+                    {% else %}
+                    {% set _1xbranch = (item.repoName == 'crypt' or item.repoName == 'form') ? '1.x-dev' : 'master'  %}
                     <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch=master" alt="Build Status"/>
+                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ _1xbranch }}" alt="Build Status"/>
                     </a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if item.repoName == 'log' %}
+                    N/A
+                    {% else %}
+                    {% set _2xbranch = (item.repoName == 'crypt' or item.repoName == 'form' or item.repoName == 'datetime' or item.repoName == 'renderer') ? 'master' : '2.0-dev'  %}
+                    <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
+                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ _2xbranch }}" alt="Build Status"/>
+                    </a>
+                    {% endif %}
                 </td>
                 {% elseif package == 'compat' or package == 'test' %}
-                <td colspan="6" class="text-center">This package is not unit tested</td>
+                <td colspan="7" class="text-center">This package is not unit tested</td>
                 {% else %}
-                <td colspan="5" class="text-center">This package does not have a test report</td>
+                <td colspan="5" class="hidden-xs hidden-sm text-center">This package does not have a test report</td>
+                <td class="hidden-md hidden-lg">This package does not have a test report</td>
                 <td>
-                    {% set _branch = (item.repoName == 'crypt' or item.repoName == 'form') ? '1.x-dev' : 'master'  %}
+                    {% if item.repoName == 'datetime' or item.repoName == 'renderer' %}
+                    N/A
+                    {% else %}
+                    {% set _1xbranch = (item.repoName == 'crypt' or item.repoName == 'form') ? '1.x-dev' : 'master'  %}
                     <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ _branch }}" alt="Build Status"/>
+                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ _1xbranch }}" alt="Build Status"/>
                     </a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if item.repoName == 'log' %}
+                    N/A
+                    {% else %}
+                    {% set _2xbranch = (item.repoName == 'crypt' or item.repoName == 'form' or item.repoName == 'datetime' or item.repoName == 'renderer') ? 'master' : '2.0-dev'  %}
+                    <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
+                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ _2xbranch }}" alt="Build Status"/>
+                    </a>
+                    {% endif %}
                 </td>
                 {% endif %}
             </tr>
@@ -81,12 +112,11 @@
             <tr>
                 <th>Totals</th>
                 <th></th>
-                <th>{{ _totalTests }}</th>
-                <th>{{ _totalAssertions }}</th>
-                <th>{{ _totalFailures }}</th>
-                <th>{{ _totalErrors }}</th>
-                <th>Lines Covered: {{ _totalCoveredLines }}<br />Total Lines: {{ _totalLines }}<br />{{ ((_totalCoveredLines / _totalLines) * 100)|number_format(2) }}% Coverage</th>
-                <th></th>
+                <th class="hidden-xs hidden-sm">{{ _totalTests }}</th>
+                <th class="hidden-xs hidden-sm">{{ _totalAssertions }}</th>
+                <th class="hidden-xs hidden-sm">{{ _totalFailures }}</th>
+                <th class="hidden-xs hidden-sm">{{ _totalErrors }}</th>
+                <th colspan="3">Lines Covered: {{ _totalCoveredLines }}<br />Total Lines: {{ _totalLines }}<br />{{ ((_totalCoveredLines / _totalLines) * 100)|number_format(2) }}% Coverage</th>
             </tr>
         </tfoot>
     </table>
