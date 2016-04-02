@@ -350,27 +350,34 @@
         },
         {
             "name": "joomla/data",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/data.git",
-                "reference": "fb835631884d6fd204dd66aef70a479f2bf3eceb"
+                "reference": "57ee292ba23307a6a6059e69b7b19ca5b624ab80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/data/zipball/fb835631884d6fd204dd66aef70a479f2bf3eceb",
-                "reference": "fb835631884d6fd204dd66aef70a479f2bf3eceb",
+                "url": "https://api.github.com/repos/joomla-framework/data/zipball/57ee292ba23307a6a6059e69b7b19ca5b624ab80",
+                "reference": "57ee292ba23307a6a6059e69b7b19ca5b624ab80",
                 "shasum": ""
             },
             "require": {
                 "joomla/compat": "~1.0",
                 "joomla/registry": "~1.0",
-                "php": ">=5.3.10"
+                "php": ">=5.3.10|>=7.0"
             },
             "require-dev": {
-                "joomla/test": "~1.0"
+                "joomla/test": "~1.0",
+                "phpunit/phpunit": "~4.8|~5.0",
+                "squizlabs/php_codesniffer": "1.*"
             },
             "type": "joomla-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Joomla\\Data\\": "src/",
@@ -388,7 +395,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2014-02-09 01:26:27"
+            "time": "2016-04-02 22:20:43"
         },
         {
             "name": "joomla/database",
@@ -2278,16 +2285,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v2.8.3",
+            "version": "v2.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "b7b4ebadd2b5e614ff7d2d6fc63e0ed0578909c7"
+                "reference": "d60b8e076d22953aabebeebda53bf334438e7aca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/b7b4ebadd2b5e614ff7d2d6fc63e0ed0578909c7",
-                "reference": "b7b4ebadd2b5e614ff7d2d6fc63e0ed0578909c7",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/d60b8e076d22953aabebeebda53bf334438e7aca",
+                "reference": "d60b8e076d22953aabebeebda53bf334438e7aca",
                 "shasum": ""
             },
             "require": {
@@ -2338,7 +2345,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-02 09:49:18"
+            "time": "2016-03-25 01:40:30"
         },
         {
             "name": "twig/twig",
@@ -3368,16 +3375,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.0.3",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c"
+                "reference": "0047c8366744a16de7516622c5b7355336afae96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/b5ba64cd67ecd6887f63868fa781ca094bd1377c",
-                "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/0047c8366744a16de7516622c5b7355336afae96",
+                "reference": "0047c8366744a16de7516622c5b7355336afae96",
                 "shasum": ""
             },
             "require": {
@@ -3413,7 +3420,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-23 15:16:06"
+            "time": "2016-03-04 07:55:57"
         }
     ],
     "aliases": [],
