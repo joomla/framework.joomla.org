@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "joomla/application",
-            "version": "1.5.1",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/application.git",
-                "reference": "9ac5463d5437759dc523bf02d59d279a43f361e0"
+                "reference": "2c2fb32553819f22ee15d4022dec805e750f43ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/application/zipball/9ac5463d5437759dc523bf02d59d279a43f361e0",
-                "reference": "9ac5463d5437759dc523bf02d59d279a43f361e0",
+                "url": "https://api.github.com/repos/joomla-framework/application/zipball/2c2fb32553819f22ee15d4022dec805e750f43ce",
+                "reference": "2c2fb32553819f22ee15d4022dec805e750f43ce",
                 "shasum": ""
             },
             "require": {
@@ -46,8 +46,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Application\\": "src/",
-                    "Joomla\\Application\\Tests\\": "Tests/"
+                    "Joomla\\Application\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -61,7 +60,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-03-18 15:08:10"
+            "time": "2016-04-09 03:08:55"
         },
         {
             "name": "joomla/archive",
