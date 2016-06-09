@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<html lang="en" dir="ltr">
     <head>
         <!-- For Responsive -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,14 +10,13 @@
         <!-- For SEO -->
         <title>{% block title %}Joomla! Framework{% endblock %}</title>
         <meta charset="utf-8">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="description" content="The Joomla! Framework provides a structurally sound foundation on which to build web applications, which is easy to adapt to and extend. Let's find out more:">
         <meta name="author" content="Open Source Matters">
         <!-- End for SEO -->
 
         <!-- For Misc -->
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet" type="text/css">
-        <link rel="shortcut icon" href="favicon.ico">
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet" />
+        <link href="favicon.ico" rel="shortcut icon" />
         <link href="https://plus.google.com/b/109167715749846214365/" rel="publisher" />
         <!-- End for misc -->
 
@@ -54,10 +53,11 @@
                     <div class="host-text">
                         <a href="https://www.rochen.com/joomla-hosting" target="_blank">Joomla! Hosting by Rochen</a>
                     </div>
+                </div>
             </div>
         </footer>
         <script src="{{ asset('js/jquery.js') }}"></script>
-        <script>
+        <script type="text/javascript">
             $(function() {
                 $('a[href*=#]:not([href=#])').click(function() {
                     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
