@@ -79,8 +79,6 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 			(new Command\ParseComposer($this))->execute();
 			(new Command\RunTests($this))->execute();
 		}
-
-		$this->out('Finished!');
 	}
 
 	/**
@@ -107,7 +105,7 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 				throw new \RuntimeException($lastLine);
 			}
 
-			$this->out('An unknown error occurred');
+			$this->out('<error>An unknown error occurred</error>');
 
 			throw new \RuntimeException('An unknown error occurred');
 		}

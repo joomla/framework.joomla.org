@@ -66,11 +66,10 @@ class ParseComposer
 	public function execute()
 	{
 		// Display status
-		$this->app->out('Parsing the Composer data.');
+		$this->app->out('<info>Parsing the Composer data.</info>');
 
 		// Get the Composer data
-		$helper = new Helper;
-		$packages = $helper->parseComposer();
+		$packages = (new Helper)->parseComposer();
 
 		// Insert the records into the database now
 		foreach ($packages as $name => $package)
@@ -97,6 +96,6 @@ class ParseComposer
 		}
 
 		// Display status
-		$this->app->out('Finished parsing Composer data.');
+		$this->app->out('<info>Finished parsing Composer data.</info>');
 	}
 }

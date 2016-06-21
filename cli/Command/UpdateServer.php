@@ -48,12 +48,12 @@ class UpdateServer
 	 */
 	public function execute()
 	{
-		$this->app->out('Updating server to git HEAD');
+		$this->app->out('<info>Updating server to git HEAD</info>');
 
 		// Pull from remote repo
 		$this->app->runCommand('cd ' . JPATH_ROOT . ' && git pull 2>&1');
 
-		$this->app->out('Updating Composer resources');
+		$this->app->out('<info>Updating Composer resources</info>');
 
 		// Run Composer install
 		$this->app->runCommand('cd ' . JPATH_ROOT . ' && composer install --no-dev -o 2>&1');
@@ -62,7 +62,7 @@ class UpdateServer
 		(new ResetTwigCache($this->app))->execute();
 
 		// Write the current build to a local file
-		$this->app->out('Writing build info');
+		$this->app->out('<info>Writing build info</info>');
 
 		$path = JPATH_ROOT . '/current_SHA';
 
@@ -72,7 +72,7 @@ class UpdateServer
 
 		if (!file_put_contents($path, /*$info . ' ' . */$branch))
 		{
-			$this->app->out('Can not write to path: ', JPATH_ROOT);
+			$this->app->out('<error>Can not write to path: ', JPATH_ROOT . '</error>');
 
 			throw new \DomainException('Can not write to path: ' . $path);
 		}

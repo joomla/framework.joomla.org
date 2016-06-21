@@ -62,7 +62,7 @@ class ResetTwigCache
 
 		if ($twigCache === false)
 		{
-			$this->app->out('Twig caching is disabled.');
+			$this->app->out('<info>Twig caching is disabled.</info>');
 
 			return;
 		}
@@ -104,11 +104,11 @@ class ResetTwigCache
 
 		if (count($errorFiles))
 		{
-			$msg = 'The following Twig resources failed to cache: ' . implode(', ', $errorFiles);
+			$msg = '<comment>The following Twig resources failed to cache: ' . implode(', ', $errorFiles) . '</comment>';
 		}
 		else
 		{
-			$msg = 'The cached Twig resources were successfully created.';
+			$msg = '<info>The cached Twig resources were successfully created.</info>';
 		}
 
 		$this->app->out($msg);
