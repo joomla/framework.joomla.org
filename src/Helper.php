@@ -94,6 +94,12 @@ class Helper
 					continue;
 				}
 
+				// Skip the renderer package; it doesn't have a stable release yet
+				if ($package->name === 'joomla/renderer')
+				{
+					continue;
+				}
+
 				self::$packages[str_replace('joomla/', '', $package->name)] = ['version' => $package->version];
 			}
 		}
