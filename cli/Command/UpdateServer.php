@@ -55,8 +55,11 @@ class UpdateServer
 
 		$this->app->out('Updating Composer resources');
 
-		// Run Composer update
-		$this->app->runCommand('cd ' . JPATH_ROOT . ' && composer update 2>&1');
+		// Run Composer install
+		$this->app->runCommand('cd ' . JPATH_ROOT . ' && composer install --no-dev -o 2>&1');
+
+		// Clear Twig cache
+		(new ResetTwigCache($this->app))->execute();
 
 		// Write the current build to a local file
 		$this->app->out('Writing build info');
