@@ -56,7 +56,7 @@
                 <td>
                     {{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage|number_format(2) ~ '%)' }}<br />
                     {% if item.id %}
-                    <a href="{{ route('coverage/' ~ package) }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
+                    <a href="{{ route('coverage/' ~ package ~ '/') }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
                     {% endif %}
                 </td>
                 <td>
