@@ -1298,32 +1298,38 @@
         },
         {
             "name": "joomla/log",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/log.git",
-                "reference": "a266f3b4826690257288fe95c91ccbe12e4f0fda"
+                "reference": "390aee6c58c68d9ae1ed88a153b732a856040eb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/log/zipball/a266f3b4826690257288fe95c91ccbe12e4f0fda",
-                "reference": "a266f3b4826690257288fe95c91ccbe12e4f0fda",
+                "url": "https://api.github.com/repos/joomla-framework/log/zipball/390aee6c58c68d9ae1ed88a153b732a856040eb9",
+                "reference": "390aee6c58c68d9ae1ed88a153b732a856040eb9",
                 "shasum": ""
             },
             "require": {
                 "joomla/date": "~1.0",
                 "joomla/filesystem": "~1.0",
-                "php": ">=5.3.10"
+                "php": ">=5.3.10|>=7.0",
+                "psr/log": "~1.0"
             },
             "require-dev": {
                 "joomla/database": "~1.0",
-                "joomla/test": "~1.0"
+                "joomla/test": "~1.0",
+                "phpunit/dbunit": "~1.3",
+                "phpunit/phpunit": "~4.8|~5.0",
+                "squizlabs/php_codesniffer": "1.*"
+            },
+            "suggest": {
+                "joomla/database": "Install joomla/database to use the database logger."
             },
             "type": "joomla-package",
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Log\\": "src/",
-                    "Joomla\\Log\\Tests\\": "Tests/"
+                    "Joomla\\Log\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1337,7 +1343,7 @@
                 "joomla",
                 "log"
             ],
-            "time": "2014-04-10 02:23:01"
+            "time": "2016-07-03 18:31:06"
         },
         {
             "name": "joomla/model",
@@ -2380,16 +2386,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v2.8.7",
+            "version": "v2.8.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "8a1648d2e165ba87c759ba57d7f4c13d95fdf4a1"
+                "reference": "00334ef0b9317e5d7c7641a2b56671a1df23b7a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/8a1648d2e165ba87c759ba57d7f4c13d95fdf4a1",
-                "reference": "8a1648d2e165ba87c759ba57d7f4c13d95fdf4a1",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/00334ef0b9317e5d7c7641a2b56671a1df23b7a0",
+                "reference": "00334ef0b9317e5d7c7641a2b56671a1df23b7a0",
                 "shasum": ""
             },
             "require": {
@@ -2440,7 +2446,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-06 11:11:27"
+            "time": "2016-06-29 05:29:29"
         },
         {
             "name": "twig/twig",
@@ -3571,16 +3577,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.1.1",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "c5a7e7fc273c758b92b85dcb9c46149ccda89623"
+                "reference": "2884c26ce4c1d61aebf423a8b912950fe7c764de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/c5a7e7fc273c758b92b85dcb9c46149ccda89623",
-                "reference": "c5a7e7fc273c758b92b85dcb9c46149ccda89623",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/2884c26ce4c1d61aebf423a8b912950fe7c764de",
+                "reference": "2884c26ce4c1d61aebf423a8b912950fe7c764de",
                 "shasum": ""
             },
             "require": {
@@ -3616,7 +3622,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-14 11:18:07"
+            "time": "2016-06-29 05:41:56"
         },
         {
             "name": "webmozart/assert",
