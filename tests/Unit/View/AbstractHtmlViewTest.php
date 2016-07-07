@@ -36,8 +36,8 @@ class AbstractHtmlViewTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$this->mockModel    = $this->getMock('\\Joomla\\Model\\ModelInterface');
-		$this->mockRenderer = $this->getMock('\\Joomla\\Renderer\\RendererInterface');
+		$this->mockModel    = $this->createMock('\\Joomla\\Model\\ModelInterface');
+		$this->mockRenderer = $this->createMock('\\Joomla\\Renderer\\RendererInterface');
 		$this->object       = $this->getMockForAbstractClass(
 			'\\Joomla\\Status\\View\\AbstractHtmlView',
 			[$this->mockModel, $this->mockRenderer]

@@ -3,7 +3,7 @@
 	"description" : "Application reporting the current status of the Joomla! Framework",
 	"license"     : "GPL-2.0+",
 	"require"     : {
-		"php"                  : ">=5.5",
+		"php"                  : ">=5.6",
 		"joomla/application"   : "~1.2",
 		"joomla/archive"       : "~1.1",
 		"joomla/authentication": "~1.0",
@@ -49,7 +49,7 @@
 		"twig/twig"            : "~1.23"
 	},
 	"require-dev" : {
-		"phpunit/phpunit": "~4.8|~5.0",
+		"phpunit/phpunit": "~5.4",
 		"phpunit/dbunit" : "~1.2"
 	},
 	"autoload"    : {
@@ -65,7 +65,7 @@
 	},
 	"config": {
 		"platform": {
-			"php": "5.5.30"
+			"php": "5.6.23"
 		}
 	}
 }

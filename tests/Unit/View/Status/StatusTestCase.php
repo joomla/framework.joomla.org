@@ -35,11 +35,11 @@ abstract class StatusTestCase extends \PHPUnit_Framework_TestCase
 
 		$mockDbo = (new DatabaseDriver)->create($this, 'mysqli');
 
-		$this->mockModel = $this->getMock('\\Joomla\\Status\\Model\\StatusModel', [], [$mockDbo]);
+		$this->mockModel = $this->createMock('\\Joomla\\Status\\Model\\StatusModel');
 		$this->mockModel->expects($this->any())
 			->method('getItems')
 			->willReturn(array());
 
-		$this->mockRenderer = $this->getMock('\\Joomla\\Renderer\\RendererInterface');
+		$this->mockRenderer = $this->createMock('\\Joomla\\Renderer\\RendererInterface');
 	}
 }

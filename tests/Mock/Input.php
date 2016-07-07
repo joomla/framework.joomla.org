@@ -51,7 +51,10 @@ class Input extends BaseMock
 		]);
 
 		// Create the mock.
-		$mockObject = $test->getMock('\\Joomla\\Input\\Input', $methods, [], '', false);
+		$mockObject = $test->getMockBuilder(\Joomla\Input\Input::class)
+			->setMethods($methods)
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->assignMockCallbacks(
 			$test,

@@ -33,7 +33,7 @@ abstract class PackageTestCase extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$mockRegistry = $this->getMock('\\Joomla\\Registry\\Registry', ['get']);
+		$mockRegistry = $this->createMock('\\Joomla\\Registry\\Registry');
 		$mockRegistry->expects($this->any())
 			->method('get')
 			->with('package.name')
@@ -41,11 +41,7 @@ abstract class PackageTestCase extends \PHPUnit_Framework_TestCase
 
 		$mockDbo = (new DatabaseDriver)->create($this, 'mysqli');
 
-		$this->mockModel = $this->getMock(
-			'\\Joomla\\Status\\Model\\PackageModel',
-			['getState', 'getItems'],
-			[$mockDbo, $mockRegistry]
-		);
+		$this->mockModel = $this->createMock('\\Joomla\\Status\\Model\\PackageModel');
 		$this->mockModel->expects($this->any())
 			->method('getState')
 			->willReturn($mockRegistry);
@@ -53,6 +49,6 @@ abstract class PackageTestCase extends \PHPUnit_Framework_TestCase
 			->method('getItems')
 			->willReturn(array());
 
-		$this->mockRenderer = $this->getMock('\\Joomla\\Renderer\\RendererInterface');
+		$this->mockRenderer = $this->createMock('\\Joomla\\Renderer\\RendererInterface');
 	}
 }

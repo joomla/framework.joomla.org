@@ -122,7 +122,10 @@ class DatabaseDriver extends BaseMock
 		}
 
 		// Create the mock.
-		$mockObject = $test->getMock($class, $methods, [['driver' => $driver]], '', false);
+		$mockObject = $test->getMockBuilder($class)
+			->setMethods($methods)
+			->setConstructorArgs([['driver' => $driver]])
+			->getMock();
 
 		// Mock selected methods.
 		$this->assignMockReturns(

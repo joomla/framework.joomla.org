@@ -93,7 +93,10 @@ class Application extends BaseMock
 		];
 
 		// Create the mock.
-		$mockObject = $test->getMock('\\Joomla\\Status\\Application', $methods, [], '', false);
+		$mockObject = $test->getMockBuilder(\Joomla\Status\Application::class)
+			->setMethods($methods)
+			->disableOriginalConstructor()
+			->getMock();
 
 		// Mock selected methods.
 		$this->assignMockReturns($test, $mockObject, ['close' => true]);
