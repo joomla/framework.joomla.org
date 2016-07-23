@@ -232,7 +232,18 @@ footer {
 }
 
 @media (min-width: @screen-sm) and (max-width: (@screen-md - 1)) {
-
+  nav {
+    font-size: 18px;
+    .glyphicon {
+      font-size: 22px;
+      padding-right: 6px;
+    }
+    ul {
+      li {
+        margin-left: 4%;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: (@screen-sm - 1)) {
@@ -258,10 +269,12 @@ footer {
     display: none;
   }
 
-  nav ul li {
-    margin-left: 15%;
-    &:first-child {
-      margin-left: 0;
+  nav {
+    ul li {
+      margin-left: 10%;
+      &:first-child {
+        margin-left: 0;
+      }
     }
   }
 
@@ -298,7 +311,7 @@ footer {
   }
 
   nav ul li {
-    margin-left: 8%;
+    margin-left: 6%;
     &:first-child {
       margin-left: 0;
     }
