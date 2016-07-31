@@ -101,6 +101,33 @@ class RunTests
 	 */
 	public function execute()
 	{
+		$package = 'github';
+
+		$this->getPackageId($package);
+
+		// Check to see if this version of the package already has a report
+		if ($this->checkForReport($package))
+		{
+			$this->app->out(
+				sprintf(
+					'A test report already exists for the %s package at version %s.',
+					$this->helper->getPackageDisplayName($package),
+					$this->packages[$package]['version']
+				)
+			);
+
+			return;
+		}
+
+		$this->recordResults($package);
+
+		$this->sanitizePaths($package);
+
+		// Write environment information for the report
+		$this->storeEnvironmentData();
+
+		return;
+
 		// Use a DirectoryIterator object to loop over each package
 		$iterator = new \DirectoryIterator(JPATH_ROOT . '/vendor/joomla');
 
@@ -259,28 +286,21 @@ class RunTests
 		$this->app->out('Sanitizing the file paths for the ' . $this->helper->getPackageDisplayName($package) . ' package code coverage report.');
 
 		// Get the files
-		$files = new \DirectoryIterator(JPATH_ROOT . '/www/coverage/' . $package);
+		$files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(JPATH_ROOT . '/www/coverage/' . $package));
 
-		/* @type  $file  \DirectoryIterator */
+		/** @var $file \SplFileInfo */
 		foreach ($files as $file)
 		{
 			// Only process HTML files
-			if (!$file->isDot() && $file->getExtension() == 'html')
+			if ($file->getExtension() == 'html')
 			{
-				$data = file_get_contents(JPATH_ROOT . '/www/coverage/' . $package . '/' . $file->getFilename());
+				$data = file_get_contents($file->getPathname());
 
 				// Clean out the path now
-				if ($package == 'datetime')
-				{
-					$data = str_replace(dirname(JPATH_ROOT) . '/Joomla-Framework/' . $package, '', $data);
-				}
-				else
-				{
-					$data = str_replace(JPATH_ROOT . '/vendor/joomla/' . $package, '', $data);
-				}
+				$data = str_replace(dirname(JPATH_ROOT) . '/Joomla-Framework/' . $package, '', $data);
 
 				// Write the sanitized file back
-				file_put_contents(JPATH_ROOT . '/www/coverage/' . $package . '/' . $file->getFilename(), $data);
+				file_put_contents($file->getPathname(), $data);
 			}
 		}
 	}
