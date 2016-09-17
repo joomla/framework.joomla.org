@@ -101,7 +101,7 @@ class RunTests
 	 */
 	public function execute()
 	{
-		$package = 'github';
+		$package = 'image';
 
 		$this->getPackageId($package);
 
