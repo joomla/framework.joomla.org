@@ -8,8 +8,6 @@
 
 namespace Joomla\Status\Renderer;
 
-use Joomla\Application\AbstractApplication;
-
 /**
  * Twig extension class
  *
@@ -17,38 +15,6 @@ use Joomla\Application\AbstractApplication;
  */
 class TwigExtension extends \Twig_Extension
 {
-	/**
-	 * Application object
-	 *
-	 * @var    AbstractApplication
-	 * @since  1.0
-	 */
-	private $app;
-
-	/**
-	 * Constructor
-	 *
-	 * @param   AbstractApplication  $app  The application object
-	 *
-	 * @since   1.0
-	 */
-	public function __construct(AbstractApplication $app)
-	{
-		$this->app = $app;
-	}
-
-	/**
-	 * Returns the name of the extension
-	 *
-	 * @return  string  The extension name
-	 *
-	 * @since   1.0
-	 */
-	public function getName()
-	{
-		return 'joomla-framework-status';
-	}
-
 	/**
 	 * Returns a list of filters to add to the existing list
 	 *
@@ -74,37 +40,9 @@ class TwigExtension extends \Twig_Extension
 	public function getFunctions()
 	{
 		return [
-			new \Twig_SimpleFunction('asset', [$this, 'getAssetUri']),
-			new \Twig_SimpleFunction('route', [$this, 'getRouteUri'])
+			new \Twig_SimpleFunction('asset', [TwigRuntimeExtension::class, 'getAssetUri']),
+			new \Twig_SimpleFunction('route', [TwigRuntimeExtension::class, 'getRouteUri'])
 		];
-	}
-
-	/**
-	 * Get the URI for an asset
-	 *
-	 * @param   string  $asset  Asset to get the path for
-	 *
-	 * @return  string
-	 *
-	 * @since   1.0
-	 */
-	public function getAssetUri($asset)
-	{
-		return $this->app->get('uri.media.path') . $asset;
-	}
-
-	/**
-	 * Get the URI for a route
-	 *
-	 * @param   string  $route  Route to get the path for
-	 *
-	 * @return  string
-	 *
-	 * @since   1.0
-	 */
-	public function getRouteUri($route = null)
-	{
-		return $this->app->get('uri.base.path') . $route;
 	}
 
 	/**

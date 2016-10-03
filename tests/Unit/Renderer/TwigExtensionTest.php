@@ -9,7 +9,6 @@
 namespace Joomla\Status\Tests\Unit\Renderer;
 
 use Joomla\Status\Renderer\TwigExtension;
-use Joomla\Status\Tests\Mock\Application;
 
 /**
  * Test class for \Joomla\Status\Renderer\TwigExtension
@@ -31,39 +30,13 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		$mockApplication = (new Application)->create($this);
-
-		$this->object = new TwigExtension($mockApplication);
-	}
-
-	/**
-	 * @testdox  Verify that TwigExtension is instantiated correctly
-	 *
-	 * @covers   Joomla\Status\Renderer\TwigExtension::__construct
-	 */
-	public function testVerifyThatClassIsInstantiatedCorrectly()
-	{
-		$object = new TwigExtension((new Application)->create($this));
-
-		$this->assertAttributeInstanceOf('Joomla\\Status\\Application', 'app', $object);
-	}
-
-	/**
-	 * @testdox  Verify the return from getName()
-	 *
-	 * @covers   Joomla\Status\Renderer\TwigExtension::getName
-	 * @uses     Joomla\Status\Renderer\TwigExtension::__construct
-	 */
-	public function testVerifyTheReturnFromGetName()
-	{
-		$this->assertSame('joomla-framework-status', $this->object->getName());
+		$this->object = new TwigExtension;
 	}
 
 	/**
 	 * @testdox  Verify that getFunctions() returns an array containing only Twig_SimpleFunction instances
 	 *
 	 * @covers   Joomla\Status\Renderer\TwigExtension::getFunctions
-	 * @uses     Joomla\Status\Renderer\TwigExtension::__construct
 	 */
 	public function testVerifyThatGetFunctionsReturnsAnArrayOfTwigSimpleFunctionInstances()
 	{
@@ -74,7 +47,6 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
 	 * @testdox  Verify that getFilters() returns an array containing only Twig_SimpleFilter instances
 	 *
 	 * @covers   Joomla\Status\Renderer\TwigExtension::getFilters
-	 * @uses     Joomla\Status\Renderer\TwigExtension::__construct
 	 */
 	public function testVerifyThatGetFiltersReturnsAnArrayOfTwigSimpleFilterInstances()
 	{
@@ -85,7 +57,6 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
 	 * @testdox  Verify that stripJRoot() replaces the JPATH_ROOT constant
 	 *
 	 * @covers   Joomla\Status\Renderer\TwigExtension::stripJRoot
-	 * @uses     Joomla\Status\Renderer\TwigExtension::__construct
 	 */
 	public function testVerifyThatStripJrootReplacesTheRootConstant()
 	{

@@ -11,9 +11,12 @@ namespace Joomla\Status\Service;
 use Joomla\Application\AbstractApplication;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
+use Joomla\Renderer\RendererInterface;
 use Joomla\Renderer\TwigRenderer;
 use Joomla\Status\Renderer\TwigExtension;
 use Joomla\Status\Renderer\TwigLoader;
+use Joomla\Status\Renderer\TwigRuntimeExtension;
+use Joomla\Status\Renderer\TwigRuntimeLoader;
 
 /**
  * Twig renderer service provider
@@ -54,7 +57,7 @@ class TwigRendererProvider implements ServiceProviderInterface
 	public function register(Container $container)
 	{
 		$container->share(
-			'Joomla\\Renderer\\RendererInterface',
+			RendererInterface::class,
 			function (Container $container) {
 				/* @type  \Joomla\Registry\Registry  $config */
 				$config = $container->get('config');
@@ -71,8 +74,14 @@ class TwigRendererProvider implements ServiceProviderInterface
 				// Instantiate the renderer object
 				$renderer = new TwigRenderer($rendererConfig);
 
+				// Add our Twig runtime loader
+				$loader = new TwigRuntimeLoader;
+				$loader->setContainer($container);
+
+				$renderer->getRenderer()->addRuntimeLoader($loader);
+
 				// Add our Twig extension
-				$renderer->getRenderer()->addExtension(new TwigExtension($this->app));
+				$renderer->getRenderer()->addExtension(new TwigExtension);
 
 				// Add the debug extension if enabled
 				if ($config->get('template.debug'))
@@ -95,6 +104,13 @@ class TwigRendererProvider implements ServiceProviderInterface
 		);
 
 		// Alias the renderer
-		$container->alias('renderer', 'Joomla\\Renderer\\RendererInterface');
+		$container->alias('renderer', RendererInterface::class);
+
+		$container->share(
+			TwigRuntimeExtension::class,
+			function (Container $container) {
+				return new TwigRuntimeExtension($this->app);
+			}
+		);
 	}
 }
