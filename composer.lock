@@ -8,6 +8,64 @@
     "content-hash": "73816c4008931fcfbf48dd192570a61c",
     "packages": [
         {
+            "name": "composer/ca-bundle",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/ca-bundle.git",
+                "reference": "ec21a59414b99501e723b63fd664aa8ead9c5680"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/ec21a59414b99501e723b63fd664aa8ead9c5680",
+                "reference": "ec21a59414b99501e723b63fd664aa8ead9c5680",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "ext-pcre": "*",
+                "php": "^5.3.2 || ^7.0"
+            },
+            "require-dev": {
+                "psr/log": "^1.0",
+                "symfony/process": "^2.5 || ^3.0"
+            },
+            "suggest": {
+                "symfony/process": "This is necessary to reliably check whether openssl_x509_parse is vulnerable on older php versions, but can be ignored on PHP 5.5.6+"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\CaBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                }
+            ],
+            "description": "Lets you find a path to the system CA bundle, and includes a fallback to the Mozilla CA bundle.",
+            "keywords": [
+                "cabundle",
+                "cacert",
+                "certificate",
+                "ssl",
+                "tls"
+            ],
+            "time": "2016-09-04 19:00:06"
+        },
+        {
             "name": "ircmaxell/password-compat",
             "version": "v1.0.4",
             "source": {
@@ -488,26 +546,34 @@
         },
         {
             "name": "joomla/date",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/date.git",
-                "reference": "b985dc1a4ed41ea14c90fc09347c6bb44470aeaa"
+                "reference": "66a4c447809f61e57f37597e15e362bd16bb42b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/date/zipball/b985dc1a4ed41ea14c90fc09347c6bb44470aeaa",
-                "reference": "b985dc1a4ed41ea14c90fc09347c6bb44470aeaa",
+                "url": "https://api.github.com/repos/joomla-framework/date/zipball/66a4c447809f61e57f37597e15e362bd16bb42b9",
+                "reference": "66a4c447809f61e57f37597e15e362bd16bb42b9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.10"
+                "php": "^5.3.10|~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8|~5.0",
+                "squizlabs/php_codesniffer": "1.*"
             },
             "type": "joomla-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Date\\": "src/",
-                    "Joomla\\Date\\Tests\\": "Tests/"
+                    "Joomla\\Date\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -521,7 +587,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2014-02-09 01:27:57"
+            "time": "2016-09-26 10:02:53"
         },
         {
             "name": "joomla/datetime",
@@ -759,25 +825,25 @@
         },
         {
             "name": "joomla/filter",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/filter.git",
-                "reference": "45a504f0cd6fa2312a0260955e957435ca2cedc9"
+                "reference": "250d8f0d3e2d2fb6e31a540ddc6c8d992c92091d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/45a504f0cd6fa2312a0260955e957435ca2cedc9",
-                "reference": "45a504f0cd6fa2312a0260955e957435ca2cedc9",
+                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/250d8f0d3e2d2fb6e31a540ddc6c8d992c92091d",
+                "reference": "250d8f0d3e2d2fb6e31a540ddc6c8d992c92091d",
                 "shasum": ""
             },
             "require": {
                 "joomla/string": "~1.3",
-                "php": ">=5.3.10"
+                "php": "^5.3.10|~7.0"
             },
             "require-dev": {
-                "joomla/language": "~1.0",
-                "phpunit/phpunit": "4.*",
+                "joomla/language": "~1.3",
+                "phpunit/phpunit": "~4.8|~5.0",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "suggest": {
@@ -791,8 +857,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Filter\\": "src/",
-                    "Joomla\\Filter\\Tests\\": "Tests/"
+                    "Joomla\\Filter\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -806,7 +871,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-01-08 17:27:47"
+            "time": "2016-10-16 18:10:33"
         },
         {
             "name": "joomla/form",
@@ -913,29 +978,29 @@
         },
         {
             "name": "joomla/google",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/google-api.git",
-                "reference": "ad79e2ee4e3b2d212753e5b6d2217b80be08b8b9"
+                "reference": "e92742d3bee7928b52e5e45accc63661a8af1824"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/google-api/zipball/ad79e2ee4e3b2d212753e5b6d2217b80be08b8b9",
-                "reference": "ad79e2ee4e3b2d212753e5b6d2217b80be08b8b9",
+                "url": "https://api.github.com/repos/joomla-framework/google-api/zipball/e92742d3bee7928b52e5e45accc63661a8af1824",
+                "reference": "e92742d3bee7928b52e5e45accc63661a8af1824",
                 "shasum": ""
             },
             "require": {
                 "joomla/filesystem": "~1.0",
-                "joomla/oauth2": "~1.0",
+                "joomla/oauth2": "~1.1",
                 "joomla/registry": "~1.0",
                 "joomla/uri": "~1.0",
-                "php": ">=5.3.10"
+                "php": "^5.3.10|~7.0"
             },
             "require-dev": {
                 "joomla/input": "~1.0",
                 "joomla/test": "~1.0",
-                "phpunit/phpunit": "4.*",
+                "phpunit/phpunit": "~4.8|>=5.0 <5.4",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "type": "joomla-package",
@@ -946,8 +1011,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Google\\": "src/",
-                    "Joomla\\Google\\Tests\\": "Tests/"
+                    "Joomla\\Google\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -961,25 +1025,26 @@
                 "google",
                 "joomla"
             ],
-            "time": "2015-01-08 02:32:09"
+            "time": "2016-10-16 18:18:38"
         },
         {
             "name": "joomla/http",
-            "version": "1.2.2",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/http.git",
-                "reference": "336243b2e6b135d19213e0847282d87d55658c8d"
+                "reference": "51caeb5c5c83f9379b88d347b6a9cc53f27683de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/http/zipball/336243b2e6b135d19213e0847282d87d55658c8d",
-                "reference": "336243b2e6b135d19213e0847282d87d55658c8d",
+                "url": "https://api.github.com/repos/joomla-framework/http/zipball/51caeb5c5c83f9379b88d347b6a9cc53f27683de",
+                "reference": "51caeb5c5c83f9379b88d347b6a9cc53f27683de",
                 "shasum": ""
             },
             "require": {
+                "composer/ca-bundle": "~1.0",
                 "joomla/uri": "~1.0",
-                "php": ">=5.3.10|>=7.0"
+                "php": "^5.3.10|~7.0"
             },
             "require-dev": {
                 "joomla/test": "~1.0",
@@ -987,6 +1052,7 @@
                 "squizlabs/php_codesniffer": "1.*"
             },
             "suggest": {
+                "ext-curl": "To use cURL for HTTP connections",
                 "joomla/registry": "Registry can be used as an alternative to using an array for the package options."
             },
             "type": "joomla-package",
@@ -997,8 +1063,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Http\\": "src/",
-                    "Joomla\\Http\\Tests\\": "Tests/"
+                    "Joomla\\Http\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1012,7 +1077,7 @@
                 "http",
                 "joomla"
             ],
-            "time": "2016-03-01 17:48:32"
+            "time": "2016-09-26 10:03:36"
         },
         {
             "name": "joomla/image",
@@ -1888,28 +1953,28 @@
         },
         {
             "name": "joomla/twitter",
-            "version": "1.1.2",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/twitter-api.git",
-                "reference": "8352ba61dcf20038c4fd18eba4b86395deb63efe"
+                "reference": "4dfac232c29cb6dd28e03dc17251446dfe47a47b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/twitter-api/zipball/8352ba61dcf20038c4fd18eba4b86395deb63efe",
-                "reference": "8352ba61dcf20038c4fd18eba4b86395deb63efe",
+                "url": "https://api.github.com/repos/joomla-framework/twitter-api/zipball/4dfac232c29cb6dd28e03dc17251446dfe47a47b",
+                "reference": "4dfac232c29cb6dd28e03dc17251446dfe47a47b",
                 "shasum": ""
             },
             "require": {
                 "joomla/http": "~1.0",
                 "joomla/input": "~1.0",
-                "joomla/oauth1": "~1.0",
+                "joomla/oauth1": "^1.1.1",
                 "joomla/uri": "~1.0",
-                "php": ">=5.3.10"
+                "php": "^5.3.10|~7.0"
             },
             "require-dev": {
                 "joomla/test": "~1.0",
-                "phpunit/phpunit": "4.*",
+                "phpunit/phpunit": "~4.8|~5.0",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "suggest": {
@@ -1923,8 +1988,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Twitter\\": "src/",
-                    "Joomla\\Twitter\\Tests\\": "Tests/"
+                    "Joomla\\Twitter\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1938,7 +2002,7 @@
                 "joomla",
                 "twitter"
             ],
-            "time": "2014-12-30 19:19:11"
+            "time": "2016-10-16 18:30:48"
         },
         {
             "name": "joomla/uri",
