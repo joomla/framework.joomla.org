@@ -120,7 +120,7 @@ class Application extends AbstractWebApplication implements ContainerAwareInterf
 				$controller->initializeRenderer();
 				$view = new DefaultHtmlView(new DefaultModel($this->getContainer()->get('db')), $this->getContainer()->get('renderer'));
 
-				$body = $view->setLayout('exception')->setData(['exception' => $exception])->render();
+				$body = $view->setLayout('exception.twig')->setData(['exception' => $exception])->render();
 
 				break;
 		}

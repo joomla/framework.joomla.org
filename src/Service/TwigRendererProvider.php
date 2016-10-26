@@ -62,43 +62,44 @@ class TwigRendererProvider implements ServiceProviderInterface
 				/* @type  \Joomla\Registry\Registry  $config */
 				$config = $container->get('config');
 
-				// Instantiate the renderer object
-				$rendererConfig = array_merge(
-					(array) $config->get('template'),
-					['path' => JPATH_TEMPLATES]
-				);
+				// Pull down the renderer config
+				$rendererConfig = (array) $config->get('template');
 
 				// If the cache isn't false, then it should be a file path relative to the app root
 				$rendererConfig['cache'] = $rendererConfig['cache'] === false ? $rendererConfig['cache'] : JPATH_ROOT . '/' . $rendererConfig['cache'];
 
-				// Instantiate the renderer object
-				$renderer = new TwigRenderer($rendererConfig);
+				// Instantiate the Twig environment
+				$environment = new \Twig_Environment(new \Twig_Loader_Filesystem([JPATH_TEMPLATES]), $rendererConfig);
 
 				// Add our Twig runtime loader
 				$loader = new TwigRuntimeLoader;
 				$loader->setContainer($container);
 
-				$renderer->getRenderer()->addRuntimeLoader($loader);
+				$environment->addRuntimeLoader($loader);
 
 				// Add our Twig extension
-				$renderer->getRenderer()->addExtension(new TwigExtension);
+				$environment->addExtension(new TwigExtension);
 
 				// Add the debug extension if enabled
 				if ($config->get('template.debug'))
 				{
-					$renderer->getRenderer()->addExtension(new \Twig_Extension_Debug);
+					$environment->addExtension(new \Twig_Extension_Debug);
 				}
 
 				// Set the Lexer object
-				$renderer->getRenderer()->setLexer(
-					new \Twig_Lexer($renderer->getRenderer(), ['delimiters' => [
-						'tag_comment'  => ['{#', '#}'],
-						'tag_block'    => ['{%', '%}'],
-						'tag_variable' => ['{{', '}}']
-					]])
+				$environment->setLexer(
+					new \Twig_Lexer(
+						$environment, [
+							'delimiters' => [
+								'tag_comment'  => ['{#', '#}'],
+								'tag_block'    => ['{%', '%}'],
+								'tag_variable' => ['{{', '}}'],
+							],
+						]
+					)
 				);
 
-				return $renderer;
+				return new TwigRenderer($environment);
 			},
 			true
 		);

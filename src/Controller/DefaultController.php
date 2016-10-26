@@ -171,7 +171,7 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 				$object = $this->getContainer()->buildObject($class);
 
 				// We need to set the layout too
-				$object->setLayout(strtolower($view) . '.' . strtolower($this->getInput()->getWord('layout', 'index')));
+				$object->setLayout(strtolower($view) . '.' . strtolower($this->getInput()->getWord('layout', 'index')) . '.twig');
 
 				// Add the current view path to the loader's lookup
 				$object->getRenderer()->getRenderer()->getLoader()->addPath(JPATH_TEMPLATES . '/' . strtolower($view));
