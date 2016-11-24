@@ -66,13 +66,12 @@ class UpdateServer
 
 		$path = JPATH_ROOT . '/current_SHA';
 
-		// Generate the build information; compile branch and SHA data; TODO need a tag for describe to work
-		//$info   = $this->app->runCommand('cd ' . JPATH_ROOT . ' && git describe --long --abbrev=10 --tags 2>&1');
-		$branch = $this->app->runCommand('cd ' . JPATH_ROOT . ' && git rev-parse --abbrev-ref HEAD 2>&1');
+		// Get the build information
+		$sha = $this->app->runCommand('cd ' . JPATH_ROOT . ' && git rev-parse --short HEAD 2>&1');
 
-		if (!file_put_contents($path, /*$info . ' ' . */$branch))
+		if (!file_put_contents($path, $sha))
 		{
-			$this->app->out('<error>Can not write to path: ', JPATH_ROOT . '</error>');
+			$this->app->out('<error>Can not write to path: ' . JPATH_ROOT . '</error>');
 
 			throw new \DomainException('Can not write to path: ' . $path);
 		}
