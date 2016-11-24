@@ -46,6 +46,7 @@
 		"joomla/uri"           : "~1.1",
 		"joomla/utilities"     : "~1.1",
 		"joomla/view"          : "~1.1",
+		"symfony/asset"        : "3.1.*",
 		"twig/twig"            : "~1.26"
 	},
 	"require-dev" : {

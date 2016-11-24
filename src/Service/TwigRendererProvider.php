@@ -13,10 +13,16 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Renderer\RendererInterface;
 use Joomla\Renderer\TwigRenderer;
+use Joomla\Status\Renderer\ApplicationContext;
 use Joomla\Status\Renderer\TwigExtension;
 use Joomla\Status\Renderer\TwigLoader;
 use Joomla\Status\Renderer\TwigRuntimeExtension;
 use Joomla\Status\Renderer\TwigRuntimeLoader;
+use Symfony\Component\Asset\Packages;
+use Symfony\Component\Asset\PathPackage;
+use Symfony\Component\Asset\UrlPackage;
+use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
+use Symfony\Component\Asset\VersionStrategy\StaticVersionStrategy;
 
 /**
  * Twig renderer service provider
@@ -110,7 +116,22 @@ class TwigRendererProvider implements ServiceProviderInterface
 		$container->share(
 			TwigRuntimeExtension::class,
 			function (Container $container) {
-				return new TwigRuntimeExtension($this->app);
+				return new TwigRuntimeExtension($this->app, $container->get(Packages::class));
+			}
+		);
+
+		$container->share(
+			Packages::class,
+			function (Container $container) {
+				$version = file_exists(JPATH_ROOT . '/current_SHA') ? trim(file_get_contents(JPATH_ROOT . '/current_SHA')) : md5(get_class($this));
+				$context = new ApplicationContext($this->app);
+
+				return new Packages(
+					new PathPackage('media', new StaticVersionStrategy($version), $context),
+					[
+						'img' => new PathPackage('media', new EmptyVersionStrategy, $context)
+					]
+				);
 			}
 		);
 	}

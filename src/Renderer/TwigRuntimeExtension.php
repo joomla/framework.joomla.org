@@ -9,6 +9,7 @@
 namespace Joomla\Status\Renderer;
 
 use Joomla\Application\AbstractApplication;
+use Symfony\Component\Asset\Packages;
 
 /**
  * Twig runtime extension class
@@ -26,29 +27,40 @@ class TwigRuntimeExtension extends \Twig_Extension
 	private $app;
 
 	/**
+	 * Packages object to look up asset paths
+	 *
+	 * @var    Packages
+	 * @since  1.0
+	 */
+	private $packages;
+
+	/**
 	 * Constructor
 	 *
-	 * @param   AbstractApplication  $app  The application object
+	 * @param   AbstractApplication  $app       The application object
+	 * @param   Packages             $packages  Packages object to look up asset paths
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(AbstractApplication $app)
+	public function __construct(AbstractApplication $app, Packages $packages)
 	{
-		$this->app = $app;
+		$this->app      = $app;
+		$this->packages = $packages;
 	}
 
 	/**
 	 * Get the URI for an asset
 	 *
-	 * @param   string  $asset  Asset to get the path for
+	 * @param   string  $path         A public path
+	 * @param   string  $packageName  The name of the asset package to use
 	 *
 	 * @return  string
 	 *
 	 * @since   1.0
 	 */
-	public function getAssetUri($asset)
+	public function getAssetUri($path, $packageName = null)
 	{
-		return $this->app->get('uri.media.path') . $asset;
+		return $this->packages->getUrl($path, $packageName);
 	}
 
 	/**

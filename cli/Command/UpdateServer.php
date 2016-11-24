@@ -67,7 +67,7 @@ class UpdateServer
 		$path = JPATH_ROOT . '/current_SHA';
 
 		// Get the build information
-		$sha = $this->app->runCommand('cd ' . JPATH_ROOT . ' && git rev-parse --short HEAD 2>&1');
+		$sha = trim($this->app->runCommand('cd ' . JPATH_ROOT . ' && git rev-parse --short HEAD 2>&1'));
 
 		if (!file_put_contents($path, $sha))
 		{
