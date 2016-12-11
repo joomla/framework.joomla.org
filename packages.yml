@@ -1,0 +1,61 @@
+packages:
+    application: ~
+    archive: ~
+    authentication: ~
+    cache: ~
+    compat: ~
+    controller: ~
+    crypt: ~
+    data: ~
+    database: ~
+    date: ~
+    datetime:
+        display: DateTime
+    di:
+        display: DI
+    event: ~
+    facebook: ~
+    filesystem: ~
+    filter: ~
+    form: ~
+    github:
+        display: GitHub
+        repo: github-api
+    google:
+        repo: google-api
+    http:
+        display: HTTP
+    image: ~
+    input: ~
+    keychain: ~
+    language: ~
+    ldap: ~
+    linkedin:
+        display: LinkedIn
+        repo: linkedin-api
+    log: ~
+    mediawiki:
+        display: MediaWiki
+        repo: mediawiki-api
+        stable: false
+    model: ~
+    oauth1:
+        display: OAuth1
+    oauth2:
+        display: OAuth2
+    openstreetmap:
+        display: OpenStreetMap
+        repo: openstreetmap-api
+    profiler: ~
+    registry: ~
+    renderer:
+        stable: false
+    router: ~
+    session: ~
+    string: ~
+    test: ~
+    twitter: ~
+    uri:
+        display: URI
+    utilities: ~
+    view: ~
