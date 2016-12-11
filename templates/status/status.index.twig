@@ -40,7 +40,7 @@
             {% set _totalLines = 0 %}
             {% for package, item in items %}
             <tr>
-                <td><a href="{{ route('status/' ~ package) }}">{{ item.displayName }}</a></td>
+                <td><a href="{{ route('status/' ~ package) }}">{{ item.displayName }}</a> <a href="https://github.com/joomla-framework/{{ item.repoName }}"><span class="fa fa-github"></span></a></td>
                 <td>{{ item.version }}</td>
                 {% if item.id %}
                 {% set _totalTests = _totalTests + item.tests %}
