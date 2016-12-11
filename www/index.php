@@ -25,6 +25,7 @@ require JPATH_ROOT . '/vendor/autoload.php';
 try
 {
 	$container = (new Joomla\DI\Container)
+		->registerServiceProvider(new Joomla\Status\Service\ApplicationProvider)
 		->registerServiceProvider(new Joomla\Status\Service\ConfigurationProvider)
 		->registerServiceProvider(new Joomla\Status\Service\DatabaseProvider);
 

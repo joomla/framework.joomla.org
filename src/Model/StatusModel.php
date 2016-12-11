@@ -17,6 +17,8 @@ use Joomla\Status\Helper;
  */
 class StatusModel extends DefaultModel
 {
+	use PackageAware;
+
 	/**
 	 * Fetches the requested data
 	 *
@@ -27,8 +29,8 @@ class StatusModel extends DefaultModel
 	public function getItems()
 	{
 		// Parse installed.json to get the currently installed packages, should always be the latest version
-		$helper   = new Helper;
-		$packages = $helper->parseComposer();
+		// TODO - Replace this with a package listing gathered from the Packagist API to decouple from needing all packages installed
+		$packages = (new Helper)->parseComposer();
 		$reports  = array();
 
 		// Get the package data for each of our packages
@@ -78,18 +80,9 @@ class StatusModel extends DefaultModel
 				}
 			}
 
-			$result->displayName = $helper->getPackageDisplayName($pack->package);
+			$result->displayName = $this->getPackages()->get('packages.' . $pack->package . '.display', ucfirst($pack->package));
 			$result->version     = $pack->version;
-
-			// For repos with -api appended, handle separately
-			if (in_array($pack->package, ['facebook', 'github', 'google', 'linkedin', 'twitter', 'openstreetmap']))
-			{
-				$result->repoName = $pack->package . '-api';
-			}
-			else
-			{
-				$result->repoName = $pack->package;
-			}
+			$result->repoName    = $this->getPackages()->get('packages.' . $pack->package . '.repo', $pack->package);
 
 			$reports[$pack->package] = $result;
 		}

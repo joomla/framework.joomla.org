@@ -8,7 +8,6 @@
 
 namespace Joomla\Status\View\Package;
 
-use Joomla\Status\Helper;
 use Joomla\Status\Model\PackageModel;
 use Joomla\Status\View\AbstractJsonView;
 
@@ -37,9 +36,11 @@ class PackageJsonView extends AbstractJsonView
 	 */
 	public function render()
 	{
+		$package = $this->model->getState()->get('package.name');
+
 		$data = [
 			'items'   => $this->model->getItems(),
-			'package' => (new Helper)->getPackageDisplayName($this->model->getState()->get('package.name'))
+			'package' => $this->model->getPackages()->get('packages.' . $package . '.display', ucfirst($package)),
 		];
 
 		return json_encode($data);

@@ -15,6 +15,8 @@ namespace Joomla\Status\Model;
  */
 class PackageModel extends DefaultModel
 {
+	use PackageAware;
+
 	/**
 	 * Fetches the requested data
 	 *
@@ -75,15 +77,7 @@ class PackageModel extends DefaultModel
 
 			$result->version = $pack->version;
 
-			// For repos with -api appended, handle separately
-			if (in_array($pack->package, ['facebook', 'github', 'google', 'linkedin', 'twitter', 'openstreetmap']))
-			{
-				$result->repoName = $pack->package . '-api';
-			}
-			else
-			{
-				$result->repoName = $pack->package;
-			}
+			$result->repoName = $this->getPackages()->get('packages.' . $pack->package . '.repo', $pack->package);
 
 			// Compute the delta to the previous build
 			if ($i !== 0)

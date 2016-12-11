@@ -92,7 +92,12 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 			$object->setState($this->modelState);
 		}
 
-		// Hack -
+		// Hack - Set the package list to our models, will be DI'd when we have the capability
+		if (method_exists($object, 'setPackages'))
+		{
+			$object->setPackages($this->getContainer()->get('application.packages'));
+		}
+
 		$this->getContainer()->set($model, $object)->alias('Joomla\\Model\\ModelInterface', $model);
 	}
 

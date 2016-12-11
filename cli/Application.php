@@ -13,6 +13,7 @@ use Joomla\DI\Container;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\ContainerAwareTrait;
 
+use Joomla\Status\Service\ApplicationProvider;
 use Joomla\Status\Service\ConfigurationProvider;
 use Joomla\Status\Service\DatabaseProvider;
 use Joomla\Status\Service\TwigRendererProvider;
@@ -34,6 +35,7 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 	public function __construct()
 	{
 		$container = (new Container)
+			->registerServiceProvider(new ApplicationProvider)
 			->registerServiceProvider(new ConfigurationProvider)
 			->registerServiceProvider(new DatabaseProvider)
 			->registerServiceProvider(new TwigRendererProvider($this));
