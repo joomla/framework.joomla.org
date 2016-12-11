@@ -92,6 +92,7 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 			$object->setState($this->modelState);
 		}
 
+		// Hack -
 		$this->getContainer()->set($model, $object)->alias('Joomla\\Model\\ModelInterface', $model);
 	}
 
