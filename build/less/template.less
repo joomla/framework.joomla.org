@@ -11,7 +11,22 @@
 // Reset and dependencies
 @import "normalize.less";
 @import "print.less";
-@import "glyphicons.less";
+//@import "glyphicons.less";
+
+// Font Awesome
+@import "font-awesome/animated.less";
+@import "font-awesome/bordered-pulled.less";
+@import "font-awesome/core.less";
+@import "font-awesome/fixed-width.less";
+@import "font-awesome/font-awesome.less";
+@import "font-awesome/icons.less";
+@import "font-awesome/larger.less";
+@import "font-awesome/list.less";
+@import "font-awesome/mixins.less";
+@import "font-awesome/path.less";
+@import "font-awesome/rotated-flipped.less";
+@import "font-awesome/stacked.less";
+@import "font-awesome/variables.less";
 
 // Core CSS
 @import "scaffolding.less";
@@ -73,7 +88,7 @@ h2 {
   text-align: center;
 }
 
-.glyphicon {
+.fa {
   color: @icon-color;
   &.mega {
     color: #ffffff;
@@ -111,7 +126,7 @@ nav {
       color: @brand-info;
     }
   }
-  .glyphicon {
+  .fa {
     font-size: 27px;
     padding-right: 8px;
   }
@@ -208,7 +223,7 @@ footer {
 @media screen and (max-width: (@screen-md - 1)) {
   .go {
     font-size: 31px;
-    .glyphicon.mega {
+    .fa.mega {
       font-size: 180px;
     }
     h1 {
@@ -234,7 +249,7 @@ footer {
 @media (min-width: @screen-sm) and (max-width: (@screen-md - 1)) {
   nav {
     font-size: 18px;
-    .glyphicon {
+    .fa {
       font-size: 22px;
       padding-right: 6px;
     }
@@ -250,7 +265,7 @@ footer {
   .go {
     background-image: url(../images/j-framework-767.png);
     font-size: 27px;
-    .glyphicon.mega {
+    .fa.mega {
       font-size: 160px;
     }
     h1 {
@@ -287,7 +302,7 @@ footer {
   .go {
     background-image: url(../images/j-framework-500.png);
     font-size: 27px;
-    .glyphicon.mega {
+    .fa.mega {
       font-size: 150px;
     }
     h1 {
