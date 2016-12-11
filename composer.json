@@ -60,11 +60,6 @@
 			"Joomla\\Status\\": "src/"
 		}
 	},
-	"autoload-dev": {
-		"psr-4": {
-			"Joomla\\Status\\Tests\\": "tests/"
-		}
-	},
 	"config": {
 		"platform": {
 			"php": "5.6.23"
