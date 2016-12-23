@@ -16,7 +16,7 @@ use Joomla\Renderer\TwigRenderer;
 use Joomla\Status\Renderer\ApplicationContext;
 use Joomla\Status\Renderer\TwigExtension;
 use Joomla\Status\Renderer\TwigLoader;
-use Joomla\Status\Renderer\TwigRuntimeExtension;
+use Joomla\Status\Renderer\TwigRuntime;
 use Joomla\Status\Renderer\TwigRuntimeLoader;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Asset\PathPackage;
@@ -114,9 +114,9 @@ class TwigRendererProvider implements ServiceProviderInterface
 		$container->alias('renderer', RendererInterface::class);
 
 		$container->share(
-			TwigRuntimeExtension::class,
+			TwigRuntime::class,
 			function (Container $container) {
-				return new TwigRuntimeExtension($this->app, $container->get(Packages::class));
+				return new TwigRuntime($this->app, $container->get(Packages::class));
 			}
 		);
 

@@ -40,8 +40,8 @@ class TwigExtension extends \Twig_Extension
 	public function getFunctions()
 	{
 		return [
-			new \Twig_SimpleFunction('asset', [TwigRuntimeExtension::class, 'getAssetUri']),
-			new \Twig_SimpleFunction('route', [TwigRuntimeExtension::class, 'getRouteUri'])
+			new \Twig_SimpleFunction('asset', [TwigRuntime::class, 'getAssetUri']),
+			new \Twig_SimpleFunction('route', [TwigRuntime::class, 'getRouteUri'])
 		];
 	}
 

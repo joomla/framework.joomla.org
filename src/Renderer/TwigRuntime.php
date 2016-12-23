@@ -12,11 +12,11 @@ use Joomla\Application\AbstractApplication;
 use Symfony\Component\Asset\Packages;
 
 /**
- * Twig runtime extension class
+ * Twig runtime class
  *
  * @since  1.0
  */
-class TwigRuntimeExtension extends \Twig_Extension
+class TwigRuntime
 {
 	/**
 	 * Application object
