@@ -101,7 +101,7 @@ class RunTests
 	 */
 	public function execute()
 	{
-		$package = 'image';
+		$package = 'session';
 
 		$this->getPackageId($package);
 

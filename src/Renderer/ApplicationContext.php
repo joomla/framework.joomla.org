@@ -13,7 +13,7 @@ use Joomla\Application\AbstractWebApplication;
 use Symfony\Component\Asset\Context\ContextInterface;
 
 /**
- * Twig runtime loader
+ * Joomla! application aware context
  *
  * @since  1.0
  */

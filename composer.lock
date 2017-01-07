@@ -4,7 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fbc53fb955cb7d07b52c65a619f82d61",
     "content-hash": "1f99857c33c1cec99752150af3e4c7e2",
     "packages": [
         {
@@ -63,7 +62,7 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2016-11-02 18:11:27"
+            "time": "2016-11-02T18:11:27+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -105,7 +104,7 @@
                 "hashing",
                 "password"
             ],
-            "time": "2014-11-20 16:49:30"
+            "time": "2014-11-20T16:49:30+00:00"
         },
         {
             "name": "joomla/application",
@@ -160,7 +159,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-12-10 17:26:50"
+            "time": "2016-12-10T17:26:50+00:00"
         },
         {
             "name": "joomla/archive",
@@ -212,7 +211,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-12-10 17:29:25"
+            "time": "2016-12-10T17:29:25+00:00"
         },
         {
             "name": "joomla/authentication",
@@ -268,7 +267,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2015-08-06 15:57:12"
+            "time": "2015-08-06T15:57:12+00:00"
         },
         {
             "name": "joomla/cache",
@@ -326,7 +325,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-12-10 17:32:42"
+            "time": "2016-12-10T17:32:42+00:00"
         },
         {
             "name": "joomla/compat",
@@ -363,7 +362,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2015-02-24 00:21:06"
+            "time": "2015-02-24T00:21:06+00:00"
         },
         {
             "name": "joomla/controller",
@@ -414,7 +413,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2015-03-05 11:42:43"
+            "time": "2015-03-05T11:42:43+00:00"
         },
         {
             "name": "joomla/crypt",
@@ -470,7 +469,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-12-10 17:35:57"
+            "time": "2016-12-10T17:35:57+00:00"
         },
         {
             "name": "joomla/data",
@@ -519,7 +518,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-04-02 22:20:43"
+            "time": "2016-04-02T22:20:43+00:00"
         },
         {
             "name": "joomla/database",
@@ -567,7 +566,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-05-18 18:51:58"
+            "time": "2016-05-18T18:51:58+00:00"
         },
         {
             "name": "joomla/date",
@@ -612,7 +611,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-12-10 17:39:40"
+            "time": "2016-12-10T17:39:40+00:00"
         },
         {
             "name": "joomla/datetime",
@@ -658,7 +657,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2014-09-18 16:53:40"
+            "time": "2014-09-18T16:53:40+00:00"
         },
         {
             "name": "joomla/di",
@@ -707,7 +706,7 @@
                 "ioc",
                 "joomla"
             ],
-            "time": "2015-04-02 16:30:40"
+            "time": "2015-04-02T16:30:40+00:00"
         },
         {
             "name": "joomla/event",
@@ -753,7 +752,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-03-13 19:41:09"
+            "time": "2016-03-13T19:41:09+00:00"
         },
         {
             "name": "joomla/facebook",
@@ -800,7 +799,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2014-02-09 01:36:02"
+            "time": "2014-02-09T01:36:02+00:00"
         },
         {
             "name": "joomla/filesystem",
@@ -849,7 +848,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-12-10 17:45:15"
+            "time": "2016-12-10T17:45:15+00:00"
         },
         {
             "name": "joomla/filter",
@@ -899,7 +898,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-10-16 18:10:33"
+            "time": "2016-10-16T18:10:33+00:00"
         },
         {
             "name": "joomla/form",
@@ -958,7 +957,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-12-10 19:39:00"
+            "time": "2016-12-10T19:39:00+00:00"
         },
         {
             "name": "joomla/github",
@@ -1006,7 +1005,7 @@
                 "github",
                 "joomla"
             ],
-            "time": "2016-10-23 15:52:56"
+            "time": "2016-10-23T15:52:56+00:00"
         },
         {
             "name": "joomla/google",
@@ -1057,7 +1056,7 @@
                 "google",
                 "joomla"
             ],
-            "time": "2016-10-16 18:18:38"
+            "time": "2016-10-16T18:18:38+00:00"
         },
         {
             "name": "joomla/http",
@@ -1109,7 +1108,7 @@
                 "http",
                 "joomla"
             ],
-            "time": "2016-09-26 10:03:36"
+            "time": "2016-09-26T10:03:36+00:00"
         },
         {
             "name": "joomla/image",
@@ -1157,7 +1156,7 @@
                 "image",
                 "joomla"
             ],
-            "time": "2016-12-10 17:53:04"
+            "time": "2016-12-10T17:53:04+00:00"
         },
         {
             "name": "joomla/input",
@@ -1205,7 +1204,7 @@
                 "input",
                 "joomla"
             ],
-            "time": "2014-10-12 18:01:36"
+            "time": "2014-10-12T18:01:36+00:00"
         },
         {
             "name": "joomla/keychain",
@@ -1258,7 +1257,7 @@
                 "joomla",
                 "keychain"
             ],
-            "time": "2016-01-30 19:05:16"
+            "time": "2016-01-30T19:05:16+00:00"
         },
         {
             "name": "joomla/language",
@@ -1307,7 +1306,7 @@
                 "joomla",
                 "language"
             ],
-            "time": "2016-01-30 19:28:42"
+            "time": "2016-01-30T19:28:42+00:00"
         },
         {
             "name": "joomla/ldap",
@@ -1344,7 +1343,7 @@
                 "joomla",
                 "ldap"
             ],
-            "time": "2014-04-10 03:07:59"
+            "time": "2014-04-10T03:07:59+00:00"
         },
         {
             "name": "joomla/linkedin",
@@ -1388,7 +1387,7 @@
                 "joomla",
                 "linkedin"
             ],
-            "time": "2014-02-09 02:14:00"
+            "time": "2014-02-09T02:14:00+00:00"
         },
         {
             "name": "joomla/log",
@@ -1437,7 +1436,7 @@
                 "joomla",
                 "log"
             ],
-            "time": "2016-07-03 18:31:06"
+            "time": "2016-07-03T18:31:06+00:00"
         },
         {
             "name": "joomla/model",
@@ -1489,7 +1488,7 @@
                 "joomla",
                 "model"
             ],
-            "time": "2014-11-03 16:43:46"
+            "time": "2014-11-03T16:43:46+00:00"
         },
         {
             "name": "joomla/oauth1",
@@ -1534,7 +1533,7 @@
                 "joomla",
                 "oauth1"
             ],
-            "time": "2014-02-09 02:34:57"
+            "time": "2014-02-09T02:34:57+00:00"
         },
         {
             "name": "joomla/oauth2",
@@ -1584,7 +1583,7 @@
                 "joomla",
                 "oauth2"
             ],
-            "time": "2014-09-01 02:11:13"
+            "time": "2014-09-01T02:11:13+00:00"
         },
         {
             "name": "joomla/openstreetmap",
@@ -1628,7 +1627,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2014-05-21 21:41:20"
+            "time": "2014-05-21T21:41:20+00:00"
         },
         {
             "name": "joomla/profiler",
@@ -1674,7 +1673,7 @@
                 "joomla",
                 "profiler"
             ],
-            "time": "2016-01-31 19:55:50"
+            "time": "2016-01-31T19:55:50+00:00"
         },
         {
             "name": "joomla/registry",
@@ -1727,7 +1726,7 @@
                 "joomla",
                 "registry"
             ],
-            "time": "2016-05-14 20:42:05"
+            "time": "2016-05-14T20:42:05+00:00"
         },
         {
             "name": "joomla/renderer",
@@ -1735,12 +1734,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/renderer.git",
-                "reference": "d17ba1b02f5b10936818a5477cbe290d055e274d"
+                "reference": "b0e67e4bf3056ef2d2cd68c149733275bb17ebdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/renderer/zipball/d17ba1b02f5b10936818a5477cbe290d055e274d",
-                "reference": "d17ba1b02f5b10936818a5477cbe290d055e274d",
+                "url": "https://api.github.com/repos/joomla-framework/renderer/zipball/b0e67e4bf3056ef2d2cd68c149733275bb17ebdb",
+                "reference": "b0e67e4bf3056ef2d2cd68c149733275bb17ebdb",
                 "shasum": ""
             },
             "require": {
@@ -1786,7 +1785,7 @@
                 "joomla",
                 "renderer"
             ],
-            "time": "2016-12-10 17:09:17"
+            "time": "2017-01-02 20:34:02"
         },
         {
             "name": "joomla/router",
@@ -1828,21 +1827,21 @@
                 "joomla",
                 "router"
             ],
-            "time": "2014-08-23 19:40:48"
+            "time": "2014-08-23T19:40:48+00:00"
         },
         {
             "name": "joomla/session",
-            "version": "1.3.2",
+            "version": "1.3.3",
             "target-dir": "Joomla/Session",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/session.git",
-                "reference": "8ff3e676e390441c183d375e3f20f506f6ce3c98"
+                "reference": "1fb5df818998305fa5d4eaf18e530a388e69edc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/session/zipball/8ff3e676e390441c183d375e3f20f506f6ce3c98",
-                "reference": "8ff3e676e390441c183d375e3f20f506f6ce3c98",
+                "url": "https://api.github.com/repos/joomla-framework/session/zipball/1fb5df818998305fa5d4eaf18e530a388e69edc0",
+                "reference": "1fb5df818998305fa5d4eaf18e530a388e69edc0",
                 "shasum": ""
             },
             "require": {
@@ -1878,7 +1877,7 @@
                 "joomla",
                 "session"
             ],
-            "time": "2016-12-10 18:12:18"
+            "time": "2016-12-21T21:08:20+00:00"
         },
         {
             "name": "joomla/string",
@@ -1944,7 +1943,7 @@
                 "joomla",
                 "string"
             ],
-            "time": "2016-12-10 18:13:42"
+            "time": "2016-12-10T18:13:42+00:00"
         },
         {
             "name": "joomla/test",
@@ -1988,7 +1987,7 @@
                 "reflection",
                 "unit test"
             ],
-            "time": "2015-03-14 17:39:02"
+            "time": "2015-03-14T17:39:02+00:00"
         },
         {
             "name": "joomla/twitter",
@@ -2041,7 +2040,7 @@
                 "joomla",
                 "twitter"
             ],
-            "time": "2016-10-16 18:30:48"
+            "time": "2016-10-16T18:30:48+00:00"
         },
         {
             "name": "joomla/uri",
@@ -2078,7 +2077,7 @@
                 "joomla",
                 "uri"
             ],
-            "time": "2014-02-09 02:57:17"
+            "time": "2014-02-09T02:57:17+00:00"
         },
         {
             "name": "joomla/utilities",
@@ -2124,7 +2123,7 @@
                 "joomla",
                 "utilities"
             ],
-            "time": "2016-12-10 17:09:33"
+            "time": "2016-12-10T17:09:33+00:00"
         },
         {
             "name": "joomla/view",
@@ -2175,7 +2174,7 @@
                 "joomla",
                 "view"
             ],
-            "time": "2016-12-10 19:17:24"
+            "time": "2016-12-10T19:17:24+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2223,7 +2222,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-11-07 23:38:38"
+            "time": "2016-11-07T23:38:38+00:00"
         },
         {
             "name": "psr/log",
@@ -2270,11 +2269,11 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "symfony/asset",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset.git",
@@ -2325,7 +2324,7 @@
             ],
             "description": "Symfony Asset Component",
             "homepage": "https://symfony.com",
-            "time": "2016-09-24 15:57:00"
+            "time": "2016-09-24T15:57:00+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2384,7 +2383,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-php55",
@@ -2440,11 +2439,11 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/translation",
-            "version": "v2.8.14",
+            "version": "v2.8.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
@@ -2504,20 +2503,20 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-18 21:10:01"
+            "time": "2016-11-18T21:10:01+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "f2300ba8fbb002c028710b92e1906e7457410693"
+                "reference": "a7095af4b97a0955f85c8989106c249fa649011f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/f2300ba8fbb002c028710b92e1906e7457410693",
-                "reference": "f2300ba8fbb002c028710b92e1906e7457410693",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/a7095af4b97a0955f85c8989106c249fa649011f",
+                "reference": "a7095af4b97a0955f85c8989106c249fa649011f",
                 "shasum": ""
             },
             "require": {
@@ -2559,20 +2558,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-18 21:17:59"
+            "time": "2016-12-10T10:07:06+00:00"
         },
         {
             "name": "twig/twig",
-            "version": "v1.28.2",
+            "version": "v1.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "b22ce0eb070e41f7cba65d78fe216de29726459c"
+                "reference": "c6ff71094fde15d12398eaba029434b013dc5e59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b22ce0eb070e41f7cba65d78fe216de29726459c",
-                "reference": "b22ce0eb070e41f7cba65d78fe216de29726459c",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/c6ff71094fde15d12398eaba029434b013dc5e59",
+                "reference": "c6ff71094fde15d12398eaba029434b013dc5e59",
                 "shasum": ""
             },
             "require": {
@@ -2585,7 +2584,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.28-dev"
+                    "dev-master": "1.30-dev"
                 }
             },
             "autoload": {
@@ -2620,7 +2619,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-11-23 18:41:40"
+            "time": "2016-12-23T11:06:22+00:00"
         }
     ],
     "packages-dev": [
@@ -2676,7 +2675,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2015-06-14T21:17:01+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2718,7 +2717,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-10-31 17:19:45"
+            "time": "2016-10-31T17:19:45+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -2772,7 +2771,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2015-12-27 11:43:31"
+            "time": "2015-12-27T11:43:31+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -2817,7 +2816,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-09-30 07:12:33"
+            "time": "2016-09-30T07:12:33+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -2864,7 +2863,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-11-25 06:54:22"
+            "time": "2016-11-25T06:54:22+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -2927,7 +2926,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2016-11-21 14:58:47"
+            "time": "2016-11-21T14:58:47+00:00"
         },
         {
             "name": "phpunit/dbunit",
@@ -2986,20 +2985,20 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-08-07 04:57:38"
+            "time": "2015-08-07T04:57:38+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "4.0.3",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "903fd6318d0a90b4770a009ff73e4a4e9c437929"
+                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/903fd6318d0a90b4770a009ff73e4a4e9c437929",
-                "reference": "903fd6318d0a90b4770a009ff73e4a4e9c437929",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c14196e64a78570034afd0b7a9f3757ba71c2a0a",
+                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a",
                 "shasum": ""
             },
             "require": {
@@ -3049,7 +3048,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-11-28 16:00:31"
+            "time": "2016-12-20T15:22:42+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3096,7 +3095,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2016-10-03T07:40:28+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -3137,7 +3136,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -3181,7 +3180,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12 18:03:57"
+            "time": "2016-05-12T18:03:57+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -3230,20 +3229,20 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2016-11-15 14:06:22"
+            "time": "2016-11-15T14:06:22+00:00"
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.3",
+            "version": "5.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "de164acc2f2bb0b79beb892a36260264b2a03233"
+                "reference": "50fd2be8f3e23e91da825f36f08e5f9633076ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/de164acc2f2bb0b79beb892a36260264b2a03233",
-                "reference": "de164acc2f2bb0b79beb892a36260264b2a03233",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/50fd2be8f3e23e91da825f36f08e5f9633076ffe",
+                "reference": "50fd2be8f3e23e91da825f36f08e5f9633076ffe",
                 "shasum": ""
             },
             "require": {
@@ -3264,7 +3263,7 @@
                 "sebastian/diff": "~1.2",
                 "sebastian/environment": "^1.3.4 || ^2.0",
                 "sebastian/exporter": "~2.0",
-                "sebastian/global-state": "~1.0",
+                "sebastian/global-state": "^1.0 || ^2.0",
                 "sebastian/object-enumerator": "~2.0",
                 "sebastian/resource-operations": "~1.0",
                 "sebastian/version": "~1.0|~2.0",
@@ -3312,7 +3311,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-09 02:48:53"
+            "time": "2016-12-28T07:18:51+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3371,7 +3370,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2016-12-08 20:27:08"
+            "time": "2016-12-08T20:27:08+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -3416,7 +3415,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2016-02-13 06:45:14"
+            "time": "2016-02-13T06:45:14+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -3480,7 +3479,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2016-11-19 09:18:40"
+            "time": "2016-11-19T09:18:40+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -3532,7 +3531,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2015-12-08 07:14:41"
+            "time": "2015-12-08T07:14:41+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -3582,7 +3581,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-11-26 07:53:53"
+            "time": "2016-11-26T07:53:53+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -3649,7 +3648,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2016-11-19 08:54:04"
+            "time": "2016-11-19T08:54:04+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -3700,7 +3699,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2015-10-12 03:26:01"
+            "time": "2015-10-12T03:26:01+00:00"
         },
         {
             "name": "sebastian/object-enumerator",
@@ -3746,7 +3745,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2016-11-19 07:35:10"
+            "time": "2016-11-19T07:35:10+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -3799,7 +3798,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2016-11-19 07:33:16"
+            "time": "2016-11-19T07:33:16+00:00"
         },
         {
             "name": "sebastian/resource-operations",
@@ -3841,7 +3840,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2015-07-28 20:34:47"
+            "time": "2015-07-28T20:34:47+00:00"
         },
         {
             "name": "sebastian/version",
@@ -3884,7 +3883,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03 07:35:21"
+            "time": "2016-10-03T07:35:21+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -3934,7 +3933,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2016-11-23 20:04:58"
+            "time": "2016-11-23T20:04:58+00:00"
         }
     ],
     "aliases": [],
