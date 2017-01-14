@@ -9,10 +9,8 @@
 		"debug"   : false
 	},
 	"template": {
-		"renderer" : "twig",
-		"debug"    : false,
-		"extension": ".twig",
-		"cache"    : false
+		"debug": false,
+		"cache": false
 	},
 	"errorReporting": 0
 }

@@ -93,19 +93,6 @@ class TwigRendererProvider implements ServiceProviderInterface
 					$environment->addExtension(new \Twig_Extension_Debug);
 				}
 
-				// Set the Lexer object
-				$environment->setLexer(
-					new \Twig_Lexer(
-						$environment, [
-							'delimiters' => [
-								'tag_comment'  => ['{#', '#}'],
-								'tag_block'    => ['{%', '%}'],
-								'tag_variable' => ['{{', '}}'],
-							],
-						]
-					)
-				);
-
 				return new TwigRenderer($environment);
 			},
 			true

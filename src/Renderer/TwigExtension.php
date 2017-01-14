@@ -18,30 +18,30 @@ class TwigExtension extends \Twig_Extension
 	/**
 	 * Returns a list of filters to add to the existing list
 	 *
-	 * @return  \Twig_SimpleFilter[]  An array of \Twig_SimpleFilter instances
+	 * @return  \Twig_Filter[]  An array of \Twig_Filter instances
 	 *
 	 * @since   1.0
 	 */
 	public function getFilters()
 	{
 		return [
-			new \Twig_SimpleFilter('get_class', 'get_class'),
-			new \Twig_SimpleFilter('stripJRoot', [$this, 'stripJRoot'])
+			new \Twig_Filter('get_class', 'get_class'),
+			new \Twig_Filter('stripJRoot', [$this, 'stripJRoot'])
 		];
 	}
 
 	/**
 	 * Returns a list of functions to add to the existing list.
 	 *
-	 * @return  \Twig_SimpleFunction[]  An array of \Twig_SimpleFunction instances
+	 * @return  \Twig_Function[]  An array of \Twig_Function instances
 	 *
 	 * @since   1.0
 	 */
 	public function getFunctions()
 	{
 		return [
-			new \Twig_SimpleFunction('asset', [TwigRuntime::class, 'getAssetUri']),
-			new \Twig_SimpleFunction('route', [TwigRuntime::class, 'getRouteUri'])
+			new \Twig_Function('asset', [TwigRuntime::class, 'getAssetUri']),
+			new \Twig_Function('route', [TwigRuntime::class, 'getRouteUri'])
 		];
 	}
 
