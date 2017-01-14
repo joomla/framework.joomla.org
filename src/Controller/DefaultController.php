@@ -12,6 +12,7 @@ use Joomla\Controller\AbstractController;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\ContainerAwareTrait;
 use Joomla\Registry\Registry;
+use Joomla\Status\Service\TwigRendererProvider;
 use Joomla\View\ViewInterface;
 
 /**
@@ -115,18 +116,7 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 		// Add the provider to the DI container if it doesn't exist
 		if (!$this->getContainer()->exists('renderer'))
 		{
-			$type = $this->getContainer()->get('config')->get('template.renderer');
-
-			// Set the class name for the renderer's service provider
-			$class = '\\Joomla\\Status\\Service\\' . ucfirst($type) . 'RendererProvider';
-
-			// Sanity check
-			if (!class_exists($class))
-			{
-				throw new \RuntimeException(sprintf('Renderer provider for renderer type %s not found.', ucfirst($type)));
-			}
-
-			$this->getContainer()->registerServiceProvider(new $class($this->getApplication()));
+			$this->getContainer()->registerServiceProvider(new TwigRendererProvider($this->getApplication()));
 		}
 	}
 
