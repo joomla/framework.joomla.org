@@ -106,7 +106,7 @@ class StatusModel extends DefaultModel
 				}
 			}
 
-			$result->displayName = $this->helper->getPackageDisplayName($package);
+			$result->displayName = $this->helper->getPackageDisplayName($pack->package);
 			$result->version     = $pack->version;
 			$result->repoName    = $this->getPackages()->get('packages.' . $pack->package . '.repo', $pack->package);
 
