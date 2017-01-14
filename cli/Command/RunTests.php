@@ -35,7 +35,7 @@ class RunTests
 	private $db;
 
 	/**
-	 * Helper class
+	 * Helper object
 	 *
 	 * @var    Helper
 	 * @since  1.0
@@ -69,7 +69,7 @@ class RunTests
 	{
 		$this->app      = $app;
 		$this->db       = $this->app->getContainer()->get('db');
-		$this->helper   = new Helper;
+		$this->helper   = $this->app->getContainer()->get('application.helper');
 		$this->packages = $this->helper->parseComposer();
 	}
 

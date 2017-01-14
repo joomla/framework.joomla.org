@@ -11,7 +11,7 @@ namespace Joomla\Status\Model;
 use Joomla\Registry\Registry;
 
 /**
- * Trait for models which are package aware
+ * Trait for objects which are package aware
  *
  * @since  1.0
  */

@@ -43,6 +43,14 @@ class ParseComposer
 	private $db;
 
 	/**
+	 * Helper object
+	 *
+	 * @var    Helper
+	 * @since  1.0
+	 */
+	private $helper;
+
+	/**
 	 * Class constructor
 	 *
 	 * @param   Application  $app  Application object
@@ -54,6 +62,7 @@ class ParseComposer
 		$this->app    = $app;
 		$this->config = $this->app->getContainer()->get('config');
 		$this->db     = $this->app->getContainer()->get('db');
+		$this->helper = $this->app->getContainer()->get('application.helper');
 	}
 
 	/**
@@ -69,7 +78,7 @@ class ParseComposer
 		$this->app->out('<info>Parsing the Composer data.</info>');
 
 		// Get the Composer data
-		$packages = (new Helper)->parseComposer();
+		$packages = $this->helper->parseComposer();
 
 		// Insert the records into the database now
 		foreach ($packages as $name => $package)

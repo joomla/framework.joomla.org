@@ -8,6 +8,8 @@
 
 namespace Joomla\Status\Model;
 
+use Joomla\Database\DatabaseDriver;
+use Joomla\Registry\Registry;
 use Joomla\Status\Helper;
 
 /**
@@ -20,6 +22,30 @@ class StatusModel extends DefaultModel
 	use PackageAware;
 
 	/**
+	 * Helper object
+	 *
+	 * @var    Helper
+	 * @since  1.0
+	 */
+	private $helper;
+
+	/**
+	 * Instantiate the model.
+	 *
+	 * @param   Helper          $helper  Helper object.
+	 * @param   DatabaseDriver  $db      The database adapter.
+	 * @param   Registry        $state   The model state.
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(Helper $helper, DatabaseDriver $db, Registry $state = null)
+	{
+		parent::__construct($db, $state);
+
+		$this->helper = $helper;
+	}
+
+	/**
 	 * Fetches the requested data
 	 *
 	 * @return  array
@@ -30,7 +56,7 @@ class StatusModel extends DefaultModel
 	{
 		// Parse installed.json to get the currently installed packages, should always be the latest version
 		// TODO - Replace this with a package listing gathered from the Packagist API to decouple from needing all packages installed
-		$packages = (new Helper)->parseComposer();
+		$packages = $this->helper->parseComposer();
 		$reports  = array();
 
 		// Get the package data for each of our packages
@@ -80,7 +106,7 @@ class StatusModel extends DefaultModel
 				}
 			}
 
-			$result->displayName = $this->getPackages()->get('packages.' . $pack->package . '.display', ucfirst($pack->package));
+			$result->displayName = $this->helper->getPackageDisplayName($package);
 			$result->version     = $pack->version;
 			$result->repoName    = $this->getPackages()->get('packages.' . $pack->package . '.repo', $pack->package);
 

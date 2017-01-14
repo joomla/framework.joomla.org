@@ -8,6 +8,9 @@
 
 namespace Joomla\Status;
 
+use Joomla\Status\Model\PackageAware;
+use PackageVersions\Versions;
+
 /**
  * Utility helper class
  *
@@ -15,13 +18,15 @@ namespace Joomla\Status;
  */
 class Helper
 {
+	use PackageAware;
+
 	/**
 	 * Data container for the Composer data
 	 *
 	 * @var    array
 	 * @since  1.0
 	 */
-	private static $packages = array();
+	private static $packageList = array();
 
 	/**
 	 * Utility method to retrieve a package's display name
@@ -34,41 +39,7 @@ class Helper
 	 */
 	public function getPackageDisplayName(string $package) : string
 	{
-		switch ($package)
-		{
-			case 'datetime':
-				return 'DateTime';
-
-			case 'di':
-				return 'DI';
-
-			case 'github':
-				return 'GitHub';
-
-			case 'http':
-				return 'HTTP';
-
-			case 'ldap':
-				return 'LDAP';
-
-			case 'linkedin':
-				return 'LinkedIn';
-
-			case 'oauth1':
-				return 'OAuth1';
-
-			case 'oauth2':
-				return 'OAuth2';
-
-			case 'openstreetmap':
-				return 'OpenStreetMap';
-
-			case 'uri':
-				return 'URI';
-
-			default:
-				return ucfirst($package);
-		}
+		return $this->getPackages()->get("packages.$package.display", ucfirst($package));
 	}
 
 	/**
@@ -81,29 +52,24 @@ class Helper
 	public function parseComposer() : array
 	{
 		// Only process this once
-		if (empty(self::$packages))
+		if (empty(self::$packageList))
 		{
-			// Read the installed.json file
-			$installed = json_decode(file_get_contents(JPATH_ROOT . '/vendor/composer/installed.json'));
-
 			// Loop through and extract the package name and version for all Joomla! Framework packages
-			foreach ($installed as $package)
+			foreach ($this->getPackages()->get('packages') as $packageName => $packageData)
 			{
-				if (strpos($package->name, 'joomla') !== 0)
+				// Skip packages without a stable release
+				if (is_object($packageData) && isset($packageData->stable) && $packageData->stable === false)
 				{
 					continue;
 				}
 
-				// Skip the renderer package; it doesn't have a stable release yet
-				if ($package->name === 'joomla/renderer')
-				{
-					continue;
-				}
+				// We need to "normalize" the version string since the underlying API returns the version with the commit SHA
+				list($version) = explode('@', Versions::getVersion("joomla/$packageName"));
 
-				self::$packages[str_replace('joomla/', '', $package->name)] = ['version' => $package->version];
+				self::$packageList[$packageName] = ['version' => $version];
 			}
 		}
 
-		return self::$packages;
+		return self::$packageList;
 	}
 }
