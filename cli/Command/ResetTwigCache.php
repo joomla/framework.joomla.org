@@ -94,7 +94,7 @@ class ResetTwigCache
 
 			try
 			{
-				$engine->loadTemplate($template);
+				$engine->load($template);
 			}
 			catch (\Twig_Error $e)
 			{
