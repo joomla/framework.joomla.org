@@ -57,8 +57,9 @@ class TwigRuntime
 	 * @return  string
 	 *
 	 * @since   1.0
+	 * @note    Do not typehint $packageName until PHP 7.1 is the minimum because the underlying implementation depends on a null value
 	 */
-	public function getAssetUri($path, $packageName = null)
+	public function getAssetUri(string $path, $packageName = null) : string
 	{
 		return $this->packages->getUrl($path, $packageName);
 	}
@@ -72,7 +73,7 @@ class TwigRuntime
 	 *
 	 * @since   1.0
 	 */
-	public function getRouteUri($route = null)
+	public function getRouteUri(string $route = '') : string
 	{
 		return $this->app->get('uri.base.path') . $route;
 	}

@@ -24,31 +24,33 @@ class DatabaseProvider implements ServiceProviderInterface
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  Container  Returns itself to support chaining.
+	 * @return  void
 	 *
 	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{
-		$container->set('Joomla\\Database\\DatabaseDriver',
-			function () use ($container)
+		$container->share(
+			'Joomla\\Database\\DatabaseDriver',
+			function (Container $container) : DatabaseDriver
 			{
 				$config = $container->get('config');
 
-				$options = array(
-					'driver' => $config->get('database.driver'),
-					'host' => $config->get('database.host'),
-					'user' => $config->get('database.user'),
+				$options = [
+					'driver'   => $config->get('database.driver'),
+					'host'     => $config->get('database.host'),
+					'user'     => $config->get('database.user'),
 					'password' => $config->get('database.password'),
 					'database' => $config->get('database.name'),
-					'prefix' => $config->get('database.prefix')
-				);
+					'prefix'   => $config->get('database.prefix'),
+				];
 
 				$db = DatabaseDriver::getInstance($options);
 				$db->setDebug($config->get('database.debug', false));
 
 				return $db;
-			}, true, true
+			},
+			true
 		);
 
 		// Alias the database

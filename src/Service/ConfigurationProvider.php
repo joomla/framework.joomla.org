@@ -52,9 +52,7 @@ class ConfigurationProvider implements ServiceProviderInterface
 			throw new \RuntimeException(sprintf('Unable to parse the configuration file %s.', $file));
 		}
 
-		$config = (new Registry)->loadObject($configObject);
-
-		$this->config = $config;
+		$this->config = new Registry($configObject);
 	}
 
 	/**
@@ -62,17 +60,19 @@ class ConfigurationProvider implements ServiceProviderInterface
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  Container  Returns itself to support chaining.
+	 * @return  void
 	 *
 	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{
-		$container->set('config',
-			function ()
+		$container->share(
+			'config',
+			function () : Registry
 			{
 				return $this->config;
-			}, true, true
+			},
+			true
 		);
 	}
 }

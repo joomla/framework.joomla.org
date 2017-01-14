@@ -93,7 +93,7 @@ class Application extends AbstractCliApplication implements ContainerAwareInterf
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public function runCommand($command)
+	public function runCommand(string $command) : string
 	{
 		$lastLine = system($command, $status);
 

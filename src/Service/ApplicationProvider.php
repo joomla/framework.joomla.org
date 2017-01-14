@@ -24,7 +24,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  Container  Returns itself to support chaining.
+	 * @return  void
 	 *
 	 * @since   1.0
 	 */
@@ -32,7 +32,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		$container->share(
 			'application.packages',
-			function ()
+			function () : Registry
 			{
 				$registry = new Registry;
 				$registry->loadFile(JPATH_ROOT . '/packages.yml', 'YAML');

@@ -26,7 +26,7 @@ try
 {
 	(new Joomla\StatusCli\Application)->execute();
 }
-catch (\Exception $e)
+catch (\Throwable $e)
 {
 	fwrite(STDOUT, "\nERROR: " . $e->getMessage() . "\n");
 	fwrite(STDOUT, "\n" . $e->getTraceAsString() . "\n");

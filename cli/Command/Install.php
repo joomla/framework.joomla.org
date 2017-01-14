@@ -124,7 +124,7 @@ class Install
 	 *
 	 * @since   1.0
 	 */
-	private function cleanDatabase(array $tables)
+	private function cleanDatabase(array $tables) : Install
 	{
 		$this->app->out('Removing existing tables...', false);
 
@@ -156,7 +156,7 @@ class Install
 	 * @throws  \RuntimeException
 	 * @throws  \UnexpectedValueException
 	 */
-	private function processSql()
+	private function processSql() : Install
 	{
 		$fName = JPATH_ROOT . '/etc/schema.sql';
 

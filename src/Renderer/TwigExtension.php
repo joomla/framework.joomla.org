@@ -50,11 +50,11 @@ class TwigExtension extends \Twig_Extension
 	 *
 	 * @param   string  $string  The string to process
 	 *
-	 * @return  mixed
+	 * @return  string
 	 *
 	 * @since   1.0
 	 */
-	public function stripJRoot($string)
+	public function stripJRoot(string $string) : string
 	{
 		return str_replace(JPATH_ROOT, 'APP_ROOT', $string);
 	}

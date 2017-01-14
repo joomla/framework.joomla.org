@@ -82,7 +82,7 @@ class RunTests
 	 *
 	 * @since   1.0
 	 */
-	private function checkForReport($package)
+	private function checkForReport(string $package)
 	{
 		return $this->db->setQuery(
 			$this->db->getQuery(true)
@@ -190,7 +190,7 @@ class RunTests
 	 *
 	 * @since   1.0
 	 */
-	private function getPackageId($package)
+	private function getPackageId(string $package)
 	{
 		$this->packageId = $this->db->setQuery(
 			$this->db->getQuery(true)
@@ -211,7 +211,7 @@ class RunTests
 	 * @since   1.0
 	 * @throws  \UnexpectedValueException
 	 */
-	private function recordResults($package)
+	private function recordResults(string $package)
 	{
 		// Initialize variables.
 		$report = array();
@@ -280,7 +280,7 @@ class RunTests
 	 *
 	 * @since   1.0
 	 */
-	private function sanitizePaths($package)
+	private function sanitizePaths(string $package)
 	{
 		// Display update to console
 		$this->app->out('Sanitizing the file paths for the ' . $this->helper->getPackageDisplayName($package) . ' package code coverage report.');

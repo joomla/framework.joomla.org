@@ -26,7 +26,7 @@ class StatusModel extends DefaultModel
 	 *
 	 * @since   1.0
 	 */
-	public function getItems()
+	public function getItems() : array
 	{
 		// Parse installed.json to get the currently installed packages, should always be the latest version
 		// TODO - Replace this with a package listing gathered from the Packagist API to decouple from needing all packages installed

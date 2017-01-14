@@ -66,7 +66,7 @@ abstract class AbstractHtmlView extends AbstractView
 	 *
 	 * @since   1.0
 	 */
-	public function getData()
+	public function getData() : array
 	{
 		return $this->data;
 	}
@@ -79,7 +79,7 @@ abstract class AbstractHtmlView extends AbstractView
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public function getLayout()
+	public function getLayout() : string
 	{
 		if (is_null($this->layout))
 		{
@@ -97,7 +97,7 @@ abstract class AbstractHtmlView extends AbstractView
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public function getRenderer()
+	public function getRenderer() : RendererInterface
 	{
 		if (is_null($this->renderer))
 		{
@@ -138,7 +138,7 @@ abstract class AbstractHtmlView extends AbstractView
 	 *
 	 * @since   1.0
 	 */
-	public function setData(array $data)
+	public function setData(array $data) : AbstractHtmlView
 	{
 		$this->data = $data;
 
@@ -154,7 +154,7 @@ abstract class AbstractHtmlView extends AbstractView
 	 *
 	 * @since   1.0
 	 */
-	public function setLayout($layout)
+	public function setLayout(string $layout) : AbstractHtmlView
 	{
 		$this->layout = $layout;
 
@@ -170,7 +170,7 @@ abstract class AbstractHtmlView extends AbstractView
 	 *
 	 * @since   1.0
 	 */
-	public function setRenderer(RendererInterface $renderer)
+	public function setRenderer(RendererInterface $renderer) : AbstractHtmlView
 	{
 		$this->renderer = $renderer;
 

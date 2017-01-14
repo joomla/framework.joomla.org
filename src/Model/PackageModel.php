@@ -25,7 +25,7 @@ class PackageModel extends DefaultModel
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public function getItems()
+	public function getItems() : array
 	{
 		$package = $this->getState()->get('package.name');
 

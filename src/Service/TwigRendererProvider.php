@@ -64,7 +64,8 @@ class TwigRendererProvider implements ServiceProviderInterface
 	{
 		$container->share(
 			RendererInterface::class,
-			function (Container $container) {
+			function (Container $container) : TwigRenderer
+			{
 				/* @type  \Joomla\Registry\Registry  $config */
 				$config = $container->get('config');
 
@@ -115,14 +116,17 @@ class TwigRendererProvider implements ServiceProviderInterface
 
 		$container->share(
 			TwigRuntime::class,
-			function (Container $container) {
+			function (Container $container) : TwigRuntime
+			{
 				return new TwigRuntime($this->app, $container->get(Packages::class));
-			}
+			},
+			true
 		);
 
 		$container->share(
 			Packages::class,
-			function (Container $container) {
+			function (Container $container) : Packages
+			{
 				$version = file_exists(JPATH_ROOT . '/current_SHA') ? trim(file_get_contents(JPATH_ROOT . '/current_SHA')) : md5(get_class($this));
 				$context = new ApplicationContext($this->app);
 
@@ -132,7 +136,8 @@ class TwigRendererProvider implements ServiceProviderInterface
 						'img' => new PathPackage('media', new EmptyVersionStrategy, $context)
 					]
 				);
-			}
+			},
+			true
 		);
 	}
 }

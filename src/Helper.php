@@ -32,7 +32,7 @@ class Helper
 	 *
 	 * @since   1.0
 	 */
-	public function getPackageDisplayName($package)
+	public function getPackageDisplayName(string $package) : string
 	{
 		switch ($package)
 		{
@@ -78,7 +78,7 @@ class Helper
 	 *
 	 * @since   1.0
 	 */
-	public function parseComposer()
+	public function parseComposer() : array
 	{
 		// Only process this once
 		if (empty(self::$packages))

@@ -33,7 +33,7 @@ try
 	$errorReporting = (int) $container->get('config')->get('errorReporting', 0);
 	error_reporting($errorReporting);
 }
-catch (\Exception $e)
+catch (\Throwable $e)
 {
 	header('HTTP/1.1 500 Internal Server Error', null, 500);
 	echo '<html><head><title>Container Initialization Error</title></head><body><h1>Container Initialization Error</h1><p>An error occurred while creating the DI container: ' . $e->getMessage() . '</p></body></html>';

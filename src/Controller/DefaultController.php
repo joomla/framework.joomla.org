@@ -12,6 +12,7 @@ use Joomla\Controller\AbstractController;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\ContainerAwareTrait;
 use Joomla\Registry\Registry;
+use Joomla\View\ViewInterface;
 
 /**
  * Default controller class for the application
@@ -137,7 +138,7 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	protected function initializeView()
+	protected function initializeView() : ViewInterface
 	{
 		// Initialize the model object
 		$this->initializeModel();

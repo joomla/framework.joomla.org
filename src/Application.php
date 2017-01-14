@@ -90,13 +90,13 @@ class Application extends AbstractWebApplication implements ContainerAwareInterf
 	/**
 	 * Set the body for error conditions
 	 *
-	 * @param   \Exception  $exception  The Exception object
+	 * @param   \Throwable  $exception  The Throwable object
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	private function setErrorOutput(\Exception $exception)
+	private function setErrorOutput(\Throwable $exception)
 	{
 		switch (strtolower($this->input->getWord('format', 'html')))
 		{
@@ -131,13 +131,13 @@ class Application extends AbstractWebApplication implements ContainerAwareInterf
 	/**
 	 * Set the HTTP Header response for error conditions
 	 *
-	 * @param   \Exception  $exception  The Exception object
+	 * @param   \Throwable  $exception  The Throwable object
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	private function setErrorHeaderResponse(\Exception $exception)
+	private function setErrorHeaderResponse(\Throwable $exception)
 	{
 		switch ($exception->getCode())
 		{
