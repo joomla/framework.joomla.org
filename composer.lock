@@ -1440,26 +1440,26 @@
         },
         {
             "name": "joomla/model",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/model.git",
-                "reference": "900c54801904bf0fa594b5d78def01d764fb4281"
+                "reference": "65013d5364540fd797d1caa123b5d46de9f48322"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/model/zipball/900c54801904bf0fa594b5d78def01d764fb4281",
-                "reference": "900c54801904bf0fa594b5d78def01d764fb4281",
+                "url": "https://api.github.com/repos/joomla-framework/model/zipball/65013d5364540fd797d1caa123b5d46de9f48322",
+                "reference": "65013d5364540fd797d1caa123b5d46de9f48322",
                 "shasum": ""
             },
             "require": {
                 "joomla/registry": "~1.0",
-                "php": ">=5.3.10"
+                "php": "^5.3.10|~7.0"
             },
             "require-dev": {
                 "joomla/database": "~1.0",
                 "joomla/test": "~1.0",
-                "phpunit/phpunit": "4.*",
+                "phpunit/phpunit": "~4.8|~5.0",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "suggest": {
@@ -1473,8 +1473,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Model\\": "src/",
-                    "Joomla\\Model\\Tests\\": "Tests/"
+                    "Joomla\\Model\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1488,7 +1487,7 @@
                 "joomla",
                 "model"
             ],
-            "time": "2014-11-03T16:43:46+00:00"
+            "time": "2017-01-22T18:29:22+00:00"
         },
         {
             "name": "joomla/oauth1",
@@ -1947,16 +1946,16 @@
         },
         {
             "name": "joomla/test",
-            "version": "1.1.2",
+            "version": "1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/test.git",
-                "reference": "2f993be0ac533f258978c898ef7fe505a3c02e2c"
+                "reference": "9bceb0387fe76156554d1de765200abefcbf9166"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/test/zipball/2f993be0ac533f258978c898ef7fe505a3c02e2c",
-                "reference": "2f993be0ac533f258978c898ef7fe505a3c02e2c",
+                "url": "https://api.github.com/repos/joomla-framework/test/zipball/9bceb0387fe76156554d1de765200abefcbf9166",
+                "reference": "9bceb0387fe76156554d1de765200abefcbf9166",
                 "shasum": ""
             },
             "require": {
@@ -1987,7 +1986,7 @@
                 "reflection",
                 "unit test"
             ],
-            "time": "2015-03-14T17:39:02+00:00"
+            "time": "2017-01-21T22:54:27+00:00"
         },
         {
             "name": "joomla/twitter",
@@ -3038,16 +3037,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "4.0.4",
+            "version": "4.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a"
+                "reference": "c19cfc7cbb0e9338d8c469c7eedecc2a428b0971"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c14196e64a78570034afd0b7a9f3757ba71c2a0a",
-                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c19cfc7cbb0e9338d8c469c7eedecc2a428b0971",
+                "reference": "c19cfc7cbb0e9338d8c469c7eedecc2a428b0971",
                 "shasum": ""
             },
             "require": {
@@ -3097,7 +3096,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-20T15:22:42+00:00"
+            "time": "2017-01-20T15:06:43+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3282,16 +3281,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.5",
+            "version": "5.7.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "50fd2be8f3e23e91da825f36f08e5f9633076ffe"
+                "reference": "caf8141b89691498d91aaac6c82e9cd5f685ae86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/50fd2be8f3e23e91da825f36f08e5f9633076ffe",
-                "reference": "50fd2be8f3e23e91da825f36f08e5f9633076ffe",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/caf8141b89691498d91aaac6c82e9cd5f685ae86",
+                "reference": "caf8141b89691498d91aaac6c82e9cd5f685ae86",
                 "shasum": ""
             },
             "require": {
@@ -3303,7 +3302,7 @@
                 "myclabs/deep-copy": "~1.3",
                 "php": "^5.6 || ^7.0",
                 "phpspec/prophecy": "^1.6.2",
-                "phpunit/php-code-coverage": "^4.0.3",
+                "phpunit/php-code-coverage": "^4.0.4",
                 "phpunit/php-file-iterator": "~1.4",
                 "phpunit/php-text-template": "~1.2",
                 "phpunit/php-timer": "^1.0.6",
@@ -3360,7 +3359,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-28T07:18:51+00:00"
+            "time": "2017-01-22T08:39:59+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
