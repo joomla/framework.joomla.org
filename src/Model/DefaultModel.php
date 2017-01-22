@@ -11,15 +11,17 @@ namespace Joomla\Status\Model;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Model\DatabaseModelInterface;
 use Joomla\Model\DatabaseModelTrait;
+use Joomla\Model\ModelInterface;
+use Joomla\Model\StatefulModelTrait;
 
 /**
  * Default model class for the application
  *
  * @since  1.0
  */
-class DefaultModel implements DatabaseModelInterface
+class DefaultModel implements DatabaseModelInterface, ModelInterface
 {
-	use DatabaseModelTrait;
+	use DatabaseModelTrait, StatefulModelTrait;
 
 	/**
 	 * Instantiate the model.

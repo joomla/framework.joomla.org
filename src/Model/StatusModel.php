@@ -9,9 +9,6 @@
 namespace Joomla\Status\Model;
 
 use Joomla\Database\DatabaseDriver;
-use Joomla\Model\StatefulModelInterface;
-use Joomla\Model\StatefulModelTrait;
-use Joomla\Registry\Registry;
 use Joomla\Status\Helper;
 
 /**
@@ -19,9 +16,9 @@ use Joomla\Status\Helper;
  *
  * @since  1.0
  */
-class StatusModel extends DefaultModel implements StatefulModelInterface
+class StatusModel extends DefaultModel
 {
-	use PackageAware, StatefulModelTrait;
+	use PackageAware;
 
 	/**
 	 * Helper object
@@ -36,15 +33,12 @@ class StatusModel extends DefaultModel implements StatefulModelInterface
 	 *
 	 * @param   Helper          $helper  Helper object.
 	 * @param   DatabaseDriver  $db      The database adapter.
-	 * @param   Registry        $state   The model state.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(Helper $helper, DatabaseDriver $db, Registry $state = null)
+	public function __construct(Helper $helper, DatabaseDriver $db)
 	{
 		parent::__construct($db);
-
-		$this->setDb($db);
 
 		$this->helper = $helper;
 	}

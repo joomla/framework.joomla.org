@@ -11,6 +11,8 @@ namespace Joomla\Status\Controller;
 use Joomla\Controller\AbstractController;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\ContainerAwareTrait;
+use Joomla\Model\ModelInterface;
+use Joomla\Model\StatefulModelInterface;
 use Joomla\Registry\Registry;
 use Joomla\Status\Service\TwigRendererProvider;
 use Joomla\View\ViewInterface;
@@ -79,28 +81,24 @@ class DefaultController extends AbstractController implements ContainerAwareInte
 	 */
 	protected function initializeModel()
 	{
-		$model = '\\Joomla\\Status\\Model\\' . ucfirst($this->getInput()->getWord('view', $this->defaultView)) . 'Model';
+		$view  = $this->getInput()->getWord('view', $this->defaultView);
+		$model = 'Joomla\\Status\\Model\\' . ucfirst($view) . 'Model';
 
 		// If a model doesn't exist for our view, revert to the default model
-		if (!class_exists($model))
+		if (!class_exists('\\' . $model))
 		{
-			$model = '\\Joomla\\Status\\Model\\DefaultModel';
+			$view  = 'default';
+			$model = 'Joomla\\Status\\Model\\DefaultModel';
 		}
 
-		$object = $this->getContainer()->buildObject($model);
+		$object = $this->getContainer()->get($model);
 
-		if ($this->modelState instanceof Registry)
+		if ($this->modelState instanceof Registry && $object instanceof StatefulModelInterface)
 		{
 			$object->setState($this->modelState);
 		}
 
-		// Hack - Set the package list to our models, will be DI'd when we have the capability
-		if (method_exists($object, 'setPackages'))
-		{
-			$object->setPackages($this->getContainer()->get('application.packages'));
-		}
-
-		$this->getContainer()->set($model, $object)->alias('Joomla\\Model\\ModelInterface', $model);
+		$this->getContainer()->alias(ModelInterface::class, "model.$view");
 	}
 
 	/**

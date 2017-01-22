@@ -30,30 +30,28 @@ class DatabaseProvider implements ServiceProviderInterface
 	 */
 	public function register(Container $container)
 	{
-		$container->share(
-			'Joomla\\Database\\DatabaseDriver',
-			function (Container $container) : DatabaseDriver
-			{
-				$config = $container->get('config');
+		$container->alias('db', DatabaseDriver::class)
+			->share(
+				DatabaseDriver::class,
+				function (Container $container) : DatabaseDriver
+				{
+					$config = $container->get('config');
 
-				$options = [
-					'driver'   => $config->get('database.driver'),
-					'host'     => $config->get('database.host'),
-					'user'     => $config->get('database.user'),
-					'password' => $config->get('database.password'),
-					'database' => $config->get('database.name'),
-					'prefix'   => $config->get('database.prefix'),
-				];
+					$options = [
+						'driver'   => $config->get('database.driver'),
+						'host'     => $config->get('database.host'),
+						'user'     => $config->get('database.user'),
+						'password' => $config->get('database.password'),
+						'database' => $config->get('database.name'),
+						'prefix'   => $config->get('database.prefix'),
+					];
 
-				$db = DatabaseDriver::getInstance($options);
-				$db->setDebug($config->get('database.debug', false));
+					$db = DatabaseDriver::getInstance($options);
+					$db->setDebug($config->get('database.debug', false));
 
-				return $db;
-			},
-			true
-		);
-
-		// Alias the database
-		$container->alias('db', 'Joomla\\Database\\DatabaseDriver');
+					return $db;
+				},
+				true
+			);
 	}
 }

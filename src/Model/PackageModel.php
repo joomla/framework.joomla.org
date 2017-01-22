@@ -8,17 +8,14 @@
 
 namespace Joomla\Status\Model;
 
-use Joomla\Model\StatefulModelInterface;
-use Joomla\Model\StatefulModelTrait;
-
 /**
  * Model class for the package view
  *
  * @since  1.0
  */
-class PackageModel extends DefaultModel implements StatefulModelInterface
+class PackageModel extends DefaultModel
 {
-	use PackageAware, StatefulModelTrait;
+	use PackageAware;
 
 	/**
 	 * Fetches the requested data
