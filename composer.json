@@ -31,7 +31,7 @@
         "joomla/ldap": "~1.1",
         "joomla/linkedin": "~1.1",
         "joomla/log": "~1.2",
-        "joomla/model": "~1.1",
+        "joomla/model": "~1.3",
         "joomla/oauth1": "~1.1",
         "joomla/oauth2": "~1.1",
         "joomla/openstreetmap": "~1.0",

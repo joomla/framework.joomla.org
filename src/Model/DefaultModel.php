@@ -8,13 +8,28 @@
 
 namespace Joomla\Status\Model;
 
-use Joomla\Model\AbstractDatabaseModel;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Model\DatabaseModelInterface;
+use Joomla\Model\DatabaseModelTrait;
 
 /**
  * Default model class for the application
  *
  * @since  1.0
  */
-class DefaultModel extends AbstractDatabaseModel
+class DefaultModel implements DatabaseModelInterface
 {
+	use DatabaseModelTrait;
+
+	/**
+	 * Instantiate the model.
+	 *
+	 * @param   DatabaseDriver  $db  The database adapter.
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(DatabaseDriver $db)
+	{
+		$this->setDb($db);
+	}
 }
