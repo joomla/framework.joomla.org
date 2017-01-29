@@ -1,6 +1,6 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! Framework Website
  *
  * @copyright  Copyright (C) 2014 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
@@ -12,7 +12,10 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
+use Joomla\FrameworkWebsite\ContainerAwareRouter;
+use Joomla\Input\Input;
 use Joomla\Registry\Registry;
+use Joomla\Router\Router;
 use Joomla\Status\Helper;
 use Joomla\Status\Model\{
 	DefaultModel, PackageModel, StatusModel
@@ -44,6 +47,12 @@ class ApplicationProvider implements ServiceProviderInterface
 			->share('application.helper', [$this, 'getApplicationHelperService'], true);
 
 		$container->share('application.packages', [$this, 'getApplicationPackagesService'], true);
+
+		$container->alias(ContainerAwareRouter::class, 'application.router')
+			->alias(Router::class, 'application.router')
+			->share('application.router', [$this, 'getApplicationRouterService'], true);
+
+		$container->share(Input::class, [$this, 'getInputClassService'], true);
 
 		/*
 		 * MVC Layer
@@ -89,6 +98,38 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getApplicationPackagesService(Container $container) : Registry
 	{
 		return (new Registry)->loadFile(JPATH_ROOT . '/packages.yml', 'YAML');
+	}
+
+	/**
+	 * Get the `application.router` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ContainerAwareRouter
+	 *
+	 * @since   1.0
+	 */
+	public function getApplicationRouterService(Container $container) : ContainerAwareRouter
+	{
+		$router = (new ContainerAwareRouter($container->get(Input::class)))
+			->setControllerPrefix('Joomla\\FrameworkWebsite\\Controller\\')
+			->setDefaultController('DefaultController')
+			->addMap('/:view', 'DefaultController')
+			->addMap('/status/:package', 'PackageController');
+	}
+
+	/**
+	 * Get the Input class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Input
+	 *
+	 * @since   1.0
+	 */
+	public function getInputClassService(Container $container) : Input
+	{
+		return new Input($_REQUEST);
 	}
 
 	/**
