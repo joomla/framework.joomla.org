@@ -1,6 +1,7 @@
 {
-    "name": "joomla/framework-status",
-    "description": "Application reporting the current status of the Joomla! Framework",
+    "name": "joomla/framework-website",
+    "description": "Application code for framework.joomla.org",
+    "homepage": "http://github.com/joomla/framework.joomla.org",
     "license": "GPL-2.0+",
     "require": {
         "php": ">=7.0",
@@ -58,7 +59,8 @@
     "autoload": {
         "psr-4": {
             "Joomla\\StatusCli\\": "cli/",
-            "Joomla\\Status\\": "src/"
+            "Joomla\\Status\\": "src/",
+            "Joomla\\FrameworkWebsite\\": "src/"
         }
     },
     "config": {
