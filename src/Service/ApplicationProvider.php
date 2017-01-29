@@ -18,8 +18,9 @@ use Joomla\FrameworkWebsite\
 	ContainerAwareRouter, WebApplication
 };
 use Joomla\FrameworkWebsite\Controller\{
-	HomepageController, PageController
+	HomepageController, PageController, StatusController
 };
+use Joomla\FrameworkWebsite\View\Status\StatusHtmlView;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Joomla\Renderer\RendererInterface;
@@ -79,6 +80,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(PageController::class, 'controller.page')
 			->share('controller.page', [$this, 'getControllerPageService'], true);
 
+		$container->alias(StatusController::class, 'controller.status')
+			->share('controller.status', [$this, 'getControllerStatusService'], true);
+
 		// Models
 		$container->alias(DefaultModel::class, 'model.default')
 			->share('model.default', [$this, 'getModelDefaultService'], true);
@@ -88,6 +92,10 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->alias(StatusModel::class, 'model.status')
 			->share('model.status', [$this, 'getModelStatusService'], true);
+
+		// Views
+		$container->alias(StatusHtmlView::class, 'view.status.html')
+			->share('view.status.html', [$this, 'getViewStatusHtmlService'], true);
 	}
 
 	/**
@@ -135,6 +143,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		$router = new ContainerAwareRouter($container->get(Input::class));
 		$router->setControllerPrefix('Joomla\\FrameworkWebsite\\Controller\\')
 			->setDefaultController('HomepageController')
+			->addMap('/status', 'StatusController')
 			->addMap('/:view', 'PageController')
 			->addMap('/status/:package', 'PackageController');
 
@@ -174,6 +183,24 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new PageController(
 			$container->get(RendererInterface::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the `controller.status` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  StatusController
+	 *
+	 * @since   1.0
+	 */
+	public function getControllerStatusService(Container $container) : StatusController
+	{
+		return new StatusController(
+			$container->get(StatusHtmlView::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
@@ -239,6 +266,27 @@ class ApplicationProvider implements ServiceProviderInterface
 		$model->setPackages($container->get('application.packages'));
 
 		return $model;
+	}
+
+	/**
+	 * Get the `view.status.html` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  StatusHtmlView
+	 *
+	 * @since   1.0
+	 */
+	public function getViewStatusHtmlService(Container $container) : StatusHtmlView
+	{
+		$view = new StatusHtmlView(
+			$container->get('model.status'),
+			$container->get('renderer')
+		);
+
+		$view->setLayout('status.twig');
+
+		return $view;
 	}
 
 	/**

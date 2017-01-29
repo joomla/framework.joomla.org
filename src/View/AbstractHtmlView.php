@@ -1,12 +1,12 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! Framework Website
  *
  * @copyright  Copyright (C) 2014 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\View;
+namespace Joomla\FrameworkWebsite\View;
 
 use Joomla\Model\ModelInterface;
 use Joomla\Renderer\RendererInterface;
@@ -47,15 +47,12 @@ abstract class AbstractHtmlView extends AbstractView
 	/**
 	 * Class constructor
 	 *
-	 * @param   ModelInterface     $model     The model object.
 	 * @param   RendererInterface  $renderer  The renderer object.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(ModelInterface $model, RendererInterface $renderer)
+	public function __construct(RendererInterface $renderer)
 	{
-		parent::__construct($model);
-
 		$this->setRenderer($renderer);
 	}
 
