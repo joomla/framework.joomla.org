@@ -18,9 +18,11 @@ use Joomla\FrameworkWebsite\
 	ContainerAwareRouter, WebApplication
 };
 use Joomla\FrameworkWebsite\Controller\{
-	HomepageController, PageController, StatusController
+	HomepageController, PackageController, PageController, StatusController
 };
-use Joomla\FrameworkWebsite\View\Status\StatusHtmlView;
+use Joomla\FrameworkWebsite\View\{
+	Package\PackageHtmlView, Status\StatusHtmlView
+};
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Joomla\Renderer\RendererInterface;
@@ -78,6 +80,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(HomepageController::class, 'controller.homepage')
 			->share('controller.homepage', [$this, 'getControllerHomepageService'], true);
 
+		$container->alias(PackageController::class, 'controller.package')
+			->share('controller.package', [$this, 'getControllerPackageService'], true);
+
 		$container->alias(PageController::class, 'controller.page')
 			->share('controller.page', [$this, 'getControllerPageService'], true);
 
@@ -95,6 +100,9 @@ class ApplicationProvider implements ServiceProviderInterface
 			->share('model.status', [$this, 'getModelStatusService'], true);
 
 		// Views
+		$container->alias(PackageHtmlView::class, 'view.package.html')
+			->share('view.package.html', [$this, 'getViewPackageHtmlService'], true);
+
 		$container->alias(StatusHtmlView::class, 'view.status.html')
 			->share('view.status.html', [$this, 'getViewStatusHtmlService'], true);
 	}
@@ -166,6 +174,24 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new HomepageController(
 			$container->get(RendererInterface::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the `controller.package` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  PackageController
+	 *
+	 * @since   1.0
+	 */
+	public function getControllerPackageService(Container $container) : PackageController
+	{
+		return new PackageController(
+			$container->get(PackageHtmlView::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
@@ -267,6 +293,27 @@ class ApplicationProvider implements ServiceProviderInterface
 		$model->setPackages($container->get('application.packages'));
 
 		return $model;
+	}
+
+	/**
+	 * Get the `view.package.html` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  PackageHtmlView
+	 *
+	 * @since   1.0
+	 */
+	public function getViewPackageHtmlService(Container $container) : PackageHtmlView
+	{
+		$view = new PackageHtmlView(
+			$container->get('model.package'),
+			$container->get('renderer')
+		);
+
+		$view->setLayout('package.twig');
+
+		return $view;
 	}
 
 	/**

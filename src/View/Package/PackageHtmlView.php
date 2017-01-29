@@ -1,15 +1,16 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! Framework Website
  *
  * @copyright  Copyright (C) 2014 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\View\Package;
+namespace Joomla\FrameworkWebsite\View\Package;
 
+use Joomla\FrameworkWebsite\View\DefaultHtmlView;
+use Joomla\Renderer\RendererInterface;
 use Joomla\Status\Model\PackageModel;
-use Joomla\Status\View\DefaultHtmlView;
 
 /**
  * Package HTML view class for the application
@@ -19,12 +20,35 @@ use Joomla\Status\View\DefaultHtmlView;
 class PackageHtmlView extends DefaultHtmlView
 {
 	/**
-	 * The model object, redeclared here for proper typehinting
+	 * The model object
 	 *
 	 * @var    PackageModel
 	 * @since  1.0
 	 */
 	protected $model;
+
+	/**
+	 * The active package
+	 *
+	 * @var    string
+	 * @since  1.0
+	 */
+	private $package;
+
+	/**
+	 * Instantiate the view.
+	 *
+	 * @param   PackageModel       $model     The model object.
+	 * @param   RendererInterface  $renderer  The renderer object.
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(PackageModel $model, RendererInterface $renderer)
+	{
+		parent::__construct($renderer);
+
+		$this->model = $model;
+	}
 
 	/**
 	 * Method to render the view
@@ -36,13 +60,25 @@ class PackageHtmlView extends DefaultHtmlView
 	 */
 	public function render()
 	{
-		$package = $this->model->getState()->get('package.name');
-
 		$this->setData([
-			'items'   => $this->model->getItems(),
-			'package' => $this->model->getPackages()->get('packages.' . $package . '.display', ucfirst($package)),
+			'items'   => $this->model->getPackage($this->package),
+			'package' => $this->model->getPackages()->get('packages.' . $this->package . '.display', ucfirst($this->package)),
 		]);
 
 		return parent::render();
+	}
+
+	/**
+	 * Set the active package
+	 *
+	 * @param   string  $package  The active package name
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function setPackage(string $package)
+	{
+		$this->package = $package;
 	}
 }

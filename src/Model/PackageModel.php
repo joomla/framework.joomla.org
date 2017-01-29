@@ -20,15 +20,15 @@ class PackageModel extends DefaultModel
 	/**
 	 * Fetches the requested data
 	 *
+	 * @param   string  $package  The package to request data for
+	 *
 	 * @return  array
 	 *
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public function getItems() : array
+	public function getPackage(string $package) : array
 	{
-		$package = $this->getState()->get('package.name');
-
 		// Get the package data for the package specified via the route
 		$db = $this->getDb();
 

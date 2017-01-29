@@ -30,7 +30,7 @@ class StatusHtmlView extends DefaultHtmlView
 	/**
 	 * Instantiate the view.
 	 *
-	 * @param   StatsModel         $model     The model object.
+	 * @param   StatusModel        $model     The model object.
 	 * @param   RendererInterface  $renderer  The renderer object.
 	 *
 	 * @since   1.0
