@@ -15,7 +15,7 @@ use Joomla\DI\{
 };
 use Joomla\FrameworkWebsite\
 {
-	ContainerAwareRouter, WebApplication
+	ContainerAwareRouter, Helper, WebApplication
 };
 use Joomla\FrameworkWebsite\Controller\{
 	HomepageController, PackageController, PageController, StatusController
@@ -30,7 +30,6 @@ use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Joomla\Renderer\RendererInterface;
 use Joomla\Router\Router;
-use Joomla\Status\Helper;
 
 /**
  * Application service provider

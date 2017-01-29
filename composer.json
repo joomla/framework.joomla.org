@@ -59,7 +59,6 @@
     "autoload": {
         "psr-4": {
             "Joomla\\StatusCli\\": "cli/",
-            "Joomla\\Status\\": "src/",
             "Joomla\\FrameworkWebsite\\": "src/"
         }
     },

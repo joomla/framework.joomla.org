@@ -1,14 +1,13 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! Framework Website
  *
  * @copyright  Copyright (C) 2014 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status;
+namespace Joomla\FrameworkWebsite;
 
-use Joomla\FrameworkWebsite\PackageAware;
 use PackageVersions\Versions;
 
 /**
@@ -26,7 +25,7 @@ class Helper
 	 * @var    array
 	 * @since  1.0
 	 */
-	private static $packageList = array();
+	private static $packageList = [];
 
 	/**
 	 * Utility method to retrieve a package's display name

@@ -9,11 +9,12 @@
 namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
-use Joomla\FrameworkWebsite\PackageAware;
+use Joomla\FrameworkWebsite\{
+	Helper, PackageAware
+};
 use Joomla\Model\{
 	DatabaseModelInterface, DatabaseModelTrait
 };
-use Joomla\Status\Helper;
 
 /**
  * Model class for the status dashboard
