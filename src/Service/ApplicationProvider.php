@@ -54,6 +54,7 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->alias(WebApplication::class, JoomlaApplication\AbstractWebApplication::class)
 			->share(JoomlaApplication\AbstractWebApplication::class, [$this, 'getWebApplicationClassService'], true);
+
 		/*
 		 * Application Helpers and Dependencies
 		 */
