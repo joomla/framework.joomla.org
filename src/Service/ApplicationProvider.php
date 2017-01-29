@@ -8,13 +8,18 @@
 
 namespace Joomla\FrameworkWebsite\Service;
 
+use Joomla\Application as JoomlaApplication;
 use Joomla\Database\DatabaseDriver;
 use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
-use Joomla\FrameworkWebsite\ContainerAwareRouter;
+use Joomla\FrameworkWebsite\{
+	ContainerAwareRouter, WebApplication
+};
+use Joomla\FrameworkWebsite\Controller\HomepageController;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
+use Joomla\Renderer\RendererInterface;
 use Joomla\Router\Router;
 use Joomla\Status\Helper;
 use Joomla\Status\Model\{
@@ -40,6 +45,12 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function register(Container $container)
 	{
 		/*
+		 * Application Classes
+		 */
+
+		$container->alias(WebApplication::class, JoomlaApplication\AbstractWebApplication::class)
+			->share(JoomlaApplication\AbstractWebApplication::class, [$this, 'getWebApplicationClassService'], true);
+		/*
 		 * Application Helpers and Dependencies
 		 */
 
@@ -57,6 +68,10 @@ class ApplicationProvider implements ServiceProviderInterface
 		/*
 		 * MVC Layer
 		 */
+
+		// Controllers
+		$container->alias(HomepageController::class, 'controller.homepage')
+			->share('controller.homepage', [$this, 'getControllerHomepageService'], true);
 
 		// Models
 		$container->alias(DefaultModel::class, 'model.default')
@@ -111,11 +126,33 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getApplicationRouterService(Container $container) : ContainerAwareRouter
 	{
-		$router = (new ContainerAwareRouter($container->get(Input::class)))
-			->setControllerPrefix('Joomla\\FrameworkWebsite\\Controller\\')
-			->setDefaultController('DefaultController')
+		$router = new ContainerAwareRouter($container->get(Input::class));
+		$router->setControllerPrefix('Joomla\\FrameworkWebsite\\Controller\\')
+			->setDefaultController('HomepageController')
 			->addMap('/:view', 'DefaultController')
 			->addMap('/status/:package', 'PackageController');
+
+		$router->setContainer($container);
+
+		return $router;
+	}
+
+	/**
+	 * Get the `controller.homepage` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  HomepageController
+	 *
+	 * @since   1.0
+	 */
+	public function getControllerHomepageService(Container $container) : HomepageController
+	{
+		return new HomepageController(
+			$container->get(RendererInterface::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
 	}
 
 	/**
@@ -178,5 +215,25 @@ class ApplicationProvider implements ServiceProviderInterface
 		$model->setPackages($container->get('application.packages'));
 
 		return $model;
+	}
+
+	/**
+	 * Get the WebApplication class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  WebApplication
+	 *
+	 * @since   1.0
+	 */
+	public function getWebApplicationClassService(Container $container) : WebApplication
+	{
+		$application = new WebApplication($container->get(Input::class), $container->get('config'));
+
+		// Inject extra services
+		$application->setContainer($container);
+		$application->setRouter($container->get(ContainerAwareRouter::class));
+
+		return $application;
 	}
 }

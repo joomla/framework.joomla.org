@@ -26,8 +26,12 @@ try
 {
 	$container = (new Joomla\DI\Container)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
-		->registerServiceProvider(new Joomla\Status\Service\ConfigurationProvider)
-		->registerServiceProvider(new Joomla\Status\Service\DatabaseProvider);
+		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
+		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\DatabaseProvider)
+		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
+
+	// Alias the web application to Joomla's base application class as this is the primary application for the environment
+	$container->alias(Joomla\Application\AbstractApplication::class, Joomla\Application\AbstractWebApplication::class);
 
 	// Set error reporting based on config
 	$errorReporting = (int) $container->get('config')->get('errorReporting', 0);
@@ -38,10 +42,23 @@ catch (\Throwable $e)
 	header('HTTP/1.1 500 Internal Server Error', null, 500);
 	echo '<html><head><title>Container Initialization Error</title></head><body><h1>Container Initialization Error</h1><p>An error occurred while creating the DI container: ' . $e->getMessage() . '</p></body></html>';
 
-	exit(500);
+	exit(1);
 }
 
 // Execute the application
-(new Joomla\Status\Application(null, $container->get('config')))
-	->setContainer($container)
-	->execute();
+try
+{
+	$container->get(Joomla\Application\AbstractApplication::class)->execute();
+}
+catch (\Throwable $e)
+{
+	if (!headers_sent())
+	{
+		header('HTTP/1.1 500 Internal Server Error', null, 500);
+		header('Content-Type: text/html; charset=utf-8');
+	}
+
+	echo '<html><head><title>Application Error</title></head><body><h1>Application Error</h1><p>An error occurred while executing the application: ' . $e->getMessage() . '</p></body></html>';
+
+	exit(1);
+}

@@ -1,19 +1,19 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! Framework Website
  *
  * @copyright  Copyright (C) 2014 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\Renderer;
+namespace Joomla\FrameworkWebsite\Renderer;
 
 /**
- * Twig extension class
+ * Framework site's Twig extension class
  *
  * @since  1.0
  */
-class TwigExtension extends \Twig_Extension
+class FrameworkExtension extends \Twig_Extension
 {
 	/**
 	 * Returns a list of filters to add to the existing list
@@ -40,13 +40,13 @@ class TwigExtension extends \Twig_Extension
 	public function getFunctions()
 	{
 		return [
-			new \Twig_Function('asset', [TwigRuntime::class, 'getAssetUri']),
-			new \Twig_Function('route', [TwigRuntime::class, 'getRouteUri'])
+			new \Twig_Function('asset', [FrameworkTwigRuntime::class, 'getAssetUri']),
+			new \Twig_Function('route', [FrameworkTwigRuntime::class, 'getRouteUri'])
 		];
 	}
 
 	/**
-	 * Replaces the application root path defined by the constant "JPATH_ROOT" with the string "APP_ROOT"
+	 * Removes the application root path defined by the constant "JPATH_ROOT"
 	 *
 	 * @param   string  $string  The string to process
 	 *
@@ -56,6 +56,6 @@ class TwigExtension extends \Twig_Extension
 	 */
 	public function stripJRoot(string $string) : string
 	{
-		return str_replace(JPATH_ROOT, 'APP_ROOT', $string);
+		return str_replace(JPATH_ROOT . DIRECTORY_SEPARATOR, '', $string);
 	}
 }
