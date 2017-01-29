@@ -8,7 +8,7 @@
 
 namespace Joomla\Status;
 
-use Joomla\Status\Model\PackageAware;
+use Joomla\FrameworkWebsite\PackageAware;
 use PackageVersions\Versions;
 
 /**

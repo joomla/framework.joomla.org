@@ -1,14 +1,18 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! Framework Website
  *
  * @copyright  Copyright (C) 2014 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\Model;
+namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
+use Joomla\FrameworkWebsite\PackageAware;
+use Joomla\Model\{
+	DatabaseModelInterface, DatabaseModelTrait
+};
 use Joomla\Status\Helper;
 
 /**
@@ -16,9 +20,9 @@ use Joomla\Status\Helper;
  *
  * @since  1.0
  */
-class StatusModel extends DefaultModel
+class StatusModel implements DatabaseModelInterface
 {
-	use PackageAware;
+	use DatabaseModelTrait, PackageAware;
 
 	/**
 	 * Helper object

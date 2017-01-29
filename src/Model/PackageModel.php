@@ -1,21 +1,38 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! Framework Website
  *
  * @copyright  Copyright (C) 2014 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\Model;
+namespace Joomla\FrameworkWebsite\Model;
+
+use Joomla\FrameworkWebsite\PackageAware;
+use Joomla\Model\{
+	DatabaseModelInterface, DatabaseModelTrait
+};
 
 /**
  * Model class for the package view
  *
  * @since  1.0
  */
-class PackageModel extends DefaultModel
+class PackageModel implements DatabaseModelInterface
 {
-	use PackageAware;
+	use DatabaseModelTrait, PackageAware;
+
+	/**
+	 * Instantiate the model.
+	 *
+	 * @param   DatabaseDriver  $db  The database adapter.
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(DatabaseDriver $db)
+	{
+		$this->setDb($db);
+	}
 
 	/**
 	 * Fetches the requested data

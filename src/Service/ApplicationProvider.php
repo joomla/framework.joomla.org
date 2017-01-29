@@ -20,6 +20,9 @@ use Joomla\FrameworkWebsite\
 use Joomla\FrameworkWebsite\Controller\{
 	HomepageController, PackageController, PageController, StatusController
 };
+use Joomla\FrameworkWebsite\Model\{
+	PackageModel, StatusModel
+};
 use Joomla\FrameworkWebsite\View\{
 	Package\PackageHtmlView, Status\StatusHtmlView
 };
@@ -28,9 +31,6 @@ use Joomla\Registry\Registry;
 use Joomla\Renderer\RendererInterface;
 use Joomla\Router\Router;
 use Joomla\Status\Helper;
-use Joomla\Status\Model\{
-	DefaultModel, PackageModel, StatusModel
-};
 
 /**
  * Application service provider
@@ -90,9 +90,6 @@ class ApplicationProvider implements ServiceProviderInterface
 			->share('controller.status', [$this, 'getControllerStatusService'], true);
 
 		// Models
-		$container->alias(DefaultModel::class, 'model.default')
-			->share('model.default', [$this, 'getModelDefaultService'], true);
-
 		$container->alias(PackageModel::class, 'model.package')
 			->share('model.package', [$this, 'getModelPackageService'], true);
 
@@ -245,20 +242,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getInputClassService(Container $container) : Input
 	{
 		return new Input($_REQUEST);
-	}
-
-	/**
-	 * Get the `model.default` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  DefaultModel
-	 *
-	 * @since   1.0
-	 */
-	public function getModelDefaultService(Container $container) : DefaultModel
-	{
-		return new DefaultModel($container->get(DatabaseDriver::class));
 	}
 
 	/**

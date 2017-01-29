@@ -8,9 +8,9 @@
 
 namespace Joomla\FrameworkWebsite\View\Status;
 
+use Joomla\FrameworkWebsite\Model\StatusModel;
 use Joomla\FrameworkWebsite\View\DefaultHtmlView;
 use Joomla\Renderer\RendererInterface;
-use Joomla\Status\Model\StatusModel;
 
 /**
  * Status dashboard HTML view class for the application

@@ -8,9 +8,9 @@
 
 namespace Joomla\FrameworkWebsite\View\Package;
 
+use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\View\DefaultHtmlView;
 use Joomla\Renderer\RendererInterface;
-use Joomla\Status\Model\PackageModel;
 
 /**
  * Package HTML view class for the application
@@ -33,7 +33,7 @@ class PackageHtmlView extends DefaultHtmlView
 	 * @var    string
 	 * @since  1.0
 	 */
-	private $package;
+	private $package = '';
 
 	/**
 	 * Instantiate the view.
