@@ -13,10 +13,13 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
-use Joomla\FrameworkWebsite\{
+use Joomla\FrameworkWebsite\
+{
 	ContainerAwareRouter, WebApplication
 };
-use Joomla\FrameworkWebsite\Controller\HomepageController;
+use Joomla\FrameworkWebsite\Controller\{
+	HomepageController, PageController
+};
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Joomla\Renderer\RendererInterface;
@@ -72,6 +75,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		// Controllers
 		$container->alias(HomepageController::class, 'controller.homepage')
 			->share('controller.homepage', [$this, 'getControllerHomepageService'], true);
+
+		$container->alias(PageController::class, 'controller.page')
+			->share('controller.page', [$this, 'getControllerPageService'], true);
 
 		// Models
 		$container->alias(DefaultModel::class, 'model.default')
@@ -129,7 +135,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		$router = new ContainerAwareRouter($container->get(Input::class));
 		$router->setControllerPrefix('Joomla\\FrameworkWebsite\\Controller\\')
 			->setDefaultController('HomepageController')
-			->addMap('/:view', 'DefaultController')
+			->addMap('/:view', 'PageController')
 			->addMap('/status/:package', 'PackageController');
 
 		$router->setContainer($container);
@@ -149,6 +155,24 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getControllerHomepageService(Container $container) : HomepageController
 	{
 		return new HomepageController(
+			$container->get(RendererInterface::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the `controller.page` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  PageController
+	 *
+	 * @since   1.0
+	 */
+	public function getControllerPageService(Container $container) : PageController
+	{
+		return new PageController(
 			$container->get(RendererInterface::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
