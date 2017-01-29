@@ -6,16 +6,17 @@
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\Service;
+namespace Joomla\FrameworkWebsite\Service;
 
 use Joomla\Database\DatabaseDriver;
-use Joomla\DI\Container;
-use Joomla\DI\ServiceProviderInterface;
+use Joomla\DI\{
+	Container, ServiceProviderInterface
+};
 use Joomla\Registry\Registry;
 use Joomla\Status\Helper;
-use Joomla\Status\Model\DefaultModel;
-use Joomla\Status\Model\PackageModel;
-use Joomla\Status\Model\StatusModel;
+use Joomla\Status\Model\{
+	DefaultModel, PackageModel, StatusModel
+};
 
 /**
  * Application service provider
@@ -35,62 +36,106 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function register(Container $container)
 	{
+		/*
+		 * Application Helpers and Dependencies
+		 */
+
 		$container->alias(Helper::class, 'application.helper')
-			->share(
-				'application.helper',
-				function (Container $container) : Helper
-				{
-					$helper = new Helper;
-					$helper->setPackages($container->get('application.packages'));
+			->share('application.helper', [$this, 'getApplicationHelperService'], true);
 
-					return $helper;
-				},
-				true
-			);
+		$container->share('application.packages', [$this, 'getApplicationPackagesService'], true);
 
-		$container->share(
-			'application.packages',
-			function () : Registry
-			{
-				$registry = new Registry;
-				$registry->loadFile(JPATH_ROOT . '/packages.yml', 'YAML');
+		/*
+		 * MVC Layer
+		 */
 
-				return $registry;
-			},
-			true
-		);
-
+		// Models
 		$container->alias(DefaultModel::class, 'model.default')
-			->share(
-				'model.default',
-				function (Container $container) : DefaultModel
-				{
-					return new DefaultModel($container->get(DatabaseDriver::class));
-				}
-			);
+			->share('model.default', [$this, 'getModelDefaultService'], true);
 
 		$container->alias(PackageModel::class, 'model.package')
-			->share(
-				'model.package',
-				function (Container $container) : PackageModel
-				{
-					$model = new PackageModel($container->get(DatabaseDriver::class));
-					$model->setPackages($container->get('application.packages'));
-
-					return $model;
-				}
-			);
+			->share('model.package', [$this, 'getModelPackageService'], true);
 
 		$container->alias(StatusModel::class, 'model.status')
-			->share(
-				'model.status',
-				function (Container $container) : StatusModel
-				{
-					$model = new StatusModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
-					$model->setPackages($container->get('application.packages'));
+			->share('model.status', [$this, 'getModelStatusService'], true);
+	}
 
-					return $model;
-				}
-			);
+	/**
+	 * Get the `application.helper` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Helper
+	 *
+	 * @since   1.0
+	 */
+	public function getApplicationHelperService(Container $container) : Helper
+	{
+		$helper = new Helper;
+		$helper->setPackages($container->get('application.packages'));
+
+		return $helper;
+	}
+
+	/**
+	 * Get the `application.packages` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Registry
+	 *
+	 * @since   1.0
+	 */
+	public function getApplicationPackagesService(Container $container) : Registry
+	{
+		return (new Registry)->loadFile(JPATH_ROOT . '/packages.yml', 'YAML');
+	}
+
+	/**
+	 * Get the `model.default` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  DefaultModel
+	 *
+	 * @since   1.0
+	 */
+	public function getModelDefaultService(Container $container) : DefaultModel
+	{
+		return new DefaultModel($container->get(DatabaseDriver::class));
+	}
+
+	/**
+	 * Get the `model.package` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  PackageModel
+	 *
+	 * @since   1.0
+	 */
+	public function getModelPackageService(Container $container) : PackageModel
+	{
+		$model = new PackageModel($container->get(DatabaseDriver::class));
+		$model->setPackages($container->get('application.packages'));
+
+		return $model;
+	}
+
+	/**
+	 * Get the `model.status` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  StatusModel
+	 *
+	 * @since   1.0
+	 */
+	public function getModelStatusService(Container $container) : StatusModel
+	{
+		$model = new StatusModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
+		$model->setPackages($container->get('application.packages'));
+
+		return $model;
 	}
 }
