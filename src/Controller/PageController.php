@@ -59,7 +59,15 @@ class PageController extends AbstractController
 		// Enable browser caching
 		$this->getApplication()->allowCache(true);
 
-		$this->getApplication()->setBody($this->renderer->render($this->getInput()->getString('view', '') . '.twig'));
+		$layout = $this->getInput()->getString('view', '') . '.twig';
+
+		// Since this is a catch-all route, if the layout doesn't exist, treat this as a 404
+		if (!$this->renderer->pathExists($layout))
+		{
+			throw new \RuntimeException(sprintf('Unable to handle request for route `%s`.', $this->getApplication()->get('uri.route')), 404);
+		}
+
+		$this->getApplication()->setBody($this->renderer->render($layout));
 
 		return true;
 	}
