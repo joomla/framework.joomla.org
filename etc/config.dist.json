@@ -1,6 +1,6 @@
 {
 	"database": {
-		"driver"  : "mysqli",
+		"driver"  : "mysql",
 		"host"    : "",
 		"user"    : "",
 		"password": "",
