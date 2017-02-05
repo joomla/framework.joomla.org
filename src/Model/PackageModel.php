@@ -58,37 +58,37 @@ class PackageModel implements DatabaseModelInterface
 	 */
 	public function getLatestReleases() : array
 	{
-		// Parse installed.json to get the currently installed packages, should always be the latest version
-		// TODO - Replace this with a package listing gathered from the Packagist API to decouple from needing all packages installed
-		$packages = $this->helper->parseComposer();
-		$reports  = array();
+		$reports = [];
 
 		// Get the package data for each of our packages
 		$db = $this->getDb();
 
+		/** @var MysqlQuery $subQuery */
+		$subQuery = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__packages'))
+			->order('package, version DESC');
+
+		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select('*')
-			->from($db->quoteName('#__packages'));
-
-		foreach ($packages as $name => $package)
-		{
-			$query->where(
-				$db->quoteName('package') . ' = ' . $db->quote($name) . ' AND ' . $db->quoteName('version') . ' = ' . $db->quote($package['version']),
-				'OR'
-			);
-		}
+			->from('(' . (string) $subQuery . ') AS sub')
+			->group('package');
 
 		$packs = $db->setQuery($query)->loadObjectList();
+
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__test_results'));
 
 		// Loop through the packs and get the reports
 		foreach ($packs as $pack)
 		{
-			$query->clear()
-				->select('*')
-				->from($db->quoteName('#__test_results'))
-				->where($db->quoteName('package_id') . ' = ' . (int) $pack->id)
-				->order('id DESC')
-				->setLimit(1);
+			$query->clear('where')
+				->where($db->quoteName('package_id') . ' = :package_id');
+
+			$query->bind('package_id', $pack->id, \PDO::PARAM_INT);
 
 			$result = $db->setQuery($query)->loadObject();
 
@@ -116,9 +116,6 @@ class PackageModel implements DatabaseModelInterface
 
 			$reports[$pack->package] = $result;
 		}
-
-		// Sort the array
-		ksort($reports);
 
 		return $reports;
 	}

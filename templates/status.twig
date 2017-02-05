@@ -54,7 +54,7 @@
                     <td class="hidden-xs hidden-sm">{{ release.failures }}</td>
                     <td class="hidden-xs hidden-sm">{{ release.errors }}</td>
                     <td>
-                        {{ release.lines_covered }}/{{ release.total_lines }} ({{ release.lines_percentage|number_format(2) }}%
+                        {{ release.lines_covered }}/{{ release.total_lines }} ({{ release.lines_percentage|number_format(2) }}%)
                         {% if release.id %}
                             <br />
                             <a href="{{ route('coverage/' ~ package ~ '/') }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
