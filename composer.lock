@@ -522,20 +522,20 @@
         },
         {
             "name": "joomla/database",
-            "version": "1.4.2",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/database.git",
-                "reference": "c8e6bf9b3c7ad04d205b563d6e5f012ec5cb9a9b"
+                "reference": "49d13066870f7235216fb94ffa86bf64070e04b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/database/zipball/c8e6bf9b3c7ad04d205b563d6e5f012ec5cb9a9b",
-                "reference": "c8e6bf9b3c7ad04d205b563d6e5f012ec5cb9a9b",
+                "url": "https://api.github.com/repos/joomla-framework/database/zipball/49d13066870f7235216fb94ffa86bf64070e04b8",
+                "reference": "49d13066870f7235216fb94ffa86bf64070e04b8",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.10|>=7.0",
+                "php": "^5.3.10|~7.0",
                 "psr/log": "~1.0"
             },
             "require-dev": {
@@ -543,6 +543,12 @@
                 "phpunit/dbunit": "~1.3",
                 "phpunit/phpunit": "~4.8|~5.0",
                 "squizlabs/php_codesniffer": "1.*"
+            },
+            "suggest": {
+                "ext-mysqli": "To connect to a MySQL database via MySQLi",
+                "ext-pdo": "To connect to a MySQL, Oracle, PostgreSQL, or SQLite database via PDO",
+                "ext-pgsql": "To connect to a PostgreSQL database",
+                "ext-sqlsrv": "To connect to a SQL Server database"
             },
             "type": "joomla-package",
             "extra": {
@@ -566,7 +572,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-05-18T18:51:58+00:00"
+            "time": "2017-01-29T23:34:44+00:00"
         },
         {
             "name": "joomla/date",
@@ -961,16 +967,16 @@
         },
         {
             "name": "joomla/github",
-            "version": "1.5.2",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/github-api.git",
-                "reference": "be2a51b389f4f8c1dc9d59cb9ba998daf481a3da"
+                "reference": "5f4198716973309d9b91cf0ab5b5b6b02dbb21ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/github-api/zipball/be2a51b389f4f8c1dc9d59cb9ba998daf481a3da",
-                "reference": "be2a51b389f4f8c1dc9d59cb9ba998daf481a3da",
+                "url": "https://api.github.com/repos/joomla-framework/github-api/zipball/5f4198716973309d9b91cf0ab5b5b6b02dbb21ce",
+                "reference": "5f4198716973309d9b91cf0ab5b5b6b02dbb21ce",
                 "shasum": ""
             },
             "require": {
@@ -1005,7 +1011,7 @@
                 "github",
                 "joomla"
             ],
-            "time": "2016-10-23T15:52:56+00:00"
+            "time": "2017-01-28T23:18:16+00:00"
         },
         {
             "name": "joomla/google",
@@ -2727,16 +2733,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.5.5",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108"
+                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/399c1f9781e222f6eb6cc238796f5200d1b7f108",
-                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/5a5a9fc8025a08d8919be87d6884d5a92520cefe",
+                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe",
                 "shasum": ""
             },
             "require": {
@@ -2765,7 +2771,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-10-31T17:19:45+00:00"
+            "time": "2017-01-26T22:05:40+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -3281,16 +3287,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.6",
+            "version": "5.7.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "caf8141b89691498d91aaac6c82e9cd5f685ae86"
+                "reference": "a6ad2472daba76b0689042b7709f86d4f06bcaab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/caf8141b89691498d91aaac6c82e9cd5f685ae86",
-                "reference": "caf8141b89691498d91aaac6c82e9cd5f685ae86",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a6ad2472daba76b0689042b7709f86d4f06bcaab",
+                "reference": "a6ad2472daba76b0689042b7709f86d4f06bcaab",
                 "shasum": ""
             },
             "require": {
@@ -3307,11 +3313,11 @@
                 "phpunit/php-text-template": "~1.2",
                 "phpunit/php-timer": "^1.0.6",
                 "phpunit/phpunit-mock-objects": "^3.2",
-                "sebastian/comparator": "~1.2.2",
+                "sebastian/comparator": "^1.2.4",
                 "sebastian/diff": "~1.2",
                 "sebastian/environment": "^1.3.4 || ^2.0",
                 "sebastian/exporter": "~2.0",
-                "sebastian/global-state": "^1.0 || ^2.0",
+                "sebastian/global-state": "^1.1",
                 "sebastian/object-enumerator": "~2.0",
                 "sebastian/resource-operations": "~1.0",
                 "sebastian/version": "~1.0|~2.0",
@@ -3359,7 +3365,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-01-22T08:39:59+00:00"
+            "time": "2017-02-05T15:31:31+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3467,16 +3473,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "1.2.2",
+            "version": "1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "6a1ed12e8b2409076ab22e3897126211ff8b1f7f"
+                "reference": "2b7424b55f5047b47ac6e5ccb20b2aea4011d9be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/6a1ed12e8b2409076ab22e3897126211ff8b1f7f",
-                "reference": "6a1ed12e8b2409076ab22e3897126211ff8b1f7f",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/2b7424b55f5047b47ac6e5ccb20b2aea4011d9be",
+                "reference": "2b7424b55f5047b47ac6e5ccb20b2aea4011d9be",
                 "shasum": ""
             },
             "require": {
@@ -3527,7 +3533,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2016-11-19T09:18:40+00:00"
+            "time": "2017-01-29T09:50:25+00:00"
         },
         {
             "name": "sebastian/diff",
