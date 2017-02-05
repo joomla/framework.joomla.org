@@ -38,72 +38,65 @@
             {% set _totalErrors = 0 %}
             {% set _totalCoveredLines = 0 %}
             {% set _totalLines = 0 %}
-            {% for package, item in items %}
+            {% for package, release in packages %}
             <tr>
-                <td><a href="{{ route('status/' ~ package) }}">{{ item.displayName }}</a> <a href="https://github.com/joomla-framework/{{ item.repoName }}"><span class="fa fa-github"></span></a></td>
-                <td>{{ item.version }}</td>
-                {% if item.id %}
-                {% set _totalTests = _totalTests + item.tests %}
-                {% set _totalAssertions = _totalAssertions + item.assertions %}
-                {% set _totalFailures = _totalFailures + item.failures %}
-                {% set _totalErrors = _totalErrors + item.errors %}
-                {% set _totalCoveredLines = _totalCoveredLines + item.lines_covered %}
-                {% set _totalLines = _totalLines + item.total_lines %}
-                <td class="hidden-xs hidden-sm">{{ item.tests }}</td>
-                <td class="hidden-xs hidden-sm">{{ item.assertions }}</td>
-                <td class="hidden-xs hidden-sm">{{ item.failures }}</td>
-                <td class="hidden-xs hidden-sm">{{ item.errors }}</td>
-                <td>
-                    {{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage|number_format(2) ~ '%)' }}<br />
-                    {% if item.id %}
-                    <a href="{{ route('coverage/' ~ package ~ '/') }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if item.repoName == 'datetime' or item.repoName == 'renderer' %}
-                    N/A
-                    {% else %}
-                    {% set _1xbranch = (item.repoName == 'crypt' or item.repoName == 'form') ? '1.x-dev' : 'master'  %}
-                    <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ _1xbranch }}" alt="Build Status"/>
-                    </a>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if item.repoName == 'log' %}
-                    N/A
-                    {% else %}
-                    {% set _2xbranch = (item.repoName == 'crypt' or item.repoName == 'form' or item.repoName == 'datetime' or item.repoName == 'renderer') ? 'master' : '2.0-dev'  %}
-                    <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ _2xbranch }}" alt="Build Status"/>
-                    </a>
-                    {% endif %}
-                </td>
-                {% elseif package == 'compat' or package == 'test' %}
-                <td colspan="7" class="text-center">This package is not unit tested</td>
+                <td><a href="{{ route('status/' ~ package) }}">{{ release.displayName }}</a> <a href="https://github.com/joomla-framework/{{ release.repoName }}"><span class="fa fa-github"></span></a></td>
+                <td>{{ release.version }}</td>
+                {% if release.id %}
+                    {% set _totalTests = _totalTests + release.tests %}
+                    {% set _totalAssertions = _totalAssertions + release.assertions %}
+                    {% set _totalFailures = _totalFailures + release.failures %}
+                    {% set _totalErrors = _totalErrors + release.errors %}
+                    {% set _totalCoveredLines = _totalCoveredLines + release.lines_covered %}
+                    {% set _totalLines = _totalLines + release.total_lines %}
+                    <td class="hidden-xs hidden-sm">{{ release.tests }}</td>
+                    <td class="hidden-xs hidden-sm">{{ release.assertions }}</td>
+                    <td class="hidden-xs hidden-sm">{{ release.failures }}</td>
+                    <td class="hidden-xs hidden-sm">{{ release.errors }}</td>
+                    <td>
+                        {{ release.lines_covered }}/{{ release.total_lines }} ({{ release.lines_percentage|number_format(2) }}%
+                        {% if release.id %}
+                            <br />
+                            <a href="{{ route('coverage/' ~ package ~ '/') }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if release.repoName in ['datetime', 'renderer'] %}
+                            N/A
+                        {% else %}
+                            {% set _1xbranch = (release.repoName in ['crypt', 'form']) ? '1.x-dev' : 'master'  %}
+                            <a href="https://travis-ci.org/joomla-framework/{{ release.repoName }}"><img src="https://travis-ci.org/joomla-framework/{{ release.repoName }}.png?branch={{ _1xbranch }}" alt="Build Status" /></a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if release.repoName == 'log' %}
+                            N/A
+                        {% else %}
+                            {% set _2xbranch = (release.repoName in ['crypt', 'form', 'datetime', 'renderer']) ? 'master' : '2.0-dev'  %}
+                            <a href="https://travis-ci.org/joomla-framework/{{ release.repoName }}"><img src="https://travis-ci.org/joomla-framework/{{ release.repoName }}.png?branch={{ _2xbranch }}" alt="Build Status" /></a>
+                        {% endif %}
+                    </td>
+                {% elseif package in ['compat', 'test'] %}
+                    <td colspan="7" class="text-center">This package is not unit tested</td>
                 {% else %}
-                <td colspan="5" class="hidden-xs hidden-sm text-center">This package does not have a test report</td>
-                <td class="hidden-md hidden-lg">This package does not have a test report</td>
-                <td>
-                    {% if item.repoName == 'datetime' or item.repoName == 'renderer' %}
-                    N/A
-                    {% else %}
-                    {% set _1xbranch = (item.repoName == 'crypt' or item.repoName == 'form') ? '1.x-dev' : 'master'  %}
-                    <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ _1xbranch }}" alt="Build Status"/>
-                    </a>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if item.repoName == 'log' %}
-                    N/A
-                    {% else %}
-                    {% set _2xbranch = (item.repoName == 'crypt' or item.repoName == 'form' or item.repoName == 'datetime' or item.repoName == 'renderer') ? 'master' : '2.0-dev'  %}
-                    <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                        <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ _2xbranch }}" alt="Build Status"/>
-                    </a>
-                    {% endif %}
-                </td>
+                    <td colspan="5" class="hidden-xs hidden-sm text-center">This package does not have a test report</td>
+                    <td class="hidden-md hidden-lg">This package does not have a test report</td>
+                    <td>
+                        {% if release.repoName in ['datetime', 'renderer'] %}
+                            N/A
+                        {% else %}
+                            {% set _1xbranch = (release.repoName in ['crypt', 'form']) ? '1.x-dev' : 'master'  %}
+                            <a href="https://travis-ci.org/joomla-framework/{{ release.repoName }}"><img src="https://travis-ci.org/joomla-framework/{{ release.repoName }}.png?branch={{ _1xbranch }}" alt="Build Status" /></a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if release.repoName == 'log' %}
+                            N/A
+                        {% else %}
+                            {% set _2xbranch = (release.repoName in ['crypt', 'form', 'datetime', 'renderer']) ? 'master' : '2.0-dev'  %}
+                            <a href="https://travis-ci.org/joomla-framework/{{ release.repoName }}"><img src="https://travis-ci.org/joomla-framework/{{ release.repoName }}.png?branch={{ _2xbranch }}" alt="Build Status" /></a>
+                        {% endif %}
+                    </td>
                 {% endif %}
             </tr>
             {% endfor %}
@@ -121,7 +114,7 @@
         </tfoot>
     </table>
     {% if build.time %}
-    <p>This build report was generated on {{ build.time }} using PHPUnit {{ build.phpunit }} on a PHP {{ build.php }} system.</p>
+        <p>This build report was generated on {{ build.time }} using PHPUnit {{ build.phpunit }} on a PHP {{ build.php }} system.</p>
     {% endif %}
 </section>
 {% endblock %}

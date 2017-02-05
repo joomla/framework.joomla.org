@@ -8,7 +8,7 @@
 
 namespace Joomla\FrameworkWebsite\View\Status;
 
-use Joomla\FrameworkWebsite\Model\StatusModel;
+use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\View\DefaultHtmlView;
 use Joomla\Renderer\RendererInterface;
 
@@ -22,7 +22,7 @@ class StatusHtmlView extends DefaultHtmlView
 	/**
 	 * The model object.
 	 *
-	 * @var    StatusModel
+	 * @var    PackageModel
 	 * @since  1.0
 	 */
 	protected $model;
@@ -30,12 +30,12 @@ class StatusHtmlView extends DefaultHtmlView
 	/**
 	 * Instantiate the view.
 	 *
-	 * @param   StatusModel        $model     The model object.
+	 * @param   PackageModel       $model     The model object.
 	 * @param   RendererInterface  $renderer  The renderer object.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(StatusModel $model, RendererInterface $renderer)
+	public function __construct(PackageModel $model, RendererInterface $renderer)
 	{
 		parent::__construct($renderer);
 
@@ -51,7 +51,7 @@ class StatusHtmlView extends DefaultHtmlView
 	 */
 	public function render()
 	{
-		$this->setData(['items' => $this->model->getItems()]);
+		$this->setData(['packages' => $this->model->getLatestReleases()]);
 
 		return parent::render();
 	}

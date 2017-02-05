@@ -20,9 +20,7 @@ use Joomla\FrameworkWebsite\
 use Joomla\FrameworkWebsite\Controller\{
 	HomepageController, PackageController, PageController, StatusController
 };
-use Joomla\FrameworkWebsite\Model\{
-	PackageModel, StatusModel
-};
+use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\View\{
 	Package\PackageHtmlView, Status\StatusHtmlView
 };
@@ -91,9 +89,6 @@ class ApplicationProvider implements ServiceProviderInterface
 		// Models
 		$container->alias(PackageModel::class, 'model.package')
 			->share('model.package', [$this, 'getModelPackageService'], true);
-
-		$container->alias(StatusModel::class, 'model.status')
-			->share('model.status', [$this, 'getModelStatusService'], true);
 
 		// Views
 		$container->alias(PackageHtmlView::class, 'view.package.html')
@@ -254,24 +249,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getModelPackageService(Container $container) : PackageModel
 	{
-		$model = new PackageModel($container->get(DatabaseDriver::class));
-		$model->setPackages($container->get('application.packages'));
-
-		return $model;
-	}
-
-	/**
-	 * Get the `model.status` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  StatusModel
-	 *
-	 * @since   1.0
-	 */
-	public function getModelStatusService(Container $container) : StatusModel
-	{
-		$model = new StatusModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
+		$model = new PackageModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
 		$model->setPackages($container->get('application.packages'));
 
 		return $model;
@@ -310,7 +288,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getViewStatusHtmlService(Container $container) : StatusHtmlView
 	{
 		$view = new StatusHtmlView(
-			$container->get('model.status'),
+			$container->get('model.package'),
 			$container->get('renderer')
 		);
 
