@@ -43,7 +43,7 @@ class StatusModel implements DatabaseModelInterface
 	 */
 	public function __construct(Helper $helper, DatabaseDriver $db)
 	{
-		parent::__construct($db);
+		$this->setDb($db);
 
 		$this->helper = $helper;
 	}
