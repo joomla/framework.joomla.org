@@ -18,14 +18,6 @@ class Helper
 	use PackageAware;
 
 	/**
-	 * Data container for the Composer data
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	private static $packageList = [];
-
-	/**
 	 * Utility method to retrieve a package's display name
 	 *
 	 * @param   string  $package  Package name

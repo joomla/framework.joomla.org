@@ -15,7 +15,7 @@
         "joomla/renderer": "~2.0@dev",
         "joomla/router": "~1.1",
         "joomla/uri": "~1.1",
-        "joomla/view": "~1.1",
+        "joomla/view": "~2.0@dev",
         "symfony/asset": "3.2.*",
         "symfony/yaml": "3.2.*",
         "twig/twig": "~2.0"

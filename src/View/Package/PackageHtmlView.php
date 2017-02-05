@@ -10,15 +10,15 @@ namespace Joomla\FrameworkWebsite\View\Package;
 
 use Joomla\FrameworkWebsite\Helper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
-use Joomla\FrameworkWebsite\View\DefaultHtmlView;
 use Joomla\Renderer\RendererInterface;
+use Joomla\View\BaseHtmlView;
 
 /**
  * Package HTML view class for the application
  *
  * @since  1.0
  */
-class PackageHtmlView extends DefaultHtmlView
+class PackageHtmlView extends BaseHtmlView
 {
 	/**
 	 * Helper object

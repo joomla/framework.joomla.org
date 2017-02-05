@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b1d64bd0ce2eed261f4aff7fd7026aa",
+    "content-hash": "4efe441ad94edd18e8b4a98fbb3a4bd9",
     "packages": [
         {
             "name": "ircmaxell/password-compat",
@@ -748,35 +748,34 @@
         },
         {
             "name": "joomla/view",
-            "version": "1.3.0",
+            "version": "dev-2.0-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/view.git",
-                "reference": "0aa3838eccc5fe85964027c1fbcc666cd5da28b0"
+                "reference": "49edb48be2537c58c9b977cd37a6a59b9019f0e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/view/zipball/0aa3838eccc5fe85964027c1fbcc666cd5da28b0",
-                "reference": "0aa3838eccc5fe85964027c1fbcc666cd5da28b0",
+                "url": "https://api.github.com/repos/joomla-framework/view/zipball/49edb48be2537c58c9b977cd37a6a59b9019f0e9",
+                "reference": "49edb48be2537c58c9b977cd37a6a59b9019f0e9",
                 "shasum": ""
             },
             "require": {
-                "joomla/model": "~1.0",
-                "php": "^5.3.10|~7.0"
+                "php": "^5.5.9|~7.0"
             },
             "require-dev": {
-                "joomla/filesystem": "~1.0",
+                "joomla/renderer": "~2.0@dev",
                 "joomla/test": "~1.0",
                 "phpunit/phpunit": "~4.8|~5.0",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "suggest": {
-                "joomla/filesystem": "To use the AbstractHtmlView, install joomla/filesystem"
+                "joomla/renderer": "Required to use Joomla\\View\\BaseHtmlView"
             },
             "type": "joomla-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-2.0-dev": "2.0-dev"
                 }
             },
             "autoload": {
@@ -795,7 +794,7 @@
                 "joomla",
                 "view"
             ],
-            "time": "2016-12-10T19:17:24+00:00"
+            "time": "2017-01-28 20:01:47"
         },
         {
             "name": "psr/log",
@@ -2449,7 +2448,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "joomla/renderer": 20
+        "joomla/renderer": 20,
+        "joomla/view": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
