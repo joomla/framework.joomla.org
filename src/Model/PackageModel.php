@@ -112,7 +112,7 @@ class PackageModel implements DatabaseModelInterface
 
 			$result->displayName = $this->helper->getPackageDisplayName($pack->package);
 			$result->version     = $pack->version;
-			$result->repoName    = $this->getPackages()->get('packages.' . $pack->package . '.repo', $pack->package);
+			$result->repoName    = $this->helper->getPackageRepositoryName($pack->package);
 
 			$reports[$pack->package] = $result;
 		}

@@ -8,8 +8,6 @@
 
 namespace Joomla\FrameworkWebsite;
 
-use PackageVersions\Versions;
-
 /**
  * Utility helper class
  *
@@ -42,33 +40,16 @@ class Helper
 	}
 
 	/**
-	 * Parses the Composer installed.json file for package information
+	 * Utility method to retrieve a package's repository name
 	 *
-	 * @return  array  Composer package information
+	 * @param   string  $package  Package name
+	 *
+	 * @return  string
 	 *
 	 * @since   1.0
 	 */
-	public function parseComposer() : array
+	public function getPackageRepositoryName(string $package) : string
 	{
-		// Only process this once
-		if (empty(self::$packageList))
-		{
-			// Loop through and extract the package name and version for all Joomla! Framework packages
-			foreach ($this->getPackages()->get('packages') as $packageName => $packageData)
-			{
-				// Skip packages without a stable release
-				if (is_object($packageData) && isset($packageData->stable) && $packageData->stable === false)
-				{
-					continue;
-				}
-
-				// We need to "normalize" the version string since the underlying API returns the version with the commit SHA
-				list($version) = explode('@', Versions::getVersion("joomla/$packageName"));
-
-				self::$packageList[$packageName] = ['version' => $version];
-			}
-		}
-
-		return self::$packageList;
+		return $this->getPackages()->get("packages.$package.repo", $package);
 	}
 }

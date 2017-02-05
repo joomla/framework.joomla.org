@@ -8,6 +8,7 @@
 
 namespace Joomla\FrameworkWebsite\View\Package;
 
+use Joomla\FrameworkWebsite\Helper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\View\DefaultHtmlView;
 use Joomla\Renderer\RendererInterface;
@@ -19,6 +20,14 @@ use Joomla\Renderer\RendererInterface;
  */
 class PackageHtmlView extends DefaultHtmlView
 {
+	/**
+	 * Helper object
+	 *
+	 * @var    Helper
+	 * @since  1.0
+	 */
+	private $helper;
+
 	/**
 	 * The model object
 	 *
@@ -40,14 +49,16 @@ class PackageHtmlView extends DefaultHtmlView
 	 *
 	 * @param   PackageModel       $model     The model object.
 	 * @param   RendererInterface  $renderer  The renderer object.
+	 * @param   Helper             $helper    Helper object.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PackageModel $model, RendererInterface $renderer)
+	public function __construct(PackageModel $model, RendererInterface $renderer, Helper $helper)
 	{
 		parent::__construct($renderer);
 
-		$this->model = $model;
+		$this->helper = $helper;
+		$this->model  = $model;
 	}
 
 	/**
@@ -61,9 +72,9 @@ class PackageHtmlView extends DefaultHtmlView
 	public function render()
 	{
 		$this->setData([
-			'releases' => $this->model->getPackageHistory($this->package),
-			'packageName'  => $this->model->getPackages()->get('packages.' . $this->package . '.display', ucfirst($this->package)),
-			'repoName'  => $this->model->getPackages()->get('packages.' . $this->package . '.repo', $this->package),
+			'releases'    => $this->model->getPackageHistory($this->package),
+			'packageName' => $this->helper->getPackageDisplayName($this->package),
+			'repoName'    => $this->helper->getPackageRepositoryName($this->package),
 		]);
 
 		return parent::render();
