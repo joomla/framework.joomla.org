@@ -8,6 +8,8 @@
 
 namespace Joomla\FrameworkWebsite\Model;
 
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\Mysql\MysqlQuery;
 use Joomla\FrameworkWebsite\PackageAware;
 use Joomla\Model\{
 	DatabaseModelInterface, DatabaseModelTrait
@@ -35,24 +37,28 @@ class PackageModel implements DatabaseModelInterface
 	}
 
 	/**
-	 * Fetches the requested data
+	 * Get the release history for a package
 	 *
-	 * @param   string  $package  The package to request data for
+	 * @param   string  $package  The package to retrieve the history for
 	 *
 	 * @return  array
 	 *
 	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
-	public function getPackage(string $package) : array
+	public function getPackageHistory(string $package) : array
 	{
 		// Get the package data for the package specified via the route
 		$db = $this->getDb();
 
+		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select('*')
 			->from($db->quoteName('#__packages'))
-			->where($db->quoteName('package') . ' = ' . $db->quote($package));
+			->where($db->quoteName('package') . ' = :package')
+			->order('version ASC');
+
+		$query->bind('package', $package, \PDO::PARAM_STR);
 
 		$packs = $db->setQuery($query)->loadObjectList();
 
@@ -65,12 +71,17 @@ class PackageModel implements DatabaseModelInterface
 		// Loop through the packs and get the reports
 		$i = 0;
 
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__test_results'));
+
 		foreach ($packs as $pack)
 		{
-			$query->clear()
-				->select('*')
-				->from($db->quoteName('#__test_results'))
-				->where($db->quoteName('package_id') . ' = ' . (int) $pack->id);
+			$query->clear('where')
+				->where($db->quoteName('package_id') . ' = :package_id');
+
+			$query->bind('package_id', $pack->id, \PDO::PARAM_INT);
 
 			$result = $db->setQuery($query)->loadObject();
 
@@ -82,19 +93,15 @@ class PackageModel implements DatabaseModelInterface
 			// Otherwise compute report percentages
 			else
 			{
+				$result->lines_percentage = 0;
+
 				if ($result->total_lines > 0)
 				{
-					$result->lines_percentage = round($result->lines_covered / $result->total_lines * 100, 2);
-				}
-				else
-				{
-					$result->lines_percentage = 0;
+					$result->lines_percentage = $result->lines_covered / $result->total_lines * 100;
 				}
 			}
 
 			$result->version = $pack->version;
-
-			$result->repoName = $this->getPackages()->get('packages.' . $pack->package . '.repo', $pack->package);
 
 			// Compute the delta to the previous build
 			if ($i !== 0)

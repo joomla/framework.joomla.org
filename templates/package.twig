@@ -1,6 +1,6 @@
 {% extends "index.twig" %}
 
-{% block title %}Joomla! Framework Status - {{ package }} Package{% endblock %}
+{% block title %}Joomla! Framework Status - {{ packageName }} Package{% endblock %}
 
 {% block bodyNavigation %}
 <nav>
@@ -16,7 +16,7 @@
 
 {% block content %}
 <section class="status container">
-    <h1>Release Data for {{ package }} Package <a href="https://github.com/joomla-framework/{{ item.repoName }}"><span class="fa fa-github"></span></a></h1>
+    <h1>Release Data for {{ packageName }} Package <a href="https://github.com/joomla-framework/{{ repoName }}"><span class="fa fa-github"></span></a></h1>
     <table class="table table-striped table-bordered table-condensed">
         <tr>
             <th>Version</th>
@@ -27,42 +27,42 @@
             <th>Lines Covered</th>
             <th>Miscellaneous</th>
         </tr>
-        {% for item in items %}
+        {% for release in releases %}
         <tr>
-            <td>{{ item.version }}</td>
-            {% if item.id %}
+            <td>{{ release.version }}</td>
+            {% if release.id %}
             <td>
-                {{ item.tests }}
-                {% if item.newTests %}
-                    <span class="pull-right label label-{{ item.newTests > 0 ? 'success' : 'danger' }}">{{ item.newTests }}</span>
+                {{ release.tests }}
+                {% if release.newTests %}
+                    <span class="pull-right label label-{{ release.newTests > 0 ? 'success' : 'danger' }}">{{ release.newTests }}</span>
                 {% endif %}
             </td>
             <td>
-                {{ item.assertions }}
-                {% if item.newAssertions %}
-                    <span class="pull-right label label-{{ item.newAssertions > 0 ? 'success' : 'danger' }}">{{ item.newAssertions }}</span>
+                {{ release.assertions }}
+                {% if release.newAssertions %}
+                    <span class="pull-right label label-{{ release.newAssertions > 0 ? 'success' : 'danger' }}">{{ release.newAssertions }}</span>
                 {% endif %}
             </td>
-            <td>{{ item.failures }}</td>
-            <td>{{ item.errors }}</td>
+            <td>{{ release.failures }}</td>
+            <td>{{ release.errors }}</td>
             <td>
-                {{ item.lines_covered ~ '/' ~ item.total_lines ~ ' (' ~ item.lines_percentage ~ '%)' }}
-                {% if item.addedCoverage %}
-                    <span class="pull-right label label-{{ item.addedCoverage > 0 ? 'success' : 'danger' }}">{{ item.addedCoverage ~ '%' }}</span>
+                {{ release.lines_covered }}/{{ release.total_lines}} ({{ release.lines_percentage|number_format(2) }}%)
+                {% if release.addedCoverage %}
+                    <span class="pull-right label label-{{ release.addedCoverage > 0 ? 'success' : 'danger' }}">{{ release.addedCoverage|number_format(2) }}%</span>
                 {% endif %}
             </td>
             <td>
-                <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                    <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ item.version }}" alt="Build Status"/>
+                <a href="https://travis-ci.org/joomla-framework/{{ repoName }}">
+                    <img src="https://travis-ci.org/joomla-framework/{{ repoName }}.png?branch={{ release.version }}" alt="Build Status"/>
                 </a>
             </td>
-            {% elseif item.repoName == 'compat' or item.repoName == 'test' %}
+            {% elseif repoName in ['compat', 'test'] %}
             <td colspan="6" class="text-center">This package is not unit tested</td>
             {% else %}
             <td colspan="5" class="text-center">This package does not have a test report</td>
             <td>
-                <a href="https://travis-ci.org/joomla-framework/{{ item.repoName }}">
-                    <img src="https://travis-ci.org/joomla-framework/{{ item.repoName }}.png?branch={{ item.version }}" alt="Build Status"/>
+                <a href="https://travis-ci.org/joomla-framework/{{ repoName }}">
+                    <img src="https://travis-ci.org/joomla-framework/{{ repoName }}.png?branch={{ release.version }}" alt="Build Status"/>
                 </a>
             </td>
             {% endif %}

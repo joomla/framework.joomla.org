@@ -61,8 +61,9 @@ class PackageHtmlView extends DefaultHtmlView
 	public function render()
 	{
 		$this->setData([
-			'items'   => $this->model->getPackage($this->package),
-			'package' => $this->model->getPackages()->get('packages.' . $this->package . '.display', ucfirst($this->package)),
+			'releases' => $this->model->getPackageHistory($this->package),
+			'packageName'  => $this->model->getPackages()->get('packages.' . $this->package . '.display', ucfirst($this->package)),
+			'repoName'  => $this->model->getPackages()->get('packages.' . $this->package . '.repo', $this->package),
 		]);
 
 		return parent::render();

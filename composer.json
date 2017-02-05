@@ -5,6 +5,7 @@
     "license": "GPL-2.0+",
     "require": {
         "php": ">=7.0",
+        "ext-pdo": "*",
         "joomla/application": "~1.2",
         "joomla/archive": "~1.1",
         "joomla/authentication": "~1.0",
@@ -13,7 +14,7 @@
         "joomla/controller": "~1.1",
         "joomla/crypt": "~1.1",
         "joomla/data": "~1.1",
-        "joomla/database": "~1.1",
+        "joomla/database": "~1.5",
         "joomla/date": "~1.1",
         "joomla/datetime": "~2.0",
         "joomla/di": "~1.1",
