@@ -13,8 +13,7 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
-use Joomla\FrameworkWebsite\
-{
+use Joomla\FrameworkWebsite\{
 	CliApplication, Console, ContainerAwareRouter, Helper, WebApplication
 };
 use Joomla\FrameworkWebsite\Command as AppCommands;
@@ -89,6 +88,8 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
+		$container->share(AppCommands\InstallCommand::class, [$this, 'getInstallCommandClassService'], true);
+		$container->share(AppCommands\UpdateCommand::class, [$this, 'getUpdateCommandClassService'], true);
 
 		/*
 		 * MVC Layer
@@ -386,6 +387,24 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the InstallCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\InstallCommand
+	 *
+	 * @since   1.0
+	 */
+	public function getInstallCommandClassService(Container $container) : AppCommands\InstallCommand
+	{
+		return new AppCommands\InstallCommand(
+			$container->get(DatabaseDriver::class),
+			$container->get(Input::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
+		);
+	}
+
+	/**
 	 * Get the `model.package` service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -400,6 +419,23 @@ class ApplicationProvider implements ServiceProviderInterface
 		$model->setPackages($container->get('application.packages'));
 
 		return $model;
+	}
+
+	/**
+	 * Get the UpdateCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\UpdateCommand
+	 *
+	 * @since   1.0
+	 */
+	public function getUpdateCommandClassService(Container $container) : AppCommands\UpdateCommand
+	{
+		return new AppCommands\UpdateCommand(
+			$container->get(Input::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
+		);
 	}
 
 	/**
