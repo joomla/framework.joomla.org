@@ -15,8 +15,9 @@ use Joomla\DI\{
 };
 use Joomla\FrameworkWebsite\
 {
-	ContainerAwareRouter, Helper, WebApplication
+	CliApplication, Console, ContainerAwareRouter, Helper, WebApplication
 };
+use Joomla\FrameworkWebsite\Command as AppCommands;
 use Joomla\FrameworkWebsite\Controller\{
 	HomepageController, PackageController, PageController, StatusController
 };
@@ -24,7 +25,9 @@ use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\View\{
 	Package\PackageHtmlView, Status\StatusHtmlView
 };
-use Joomla\Input\Input;
+use Joomla\Input\{
+	Cli, Input
+};
 use Joomla\Registry\Registry;
 use Joomla\Renderer\RendererInterface;
 use Joomla\Router\Router;
@@ -51,6 +54,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		 * Application Classes
 		 */
 
+		$container->alias(CliApplication::class, JoomlaApplication\AbstractCliApplication::class)
+			->share(JoomlaApplication\AbstractCliApplication::class, [$this, 'getCliApplicationClassService'], true);
+
 		$container->alias(WebApplication::class, JoomlaApplication\AbstractWebApplication::class)
 			->share(JoomlaApplication\AbstractWebApplication::class, [$this, 'getWebApplicationClassService'], true);
 
@@ -68,6 +74,21 @@ class ApplicationProvider implements ServiceProviderInterface
 			->share('application.router', [$this, 'getApplicationRouterService'], true);
 
 		$container->share(Input::class, [$this, 'getInputClassService'], true);
+		$container->share(Cli::class, [$this, 'getInputCliClassService'], true);
+
+		$container->share(Console::class, [$this, 'getConsoleClassService'], true);
+
+		$container->share(JoomlaApplication\Cli\Output\Processor\ColorProcessor::class, [$this, 'getColorProcessorClassService'], true);
+		$container->share(JoomlaApplication\Cli\CliInput::class, [$this, 'getCliInputClassService'], true);
+
+		$container->alias(JoomlaApplication\Cli\CliOutput::class, JoomlaApplication\Cli\Output\Stdout::class)
+			->share(JoomlaApplication\Cli\Output\Stdout::class, [$this, 'getCliOutputClassService'], true);
+
+		/*
+		 * Console Commands
+		 */
+
+		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
 
 		/*
 		 * MVC Layer
@@ -153,6 +174,100 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the CLI application service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  CliApplication
+	 *
+	 * @since   1.0
+	 */
+	public function getCliApplicationClassService(Container $container) : CliApplication
+	{
+		$application = new CliApplication(
+			$container->get(Cli::class),
+			$container->get('config'),
+			$container->get(JoomlaApplication\Cli\CliOutput::class),
+			$container->get(JoomlaApplication\Cli\CliInput::class),
+			$container->get(Console::class)
+		);
+
+		return $application;
+	}
+
+	/**
+	 * Get the CliInput class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  JoomlaApplication\Cli\CliInput
+	 *
+	 * @since   1.0
+	 */
+	public function getCliInputClassService(Container $container) : JoomlaApplication\Cli\CliInput
+	{
+		return new JoomlaApplication\Cli\CliInput;
+	}
+
+	/**
+	 * Get the CliOutput class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  JoomlaApplication\Cli\CliOutput
+	 *
+	 * @since   1.0
+	 */
+	public function getCliOutputClassService(Container $container) : JoomlaApplication\Cli\Output\Stdout
+	{
+		return new JoomlaApplication\Cli\Output\Stdout($container->get(JoomlaApplication\Cli\Output\Processor\ColorProcessor::class));
+	}
+
+	/**
+	 * Get the ColorProcessor class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  JoomlaApplication\Cli\Output\Processor\ColorProcessor
+	 *
+	 * @since   1.0
+	 */
+	public function getColorProcessorClassService(Container $container) : JoomlaApplication\Cli\Output\Processor\ColorProcessor
+	{
+		$processor = new JoomlaApplication\Cli\Output\Processor\ColorProcessor;
+
+		/** @var Cli $input */
+		$input = $container->get(Cli::class);
+
+		if ($input->getBool('nocolors', false))
+		{
+			$processor->noColors = true;
+		}
+
+		// Setup app colors (also required in "nocolors" mode - to strip them).
+		$processor->addStyle('title', new JoomlaApplication\Cli\ColorStyle('yellow', '', ['bold']));
+
+		return $processor;
+	}
+
+	/**
+	 * Get the console service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Console
+	 *
+	 * @since   1.0
+	 */
+	public function getConsoleClassService(Container $container) : Console
+	{
+		$console = new Console;
+		$console->setContainer($container);
+
+		return $console;
+	}
+
+	/**
 	 * Get the `controller.homepage` service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -225,6 +340,24 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the HelpCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\HelpCommand
+	 *
+	 * @since   1.0
+	 */
+	public function getHelpCommandClassService(Container $container) : AppCommands\HelpCommand
+	{
+		return new AppCommands\HelpCommand(
+			$container->get(Console::class),
+			$container->get(Input::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
+		);
+	}
+
+	/**
 	 * Get the Input class service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -236,6 +369,20 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getInputClassService(Container $container) : Input
 	{
 		return new Input($_REQUEST);
+	}
+
+	/**
+	 * Get the Input\Cli class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Cli
+	 *
+	 * @since   1.0
+	 */
+	public function getInputCliClassService(Container $container) : Cli
+	{
+		return new Cli;
 	}
 
 	/**
