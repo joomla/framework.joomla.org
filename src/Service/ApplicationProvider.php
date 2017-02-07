@@ -29,6 +29,7 @@ use Joomla\Input\{
 };
 use Joomla\Registry\Registry;
 use Joomla\Renderer\RendererInterface;
+use Joomla\Renderer\TwigRenderer;
 use Joomla\Router\Router;
 
 /**
@@ -89,6 +90,7 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
 		$container->share(AppCommands\InstallCommand::class, [$this, 'getInstallCommandClassService'], true);
+		$container->share(AppCommands\Twig\ResetCacheCommand::class, [$this, 'getTwigResetCacheCommandClassService'], true);
 		$container->share(AppCommands\UpdateCommand::class, [$this, 'getUpdateCommandClassService'], true);
 
 		/*
@@ -422,6 +424,24 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the Twig\ResetCacheCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\Twig\ResetCacheCommand
+	 *
+	 * @since   1.0
+	 */
+	public function getTwigResetCacheCommandClassService(Container $container) : AppCommands\Twig\ResetCacheCommand
+	{
+		return new AppCommands\Twig\ResetCacheCommand(
+			$container->get(TwigRenderer::class),
+			$container->get(Input::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
+		);
+	}
+
+	/**
 	 * Get the UpdateCommand class service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -433,6 +453,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getUpdateCommandClassService(Container $container) : AppCommands\UpdateCommand
 	{
 		return new AppCommands\UpdateCommand(
+			$container->get(Console::class),
 			$container->get(Input::class),
 			$container->get(JoomlaApplication\AbstractApplication::class)
 		);

@@ -8,8 +8,12 @@
 
 namespace Joomla\FrameworkWebsite\Command;
 
+use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
-use Joomla\FrameworkWebsite\CommandInterface;
+use Joomla\FrameworkWebsite\{
+	CommandInterface, Console
+};
+use Joomla\Input\Input;
 
 /**
  * Update command
@@ -21,6 +25,30 @@ use Joomla\FrameworkWebsite\CommandInterface;
  */
 class UpdateCommand extends AbstractController implements CommandInterface
 {
+	/**
+	 * The application's console object
+	 *
+	 * @var    Console
+	 * @since  1.0
+	 */
+	private $console;
+
+	/**
+	 * Instantiate the controller.
+	 *
+	 * @param   Console              $console  The application's console object
+	 * @param   Input                $input    The input object.
+	 * @param   AbstractApplication  $app      The application object.
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(Console $console, Input $input = null, AbstractApplication $app = null)
+	{
+		parent::__construct($input, $app);
+
+		$this->console = $console;
+	}
+
 	/**
 	 * Execute the controller.
 	 *
@@ -42,6 +70,9 @@ class UpdateCommand extends AbstractController implements CommandInterface
 
 		// Run Composer install
 		$this->runCommand('cd ' . JPATH_ROOT . ' && composer install --no-dev -o 2>&1');
+
+		// Reset the Twig cache
+		$this->console->getCommand('twig:resetcache')->execute();
 
 		// Write the current build to a local file
 		$this->getApplication()->out('<info>Writing build info</info>');
