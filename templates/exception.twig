@@ -17,6 +17,6 @@
 {% block content %}
     <div class="alert alert-danger">
         <h4>{{ exception.code ? : "0" }} - {{ exception|get_class }}</h4>
-        <p>{{ exception.message|stripJRoot }}</p>
+        <p>{{ exception.message|strip_root_path }}</p>
     </div>
 {% endblock %}

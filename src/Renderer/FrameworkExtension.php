@@ -26,7 +26,7 @@ class FrameworkExtension extends \Twig_Extension
 	{
 		return [
 			new \Twig_Filter('get_class', 'get_class'),
-			new \Twig_Filter('stripJRoot', [$this, 'stripJRoot'])
+			new \Twig_Filter('strip_root_path', [$this, 'stripRootPath'])
 		];
 	}
 
@@ -54,7 +54,7 @@ class FrameworkExtension extends \Twig_Extension
 	 *
 	 * @since   1.0
 	 */
-	public function stripJRoot(string $string) : string
+	public function stripRootPath(string $string) : string
 	{
 		return str_replace(JPATH_ROOT . DIRECTORY_SEPARATOR, '', $string);
 	}
