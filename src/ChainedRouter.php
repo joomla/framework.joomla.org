@@ -79,6 +79,6 @@ class ChainedRouter
 			}
 		}
 
-		throw new \RuntimeException(sprintf('Unable to handle request for route `%s`.', $route), 404);
+		throw new \RuntimeException(sprintf('Unable to handle request for route `%s`.', $route), 404, $exception ?? null);
 	}
 }
