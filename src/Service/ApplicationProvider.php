@@ -17,12 +17,13 @@ use Joomla\FrameworkWebsite\{
 	ChainedRouter, CliApplication, Console, ContainerAwareRestRouter, ContainerAwareRouter, Helper, WebApplication
 };
 use Joomla\FrameworkWebsite\Command as AppCommands;
-use Joomla\FrameworkWebsite\Controller\{
-	HomepageController, PackageController, PageController, StatusController
+use Joomla\FrameworkWebsite\Controller\
+{
+	Api\StatusControllerGet, HomepageController, PackageController, PageController, StatusController
 };
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\View\{
-	Package\PackageHtmlView, Status\StatusHtmlView
+	Package\PackageHtmlView, Status\StatusHtmlView, Status\StatusJsonView
 };
 use Joomla\Input\{
 	Cli, Input
@@ -108,6 +109,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		// Controllers
+		$container->alias(StatusControllerGet::class, 'controller.api.status')
+			->share('controller.api.status', [$this, 'getControllerApiStatusService'], true);
+
 		$container->alias(HomepageController::class, 'controller.homepage')
 			->share('controller.homepage', [$this, 'getControllerHomepageService'], true);
 
@@ -130,6 +134,9 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->alias(StatusHtmlView::class, 'view.status.html')
 			->share('view.status.html', [$this, 'getViewStatusHtmlService'], true);
+
+		$container->alias(StatusJsonView::class, 'view.status.json')
+			->share('view.status.json', [$this, 'getViewStatusJsonService'], true);
 	}
 
 	/**
@@ -194,7 +201,8 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getApplicationRouterRestService(Container $container) : ContainerAwareRestRouter
 	{
 		$router = new ContainerAwareRestRouter($container->get(Input::class));
-		$router->setControllerPrefix('Joomla\\FrameworkWebsite\\Controller\\Api\\');
+		$router->setControllerPrefix('Joomla\\FrameworkWebsite\\Controller\\Api\\')
+			->addMap('/api/v1/packages', 'StatusController');
 
 		$router->setContainer($container);
 
@@ -316,6 +324,24 @@ class ApplicationProvider implements ServiceProviderInterface
 		$console->setContainer($container);
 
 		return $console;
+	}
+
+	/**
+	 * Get the `controller.api.status` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  StatusControllerGet
+	 *
+	 * @since   1.0
+	 */
+	public function getControllerApiStatusService(Container $container) : StatusControllerGet
+	{
+		return new StatusControllerGet(
+			$container->get(StatusJsonView::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
 	}
 
 	/**
@@ -548,6 +574,22 @@ class ApplicationProvider implements ServiceProviderInterface
 		$view->setLayout('status.twig');
 
 		return $view;
+	}
+
+	/**
+	 * Get the `view.status.json` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  StatusJsonView
+	 *
+	 * @since   1.0
+	 */
+	public function getViewStatusJsonService(Container $container) : StatusJsonView
+	{
+		return new StatusJsonView(
+			$container->get('model.package')
+		);
 	}
 
 	/**

@@ -62,9 +62,9 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 */
 	private function setErrorOutput(\Throwable $exception)
 	{
-		switch (strtolower($this->input->getWord('format', 'html')))
+		switch ($this->mimeType)
 		{
-			case 'json' :
+			case 'application/json' :
 				$data = [
 					'code'    => $exception->getCode(),
 					'message' => $exception->getMessage(),
@@ -75,7 +75,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 
 				break;
 
-			case 'html' :
 			default :
 				$body = $this->getContainer()->get(RendererInterface::class)->render('exception.twig', ['exception' => $exception]);
 
