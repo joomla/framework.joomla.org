@@ -41,7 +41,8 @@ class FrameworkExtension extends \Twig_Extension
 	{
 		return [
 			new \Twig_Function('asset', [FrameworkTwigRuntime::class, 'getAssetUri']),
-			new \Twig_Function('route', [FrameworkTwigRuntime::class, 'getRouteUri'])
+			new \Twig_Function('route', [FrameworkTwigRuntime::class, 'getRouteUri']),
+			new \Twig_Function('url', [FrameworkTwigRuntime::class, 'getRouteUrl']),
 		];
 	}
 

@@ -77,4 +77,18 @@ class FrameworkTwigRuntime
 	{
 		return $this->app->get('uri.base.path') . $route;
 	}
+
+	/**
+	 * Get the full URL for a route
+	 *
+	 * @param   string  $route  Route to get the URL for
+	 *
+	 * @return  string
+	 *
+	 * @since   1.0
+	 */
+	public function getRouteUrl(string $route = '') : string
+	{
+		return $this->app->get('uri.base.host') . $this->getRouteUri($route);
+	}
 }
