@@ -26,7 +26,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	/**
 	 * Application router
 	 *
-	 * @var    ContainerAwareRouter
+	 * @var    ChainedRouter
 	 * @since  1.0
 	 */
 	private $router;
@@ -114,13 +114,13 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	/**
 	 * Set the application's router
 	 *
-	 * @param   ContainerAwareRouter  $router  Router object to set
+	 * @param   ChainedRouter  $router  Router object to set
 	 *
 	 * @return  $this
 	 *
 	 * @since   1.0
 	 */
-	public function setRouter(ContainerAwareRouter $router) : WebApplication
+	public function setRouter(ChainedRouter $router) : WebApplication
 	{
 		$this->router = $router;
 

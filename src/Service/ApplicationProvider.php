@@ -14,7 +14,7 @@ use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
 use Joomla\FrameworkWebsite\{
-	CliApplication, Console, ContainerAwareRouter, Helper, WebApplication
+	ChainedRouter, CliApplication, Console, ContainerAwareRestRouter, ContainerAwareRouter, Helper, WebApplication
 };
 use Joomla\FrameworkWebsite\Command as AppCommands;
 use Joomla\FrameworkWebsite\Controller\{
@@ -28,9 +28,12 @@ use Joomla\Input\{
 	Cli, Input
 };
 use Joomla\Registry\Registry;
-use Joomla\Renderer\RendererInterface;
-use Joomla\Renderer\TwigRenderer;
-use Joomla\Router\Router;
+use Joomla\Renderer\{
+	RendererInterface, TwigRenderer
+};
+use Joomla\Router\{
+	RestRouter, Router
+};
 
 /**
  * Application service provider
@@ -68,6 +71,13 @@ class ApplicationProvider implements ServiceProviderInterface
 			->share('application.helper', [$this, 'getApplicationHelperService'], true);
 
 		$container->share('application.packages', [$this, 'getApplicationPackagesService'], true);
+
+		$container->alias(ChainedRouter::class, 'application.router.chained')
+			->share('application.router.chained', [$this, 'getApplicationRouterChainedService'], true);
+
+		$container->alias(ContainerAwareRestRouter::class, 'application.router.rest')
+			->alias(RestRouter::class, 'application.router.rest')
+			->share('application.router.rest', [$this, 'getApplicationRouterRestService'], true);
 
 		$container->alias(ContainerAwareRouter::class, 'application.router')
 			->alias(Router::class, 'application.router')
@@ -151,6 +161,44 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getApplicationPackagesService(Container $container) : Registry
 	{
 		return (new Registry)->loadFile(JPATH_ROOT . '/packages.yml', 'YAML');
+	}
+
+	/**
+	 * Get the `application.router.chained` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ChainedRouter
+	 *
+	 * @since   1.0
+	 */
+	public function getApplicationRouterChainedService(Container $container) : ChainedRouter
+	{
+		return new ChainedRouter(
+			[
+				$container->get('application.router'),
+				$container->get('application.router.rest'),
+			]
+		);
+	}
+
+	/**
+	 * Get the `application.router.rest` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ContainerAwareRestRouter
+	 *
+	 * @since   1.0
+	 */
+	public function getApplicationRouterRestService(Container $container) : ContainerAwareRestRouter
+	{
+		$router = new ContainerAwareRestRouter($container->get(Input::class));
+		$router->setControllerPrefix('Joomla\\FrameworkWebsite\\Controller\\Api\\');
+
+		$router->setContainer($container);
+
+		return $router;
 	}
 
 	/**
@@ -517,7 +565,7 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		// Inject extra services
 		$application->setContainer($container);
-		$application->setRouter($container->get(ContainerAwareRouter::class));
+		$application->setRouter($container->get(ChainedRouter::class));
 
 		return $application;
 	}
