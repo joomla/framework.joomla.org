@@ -82,8 +82,8 @@ class ResetCacheCommand extends AbstractController implements CommandInterface
 			}
 		}
 
-        // Now get a list of all the templates
-        $files = Folder::files(JPATH_TEMPLATES, '.twig', true, true);
+		// Now get a list of all the templates
+		$files = Folder::files(JPATH_TEMPLATES, '.twig', true, true);
 
 		// Load each template now
 		$engine       = $this->renderer->getRenderer();
