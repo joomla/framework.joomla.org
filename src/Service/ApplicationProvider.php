@@ -19,11 +19,11 @@ use Joomla\FrameworkWebsite\{
 use Joomla\FrameworkWebsite\Command as AppCommands;
 use Joomla\FrameworkWebsite\Controller\
 {
-	Api\StatusControllerGet, HomepageController, PackageController, PageController, StatusController
+	Api\PackageControllerGet, Api\StatusControllerGet, HomepageController, PackageController, PageController, StatusController
 };
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\View\{
-	Package\PackageHtmlView, Status\StatusHtmlView, Status\StatusJsonView
+	Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
 };
 use Joomla\Input\{
 	Cli, Input
@@ -109,6 +109,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		// Controllers
+		$container->alias(PackageControllerGet::class, 'controller.api.package')
+			->share('controller.api.package', [$this, 'getControllerApiPackageService'], true);
+
 		$container->alias(StatusControllerGet::class, 'controller.api.status')
 			->share('controller.api.status', [$this, 'getControllerApiStatusService'], true);
 
@@ -131,6 +134,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		// Views
 		$container->alias(PackageHtmlView::class, 'view.package.html')
 			->share('view.package.html', [$this, 'getViewPackageHtmlService'], true);
+
+		$container->alias(PackageJsonView::class, 'view.package.json')
+			->share('view.package.json', [$this, 'getViewPackageJsonService'], true);
 
 		$container->alias(StatusHtmlView::class, 'view.status.html')
 			->share('view.status.html', [$this, 'getViewStatusHtmlService'], true);
@@ -202,7 +208,8 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		$router = new ContainerAwareRestRouter($container->get(Input::class));
 		$router->setControllerPrefix('Joomla\\FrameworkWebsite\\Controller\\Api\\')
-			->addMap('/api/v1/packages', 'StatusController');
+			->addMap('/api/v1/packages', 'StatusController')
+			->addMap('/api/v1/packages/:package', 'PackageController');
 
 		$router->setContainer($container);
 
@@ -324,6 +331,24 @@ class ApplicationProvider implements ServiceProviderInterface
 		$console->setContainer($container);
 
 		return $console;
+	}
+
+	/**
+	 * Get the `controller.api.package` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  PackageControllerGet
+	 *
+	 * @since   1.0
+	 */
+	public function getControllerApiPackageService(Container $container) : PackageControllerGet
+	{
+		return new PackageControllerGet(
+			$container->get(PackageJsonView::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
 	}
 
 	/**
@@ -553,6 +578,22 @@ class ApplicationProvider implements ServiceProviderInterface
 		$view->setLayout('package.twig');
 
 		return $view;
+	}
+
+	/**
+	 * Get the `view.package.json` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  PackageJsonView
+	 *
+	 * @since   1.0
+	 */
+	public function getViewPackageJsonService(Container $container) : PackageJsonView
+	{
+		return new PackageJsonView(
+			$container->get('model.package')
+		);
 	}
 
 	/**

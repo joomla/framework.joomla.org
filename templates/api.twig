@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block content %}
-<section class="contribute container">
+<section class="api container">
     <h2>Joomla! Framework Website API</h2>
     <p class="lead">The Framework website exposes a basic REST API for loading the package release metrics. The available API endpoints are documented below.</p>
 
@@ -24,5 +24,8 @@
 
     <h4><span class="label label-info">GET</span> /v1/packages</h4>
     <p>Get the information for the latest release of all stable packages.</p>
+
+    <h4><span class="label label-info">GET</span> /v1/packages/:package</h4>
+    <p>Get the information for all releases of a package (this is the package name as registered on Packagist without the <code>joomla/</code> prefix, i.e. <code>application</code> for <code>joomla/application</code>.</p>
 </section>
 {% endblock %}
