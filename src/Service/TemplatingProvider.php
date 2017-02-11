@@ -109,6 +109,9 @@ class TemplatingProvider implements ServiceProviderInterface
 		// Instantiate the Twig environment
 		$environment = new \Twig_Environment(new \Twig_Loader_Filesystem([JPATH_TEMPLATES]), ['debug' => $debug]);
 
+		// Add a global tracking the debug state
+		$environment->addGlobal('fwDebug', $debug);
+
 		// Set up the environment's caching mechanism
 		$cacheService = new \Twig_Cache_Null;
 
