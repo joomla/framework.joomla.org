@@ -69,8 +69,5 @@
         </tr>
         {% endfor %}
     </table>
-    {% if build.time %}
-    <p>This build report was generated on {{ build.time }} using PHPUnit {{ build.phpunit }} on a PHP {{ build.php }} system.</p>
-    {% endif %}
 </section>
 {% endblock %}

@@ -137,14 +137,6 @@ class TemplatingProvider implements ServiceProviderInterface
 			$environment->addExtension(new \Twig_Extension_Debug);
 		}
 
-		// Add the build data if available
-		if (file_exists(JPATH_ROOT . '/last_build.json'))
-		{
-			$build = json_decode(file_get_contents(JPATH_ROOT . '/last_build.json'));
-
-			$environment->addGlobal('build', $build);
-		}
-
 		return new TwigRenderer($environment);
 	}
 }
