@@ -12,6 +12,7 @@ use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\View\Status\StatusJsonView;
 use Joomla\Input\Input;
+use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
  * API Controller handling the site's package status listing
@@ -23,6 +24,8 @@ use Joomla\Input\Input;
  */
 class StatusControllerGet extends AbstractController
 {
+	use AnalyticsController;
+
 	/**
 	 * The view object.
 	 *
@@ -34,17 +37,19 @@ class StatusControllerGet extends AbstractController
 	/**
 	 * Constructor.
 	 *
-	 * @param   StatusJsonView       $view   The view object.
-	 * @param   Input                $input  The input object.
-	 * @param   AbstractApplication  $app    The application object.
+	 * @param   Analytics            $analytics  Analytics object.
+	 * @param   StatusJsonView       $view       The view object.
+	 * @param   Input                $input      The input object.
+	 * @param   AbstractApplication  $app        The application object.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(StatusJsonView $view, Input $input = null, AbstractApplication $app = null)
+	public function __construct(Analytics $analytics, StatusJsonView $view, Input $input = null, AbstractApplication $app = null)
 	{
 		parent::__construct($input, $app);
 
-		$this->view = $view;
+		$this->analytics = $analytics;
+		$this->view      = $view;
 	}
 
 	/**
@@ -56,6 +61,8 @@ class StatusControllerGet extends AbstractController
 	 */
 	public function execute() : bool
 	{
+		$this->sendAnalytics();
+
 		// Disable browser caching
 		$this->getApplication()->allowCache(false);
 

@@ -17,8 +17,10 @@
         "joomla/router": "~1.1",
         "joomla/uri": "~1.1",
         "joomla/view": "~2.0@dev",
+        "ramsey/uuid": "~3.4",
         "symfony/asset": "3.2.*",
         "symfony/yaml": "3.2.*",
+        "theiconic/php-ga-measurement-protocol": "^2.0",
         "twig/twig": "~2.0"
     },
     "require-dev": {

@@ -12,9 +12,10 @@ use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\View\Package\PackageJsonView;
 use Joomla\Input\Input;
+use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
- * Controller handling a package's status data listing
+ * API Controller handling a package's status data listing
  *
  * @method         \Joomla\FrameworkWebsite\WebApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\WebApplication  $app              Application object
@@ -23,6 +24,8 @@ use Joomla\Input\Input;
  */
 class PackageControllerGet extends AbstractController
 {
+	use AnalyticsController;
+
 	/**
 	 * The view object.
 	 *
@@ -34,17 +37,19 @@ class PackageControllerGet extends AbstractController
 	/**
 	 * Constructor.
 	 *
-	 * @param   PackageJsonView      $view   The view object.
-	 * @param   Input                $input  The input object.
-	 * @param   AbstractApplication  $app    The application object.
+	 * @param   Analytics            $analytics  Analytics object.
+	 * @param   PackageJsonView      $view       The view object.
+	 * @param   Input                $input      The input object.
+	 * @param   AbstractApplication  $app        The application object.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PackageJsonView $view, Input $input = null, AbstractApplication $app = null)
+	public function __construct(Analytics $analytics, PackageJsonView $view, Input $input = null, AbstractApplication $app = null)
 	{
 		parent::__construct($input, $app);
 
-		$this->view = $view;
+		$this->analytics = $analytics;
+		$this->view      = $view;
 	}
 
 	/**
@@ -56,6 +61,8 @@ class PackageControllerGet extends AbstractController
 	 */
 	public function execute() : bool
 	{
+		$this->sendAnalytics();
+
 		// Disable browser caching
 		$this->getApplication()->allowCache(false);
 

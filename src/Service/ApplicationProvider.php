@@ -35,6 +35,7 @@ use Joomla\Renderer\{
 use Joomla\Router\{
 	RestRouter, Router
 };
+use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
  * Application service provider
@@ -67,6 +68,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		/*
 		 * Application Helpers and Dependencies
 		 */
+
+		$container->alias(Analytics::class, 'analytics')
+			->share('analytics', [$this, 'getAnalyticsService'], true);
 
 		$container->alias(Helper::class, 'application.helper')
 			->share('application.helper', [$this, 'getApplicationHelperService'], true);
@@ -143,6 +147,20 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->alias(StatusJsonView::class, 'view.status.json')
 			->share('view.status.json', [$this, 'getViewStatusJsonService'], true);
+	}
+
+	/**
+	 * Get the Analytics class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Analytics
+	 *
+	 * @since   1.0
+	 */
+	public function getAnalyticsService(Container $container)
+	{
+		return new Analytics(true);
 	}
 
 	/**
@@ -345,6 +363,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getControllerApiPackageService(Container $container) : PackageControllerGet
 	{
 		return new PackageControllerGet(
+			$container->get(Analytics::class),
 			$container->get(PackageJsonView::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
@@ -363,6 +382,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getControllerApiStatusService(Container $container) : StatusControllerGet
 	{
 		return new StatusControllerGet(
+			$container->get(Analytics::class),
 			$container->get(StatusJsonView::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)

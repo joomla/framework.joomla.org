@@ -12,5 +12,9 @@
 		"debug": false,
 		"cache": false
 	},
+	"analytics": {
+		"enabled": false,
+		"account": ""
+	},
 	"errorReporting": 0
 }
