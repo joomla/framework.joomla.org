@@ -158,7 +158,7 @@ class InstallCommand extends AbstractController implements CommandInterface
 	 */
 	private function processSql() : InstallCommand
 	{
-		$fName = JPATH_ROOT . '/etc/mysql.sql';
+		$fName = JPATH_ROOT . '/etc/schema.sql';
 
 		if (!file_exists($fName))
 		{
