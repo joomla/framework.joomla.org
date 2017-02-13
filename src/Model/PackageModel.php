@@ -1,59 +1,94 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! Framework Website
  *
  * @copyright  Copyright (C) 2014 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\Model;
+namespace Joomla\FrameworkWebsite\Model;
+
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\Mysql\MysqlQuery;
+use Joomla\FrameworkWebsite\{
+	Helper, PackageAware
+};
+use Joomla\Model\{
+	DatabaseModelInterface, DatabaseModelTrait
+};
 
 /**
  * Model class for the package view
  *
  * @since  1.0
  */
-class PackageModel extends DefaultModel
+class PackageModel implements DatabaseModelInterface
 {
-	use PackageAware;
+	use DatabaseModelTrait, PackageAware;
 
 	/**
-	 * Fetches the requested data
+	 * Helper object
+	 *
+	 * @var    Helper
+	 * @since  1.0
+	 */
+	private $helper;
+
+	/**
+	 * Instantiate the model.
+	 *
+	 * @param   Helper          $helper  Helper object.
+	 * @param   DatabaseDriver  $db      The database adapter.
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(Helper $helper, DatabaseDriver $db)
+	{
+		$this->setDb($db);
+
+		$this->helper = $helper;
+	}
+
+	/**
+	 * Fetches the latest releases for each Framework package
 	 *
 	 * @return  array
 	 *
 	 * @since   1.0
-	 * @throws  \RuntimeException
 	 */
-	public function getItems() : array
+	public function getLatestReleases() : array
 	{
-		$package = $this->getState()->get('package.name');
+		$reports = [];
 
-		// Get the package data for the package specified via the route
+		// Get the package data for each of our packages
 		$db = $this->getDb();
 
-		$query = $db->getQuery(true)
+		/** @var MysqlQuery $subQuery */
+		$subQuery = $db->getQuery(true)
 			->select('*')
 			->from($db->quoteName('#__packages'))
-			->where($db->quoteName('package') . ' = ' . $db->quote($package));
+			->order('package, version DESC');
+
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true)
+			->select('*')
+			->from('(' . (string) $subQuery . ') AS sub')
+			->group('package');
 
 		$packs = $db->setQuery($query)->loadObjectList();
 
-		// Bail if we don't have any data for the given package
-		if (!count($packs))
-		{
-			throw new \RuntimeException(sprintf('Unable to find package data for the specified package `%s`', $package), 404);
-		}
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__test_results'));
 
 		// Loop through the packs and get the reports
-		$i = 0;
-
 		foreach ($packs as $pack)
 		{
-			$query->clear()
-				->select('*')
-				->from($db->quoteName('#__test_results'))
-				->where($db->quoteName('package_id') . ' = ' . (int) $pack->id);
+			$query->clear('where')
+				->where($db->quoteName('package_id') . ' = :package_id');
+
+			$query->bind('package_id', $pack->id, \PDO::PARAM_INT);
 
 			$result = $db->setQuery($query)->loadObject();
 
@@ -75,9 +110,84 @@ class PackageModel extends DefaultModel
 				}
 			}
 
-			$result->version = $pack->version;
+			$result->displayName = $this->helper->getPackageDisplayName($pack->package);
+			$result->version     = $pack->version;
+			$result->repoName    = $this->helper->getPackageRepositoryName($pack->package);
 
-			$result->repoName = $this->getPackages()->get('packages.' . $pack->package . '.repo', $pack->package);
+			$reports[$pack->package] = $result;
+		}
+
+		return $reports;
+	}
+
+	/**
+	 * Get the release history for a package
+	 *
+	 * @param   string  $package  The package to retrieve the history for
+	 *
+	 * @return  array
+	 *
+	 * @since   1.0
+	 * @throws  \RuntimeException
+	 */
+	public function getPackageHistory(string $package) : array
+	{
+		// Get the package data for the package specified via the route
+		$db = $this->getDb();
+
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__packages'))
+			->where($db->quoteName('package') . ' = :package')
+			->order('version ASC');
+
+		$query->bind('package', $package, \PDO::PARAM_STR);
+
+		$packs = $db->setQuery($query)->loadObjectList();
+
+		// Bail if we don't have any data for the given package
+		if (!count($packs))
+		{
+			throw new \RuntimeException(sprintf('Unable to find package data for the specified package `%s`', $package), 404);
+		}
+
+		// Loop through the packs and get the reports
+		$i = 0;
+
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__test_results'));
+
+		$reports = [];
+
+		foreach ($packs as $pack)
+		{
+			$query->clear('where')
+				->where($db->quoteName('package_id') . ' = :package_id');
+
+			$query->bind('package_id', $pack->id, \PDO::PARAM_INT);
+
+			$result = $db->setQuery($query)->loadObject();
+
+			// If we didn't get any data, build a new object
+			if (!$result)
+			{
+				$result = new \stdClass;
+			}
+			// Otherwise compute report percentages
+			else
+			{
+				$result->lines_percentage = 0;
+
+				if ($result->total_lines > 0)
+				{
+					$result->lines_percentage = $result->lines_covered / $result->total_lines * 100;
+				}
+			}
+
+			$result->version = $pack->version;
 
 			// Compute the delta to the previous build
 			if ($i !== 0)

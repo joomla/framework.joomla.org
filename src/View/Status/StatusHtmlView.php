@@ -1,30 +1,46 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! Framework Website
  *
  * @copyright  Copyright (C) 2014 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\View\Status;
+namespace Joomla\FrameworkWebsite\View\Status;
 
-use Joomla\Status\Model\StatusModel;
-use Joomla\Status\View\DefaultHtmlView;
+use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\Renderer\RendererInterface;
+use Joomla\View\BaseHtmlView;
 
 /**
  * Status dashboard HTML view class for the application
  *
  * @since  1.0
  */
-class StatusHtmlView extends DefaultHtmlView
+class StatusHtmlView extends BaseHtmlView
 {
 	/**
-	 * The model object, redeclared here for proper typehinting
+	 * The model object.
 	 *
-	 * @var    StatusModel
+	 * @var    PackageModel
 	 * @since  1.0
 	 */
 	protected $model;
+
+	/**
+	 * Instantiate the view.
+	 *
+	 * @param   PackageModel       $model     The model object.
+	 * @param   RendererInterface  $renderer  The renderer object.
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(PackageModel $model, RendererInterface $renderer)
+	{
+		parent::__construct($renderer);
+
+		$this->model = $model;
+	}
 
 	/**
 	 * Method to render the view
@@ -32,11 +48,10 @@ class StatusHtmlView extends DefaultHtmlView
 	 * @return  string  The rendered view
 	 *
 	 * @since   1.0
-	 * @throws  \RuntimeException
 	 */
 	public function render()
 	{
-		$this->setData(['items' => $this->model->getItems()]);
+		$this->setData(['packages' => $this->model->getLatestReleases()]);
 
 		return parent::render();
 	}

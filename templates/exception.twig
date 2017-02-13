@@ -1,6 +1,6 @@
 {% extends 'index.twig' %}
 
-{% block title %}{{ exception.code ? exception.code ~ ' - ' : '' }}Error{% endblock %}
+{% block title %}Framework Error{% endblock %}
 
 {% block bodyNavigation %}
 <nav>
@@ -15,8 +15,25 @@
 {% endblock %}
 
 {% block content %}
-    <div class="alert alert-danger">
-        <h4>{{ exception.code ? : "0" }} - {{ exception|get_class }}</h4>
-        <p>{{ exception.message|stripJRoot }}</p>
-    </div>
+    <section class="error-page container">
+        {% if exception.code == 404 %}
+            <h2>We Couldn't Find It</h2>
+            <p class="lead">Sorry, we couldn't find the page matching your request. Try using the navigation to find what you were looking for?</p>
+        {% else %}
+            <h2>Ouch, That's an Error</h2>
+            <p class="lead">Well this is embarrassing, seems there was an error processing this request. Perhaps try again? Or <a href="https://github.com/joomla/framework.joomla.org/issues/new?title=[FW Site]&body=Please state the nature of your development emergency">file an issue</a> so we can address it.</p>
+        {% endif %}
+
+        {% if fwDebug %}
+            <h3><span class="label label-danger">{{ exception.code|default(0) }}</span> {{ exception|get_class }}</h3>
+            <p>{{ exception.message|strip_root_path }}</p>
+
+            {% if exception.previous %}
+                {% set _previous = exception.previous %}
+                <h3>Previous Exception</h3>
+                <h4><span class="label label-danger">{{ exception.code|default(0) }}</span> {{ exception|get_class }}</h4>
+                <p>{{ exception.message|strip_root_path }}</p>
+            {% endif %}
+        {% endif %}
+    </section>
 {% endblock %}

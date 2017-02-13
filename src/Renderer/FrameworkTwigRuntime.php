@@ -1,12 +1,12 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! Framework Website
  *
  * @copyright  Copyright (C) 2014 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status\Renderer;
+namespace Joomla\FrameworkWebsite\Renderer;
 
 use Joomla\Application\AbstractApplication;
 use Symfony\Component\Asset\Packages;
@@ -16,7 +16,7 @@ use Symfony\Component\Asset\Packages;
  *
  * @since  1.0
  */
-class TwigRuntime
+class FrameworkTwigRuntime
 {
 	/**
 	 * Application object
@@ -76,5 +76,19 @@ class TwigRuntime
 	public function getRouteUri(string $route = '') : string
 	{
 		return $this->app->get('uri.base.path') . $route;
+	}
+
+	/**
+	 * Get the full URL for a route
+	 *
+	 * @param   string  $route  Route to get the URL for
+	 *
+	 * @return  string
+	 *
+	 * @since   1.0
+	 */
+	public function getRouteUrl(string $route = '') : string
+	{
+		return $this->app->get('uri.base.host') . $this->getRouteUri($route);
 	}
 }

@@ -1,0 +1,31 @@
+{% extends "index.twig" %}
+
+{% block title %}API - Joomla! Framework{% endblock %}
+
+{% block bodyNavigation %}
+<nav>
+    <div class="container">
+        <ul>
+            <li><a href="{{ route() }}"><span class="fa fa-cog"></span><span class="title">Framework</span></a></li>
+            <li><a href="{{ route('about') }}"><span class="fa fa-user"></span><span class="title">Team</span></a></li>
+            <li><a href="{{ route('status') }}"><span class="fa fa-wrench"></span><span class="title">Status</span></a></li>
+        </ul>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="api container">
+    <h2>Joomla! Framework Website API</h2>
+    <p class="lead">The Framework website exposes a basic REST API for loading the package release metrics. The available API endpoints are documented below.</p>
+
+    <h3>Endpoints</h3>
+    <p>The base URL for all API endpoints is {{ url('api') }}.</p>
+
+    <h4><span class="label label-info">GET</span> /v1/packages</h4>
+    <p>Get the information for the latest release of all stable packages.</p>
+
+    <h4><span class="label label-info">GET</span> /v1/packages/:package</h4>
+    <p>Get the information for all releases of a package (this is the package name as registered on Packagist without the <code>joomla/</code> prefix, i.e. <code>application</code> for <code>joomla/application</code>.</p>
+</section>
+{% endblock %}

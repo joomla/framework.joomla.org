@@ -10,41 +10,41 @@ namespace Joomla\FrameworkWebsite\Controller;
 
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
-use Joomla\FrameworkWebsite\View\Package\PackageHtmlView;
 use Joomla\Input\Input;
+use Joomla\Renderer\RendererInterface;
 
 /**
- * Controller handling a package's status data listing
+ * Controller handling the site's homepage
  *
  * @method         \Joomla\FrameworkWebsite\WebApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\WebApplication  $app              Application object
  *
  * @since          1.0
  */
-class PackageController extends AbstractController
+class HomepageController extends AbstractController
 {
 	/**
-	 * The view object.
+	 * The template renderer.
 	 *
-	 * @var    PackageHtmlView
+	 * @var    RendererInterface
 	 * @since  1.0
 	 */
-	private $view;
+	private $renderer;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param   PackageHtmlView      $view   The view object.
-	 * @param   Input                $input  The input object.
-	 * @param   AbstractApplication  $app    The application object.
+	 * @param   RendererInterface    $renderer  The template renderer.
+	 * @param   Input                $input     The input object.
+	 * @param   AbstractApplication  $app       The application object.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PackageHtmlView $view, Input $input = null, AbstractApplication $app = null)
+	public function __construct(RendererInterface $renderer, Input $input = null, AbstractApplication $app = null)
 	{
 		parent::__construct($input, $app);
 
-		$this->view = $view;
+		$this->renderer = $renderer;
 	}
 
 	/**
@@ -59,9 +59,7 @@ class PackageController extends AbstractController
 		// Enable browser caching
 		$this->getApplication()->allowCache(true);
 
-		$this->view->setPackage($this->getInput()->getString('package'));
-
-		$this->getApplication()->setBody($this->view->render());
+		$this->getApplication()->setBody($this->renderer->render('homepage.twig'));
 
 		return true;
 	}

@@ -1,15 +1,12 @@
 <?php
 /**
- * Joomla! Framework Status Application
+ * Joomla! Framework Website
  *
  * @copyright  Copyright (C) 2014 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\Status;
-
-use Joomla\Status\Model\PackageAware;
-use PackageVersions\Versions;
+namespace Joomla\FrameworkWebsite;
 
 /**
  * Utility helper class
@@ -19,14 +16,6 @@ use PackageVersions\Versions;
 class Helper
 {
 	use PackageAware;
-
-	/**
-	 * Data container for the Composer data
-	 *
-	 * @var    array
-	 * @since  1.0
-	 */
-	private static $packageList = array();
 
 	/**
 	 * Utility method to retrieve a package's display name
@@ -43,33 +32,16 @@ class Helper
 	}
 
 	/**
-	 * Parses the Composer installed.json file for package information
+	 * Utility method to retrieve a package's repository name
 	 *
-	 * @return  array  Composer package information
+	 * @param   string  $package  Package name
+	 *
+	 * @return  string
 	 *
 	 * @since   1.0
 	 */
-	public function parseComposer() : array
+	public function getPackageRepositoryName(string $package) : string
 	{
-		// Only process this once
-		if (empty(self::$packageList))
-		{
-			// Loop through and extract the package name and version for all Joomla! Framework packages
-			foreach ($this->getPackages()->get('packages') as $packageName => $packageData)
-			{
-				// Skip packages without a stable release
-				if (is_object($packageData) && isset($packageData->stable) && $packageData->stable === false)
-				{
-					continue;
-				}
-
-				// We need to "normalize" the version string since the underlying API returns the version with the commit SHA
-				list($version) = explode('@', Versions::getVersion("joomla/$packageName"));
-
-				self::$packageList[$packageName] = ['version' => $version];
-			}
-		}
-
-		return self::$packageList;
+		return $this->getPackages()->get("packages.$package.repo", $package);
 	}
 }
