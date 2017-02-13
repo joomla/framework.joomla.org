@@ -160,6 +160,8 @@ class PackageModel implements DatabaseModelInterface
 			->select('*')
 			->from($db->quoteName('#__test_results'));
 
+		$reports = [];
+
 		foreach ($packs as $pack)
 		{
 			$query->clear('where')
