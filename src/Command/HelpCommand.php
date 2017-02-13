@@ -106,7 +106,7 @@ class HelpCommand extends AbstractController implements CommandInterface
 	 */
 	public function getDescription() : string
 	{
-		return 'Provides basic use information for the stats application.';
+		return 'Provides basic use information for the website application.';
 	}
 
 	/**
