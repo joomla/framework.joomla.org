@@ -64,7 +64,7 @@ class HelpCommand extends AbstractController implements CommandInterface
 		$processor = $this->getApplication()->getOutput()->getProcessor();
 		$processor->addStyle('cmd', new ColorStyle('magenta'));
 
-		$executable = basename($this->getApplication()->input->executable);
+		$executable = $this->getApplication()->input->executable;
 
 		$commands = $this->getApplication()->getConsole()->getCommands();
 
