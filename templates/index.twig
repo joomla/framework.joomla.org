@@ -16,16 +16,12 @@
 
         <!-- For Misc -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet" />
+        <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
         <link href="favicon.ico" rel="shortcut icon" />
         <link href="https://plus.google.com/b/109167715749846214365/" rel="publisher" />
         <!-- End for misc -->
 
         {% block headJavaScript %}
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-        <script src="{{ asset('js/html5shiv.js') }}"></script>
-        <script src="{{ asset('js/respond.min.js') }}"></script>
-        <![endif]-->
         {% endblock %}
     </head>
     <body id="go">
@@ -56,21 +52,14 @@
                 </div>
             </div>
         </footer>
-        <script src="{{ asset('js/jquery.js') }}"></script>
+        <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
         <script type="text/javascript">
-            $(function() {
-                $('a[href*="#"]:not([href="#"])').click(function() {
-                    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-                        var target = $(this.hash);
-                        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                        if (target.length) {
-                            $('html,body').animate({
-                                scrollTop: target.offset().top
-                            }, 1000);
-                            return false;
-                        }
-                    }
-                });
+	        AOS.init({
+		        offset: 200,
+		        duration: 600,
+		        easing: 'ease-in-sine',
+		        delay: 100,
+		        disable: 'mobile'
             });
         </script>
         {% block bodyJavaScript %}{% endblock %}

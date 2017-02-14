@@ -4,10 +4,10 @@
 <nav>
     <div class="container">
         <ul>
-            <li><a href="#go"><span class="fa fa-cloud-download"></span><span class="title">Download</span></a></li>
-            <li><a href="#about"><span class="fa fa-info-circle"></span><span class="title">About</span></a></li>
-            <li><a href="#involved"><span class="fa fa-globe"></span><span class="title">Get Involved</span></a></li>
-            <li><a href="#resources"><span class="fa fa-book"></span><span class="title">Resources</span></a></li>
+            <li><a href="#go"><span class="fa fa-cloud-download aos-init aos-animate" data-aos="fade-up" data-aos-easing="ease" data-aos-delay="800"></span><span class="title">Download</span></a></li>
+            <li><a href="#about"><span class="fa fa-info-circle aos-init aos-animate" data-aos="fade-up" data-aos-easing="ease" data-aos-delay="800"></span><span class="title">About</span></a></li>
+            <li><a href="#involved"><span class="fa fa-globe aos-init aos-animate" data-aos="fade-up" data-aos-easing="ease" data-aos-delay="800"></span><span class="title">Get Involved</span></a></li>
+            <li><a href="#resources"><span class="fa fa-book aos-init aos-animate" data-aos="fade-up" data-aos-easing="ease" data-aos-delay="800"></span><span class="title">Resources</span></a></li>
             <li><a href="{{ route('about') }}"><span class="fa fa-user"></span><span class="title">Team</span></a></li>
             <li><a href="{{ route('status') }}"><span class="fa fa-wrench"></span><span class="title">Status</span></a></li>
         </ul>
@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-<section class="go">
+<section class="go" data-aos="fade-up">
     <div class="container">
         <h1>Joomla! Framework</h1>
         <h2>Download &amp; Go</h2>
@@ -30,71 +30,72 @@
 
 <hr id="about" />
 
-<span class="fa fa-info-circle marker"></span>
-<section class="about container">
+<span class="fa fa-info-circle marker" data-aos="fade-up"></span>
+<section class="about container" data-aos="fade-up">
     <h2>What is the Joomla! Framework?</h2>
     <p>The Joomla! Framework&#8482 is a new PHP framework (a collection of software libraries/packages) for writing web and command line applications in PHP, without the features and corresponding overhead found in the Joomla! Content Management System (CMS). It provides a structurally sound foundation, which is easy to adapt and easy to extend.</p>
     <p>The Joomla! Framework is free and open source software, distributed under the GNU General Public License version 2 or later; and is comprised of code originally developed for the Joomla! CMS&#8482.</p>
     <p>The Joomla! Framework should not be confused with the hugely popular Joomla! CMS. It is important to remember that you do not need to install the Joomla! Framework to use the CMS, nor do you need to install the Joomla! CMS to use the Framework.</p>
     <img class="img-responsive center structure" src="{{ asset('images/FrameworkDiagram-712x350.png', 'img') }}" alt="The versatility and structure of the Joomla! Framework" />
 
-    <section class="getting-started container">
+    <section class="getting-started container" data-aos="fade-up">
         <h4>Getting Started</h4>
         <p>The new Joomla! Framework is now available to install via Composer and you can find the list of packages on <a href="https://packagist.org/packages/joomla/">Packagist.org</a>. There are plenty of avenues you can explore to get started on working with the Framework.</p>
         <p>For the official docs, check out the <code>README.md</code> file found in each package. You can also review the <a href="https://github.com/joomla-framework">Joomla! Framework organization on GitHub</a>.</p>
     </section>
 
-    <h3>Get the Sample Application</h3>
-    <p>The easiest way to get to know the Joomla! Framework is to start with the sample app.</p>
-    <ol>
+    <h3 data-aos="fade-up">Get the Sample Application</h3>
+    <p data-aos="fade-up">The easiest way to get to know the Joomla! Framework is to start with the sample app.</p>
+    <ol data-aos="fade-up">
         <li>Install Composer.</li>
         <li>Download this <a href="https://github.com/dbhurley/framework-app">sample app</a> repository from GitHub.</li>
         <li>Run <code>composer install</code>.</li>
         <li>View in your browser.</li>
     </ol>
 
-    <h3>Why build a Joomla! Framework?</h3>
-    <p>Separating the framework from the CMS was a big deal, and in retrospect, a smart decision. By separating the two code bases Joomla!&reg; can now offer the stability the CMS requires while still taking advantage of current and modern trends in PHP development.</p>
+    <h3 data-aos="fade-up">Why build a Joomla! Framework?</h3>
+    <p data-aos="fade-up">Separating the framework from the CMS was a big deal, and in retrospect, a smart decision. By separating the two code bases Joomla!&reg; can now offer the stability the CMS requires while still taking advantage of current and modern trends in PHP development.</p>
 
-    <a href="{{ asset('images/FrameworkRoadmap-1200x650.png', 'img') }}">
+    <a href="{{ asset('images/FrameworkRoadmap-1200x650.png', 'img') }}" data-aos="fade-up">
         <img class="img-responsive center structure" src="{{ asset('images/FrameworkRoadmap-960x520.png', 'img') }}" alt="The current and future roles of the Joomla! Framework" />
     </a>
 
-    <h3>What is the Framework good for?</h3>
-    <ul>
+    <h3 data-aos="fade-up">What is the Framework good for?</h3>
+    <ul data-aos="fade-up">
         <li>Building a RESTful web services platform</li>
         <li>Building both simple and complex command line tools</li>
         <li>Building next generation web applications</li>
     </ul>
-    <p>A great example is the <a href="https://issues.joomla.org">issue tracker for the Joomla! CMS</a>.</p>
+    <p data-aos="fade-up">A great example is the <a href="https://issues.joomla.org">issue tracker for the Joomla! CMS</a>.</p>
 
-    <h3>Framework Architecture</h3>
-    <p>The Joomla! Framework has also been designed for maximum flexibility. Breaking the Framework into isolated modular packages allows each package to evolve more easily than if all packages are tied to a single, large package release.</p>
-    <p>Gone are the days when a PHP framework must offer anything and everything a developer needs to complete a project. The current and widely adopted modern practice is to employ lightweight independent feature-specific packages.</p>
-    <p>The Framework is distributed with <a href="https://getcomposer.org">Composer</a>, and as such, allows you to include any other PHP code packages that you can install using Composer. And that's a LOT! Take a look at <a href="https://packagist.org/">Packagist.org</a> to see the kind and quality of code which becomes available when using Composer for dependency management.</p>
+    <h3 data-aos="fade-up">Framework Architecture</h3>
+    <p data-aos="fade-up">The Joomla! Framework has also been designed for maximum flexibility. Breaking the Framework into isolated modular packages allows each package to evolve more easily than if all packages are tied to a single, large package release.</p>
+    <p data-aos="fade-up">Gone are the days when a PHP framework must offer anything and everything a developer needs to complete a project. The current and widely adopted modern practice is to employ lightweight independent feature-specific packages.</p>
+    <p data-aos="fade-up">The Framework is distributed with <a href="https://getcomposer.org">Composer</a>, and as such, allows you to include any other PHP code packages that you can install using Composer. And that's a LOT! Take a look at <a href="https://packagist.org/">Packagist.org</a> to see the kind and quality of code which becomes available when using Composer for dependency management.</p>
 
-    <h3>What does the Joomla! Framework mean for you?</h3>
-    <p>Whether you are a Joomla! extension developer looking to spread your wings &amp; delve into developing standalone applications or a PHP coder looking for a stable lightweight framework for your next app, the Framework provides benefits for everyone.</p>
+    <h3 data-aos="fade-up">What does the Joomla! Framework mean for you?</h3>
+    <p data-aos="fade-up">Whether you are a Joomla! extension developer looking to spread your wings &amp; delve into developing standalone applications or a PHP coder looking for a stable lightweight framework for your next app, the Framework provides benefits for everyone.</p>
 
-    <h3>I am already developing Extensions for the Joomla! CMS. Why should I consider using the Joomla! Framework?</h3>
-    <p>You have invested significant time &amp; effort in learning the Joomla! way of doing things &amp; writing extensions. You can now apply this same knowledge within a non-CMS environment because the Joomla! Framework maintains a similar set of function, class, and method names.</p>
-    <p>It's important to keep in mind other situations, such as what happens when you land a project that needs a different type of application. Or when something doesn't really fit into the website or CMS box, or the CMS is simply too much overhead. There may be times when you need a simple tool to migrate data from one Business Intelligence system to another or a lightweight RESTful service to talk to a mobile application. These are all cases when a framework-based application will prove much more beneficial.</p>
-    <p>These are only a few of the many situations where a framework based solution would work far better than attempting to shoehorn a solution into the Joomla! CMS. The Joomla! Framework allows you to leverage all that Joomla! knowledge to build apps without the overhead of the CMS.</p>
+    <h3 data-aos="fade-up">I am already developing Extensions for the Joomla! CMS. Why should I consider using the Joomla! Framework?</h3>
+    <p data-aos="fade-up">You have invested significant time &amp; effort in learning the Joomla! way of doing things &amp; writing extensions. You can now apply this same knowledge within a non-CMS environment because the Joomla! Framework maintains a similar set of function, class, and method names.</p>
+    <p data-aos="fade-up">It's important to keep in mind other situations, such as what happens when you land a project that needs a different type of application. Or when something doesn't really fit into the website or CMS box, or the CMS is simply too much overhead. There may be times when you need a simple tool to migrate data from one Business Intelligence system to another or a lightweight RESTful service to talk to a mobile application. These are all cases when a framework-based application will prove much more beneficial.</p>
+    <p data-aos="fade-up">These are only a few of the many situations where a framework based solution would work far better than attempting to shoehorn a solution into the Joomla! CMS. The Joomla! Framework allows you to leverage all that Joomla! knowledge to build apps without the overhead of the CMS.</p>
 
-    <h3>I know PHP already. Why should I use this framework?</h3>
-    <p>If you are a strong coder looking for a lightweight framework that is easy to adapt and extend, you are in the right place.</p>
-    <p>The Joomla! Framework is available using Composer. This allows you to build projects from the many packages included in the Joomla! Framework as well as packages that best fit your needs from any of the other PHP frameworks that use Composer.</p>
+    <h3 data-aos="fade-up">I know PHP already. Why should I use this framework?</h3>
+    <p data-aos="fade-up">If you are a strong coder looking for a lightweight framework that is easy to adapt and extend, you are in the right place.</p>
+    <p data-aos="fade-up">The Joomla! Framework is available using Composer. This allows you to build projects from the many packages included in the Joomla! Framework as well as packages that best fit your needs from any of the other PHP frameworks that use Composer.</p>
 
-    <h3>I am a Joomla! CMS User. How will I be affected?</h3>
-    <p>The Joomla! CMS and the Joomla! Framework are currently developed independently and, thus, the Framework's launch will not have an immediate impact for you. However, there are already parts of the Framework integrated into the CMS (e.g. the Dependency Injection package, added in Joomla! 3.2), and more is coming. Expect to see some great extensions made available to you, built using the Framework!</p>
-    <p>The Joomla! Framework aims at getting the latest in PHP developments and features into Joomla! at the framework level. This allows the CMS to better focus its aims on providing the best features for its end users and staying ahead of the game.</p>
-    <p>Bottom line, you can rest assured that your favorite CMS will continue to have a strong, up-to-date and robust base that can evolve with the web.</p>
+    <h3 data-aos="fade-up">I am a Joomla! CMS User. How will I be affected?</h3>
+    <p data-aos="fade-up">The Joomla! CMS and the Joomla! Framework are currently developed independently and, thus, the Framework's launch will not have an immediate impact for you. However, there are already parts of the Framework integrated into the CMS (e.g. the Dependency Injection package, added in Joomla! 3.2), and more is coming. Expect to see some great extensions made available to you, built using the Framework!</p>
+    <p data-aos="fade-up">The Joomla! Framework aims at getting the latest in PHP developments and features into Joomla! at the framework level. This allows the CMS to better focus its aims on providing the best features for its end users and staying ahead of the game.</p>
+    <p data-aos="fade-up">Bottom line, you can rest assured that your favorite CMS will continue to have a strong, up-to-date and robust base that can evolve with the web.</p>
 </section>
+
 
 <hr id="involved" />
 
-<span class="fa fa-globe marker"></span>
-<section class="container">
+<span class="fa fa-globe marker" data-aos="fade-up"></span>
+<section class="container" data-aos="fade-up">
     <h2>Get Involved</h2>
 
     <h3>Support</h3>
@@ -115,7 +116,7 @@
     <!--h3>Submit Your Code</h3>
     <p>Once you've done your research and asked for other's opinions you're ready to submit a pull request. You should create your code and submit a pull request to the <a href="https://github.com/joomla/joomla-framework" target="_blank">GitHub repository for the Framework</a>.</p-->
 
-    <aside class="involved-chunks clearfix">
+    <aside class="involved-chunks clearfix" data-aos="fade-up">
         <div>
             <h4>Official Group</h4>
             <p>A tried and tested method of communication, it is a quick and easy way for you to ask any questions, offer suggestions, and voice your opinion.</p>
@@ -141,7 +142,7 @@
 {% endblock %}
 
 {% block footerContent %}
-<div class="container clearfix">
+<div class="container clearfix" data-aos="fade-up">
     <aside class="resources">
         <h3><span class="fa fa-book"></span> Resources</h3>
         <p><a href="https://packagist.org/packages/joomla/">Packagist</a></p>
@@ -177,59 +178,21 @@
 {% endblock %}
 
 {% block bodyJavaScript %}
-<!--[if lt IE 9]>
 <script type="text/javascript">
-    jQuery(window).load(function() {
-        jQuery('[placeholder]').focus(function() {
-            var input = jQuery(this);
-            if (input.val() == input.attr('placeholder')) {
-                input.val('');
-                input.removeClass('placeholder');
-            }
-        }).blur(function() {
-            var input = jQuery(this);
-            if (input.val() == '' || input.val() == input.attr('placeholder')) {
-                input.addClass('placeholder');
-                input.val(input.attr('placeholder'));
-            }
-        }).blur().parents('form').submit(function() {
-            jQuery(this).find('[placeholder]').each(function() {
-                var input = jQuery(this);
-                if (input.val() == input.attr('placeholder')) {
-                    input.val('');
-                }
-            })
-        });
-    });
-</script>
-<![endif]-->
+    var getHeight = function ( elem ) {
+		return Math.max( elem.scrollHeight, elem.offsetHeight, elem.clientHeight );
+	};
 
-<script type="text/javascript">
-/*
-* Simple jQuery Equal Heights
-*
-* Copyright (c) 2012 Matt Banks
-* Dual licensed under the MIT and GPL licenses.
-* Uses the same license as jQuery, see:
-* http://docs.jquery.com/License
-*
-* @version 1.3
-*/
-(function($) {
-    $.fn.equalHeights = function() {
-        var maxHeight = 0, $this = $(this);
+	var height = 200;
+	var elems = document.querySelectorAll( '.involved-chunks div' );
+	for (var i = 0; i < elems.length; i++) {
+		var hTmp = getHeight( elems[i] );
+		if (hTmp > height)
+			height = hTmp;
+	}
 
-        $this.each(function() {
-            var height = $(this).innerHeight();
-
-            if (height > maxHeight) {
-                maxHeight = height;
-            }
-        });
-
-        return $this.height(maxHeight);
-    };
-})(jQuery);
-$('.involved-chunks div').equalHeights();
+	for (var i = 0; i < elems.length; i++) {
+		elems[i].style.height = height + 'px';
+	}
 </script>
 {% endblock %}
