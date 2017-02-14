@@ -52,14 +52,16 @@
                 </div>
             </div>
         </footer>
-        <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+
+        <script src="/media/js/smooth-scroll.min.js"></script>
         <script type="text/javascript">
-	        AOS.init({
-		        offset: 200,
-		        duration: 600,
-		        easing: 'ease-in-sine',
-		        delay: 100,
-		        disable: 'mobile'
+            smoothScroll.init({
+                // selector: '[data-scroll]', // Selector for links (must be a class, ID, data attribute, or element tag)
+                // selectorHeader: null, // Selector for fixed headers (must be a valid CSS selector) [optional]
+                speed: 600, // Integer. How fast to complete the scroll in milliseconds
+                easing: 'easeInOutCubic', // Easing pattern to use
+                // offset: 0, // Integer. How far to offset the scrolling anchor location in pixels
+                // callback: function ( anchor, toggle ) {} // Function to run after scrolling
             });
         </script>
         {% block bodyJavaScript %}{% endblock %}
