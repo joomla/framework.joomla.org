@@ -4,10 +4,10 @@
 <nav>
     <div class="container">
         <ul>
-            <li><a href="#go"><span class="fa fa-cloud-download"></span><span class="title">Download</span></a></li>
-            <li><a href="#about"><span class="fa fa-info-circle"></span><span class="title">About</span></a></li>
-            <li><a href="#involved"><span class="fa fa-globe"></span><span class="title">Get Involved</span></a></li>
-            <li><a href="#resources"><span class="fa fa-book"></span><span class="title">Resources</span></a></li>
+            <li><a data-scroll href="#go"><span class="fa fa-cloud-download"></span><span class="title">Download</span></a></li>
+            <li><a data-scroll href="#about"><span class="fa fa-info-circle"></span><span class="title">About</span></a></li>
+            <li><a data-scroll href="#involved"><span class="fa fa-globe aos-init"></span><span class="title">Get Involved</span></a></li>
+            <li><a data-scroll href="#resources"><span class="fa fa-book"></span><span class="title">Resources</span></a></li>
             <li><a href="{{ route('about') }}"><span class="fa fa-user"></span><span class="title">Team</span></a></li>
             <li><a href="{{ route('status') }}"><span class="fa fa-wrench"></span><span class="title">Status</span></a></li>
         </ul>
@@ -177,59 +177,21 @@
 {% endblock %}
 
 {% block bodyJavaScript %}
-<!--[if lt IE 9]>
 <script type="text/javascript">
-    jQuery(window).load(function() {
-        jQuery('[placeholder]').focus(function() {
-            var input = jQuery(this);
-            if (input.val() == input.attr('placeholder')) {
-                input.val('');
-                input.removeClass('placeholder');
-            }
-        }).blur(function() {
-            var input = jQuery(this);
-            if (input.val() == '' || input.val() == input.attr('placeholder')) {
-                input.addClass('placeholder');
-                input.val(input.attr('placeholder'));
-            }
-        }).blur().parents('form').submit(function() {
-            jQuery(this).find('[placeholder]').each(function() {
-                var input = jQuery(this);
-                if (input.val() == input.attr('placeholder')) {
-                    input.val('');
-                }
-            })
-        });
-    });
-</script>
-<![endif]-->
+    var getHeight = function ( elem ) {
+		return Math.max( elem.scrollHeight, elem.offsetHeight, elem.clientHeight );
+	};
 
-<script type="text/javascript">
-/*
-* Simple jQuery Equal Heights
-*
-* Copyright (c) 2012 Matt Banks
-* Dual licensed under the MIT and GPL licenses.
-* Uses the same license as jQuery, see:
-* http://docs.jquery.com/License
-*
-* @version 1.3
-*/
-(function($) {
-    $.fn.equalHeights = function() {
-        var maxHeight = 0, $this = $(this);
+	var height = 200;
+	var elems = document.querySelectorAll( '.involved-chunks div' );
+	for (var i = 0; i < elems.length; i++) {
+		var hTmp = getHeight( elems[i] );
+		if (hTmp > height)
+			height = hTmp;
+	}
 
-        $this.each(function() {
-            var height = $(this).innerHeight();
-
-            if (height > maxHeight) {
-                maxHeight = height;
-            }
-        });
-
-        return $this.height(maxHeight);
-    };
-})(jQuery);
-$('.involved-chunks div').equalHeights();
+	for (var i = 0; i < elems.length; i++) {
+		elems[i].style.height = height + 'px';
+	}
 </script>
 {% endblock %}
