@@ -200,20 +200,20 @@
 
 {% block bodyJavaScript %}
 <script type="text/javascript">
-    var getHeight = function ( elem ) {
-		return Math.max( elem.scrollHeight, elem.offsetHeight, elem.clientHeight );
-	};
+    var getHeight = function (elem) {
+        return Math.max(elem.scrollHeight, elem.offsetHeight, elem.clientHeight);
+    };
 
-	var height = 20;
-	var elems = document.querySelectorAll( 'div.thumbnail div.caption' );
-	for (var i = 0; i < elems.length; i++) {
-		var hTmp = getHeight( elems[i] );
-		if (hTmp > height)
-			height = hTmp;
-	}
+    var height = 20;
+    var elems = document.querySelectorAll('div.thumbnail div.caption');
+    for (var i = 0; i < elems.length; i++) {
+        var hTmp = getHeight(elems[i]);
+        if (hTmp > height)
+            height = hTmp;
+    }
 
-	for (var i = 0; i < elems.length; i++) {
-		elems[i].style.height = height + 'px';
-	}
+    for (var i = 0; i < elems.length; i++) {
+        elems[i].style.height = height + 'px';
+    }
 </script>
 {% endblock %}
