@@ -54,7 +54,8 @@ packages:
     session: ~
     string: ~
     test: ~
-    twitter: ~
+    twitter:
+        repo: twitter-api
     uri:
         display: URI
     utilities: ~
