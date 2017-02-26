@@ -29,7 +29,8 @@ packages:
     input: ~
     keychain: ~
     language: ~
-    ldap: ~
+    ldap:
+        display: LDAP
     linkedin:
         display: LinkedIn
         repo: linkedin-api
