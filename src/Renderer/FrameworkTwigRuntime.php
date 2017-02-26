@@ -65,6 +65,18 @@ class FrameworkTwigRuntime
 	}
 
 	/**
+	 * Retrieves the current URI
+	 *
+	 * @return  string
+	 *
+	 * @since   1.0
+	 */
+	public function getRequestUri() : string
+	{
+		return $this->app->get('uri.request');
+	}
+
+	/**
 	 * Get the URI for a route
 	 *
 	 * @param   string  $route  Route to get the path for
