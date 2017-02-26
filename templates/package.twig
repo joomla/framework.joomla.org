@@ -4,18 +4,6 @@
 
 {% block metaDescription %}Release history for the Joomla! Framework {{ packageName }} package.{% endblock %}
 
-{% block bodyNavigation %}
-<nav>
-    <div class="container">
-        <ul>
-            <li><a href="{{ route() }}"><span class="fa fa-cog"></span><span class="title">Framework</span></a></li>
-            <li><a href="{{ route('about') }}"><span class="fa fa-user"></span><span class="title">Team</span></a></li>
-            <li><a href="{{ route('status') }}"><span class="fa fa-wrench"></span><span class="title">Status</span></a></li>
-        </ul>
-    </div>
-</nav>
-{% endblock %}
-
 {% block content %}
 <section class="status container">
     <h1>Release Data for {{ packageName }} Package <a href="https://github.com/joomla-framework/{{ repoName }}"><span class="fa fa-github"></span></a></h1>

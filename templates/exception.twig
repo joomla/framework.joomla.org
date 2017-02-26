@@ -2,18 +2,6 @@
 
 {% block title %}Framework Error{% endblock %}
 
-{% block bodyNavigation %}
-<nav>
-    <div class="container">
-        <ul>
-            <li><a href="{{ route() }}"><span class="fa fa-cog"></span><span class="title">Framework</span></a></li>
-            <li><a href="{{ route('about') }}"><span class="fa fa-user"></span><span class="title">Team</span></a></li>
-            <li><a href="{{ route('status') }}"><span class="fa fa-wrench"></span><span class="title">Status</span></a></li>
-        </ul>
-    </div>
-</nav>
-{% endblock %}
-
 {% block content %}
     <section class="error-page container">
         {% if exception.code == 404 %}
