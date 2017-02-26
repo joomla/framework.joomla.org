@@ -135,7 +135,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @param   string  $package  The package to retrieve the history for
 	 *
-	 * @return  array
+	 * @return  \stdClass[]
 	 *
 	 * @since   1.0
 	 * @throws  \RuntimeException
@@ -165,30 +165,38 @@ class PackageModel implements DatabaseModelInterface
 		// Loop through the packs and get the reports
 		$i = 0;
 
+		$inString = '';
+
 		/** @var MysqlQuery $query */
-		$query = $db->getQuery(true)
-			->select('*')
-			->from($db->quoteName('#__test_results'));
+		$query = $db->getQuery(true);
+
+		foreach ($packs as $key => $pack)
+		{
+			$queryKey = "package$key";
+			$inString .= ":$queryKey,";
+			$query->bind($queryKey, $pack->id, \PDO::PARAM_INT);
+		}
+
+		$query->select('*')
+			->from($db->quoteName('#__test_results'))
+			->where($db->quoteName('package_id') . ' IN (' . rtrim($inString, ',') . ')');
+
+		$releaseTests = $db->setQuery($query)->loadObjectList('package_id');
 
 		$reports = [];
 
 		foreach ($packs as $pack)
 		{
-			$query->clear('where')
-				->where($db->quoteName('package_id') . ' = :package_id');
-
-			$query->bind('package_id', $pack->id, \PDO::PARAM_INT);
-
-			$result = $db->setQuery($query)->loadObject();
-
 			// If we didn't get any data, build a new object
-			if (!$result)
+			if (!isset($releaseTests[$pack->id]))
 			{
 				$result = new \stdClass;
 			}
 			// Otherwise compute report percentages
 			else
 			{
+				$result = $releaseTests[$pack->id];
+
 				$result->lines_percentage = 0;
 
 				if ($result->total_lines > 0)
