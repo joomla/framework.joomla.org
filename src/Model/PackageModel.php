@@ -52,7 +52,7 @@ class PackageModel implements DatabaseModelInterface
 	/**
 	 * Fetches the latest releases for each Framework package
 	 *
-	 * @return  array
+	 * @return  \stdClass[]
 	 *
 	 * @since   1.0
 	 */
@@ -65,7 +65,7 @@ class PackageModel implements DatabaseModelInterface
 
 		/** @var MysqlQuery $subQuery */
 		$subQuery = $db->getQuery(true)
-			->select('*')
+			->select($db->quoteName(['id', 'package', 'version']))
 			->from($db->quoteName('#__packages'))
 			->order('package, version DESC');
 
@@ -77,29 +77,39 @@ class PackageModel implements DatabaseModelInterface
 
 		$packs = $db->setQuery($query)->loadObjectList();
 
-		/** @var MysqlQuery $query */
-		$query = $db->getQuery(true)
-			->select('*')
-			->from($db->quoteName('#__test_results'));
+		$inString = '';
 
-		// Loop through the packs and get the reports
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true);
+
+		foreach ($packs as $key => $pack)
+		{
+			$queryKey = "package$key";
+			$inString .= ":$queryKey,";
+			$query->bind($queryKey, $pack->id, \PDO::PARAM_INT);
+		}
+
+		$query->select('*')
+			->from($db->quoteName('#__test_results'))
+			->where($db->quoteName('package_id') . ' IN (' . rtrim($inString, ',') . ')');
+
+		$packageTests = $db->setQuery($query)->loadObjectList('package_id');
+
+		$reports = [];
+
+		// Loop through the packs and build the reports
 		foreach ($packs as $pack)
 		{
-			$query->clear('where')
-				->where($db->quoteName('package_id') . ' = :package_id');
-
-			$query->bind('package_id', $pack->id, \PDO::PARAM_INT);
-
-			$result = $db->setQuery($query)->loadObject();
-
 			// If we didn't get any data, build a new object
-			if (!$result)
+			if (!isset($packageTests[$pack->id]))
 			{
 				$result = new \stdClass;
 			}
 			// Otherwise compute report percentages
 			else
 			{
+				$result = $packageTests[$pack->id];
+
 				if ($result->total_lines > 0)
 				{
 					$result->lines_percentage = round($result->lines_covered / $result->total_lines * 100, 2);
