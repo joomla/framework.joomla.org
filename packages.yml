@@ -14,7 +14,8 @@ packages:
     di:
         display: DI
     event: ~
-    facebook: ~
+    facebook:
+        repo: facebook-api
     filesystem: ~
     filter: ~
     form: ~
