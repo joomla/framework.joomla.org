@@ -10,8 +10,19 @@
         <!-- For SEO -->
         <title>{% block title %}Joomla! Framework{% endblock %}</title>
         <meta charset="utf-8">
-        <meta name="description" content="The Joomla! Framework provides a structurally sound foundation on which to build web applications, which is easy to adapt to and extend. Let's find out more:">
-        <meta name="author" content="Open Source Matters">
+        <meta name="description" content="{% block metaDescription %}The Joomla! Framework provides a structurally sound foundation on which to build web applications, which is easy to adapt to and extend. Let's find out more!{% endblock %}">
+        <meta name="generator" content="Joomla! Framework" />
+        <meta property="og:description" content="{{ block('metaDescription') }}" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:site_name" content="Joomla! Framework" />
+        <meta property="og:title" content="{{ block('title') }}" />
+        <meta property="og:type" content="{% block metaOgType %}website{% endblock %}" />
+        <meta property="og:url" content="{{ request_uri() }}" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@JoomlaFramework" />
+        <meta name="twitter:description" content="{{ block('metaDescription') }}" />
+        <meta name="twitter:title" content="{{ block('title') }}" />
+        {% block metadata %}{% endblock %}
         <!-- End for SEO -->
 
         <!-- For Misc -->
