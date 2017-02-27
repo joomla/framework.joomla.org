@@ -24,6 +24,14 @@ use Joomla\Renderer\RendererInterface;
 class PageController extends AbstractController
 {
 	/**
+	 * Container defining layouts which shouldn't be routable
+	 *
+	 * @var    array
+	 * @since  1.0
+	 */
+	private $excludedLayouts = ['exception', 'homepage', 'index', 'package'];
+
+	/**
 	 * The template renderer.
 	 *
 	 * @var    RendererInterface
@@ -59,10 +67,11 @@ class PageController extends AbstractController
 		// Enable browser caching
 		$this->getApplication()->allowCache(true);
 
-		$layout = $this->getInput()->getString('view', '') . '.twig';
+		$view   = $this->getInput()->getString('view', '');
+		$layout = "$view.twig";
 
-		// Since this is a catch-all route, if the layout doesn't exist, treat this as a 404
-		if (!$this->renderer->pathExists($layout))
+		// Since this is a catch-all route, if the layout doesn't exist, or is an excluded layout, treat this as a 404
+		if (!$this->renderer->pathExists($layout) || in_array($view, $this->excludedLayouts))
 		{
 			throw new \RuntimeException(sprintf('Unable to handle request for route `%s`.', $this->getApplication()->get('uri.route')), 404);
 		}
