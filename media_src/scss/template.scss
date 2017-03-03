@@ -1,0 +1,352 @@
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_mixins.scss";
+
+// Reset and dependencies
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_normalize.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_print.scss";
+//@import "glyphicons.scss";
+
+// Font Awesome
+// @import "../../node_modules/font-awesome/scss/_animated.scss";
+// @import "../../node_modules/font-awesome/scss/_bordered-pulled.scss";
+// @import "../../node_modules/font-awesome/scss/_core.scss";
+// @import "../../node_modules/font-awesome/scss/_fixed-width.scss";
+// @import "../../node_modules/font-awesome/scss/_icons.scss";
+// @import "../../node_modules/font-awesome/scss/_larger.scss";
+// @import "../../node_modules/font-awesome/scss/_list.scss";
+// @import "../../node_modules/font-awesome/scss/_mixins.scss";
+// @import "../../node_modules/font-awesome/scss/_path.scss";
+// @import "../../node_modules/font-awesome/scss/_rotated-flipped.scss";
+// @import "../../node_modules/font-awesome/scss/_stacked.scss";
+// @import "../../node_modules/font-awesome/scss/_variables.scss";
+@import "../../node_modules/font-awesome/scss/font-awesome.scss";
+
+// Core CSS
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_scaffolding.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_type.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_code.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_grid.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_tables.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_forms.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_buttons.scss";
+
+// Components
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_component-animations.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_dropdowns.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_button-groups.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_input-groups.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_navs.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_navbar.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_breadcrumbs.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_pagination.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_pager.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_labels.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_badges.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_jumbotron.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_thumbnails.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_alerts.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_progress-bars.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_media.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_list-group.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_panels.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_responsive-embed.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_wells.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_close.scss";
+
+// Components w/ JavaScript
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_modals.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_tooltip.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_popovers.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_carousel.scss";
+
+// Utility classes
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_utilities.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_responsive-utilities.scss";
+
+$icon-color: #fff;
+$go-h2: darkblue;
+$marker-color: grey;
+// Site Body Styles
+.container {
+  margin: 0 auto;
+}
+
+.center {
+  display: block;
+  margin: 0 auto;
+}
+
+a {
+  @include transition(all 0.3s ease-out)
+}
+
+h2 {
+  text-align: center;
+}
+
+.fa {
+  color: $icon-color;
+  &.mega {
+    color: #ffffff;
+    font-size: 170px;
+    margin-top: -20px;
+  }
+}
+
+section.team div.row {
+  margin-bottom: 10px;
+}
+
+.rochen {
+  background: url(https://cdn.joomla.org/rochen/rochen_footer_logo_white.png) no-repeat;
+  height: 42px;
+  width: 84px;
+  text-indent: -9999px;
+  display: inline-block;
+  position: relative;
+}
+
+nav {
+  background: $gray-base;
+  color: #ffffff;
+  height: 45px;
+  padding: 8px 0;
+  font-size: 21px;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+  a {
+    color: #ffffff;
+    &:hover {
+      text-decoration: none;
+      color: $brand-info;
+    }
+  }
+  .fa {
+    font-size: 27px;
+    padding-right: 8px;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+    li {
+      display: inline;
+      line-height: 1.5;
+      margin-left: 5.5%;
+      &:first-child {
+        margin-left: 0;
+      }
+      span {
+        vertical-align: top;
+      }
+    }
+  }
+}
+
+main {
+  padding: 45px 0 20px;
+}
+
+.go {
+  background: url(../images/j-framework-full.png) no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; /* min-height:800px; */
+  text-align: center;
+  padding: 10px;
+  font-size: 34px;
+  color: #ffffff;
+  h1 {
+    font-size: 110px;
+    margin: 0;
+    line-height: 100%;
+  }
+  h2 {
+    font-size: 85px;
+    color: $go-h2;
+    margin: -10px 0 0;
+  }
+  .cta {
+    max-width: 767px;
+    margin: 0 auto;
+    .btn {
+      width: 40%;
+      font-size: 24px;
+    }
+  }
+}
+
+.marker {
+  color: $marker-color;
+  font-size: 100px;
+  display: block;
+  text-align: center;
+}
+
+.involved-chunks div {
+  width: 21%;
+  margin: 2%;
+  padding: 2%;
+  float: left;
+  background: $gray-lighter;
+}
+
+footer {
+  background: $gray-darker;
+  color: #a4a4a4;
+  aside {
+    float: left;
+    width: 50%;
+  }
+}
+
+//template responsive
+@media screen and (max-width: ($screen-lg-min - 1)) {
+  .go {
+    background-image: url(../images/j-framework-1200.png);
+    margin: 0 -10px;
+  }
+
+  main, footer {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media screen and (max-width: ($screen-md - 1)) {
+  .go {
+    font-size: 31px;
+    .fa.mega {
+      font-size: 180px;
+    }
+    h1 {
+      font-size: 90px;
+    }
+    h2 {
+      font-size: 80px;
+    }
+    .cta .btn {
+      width: 40%;
+      font-size: 19px;
+    }
+  }
+
+  .involved-chunks div {
+    width: 46%;
+    &:nth-child(2n+1) {
+      clear: both;
+    }
+  }
+}
+
+@media (min-width: $screen-sm) and (max-width: ($screen-md - 1)) {
+  nav {
+    font-size: 18px;
+    .fa {
+      font-size: 22px;
+      padding-right: 6px;
+    }
+    ul {
+      li {
+        margin-left: 4%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: ($screen-sm - 1)) {
+  .go {
+    background-image: url(../images/j-framework-767.png);
+    font-size: 27px;
+    .fa.mega {
+      font-size: 160px;
+    }
+    h1 {
+      font-size: 50px;
+    }
+    h2 {
+      font-size: 40px;
+    }
+    .cta .btn {
+      width: 40%;
+      font-size: 17px;
+    }
+  }
+
+  .title {
+    display: none;
+  }
+
+  nav {
+    ul li {
+      margin-left: 10%;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  footer p {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .go {
+    background-image: url(../images/j-framework-500.png);
+    font-size: 27px;
+    .fa.mega {
+      font-size: 150px;
+    }
+    h1 {
+      font-size: 35px;
+    }
+    h2 {
+      font-size: 30px;
+    }
+    .cta .btn {
+      width: 100%;
+      float: none !important;
+      margin: 20px 0;
+      font-size: 15px;
+    }
+  }
+
+  .involved-chunks div {
+    width: 96%;
+    margin: 3px 0;
+    padding: 0 2%;
+  }
+
+  nav ul li {
+    margin-left: 6%;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .structure {
+    display: none;
+  }
+
+  footer aside {
+    width: 100%;
+  }
+}
+
+.involved-chunks div {
+  position: relative;
+  padding-bottom: 60px
+}
+
+.involved-chunks div p:last-child {
+  position: absolute;
+  bottom: 10px
+}
+
+section.team div.row > div {
+  padding-bottom: 10px
+}

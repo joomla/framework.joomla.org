@@ -19,3 +19,6 @@
 /app-coverage
 /phpunit.xml
 /testconfigs
+
+# Node modules should be local
+node_modules/
