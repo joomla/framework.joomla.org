@@ -73,18 +73,19 @@ module.exports = function(grunt) {
 						dest: 'www/media/fonts/',
 						filter: 'isFile'
 					},
-					{
-						expand: true,
-						cwd: 'node_modules/smooth-scroll/dist/js',
-						src: ['*'],
-						dest: 'www/media/js/',
-						filter: 'isFile'
-					},
 				]
 			}
 		},
 
-
+		concat: {
+			options: {
+				separator: ';',
+			},
+			dist: {
+				src: ['node_modules/smooth-scroll/dist/js/smooth-scroll.js', 'media_src/js/template.js'],
+				dest: 'www/media/js/template.js',
+			},
+		},
 
 		// Minimize some javascript files
 		uglify: {
@@ -111,9 +112,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
-	grunt.loadNpmTasks('grunt-scss-lint');
 	grunt.loadNpmTasks('grunt-sass');
-	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-postcss');
 
 	grunt.registerTask('default',
@@ -122,14 +121,9 @@ module.exports = function(grunt) {
 			'sass:dist',
 			'postcss',
 			'cssmin:allCss',
-
 			'copy:fromSource',
-			//'concat:someFiles',
+			'concat:dist',
 			'uglify:allJs',
-
-
-
-			// 'clean:temp'
 		]
 	);
 };
