@@ -48,7 +48,7 @@
 }
 
 
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+@import "_variables.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_mixins.scss";
 
 // Reset and dependencies
@@ -113,15 +113,6 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_utilities.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_responsive-utilities.scss";
 
-html, body {
-	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 18px;
-	background-color: #fffcf9;
-}
-
-$icon-color: #fff;
-$go-h2: darkblue;
-$marker-color: grey;
 // Site Body Styles
 .container {
   margin: 0 auto;
@@ -163,7 +154,7 @@ section.team div.row {
 }
 
 nav {
-  background: $gray-base;
+  background: $darker-black;
   color: #ffffff;
   height: 45px;
   padding: 8px 0;
@@ -255,7 +246,7 @@ main {
 }
 
 footer {
-  background: $gray-darker;
+  background: $darker-black;
   color: #a4a4a4;
   aside {
     float: left;
@@ -264,7 +255,7 @@ footer {
 }
 
 //template responsive
-@media screen and (max-width: ($screen-lg-min - 1)) {
+@media screen and (max-width: $screen-md-max) {
   .go {
     background-image: url(../images/j-framework-1200.png);
     margin: 0 -10px;
@@ -276,7 +267,7 @@ footer {
   }
 }
 
-@media screen and (max-width: ($screen-md - 1)) {
+@media screen and (max-width: $screen-md-max) {
   .go {
     font-size: 31px;
     .fa.mega {
@@ -302,7 +293,7 @@ footer {
   }
 }
 
-@media (min-width: $screen-sm) and (max-width: ($screen-md - 1)) {
+@media (min-width: $screen-sm) and (max-width: $screen-sm-max) {
   nav {
     font-size: 18px;
     .fa {
@@ -317,7 +308,7 @@ footer {
   }
 }
 
-@media screen and (max-width: ($screen-sm - 1)) {
+@media screen and (max-width: $screen-sm-max) {
   .go {
     background-image: url(../images/j-framework-767.png);
     font-size: 27px;
