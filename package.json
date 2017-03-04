@@ -1,0 +1,20 @@
+{
+  "name": "joomla.framework.site",
+  "version": "0.0.1",
+  "description": "Joomla Framework Site",
+  "dependencies": {
+    "autoprefixer": "^6.6.1",
+    "bootstrap-sass": "3.3.7",
+    "font-awesome": "4.7.0",
+    "grunt": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-copy": "latest",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-postcss": "0.8.0",
+    "grunt-sass": "^2.0.0",
+    "smooth-scroll": "github:cferdinandi/smooth-scroll"
+  },
+  "license": "GPL-2.0+"
+}

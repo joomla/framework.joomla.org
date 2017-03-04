@@ -4,7 +4,7 @@
         <!-- For Responsive -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" href="{{ asset('css/template.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/template.min.css') }}" type="text/css">
         <!-- End for Responsive -->
 
         <!-- For SEO -->
@@ -26,7 +26,6 @@
         <!-- End for SEO -->
 
         <!-- For Misc -->
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet" />
         <link href="favicon.ico" rel="shortcut icon" />
         <link href="https://plus.google.com/b/109167715749846214365/" rel="publisher" />
         <!-- End for misc -->
@@ -73,17 +72,7 @@
             </div>
         </footer>
 
-        <script src="{{ asset('js/smooth-scroll.min.js') }}"></script>
-        <script type="text/javascript">
-            smoothScroll.init({
-                // selector: '[data-scroll]', // Selector for links (must be a class, ID, data attribute, or element tag)
-                // selectorHeader: null, // Selector for fixed headers (must be a valid CSS selector) [optional]
-                speed: 600, // Integer. How fast to complete the scroll in milliseconds
-                easing: 'easeInOutCubic', // Easing pattern to use
-                offset: 40, // Integer. How far to offset the scrolling anchor location in pixels
-                // callback: function ( anchor, toggle ) {} // Function to run after scrolling
-            });
-        </script>
+        <script src="{{ asset('js/template.min.js') }}"></script>
         {% block bodyJavaScript %}{% endblock %}
     </body>
 </html>
