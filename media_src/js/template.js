@@ -12,8 +12,8 @@ var getHeight = function (elem) {
 };
 
 var height = 20;
-var elems = document.querySelectorAll('div.thumbnail div.caption');
-if (!elems.length) elems = document.querySelectorAll('.involved-chunks div');
+var elems = document.querySelectorAll('[data-display="equal"]');
+
 if (elems) {
 	for (var i = 0; i < elems.length; i++) {
 		var hTmp = getHeight(elems[i]);
