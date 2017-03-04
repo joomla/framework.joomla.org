@@ -4906,6 +4906,10 @@ a.thumbnail.active {
   .hidden-print {
     display: none !important; } }
 
+html, body {
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px; }
+
 .container {
   margin: 0 auto; }
 

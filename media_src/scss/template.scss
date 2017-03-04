@@ -113,6 +113,11 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_utilities.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_responsive-utilities.scss";
 
+html, body {
+	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 18px;
+}
+
 $icon-color: #fff;
 $go-h2: darkblue;
 $marker-color: grey;
