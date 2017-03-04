@@ -116,6 +116,7 @@
 html, body {
 	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 18px;
+	background-color: #fffcf9;
 }
 
 $icon-color: #fff;
@@ -247,6 +248,10 @@ main {
   padding: 2%;
   float: left;
   background: $gray-lighter;
+}
+
+.involved-chunks div p {
+	font-size: 14px;
 }
 
 footer {

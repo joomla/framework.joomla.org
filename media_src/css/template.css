@@ -4908,7 +4908,8 @@ a.thumbnail.active {
 
 html, body {
   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 18px; }
+  font-size: 18px;
+  background-color: #fffcf9; }
 
 .container {
   margin: 0 auto; }
@@ -5010,6 +5011,9 @@ main {
   padding: 2%;
   float: left;
   background: #eeeeee; }
+
+.involved-chunks div p {
+  font-size: 14px; }
 
 footer {
   background: #222222;

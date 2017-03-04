@@ -115,6 +115,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-postcss');
 
+	grunt.registerTask('clean-up', function() {
+		if (grunt.file.exists('www/media/js/template.js')) {
+			grunt.file.delete('www/media/js/template.js');
+		}
+	});
+
 	grunt.registerTask('default',
 		[
 			'clean:assets',
@@ -124,6 +130,7 @@ module.exports = function(grunt) {
 			'copy:fromSource',
 			'concat:dist',
 			'uglify:allJs',
+			'clean-up',
 		]
 	);
 };
