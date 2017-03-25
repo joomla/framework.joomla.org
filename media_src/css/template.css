@@ -4946,9 +4946,6 @@ h2 {
     font-size: 170px;
     margin-top: -20px; }
 
-section.team div.row {
-  margin-bottom: 10px; }
-
 .rochen {
   background: url(https://cdn.joomla.org/rochen/rochen_footer_logo_white.png) no-repeat;
   height: 42px;
@@ -5115,9 +5112,4 @@ footer {
     nav ul li:first-child {
       margin-left: 0; }
   .structure {
-    display: none; }
-  footer aside {
-    width: 100%; } }
-
-section.team div.row > div {
-  padding-bottom: 10px; }
+    display: none; } }

@@ -140,10 +140,6 @@ h2 {
   }
 }
 
-section.team div.row {
-  margin-bottom: 10px;
-}
-
 .rochen {
   background: url(https://cdn.joomla.org/rochen/rochen_footer_logo_white.png) no-repeat;
   height: 42px;
@@ -380,12 +376,4 @@ footer {
   .structure {
     display: none;
   }
-
-  footer aside {
-    width: 100%;
-  }
-}
-
-section.team div.row > div {
-  padding-bottom: 10px
 }
