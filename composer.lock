@@ -121,16 +121,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855"
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/0d6c7ca039329247e4f0f8f8f6506810e8248855",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
                 "shasum": ""
             },
             "require": {
@@ -182,7 +182,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-02-27T10:51:17+00:00"
+            "time": "2017-03-20T17:10:46+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -1170,21 +1170,21 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.5.2",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "5677cfe02397dd6b58c861870dfaa5d9007d3954"
+                "reference": "0b7bdfb180e72c8d76e75a649ced67e392201458"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/5677cfe02397dd6b58c861870dfaa5d9007d3954",
-                "reference": "5677cfe02397dd6b58c861870dfaa5d9007d3954",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/0b7bdfb180e72c8d76e75a649ced67e392201458",
+                "reference": "0b7bdfb180e72c8d76e75a649ced67e392201458",
                 "shasum": ""
             },
             "require": {
                 "paragonie/random_compat": "^1.0|^2.0",
-                "php": ">=5.4"
+                "php": "^5.4 || ^7.0"
             },
             "replace": {
                 "rhumsaa/uuid": "self.version"
@@ -1248,7 +1248,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2016-11-22T19:21:44+00:00"
+            "time": "2017-03-18T15:38:09+00:00"
         },
         {
             "name": "symfony/asset",
@@ -1477,16 +1477,16 @@
         },
         {
             "name": "theiconic/php-ga-measurement-protocol",
-            "version": "v2.4.1",
+            "version": "v2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theiconic/php-ga-measurement-protocol.git",
-                "reference": "920b7a79432e1452ddef90adb8bb1e236beb0ab1"
+                "reference": "a4e2d63997a449770e576800dce290dbe13dae09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/theiconic/php-ga-measurement-protocol/zipball/920b7a79432e1452ddef90adb8bb1e236beb0ab1",
-                "reference": "920b7a79432e1452ddef90adb8bb1e236beb0ab1",
+                "url": "https://api.github.com/repos/theiconic/php-ga-measurement-protocol/zipball/a4e2d63997a449770e576800dce290dbe13dae09",
+                "reference": "a4e2d63997a449770e576800dce290dbe13dae09",
                 "shasum": ""
             },
             "require": {
@@ -1514,20 +1514,20 @@
                 }
             ],
             "description": "Send data to Google Analytics from the server using PHP. This library fully implements GA measurement protocol.",
-            "time": "2017-01-18T23:24:46+00:00"
+            "time": "2017-03-20T00:24:04+00:00"
         },
         {
             "name": "twig/twig",
-            "version": "v2.2.0",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "29bb02dde09ff56291d30f7687eb8696918023af"
+                "reference": "9718186a5df85a4f7917e78d3ffcabc204c75d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/29bb02dde09ff56291d30f7687eb8696918023af",
-                "reference": "29bb02dde09ff56291d30f7687eb8696918023af",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9718186a5df85a4f7917e78d3ffcabc204c75d25",
+                "reference": "9718186a5df85a4f7917e78d3ffcabc204c75d25",
                 "shasum": ""
             },
             "require": {
@@ -1537,12 +1537,12 @@
             "require-dev": {
                 "psr/container": "^1.0",
                 "symfony/debug": "~2.7",
-                "symfony/phpunit-bridge": "~3.2"
+                "symfony/phpunit-bridge": "~3.3@dev"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -1577,7 +1577,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-02-27T00:16:20+00:00"
+            "time": "2017-03-22T15:41:51+00:00"
         }
     ],
     "packages-dev": [],
