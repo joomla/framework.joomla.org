@@ -100,7 +100,7 @@
 //@import "../../node_modules/bootstrap-sass/assets/stylesheets/_list-group.scss";
 //@import "../../node_modules/bootstrap-sass/assets/stylesheets/_panels.scss";
 //@import "../../node_modules/bootstrap-sass/assets/stylesheets/_responsive-embed.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_wells.scss";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_wells.scss";
 //@import "../../node_modules/bootstrap-sass/assets/stylesheets/_close.scss";
 
 // Components w/ JavaScript
@@ -234,15 +234,18 @@ main {
 }
 
 .involved-chunks div {
-  width: 21%;
-  margin: 2%;
-  padding: 2%;
+  width: 22%;
+  margin: 1.5%;
+  padding: 1.5% 1.5% 60px;
   float: left;
-  background: $gray-lighter;
-}
-
-.involved-chunks div p {
-	font-size: 14px;
+  position: relative;
+  p {
+  	font-size: 14px;
+    &:last-child {
+      position: absolute;
+      bottom: 10px
+    }
+  }
 }
 
 footer {
@@ -287,6 +290,9 @@ footer {
 
   .involved-chunks div {
     width: 46%;
+    margin: 1%;
+    padding: 1% 1% 60px;
+
     &:nth-child(2n+1) {
       clear: both;
     }
@@ -364,8 +370,8 @@ footer {
 
   .involved-chunks div {
     width: 96%;
-    margin: 3px 0;
-    padding: 0 2%;
+    margin: 1%;
+    padding: 1% 1% 60px;
   }
 
   nav ul li {
@@ -382,16 +388,6 @@ footer {
   footer aside {
     width: 100%;
   }
-}
-
-.involved-chunks div {
-  position: relative;
-  padding-bottom: 60px
-}
-
-.involved-chunks div p:last-child {
-  position: absolute;
-  bottom: 10px
 }
 
 section.team div.row > div {
