@@ -81,33 +81,33 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_buttons.scss";
 
 // Components
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_component-animations.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_dropdowns.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_button-groups.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_input-groups.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_navs.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_navbar.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_breadcrumbs.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_pagination.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_pager.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_component-animations.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_dropdowns.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_button-groups.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_input-groups.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_navs.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_navbar.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_breadcrumbs.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_pagination.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_pager.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_labels.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_badges.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_jumbotron.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_jumbotron.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_thumbnails.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_alerts.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_progress-bars.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_media.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_list-group.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_panels.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_responsive-embed.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_alerts.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_progress-bars.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_media.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_list-group.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_panels.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_responsive-embed.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_wells.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_close.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_close.scss";
 
 // Components w/ JavaScript
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_modals.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_tooltip.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_popovers.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/_carousel.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_modals.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_tooltip.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_popovers.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_carousel.scss";
 
 // Utility classes
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_utilities.scss";
@@ -251,10 +251,6 @@ main {
 footer {
   background: $darker-black;
   color: #a4a4a4;
-  aside {
-    float: left;
-    width: 50%;
-  }
 }
 
 //template responsive

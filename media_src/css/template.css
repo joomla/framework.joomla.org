@@ -5035,9 +5035,6 @@ main {
 footer {
   background: #181818;
   color: #a4a4a4; }
-  footer aside {
-    float: left;
-    width: 50%; }
 
 @media screen and (max-width: 1199px) {
   .go {
