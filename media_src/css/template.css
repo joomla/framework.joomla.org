@@ -5045,9 +5045,6 @@ footer {
 @media (min-width: 768px) and (max-width: 991px) {
   nav {
     font-size: 18px; }
-    nav .fa {
-      font-size: 22px;
-      padding-right: 6px; }
     nav ul li {
       margin-left: 4%; } }
 
