@@ -39,14 +39,12 @@
         <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NX46ZP');</script>
         <!-- End Google Tag Manager -->
         {% block bodyNavigation %}
-            <nav>
-                <div class="container">
-                    <ul>
-                        <li><a href="{{ route() }}"><span class="fa fa-cog"></span><span class="title">Framework</span></a></li>
-                        <li><a href="{{ route('about') }}"><span class="fa fa-user"></span><span class="title">Team</span></a></li>
-                        <li><a href="{{ route('status') }}"><span class="fa fa-wrench"></span><span class="title">Status</span></a></li>
-                    </ul>
-                </div>
+            <nav class="container-fluid">
+                <ul>
+                    <li><a href="{{ route() }}"><span class="fa fa-cog"></span><span class="title">Framework</span></a></li>
+                    <li><a href="{{ route('about') }}"><span class="fa fa-user"></span><span class="title">Team</span></a></li>
+                    <li><a href="{{ route('status') }}"><span class="fa fa-wrench"></span><span class="title">Status</span></a></li>
+                </ul>
             </nav>
         {% endblock %}
         <main>

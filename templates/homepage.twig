@@ -1,17 +1,15 @@
 {% extends "index.twig" %}
 
 {% block bodyNavigation %}
-<nav>
-    <div class="container">
-        <ul>
-            <li><a data-scroll href="#go"><span class="fa fa-cloud-download"></span><span class="title">Download</span></a></li>
-            <li><a data-scroll href="#about"><span class="fa fa-info-circle"></span><span class="title">About</span></a></li>
-            <li><a data-scroll href="#involved"><span class="fa fa-globe aos-init"></span><span class="title">Get Involved</span></a></li>
-            <li><a data-scroll href="#resources"><span class="fa fa-book"></span><span class="title">Resources</span></a></li>
-            <li><a href="{{ route('about') }}"><span class="fa fa-user"></span><span class="title">Team</span></a></li>
-            <li><a href="{{ route('status') }}"><span class="fa fa-wrench"></span><span class="title">Status</span></a></li>
-        </ul>
-    </div>
+<nav class="container-fluid">
+    <ul>
+        <li><a data-scroll href="#go"><span class="fa fa-cloud-download"></span><span class="title">Download</span></a></li>
+        <li><a data-scroll href="#about"><span class="fa fa-info-circle"></span><span class="title">About</span></a></li>
+        <li><a data-scroll href="#involved"><span class="fa fa-globe aos-init"></span><span class="title">Get Involved</span></a></li>
+        <li><a data-scroll href="#resources"><span class="fa fa-book"></span><span class="title">Resources</span></a></li>
+        <li><a href="{{ route('about') }}"><span class="fa fa-user"></span><span class="title">Team</span></a></li>
+        <li><a href="{{ route('status') }}"><span class="fa fa-wrench"></span><span class="title">Status</span></a></li>
+    </ul>
 </nav>
 {% endblock %}
 
