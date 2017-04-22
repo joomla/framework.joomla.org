@@ -49,6 +49,12 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 		}
 		catch (\Throwable $throwable)
 		{
+			// Log the error for reference
+			$this->getLogger()->error(
+				sprintf('Uncaught Throwable of type %s caught.', get_class($throwable)),
+				['exception' => $throwable]
+			);
+
 			$this->allowCache(false);
 
 			// TODO - The error handler will need to be refactored to fully account for being aware of route formats and Response objects

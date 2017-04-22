@@ -12,6 +12,10 @@
 /cache/*
 !/cache/.placeholder
 
+# App Logs #
+/logs/*
+!/logs/.placeholder
+
 # Don't push the local config #
 /etc/config.json
 

@@ -17,6 +17,7 @@
         "joomla/router": "dev-master",
         "joomla/uri": "~2.0@dev",
         "joomla/view": "~2.0@dev",
+        "monolog/monolog": "^1.22.1",
         "ramsey/uuid": "~3.4",
         "symfony/asset": "3.2.*",
         "symfony/yaml": "3.2.*",

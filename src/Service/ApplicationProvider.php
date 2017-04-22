@@ -276,6 +276,8 @@ class ApplicationProvider implements ServiceProviderInterface
 			$container->get(Console::class)
 		);
 
+		$application->setLogger($container->get('monolog.logger.application.cli'));
+
 		return $application;
 	}
 
@@ -668,6 +670,7 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		// Inject extra services
 		$application->setContainer($container);
+		$application->setLogger($container->get('monolog.logger.application.web'));
 		$application->setRouter($container->get(ChainedRouter::class));
 
 		return $application;

@@ -28,6 +28,7 @@ try
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\DatabaseProvider)
+		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
 
 	// Alias the web application to Joomla's base application class as this is the primary application for the environment
@@ -42,6 +43,8 @@ try
 }
 catch (\Throwable $e)
 {
+	error_log($e);
+
     fwrite(STDOUT, "\nAn error occurred while creating the DI container: " . $e->getMessage() . "\n");
    	fwrite(STDOUT, "\n" . $e->getTraceAsString() . "\n");
 
@@ -61,6 +64,14 @@ try
 }
 catch (\Throwable $e)
 {
+	error_log($e);
+
+	// Log the error for reference
+	$container->get('monolog.logger.application.cli')->error(
+		sprintf('Uncaught Throwable of type %s caught.', get_class($throwable)),
+		['exception' => $throwable]
+	);
+
 	fwrite(STDOUT, "\nERROR: " . $e->getMessage() . "\n");
 	fwrite(STDOUT, "\n" . $e->getTraceAsString() . "\n");
 

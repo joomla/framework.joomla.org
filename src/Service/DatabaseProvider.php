@@ -49,6 +49,7 @@ class DatabaseProvider implements ServiceProviderInterface
 
 					$db = DatabaseDriver::getInstance($options);
 					$db->setDebug($config->get('database.debug', false));
+					$db->setLogger($container->get('monolog.logger.database'));
 
 					return $db;
 				},

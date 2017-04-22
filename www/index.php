@@ -28,6 +28,7 @@ try
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\DatabaseProvider)
+		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
 
 	// Alias the web application to Joomla's base application class as this is the primary application for the environment
@@ -39,6 +40,8 @@ try
 }
 catch (\Throwable $e)
 {
+	error_log($e);
+
 	header('HTTP/1.1 500 Internal Server Error', null, 500);
 	echo '<html><head><title>Container Initialization Error</title></head><body><h1>Container Initialization Error</h1><p>An error occurred while creating the DI container: ' . $e->getMessage() . '</p></body></html>';
 
@@ -52,6 +55,8 @@ try
 }
 catch (\Throwable $e)
 {
+	error_log($e);
+
 	if (!headers_sent())
 	{
 		header('HTTP/1.1 500 Internal Server Error', null, 500);
