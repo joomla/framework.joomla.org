@@ -21,7 +21,8 @@
         "symfony/asset": "3.2.*",
         "symfony/yaml": "3.2.*",
         "theiconic/php-ga-measurement-protocol": "^2.0",
-        "twig/twig": "~2.2"
+        "twig/twig": "~2.2",
+        "zendframework/zend-diactoros": "~1.4"
     },
     "autoload": {
         "psr-4": {

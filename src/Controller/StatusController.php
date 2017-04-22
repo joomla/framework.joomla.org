@@ -12,6 +12,7 @@ use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\View\Status\StatusHtmlView;
 use Joomla\Input\Input;
+use Zend\Diactoros\Response\HtmlResponse;
 
 /**
  * Controller handling the site's package status listing
@@ -59,7 +60,7 @@ class StatusController extends AbstractController
 		// Enable browser caching
 		$this->getApplication()->allowCache(true);
 
-		$this->getApplication()->setBody($this->view->render());
+		$this->getApplication()->setResponse(new HtmlResponse($this->view->render()));
 
 		return true;
 	}

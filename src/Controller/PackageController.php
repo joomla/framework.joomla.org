@@ -12,6 +12,7 @@ use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\View\Package\PackageHtmlView;
 use Joomla\Input\Input;
+use Zend\Diactoros\Response\HtmlResponse;
 
 /**
  * Controller handling a package's status data listing
@@ -61,7 +62,7 @@ class PackageController extends AbstractController
 
 		$this->view->setPackage($this->getInput()->getString('package'));
 
-		$this->getApplication()->setBody($this->view->render());
+		$this->getApplication()->setResponse(new HtmlResponse($this->view->render()));
 
 		return true;
 	}

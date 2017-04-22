@@ -12,6 +12,7 @@ use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\Input\Input;
 use Joomla\Renderer\RendererInterface;
+use Zend\Diactoros\Response\HtmlResponse;
 
 /**
  * Controller handling the site's homepage
@@ -59,7 +60,7 @@ class HomepageController extends AbstractController
 		// Enable browser caching
 		$this->getApplication()->allowCache(true);
 
-		$this->getApplication()->setBody($this->renderer->render('homepage.twig'));
+		$this->getApplication()->setResponse(new HtmlResponse($this->renderer->render('homepage.twig')));
 
 		return true;
 	}
