@@ -13,7 +13,7 @@ use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
 use Joomla\FrameworkWebsite\Renderer\{
-	ApplicationContext, FrameworkExtension, FrameworkTwigRuntime, TwigRuntimeLoader
+	ApplicationContext, FrameworkExtension, FrameworkTwigRuntime
 };
 use Joomla\Renderer\{
 	RendererInterface, TwigRenderer
@@ -122,9 +122,8 @@ class TemplatingProvider implements ServiceProviderInterface
 
 		$environment->setCache($cacheService);
 
-		// Add our Twig runtime loader
-		$loader = new TwigRuntimeLoader;
-		$loader->setContainer($container);
+		// Add the Twig runtime loader
+		$loader = new \Twig_ContainerRuntimeLoader($container);
 
 		$environment->addRuntimeLoader($loader);
 
