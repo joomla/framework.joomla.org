@@ -13,6 +13,9 @@ use Joomla\DI\{
 	ContainerAwareInterface, ContainerAwareTrait
 };
 use Joomla\Renderer\RendererInterface;
+use Zend\Diactoros\Response\{
+	HtmlResponse, JsonResponse
+};
 
 /**
  * Web application class
@@ -44,10 +47,47 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 		{
 			$this->router->getController($this->get('uri.route'))->execute();
 		}
-		catch (\Throwable $exception)
+		catch (\Throwable $throwable)
 		{
-			$this->setErrorHeaderResponse($exception);
-			$this->setErrorOutput($exception);
+			$this->allowCache(false);
+
+			// TODO - The error handler will need to be refactored to fully account for being aware of route formats and Response objects
+			switch ($this->mimeType)
+			{
+				case 'application/json' :
+					$data = [
+						'code'    => $throwable->getCode(),
+						'message' => $throwable->getMessage(),
+						'error'   => true
+					];
+
+					$response = new JsonResponse($data);
+
+					break;
+
+				default :
+					$response = new HtmlResponse(
+						$this->getContainer()->get(RendererInterface::class)->render('exception.twig', ['exception' => $throwable])
+					);
+
+					break;
+			}
+
+			switch ($throwable->getCode())
+			{
+				case 404 :
+					$response = $response->withStatus(404);
+
+					break;
+
+				case 500 :
+				default  :
+					$response = $response->withStatus(500);
+
+					break;
+			}
+
+			$this->setResponse($response);
 		}
 	}
 
@@ -63,65 +103,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	public function getFormToken($forceNew = false)
 	{
 		return '';
-	}
-
-	/**
-	 * Set the body for error conditions
-	 *
-	 * @param   \Throwable  $exception  The Throwable object
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function setErrorOutput(\Throwable $exception)
-	{
-		switch ($this->mimeType)
-		{
-			case 'application/json' :
-				$data = [
-					'code'    => $exception->getCode(),
-					'message' => $exception->getMessage(),
-					'error'   => true
-				];
-
-				$body = json_encode($data);
-
-				break;
-
-			default :
-				$body = $this->getContainer()->get(RendererInterface::class)->render('exception.twig', ['exception' => $exception]);
-
-				break;
-		}
-
-		$this->setBody($body);
-	}
-
-	/**
-	 * Set the HTTP Header response for error conditions
-	 *
-	 * @param   \Throwable  $exception  The Throwable object
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function setErrorHeaderResponse(\Throwable $exception)
-	{
-		switch ($exception->getCode())
-		{
-			case 404 :
-				$this->setHeader('HTTP/1.1 404 Not Found', 404, true);
-
-				break;
-
-			case 500 :
-			default  :
-				$this->setHeader('HTTP/1.1 500 Internal Server Error', 500, true);
-
-				break;
-		}
 	}
 
 	/**
