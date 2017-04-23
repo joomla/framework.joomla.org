@@ -16,7 +16,7 @@ use Joomla\Input\Input;
 use Joomla\Renderer\TwigRenderer;
 
 /**
- * Update command
+ * Twig cache reset command
  *
  * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object

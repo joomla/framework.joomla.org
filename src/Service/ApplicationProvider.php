@@ -95,6 +95,7 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
 		$container->share(AppCommands\InstallCommand::class, [$this, 'getInstallCommandClassService'], true);
+		$container->share(AppCommands\Router\CacheCommand::class, [$this, 'getRouterCacheCommandClassService'], true);
 		$container->share(AppCommands\Twig\ResetCacheCommand::class, [$this, 'getTwigResetCacheCommandClassService'], true);
 		$container->share(AppCommands\UpdateCommand::class, [$this, 'getUpdateCommandClassService'], true);
 
@@ -214,6 +215,12 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getApplicationRouterService(Container $container) : Router
 	{
+		// Check for a cached router and use it
+		if (file_exists(JPATH_ROOT . '/cache/router.txt'))
+		{
+			return unserialize(file_get_contents(JPATH_ROOT . '/cache/router.txt'));
+		}
+
 		$router = new Router;
 
 		/*
@@ -555,6 +562,24 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new AppCommands\Twig\ResetCacheCommand(
 			$container->get(TwigRenderer::class),
+			$container->get(Input::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
+		);
+	}
+
+	/**
+	 * Get the Router\CacheCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\Router\CacheCommand
+	 *
+	 * @since   1.0
+	 */
+	public function getRouterCacheCommandClassService(Container $container) : AppCommands\Router\CacheCommand
+	{
+		return new AppCommands\Router\CacheCommand(
+			$container->get(Router::class),
 			$container->get(Input::class),
 			$container->get(JoomlaApplication\AbstractApplication::class)
 		);

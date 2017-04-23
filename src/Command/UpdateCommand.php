@@ -74,6 +74,9 @@ class UpdateCommand extends AbstractController implements CommandInterface
 		// Reset the Twig cache
 		$this->console->getCommand('twig:resetcache')->execute();
 
+		// Reset the router cache
+		$this->console->getCommand('router:cache')->execute();
+
 		// Write the current build to a local file
 		$this->getApplication()->out('<info>Writing build info</info>');
 
