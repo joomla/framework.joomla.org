@@ -9,10 +9,12 @@
 namespace Joomla\FrameworkWebsite;
 
 use Joomla\Application\AbstractWebApplication;
+use Joomla\Controller\ControllerInterface;
 use Joomla\DI\{
 	ContainerAwareInterface, ContainerAwareTrait
 };
 use Joomla\Renderer\RendererInterface;
+use Joomla\Router\Router;
 use Zend\Diactoros\Response\{
 	HtmlResponse, JsonResponse
 };
@@ -29,7 +31,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	/**
 	 * Application router
 	 *
-	 * @var    ChainedRouter
+	 * @var    Router
 	 * @since  1.0
 	 */
 	private $router;
@@ -45,7 +47,17 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	{
 		try
 		{
-			$this->router->getController($this->get('uri.route'))->execute();
+			$route = $this->router->parseRoute($this->get('uri.route'));
+
+			// Add variables to the input if not already set
+			foreach ($route['vars'] as $key => $value)
+			{
+				$this->input->def($key, $value);
+			}
+
+			/** @var ControllerInterface $controller */
+			$controller = $this->getContainer()->get($route['controller']);
+			$controller->execute();
 		}
 		catch (\Throwable $throwable)
 		{
@@ -114,13 +126,13 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	/**
 	 * Set the application's router
 	 *
-	 * @param   ChainedRouter  $router  Router object to set
+	 * @param   Router  $router  Router object to set
 	 *
 	 * @return  $this
 	 *
 	 * @since   1.0
 	 */
-	public function setRouter(ChainedRouter $router) : WebApplication
+	public function setRouter(Router $router) : WebApplication
 	{
 		$this->router = $router;
 

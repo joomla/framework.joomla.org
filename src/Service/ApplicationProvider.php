@@ -14,7 +14,7 @@ use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
 use Joomla\FrameworkWebsite\{
-	ChainedRouter, CliApplication, Console, ContainerAwareRestRouter, ContainerAwareRouter, Helper, WebApplication
+	CliApplication, Console, Helper, WebApplication
 };
 use Joomla\FrameworkWebsite\Command as AppCommands;
 use Joomla\FrameworkWebsite\Controller\
@@ -32,9 +32,7 @@ use Joomla\Registry\Registry;
 use Joomla\Renderer\{
 	RendererInterface, TwigRenderer
 };
-use Joomla\Router\{
-	RestRouter, Router
-};
+use Joomla\Router\Router;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
@@ -77,15 +75,7 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->share('application.packages', [$this, 'getApplicationPackagesService'], true);
 
-		$container->alias(ChainedRouter::class, 'application.router.chained')
-			->share('application.router.chained', [$this, 'getApplicationRouterChainedService'], true);
-
-		$container->alias(ContainerAwareRestRouter::class, 'application.router.rest')
-			->alias(RestRouter::class, 'application.router.rest')
-			->share('application.router.rest', [$this, 'getApplicationRouterRestService'], true);
-
-		$container->alias(ContainerAwareRouter::class, 'application.router')
-			->alias(Router::class, 'application.router')
+		$container->alias(Router::class, 'application.router')
 			->share('application.router', [$this, 'getApplicationRouterService'], true);
 
 		$container->share(Input::class, [$this, 'getInputClassService'], true);
@@ -214,45 +204,53 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the `application.router.rest` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  ContainerAwareRestRouter
-	 *
-	 * @since   1.0
-	 */
-	public function getApplicationRouterRestService(Container $container) : ContainerAwareRestRouter
-	{
-		$router = new ContainerAwareRestRouter($container->get(Input::class));
-		$router->setControllerPrefix('Joomla\\FrameworkWebsite\\Controller\\Api\\')
-			->addMap('/api/v1/packages', 'StatusController')
-			->addMap('/api/v1/packages/:package', 'PackageController');
-
-		$router->setContainer($container);
-
-		return $router;
-	}
-
-	/**
 	 * Get the `application.router` service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  ContainerAwareRouter
+	 * @return  Router
 	 *
 	 * @since   1.0
 	 */
-	public function getApplicationRouterService(Container $container) : ContainerAwareRouter
+	public function getApplicationRouterService(Container $container) : Router
 	{
-		$router = new ContainerAwareRouter($container->get(Input::class));
-		$router->setControllerPrefix('Joomla\\FrameworkWebsite\\Controller\\')
-			->setDefaultController('HomepageController')
-			->addMap('/status', 'StatusController')
-			->addMap('/:view', 'PageController')
-			->addMap('/status/:package', 'PackageController');
+		$router = new Router;
 
-		$router->setContainer($container);
+		/*
+		 * Web routes
+		 */
+		$router->get(
+			'/',
+			HomepageController::class
+		);
+
+		$router->get(
+			'/status',
+			StatusController::class
+		);
+
+		$router->get(
+			'/:view',
+			PageController::class
+		);
+
+		$router->get(
+			'/status/:package',
+			PackageController::class
+		);
+
+		/*
+		 * API routes
+		 */
+		$router->get(
+			'/api/v1/packages',
+			StatusControllerGet::class
+		);
+
+		$router->get(
+			'/api/v1/packages/:package',
+			PackageControllerGet::class
+		);
 
 		return $router;
 	}
@@ -671,7 +669,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		// Inject extra services
 		$application->setContainer($container);
 		$application->setLogger($container->get('monolog.logger.application.web'));
-		$application->setRouter($container->get(ChainedRouter::class));
+		$application->setRouter($container->get(Router::class));
 
 		return $application;
 	}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a8b36c69e3e235675e4e1add8600bec",
+    "content-hash": "af6c703be388f162c15ef6c4357f6880",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -713,32 +713,33 @@
         },
         {
             "name": "joomla/router",
-            "version": "dev-master",
+            "version": "dev-2.0-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/router.git",
-                "reference": "ae3c0667d45e49e01b01a751a149ce2f005b24ac"
+                "reference": "34796807a861157eb46d06aff1cc25a3ebc3edb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/router/zipball/ae3c0667d45e49e01b01a751a149ce2f005b24ac",
-                "reference": "ae3c0667d45e49e01b01a751a149ce2f005b24ac",
+                "url": "https://api.github.com/repos/joomla-framework/router/zipball/34796807a861157eb46d06aff1cc25a3ebc3edb8",
+                "reference": "34796807a861157eb46d06aff1cc25a3ebc3edb8",
                 "shasum": ""
             },
             "require": {
-                "joomla/controller": "~1.0|~2.0",
-                "joomla/input": "~1.0|~2.0",
-                "php": "^5.3.10|~7.0"
+                "php": "^5.5.9|~7.0"
             },
             "require-dev": {
-                "joomla/test": "~1.0",
+                "jeremeamia/superclosure": "~1.0",
                 "phpunit/phpunit": "^4.8.35|^5.4.3|~6.0",
                 "squizlabs/php_codesniffer": "1.*"
+            },
+            "suggest": {
+                "jeremeamia/superclosure": "If you use Closure controllers, and want to be able to cache / serialize the router, please install jeremeamia/superclosure:~1.0"
             },
             "type": "joomla-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-2.0-dev": "2.0-dev"
                 }
             },
             "autoload": {
@@ -757,7 +758,7 @@
                 "joomla",
                 "router"
             ],
-            "time": "2017-03-12 02:28:18"
+            "time": "2017-03-12 02:30:46"
         },
         {
             "name": "joomla/string",

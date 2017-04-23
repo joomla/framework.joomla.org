@@ -14,7 +14,7 @@
         "joomla/model": "~2.0@dev",
         "joomla/registry": "~2.0@dev",
         "joomla/renderer": "~2.0@dev",
-        "joomla/router": "dev-master",
+        "joomla/router": "~2.0@dev",
         "joomla/uri": "~2.0@dev",
         "joomla/view": "~2.0@dev",
         "monolog/monolog": "^1.22.1",
