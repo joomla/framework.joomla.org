@@ -80,7 +80,7 @@ class UpdateCommand extends AbstractController implements CommandInterface
 		// Write the current build to a local file
 		$this->getApplication()->out('<info>Writing build info</info>');
 
-		$path = JPATH_ROOT . '/current_SHA';
+		$path = JPATH_ROOT . '/cache/deployed.txt';
 
 		// Get the build information
 		$sha = trim($this->runCommand('cd ' . JPATH_ROOT . ' && git rev-parse --short HEAD 2>&1'));

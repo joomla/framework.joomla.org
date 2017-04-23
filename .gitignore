@@ -1,7 +1,6 @@
 .idea
 .DS_Store
 /vendor/
-/current_SHA
 /last_build.json
 
 # Don't push reports to repo #
