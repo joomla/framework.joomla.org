@@ -123,6 +123,7 @@ class PackageModel implements DatabaseModelInterface
 			$result->displayName = $this->helper->getPackageDisplayName($pack->package);
 			$result->version     = $pack->version;
 			$result->repoName    = $this->helper->getPackageRepositoryName($pack->package);
+			$result->deprecated  = $this->helper->getPackageDeprecated($pack->package);
 
 			$reports[$pack->package] = $result;
 		}

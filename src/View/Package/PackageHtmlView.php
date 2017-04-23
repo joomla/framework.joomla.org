@@ -72,9 +72,10 @@ class PackageHtmlView extends BaseHtmlView
 	public function render()
 	{
 		$this->setData([
-			'releases'    => $this->model->getPackageHistory($this->package),
-			'packageName' => $this->helper->getPackageDisplayName($this->package),
-			'repoName'    => $this->helper->getPackageRepositoryName($this->package),
+			'releases'          => $this->model->getPackageHistory($this->package),
+			'packageName'       => $this->helper->getPackageDisplayName($this->package),
+			'repoName'          => $this->helper->getPackageRepositoryName($this->package),
+			'packageDeprecated' => $this->helper->getPackageDeprecated($this->package),
 		]);
 
 		return parent::render();

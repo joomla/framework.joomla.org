@@ -18,6 +18,20 @@ class Helper
 	use PackageAware;
 
 	/**
+	 * Utility method to retrieve a package's deprecation status
+	 *
+	 * @param   string  $package  Package name
+	 *
+	 * @return  bool
+	 *
+	 * @since   1.0
+	 */
+	public function getPackageDeprecated(string $package) : bool
+	{
+		return $this->getPackages()->get("packages.$package.deprecated", false);
+	}
+
+	/**
 	 * Utility method to retrieve a package's display name
 	 *
 	 * @param   string  $package  Package name

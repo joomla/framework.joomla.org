@@ -30,7 +30,12 @@
             {% set _totalLines = 0 %}
             {% for package, release in packages %}
             <tr>
-                <td><a href="{{ route('status/' ~ package) }}">{{ release.displayName }}</a> <a href="https://github.com/joomla-framework/{{ release.repoName }}"><span class="fa fa-github"></span></a></td>
+                <td>
+                    <a href="{{ route('status/' ~ package) }}">{{ release.displayName }}</a> <a href="https://github.com/joomla-framework/{{ release.repoName }}"><span class="fa fa-github"></span></a>
+                    {% if release.deprecated %}
+                        <br><span class="label label-warning">Deprecated</span>
+                    {% endif %}
+                </td>
                 <td>{{ release.version }}</td>
                 {% if release.id %}
                     {% set _totalTests = _totalTests + release.tests %}

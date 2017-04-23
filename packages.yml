@@ -35,7 +35,8 @@ packages:
     linkedin:
         display: LinkedIn
         repo: linkedin-api
-    log: ~
+    log:
+        deprecated: true
     mediawiki:
         display: MediaWiki
         repo: mediawiki-api

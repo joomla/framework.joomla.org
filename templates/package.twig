@@ -7,6 +7,12 @@
 {% block content %}
 <section class="status container">
     <h1>Release Data for {{ packageName }} Package <a href="https://github.com/joomla-framework/{{ repoName }}"><span class="fa fa-github"></span></a></h1>
+    {% if packageDeprecated %}
+        <div class="alert alert-warning">
+            <h4>Deprecated Package</h4>
+            <p>This package has been deprecated and will soon no longer be supported.</p>
+        </div>
+    {% endif %}
     <table class="table table-striped table-bordered table-condensed">
         <tr>
             <th>Version</th>
