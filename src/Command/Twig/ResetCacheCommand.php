@@ -62,9 +62,7 @@ class ResetCacheCommand extends AbstractController implements CommandInterface
 		$this->getApplication()->outputTitle('Reset Twig Cache');
 
 		// Check if caching is enabled
-		$twigCache = $this->getApplication()->get('template.cache', false);
-
-		if ($twigCache === false)
+		if ($this->getApplication()->get('template.cache.enabled', false) === false)
 		{
 			$this->getApplication()->out('<info>Twig caching is disabled.</info>');
 
@@ -72,6 +70,8 @@ class ResetCacheCommand extends AbstractController implements CommandInterface
 		}
 
 		$this->getApplication()->out('<info>Resetting Twig Cache</info>');
+
+		$twigCache = $this->getApplication()->get('template.cache.path', '');
 
 		// First remove the existing cache files
 		if (is_dir(JPATH_ROOT . '/' . $twigCache))

@@ -10,7 +10,10 @@
 	},
 	"template": {
 		"debug": false,
-		"cache": false
+		"cache": {
+			"enabled": false,
+			"path": "cache/twig"
+		}
 	},
 	"analytics": {
 		"enabled": false,

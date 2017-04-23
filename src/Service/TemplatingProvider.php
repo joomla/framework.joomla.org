@@ -103,8 +103,9 @@ class TemplatingProvider implements ServiceProviderInterface
 		$config = $container->get('config');
 
 		// Pull down the renderer config
-		$cache = $config->get('template.cache', false);
-		$debug = $config->get('template.debug', false);
+		$cacheEnabled = $config->get('template.cache.enabled', false);
+		$cachePath    = $config->get('template.cache.path', '');
+		$debug        = $config->get('template.debug', false);
 
 		// Instantiate the Twig environment
 		$environment = new \Twig_Environment(new \Twig_Loader_Filesystem([JPATH_TEMPLATES]), ['debug' => $debug]);
@@ -115,9 +116,9 @@ class TemplatingProvider implements ServiceProviderInterface
 		// Set up the environment's caching mechanism
 		$cacheService = new \Twig_Cache_Null;
 
-		if ($debug === false && $cache !== false)
+		if ($debug === false && $cacheEnabled !== false)
 		{
-			$cacheService = new \Twig_Cache_Filesystem(JPATH_ROOT . '/' . $cache);
+			$cacheService = new \Twig_Cache_Filesystem(JPATH_ROOT . '/' . $cachePath);
 		}
 
 		$environment->setCache($cacheService);
