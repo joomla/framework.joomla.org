@@ -15,6 +15,8 @@ use Joomla\DI\{
 };
 use Joomla\Renderer\RendererInterface;
 use Joomla\Router\Router;
+use Psr\Link\EvolvableLinkProviderInterface;
+use Symfony\Component\WebLink\HttpHeaderSerializer;
 use Zend\Diactoros\Response\{
 	HtmlResponse, JsonResponse
 };
@@ -121,6 +123,26 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	public function getFormToken($forceNew = false)
 	{
 		return '';
+	}
+
+	/**
+	 * Method to send the application response to the client.  All headers will be sent prior to the main application output data.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	protected function respond()
+	{
+		/** @var EvolvableLinkProviderInterface|null $linkProvider */
+		$linkProvider = $this->input->getRaw('_links');
+
+		if ($linkProvider && $linkProvider instanceof EvolvableLinkProviderInterface && $links = $linkProvider->getLinks())
+		{
+			$this->setHeader('Link', (new HttpHeaderSerializer)->serialize($links));
+		}
+
+		parent::respond();
 	}
 
 	/**

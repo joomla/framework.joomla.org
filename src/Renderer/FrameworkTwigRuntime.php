@@ -8,7 +8,11 @@
 
 namespace Joomla\FrameworkWebsite\Renderer;
 
+use Fig\Link\{
+	GenericLinkProvider, Link
+};
 use Joomla\Application\AbstractApplication;
+use Psr\Link\EvolvableLinkProviderInterface;
 use Symfony\Component\Asset\Packages;
 
 /**
@@ -102,5 +106,23 @@ class FrameworkTwigRuntime
 	public function getRouteUrl(string $route = '') : string
 	{
 		return $this->app->get('uri.base.host') . $this->getRouteUri($route);
+	}
+
+	/**
+	 * Preload a resource
+	 *
+	 * @param   string  $uri  The URI for the resource to preload
+	 *
+	 * @return  string
+	 *
+	 * @since   1.0
+	 */
+	public function preloadAsset(string $uri) : string
+	{
+		/** @var EvolvableLinkProviderInterface $linkProvider */
+		$linkProvider = $this->app->input->getRaw('_links', new GenericLinkProvider);
+		$this->app->input->set('_links', $linkProvider->withLink(new Link('preload', $uri)));
+
+		return $uri;
 	}
 }

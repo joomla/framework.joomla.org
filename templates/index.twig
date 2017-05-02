@@ -4,7 +4,7 @@
         <!-- For Responsive -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" href="{{ asset('css/template.min.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ preload(asset('css/template.min.css')) }}" type="text/css">
         <!-- End for Responsive -->
 
         <!-- For SEO -->
@@ -70,7 +70,7 @@
             </div>
         </footer>
 
-        <script src="{{ asset('js/template.min.js') }}"></script>
+        <script src="{{ preload(asset('js/template.min.js')) }}"></script>
         {% block bodyJavaScript %}{% endblock %}
     </body>
 </html>
