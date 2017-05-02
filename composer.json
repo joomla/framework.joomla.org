@@ -19,8 +19,8 @@
         "joomla/view": "~2.0@dev",
         "monolog/monolog": "^1.22.1",
         "ramsey/uuid": "~3.4",
-        "symfony/asset": "3.2.*",
-        "symfony/yaml": "3.2.*",
+        "symfony/asset": "3.3.*@beta",
+        "symfony/yaml": "3.3.*@beta",
         "theiconic/php-ga-measurement-protocol": "^2.0",
         "twig/twig": "~2.2",
         "zendframework/zend-diactoros": "~1.4"

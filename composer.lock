@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "af6c703be388f162c15ef6c4357f6880",
+    "content-hash": "059fb76b0d7d43942e834f6b0ba3feb7",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -357,12 +357,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/di.git",
-                "reference": "4dc70c02ce3147fab166a6c309b6e57435a4fb27"
+                "reference": "9478daa9352c8126210a3f46f65cb3e565c65c6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/di/zipball/4dc70c02ce3147fab166a6c309b6e57435a4fb27",
-                "reference": "4dc70c02ce3147fab166a6c309b6e57435a4fb27",
+                "url": "https://api.github.com/repos/joomla-framework/di/zipball/9478daa9352c8126210a3f46f65cb3e565c65c6e",
+                "reference": "9478daa9352c8126210a3f46f65cb3e565c65c6e",
                 "shasum": ""
             },
             "require": {
@@ -401,7 +401,7 @@
                 "ioc",
                 "joomla"
             ],
-            "time": "2017-02-19 23:07:43"
+            "time": "2017-04-30 20:47:01"
         },
         {
             "name": "joomla/filesystem",
@@ -454,25 +454,25 @@
         },
         {
             "name": "joomla/filter",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/filter.git",
-                "reference": "250d8f0d3e2d2fb6e31a540ddc6c8d992c92091d"
+                "reference": "11a8697e3419bbd68fe2be9a8b406b471436754e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/250d8f0d3e2d2fb6e31a540ddc6c8d992c92091d",
-                "reference": "250d8f0d3e2d2fb6e31a540ddc6c8d992c92091d",
+                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/11a8697e3419bbd68fe2be9a8b406b471436754e",
+                "reference": "11a8697e3419bbd68fe2be9a8b406b471436754e",
                 "shasum": ""
             },
             "require": {
-                "joomla/string": "~1.3",
+                "joomla/string": "~1.3|~2.0",
                 "php": "^5.3.10|~7.0"
             },
             "require-dev": {
                 "joomla/language": "~1.3",
-                "phpunit/phpunit": "~4.8|~5.0",
+                "phpunit/phpunit": "^4.8.35|^5.4.3|~6.0",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "suggest": {
@@ -500,7 +500,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2016-10-16T18:10:33+00:00"
+            "time": "2017-04-25T14:11:08+00:00"
         },
         {
             "name": "joomla/input",
@@ -1324,23 +1324,24 @@
         },
         {
             "name": "symfony/asset",
-            "version": "v3.2.7",
+            "version": "v3.3.0-BETA1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset.git",
-                "reference": "ec4aa5ac7e672ccac2eb7bf3eab6d8569426038a"
+                "reference": "67ee69a32a4abd97bb14f938e51e714fbb38555b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/asset/zipball/ec4aa5ac7e672ccac2eb7bf3eab6d8569426038a",
-                "reference": "ec4aa5ac7e672ccac2eb7bf3eab6d8569426038a",
+                "url": "https://api.github.com/repos/symfony/asset/zipball/67ee69a32a4abd97bb14f938e51e714fbb38555b",
+                "reference": "67ee69a32a4abd97bb14f938e51e714fbb38555b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5.9"
             },
             "require-dev": {
-                "symfony/http-foundation": "~2.8|~3.0"
+                "symfony/http-foundation": "~2.8|~3.0",
+                "symfony/http-kernel": "~2.8|~3.0"
             },
             "suggest": {
                 "symfony/http-foundation": ""
@@ -1348,7 +1349,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -1375,7 +1376,7 @@
             ],
             "description": "Symfony Asset Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-28T21:38:24+00:00"
+            "time": "2017-05-01T15:01:29+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1438,16 +1439,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.7",
+            "version": "v3.3.0-BETA1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "62b4cdb99d52cb1ff253c465eb1532a80cebb621"
+                "reference": "dcbd318c241341c82444a8d92b7a0ddf6419f496"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/62b4cdb99d52cb1ff253c465eb1532a80cebb621",
-                "reference": "62b4cdb99d52cb1ff253c465eb1532a80cebb621",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/dcbd318c241341c82444a8d92b7a0ddf6419f496",
+                "reference": "dcbd318c241341c82444a8d92b7a0ddf6419f496",
                 "shasum": ""
             },
             "require": {
@@ -1462,7 +1463,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -1489,7 +1490,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-20T09:45:15+00:00"
+            "time": "2017-05-01T15:01:29+00:00"
         },
         {
             "name": "theiconic/php-ga-measurement-protocol",
@@ -1662,7 +1663,9 @@
         "joomla/renderer": 20,
         "joomla/router": 20,
         "joomla/uri": 20,
-        "joomla/view": 20
+        "joomla/view": 20,
+        "symfony/asset": 10,
+        "symfony/yaml": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,
