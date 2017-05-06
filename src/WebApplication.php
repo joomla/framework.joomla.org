@@ -49,7 +49,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	{
 		try
 		{
-			$route = $this->router->parseRoute($this->get('uri.route'));
+			$route = $this->router->parseRoute($this->get('uri.route'), $this->input->getMethod());
 
 			// Add variables to the input if not already set
 			foreach ($route['vars'] as $key => $value)
