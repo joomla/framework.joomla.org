@@ -113,16 +113,6 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_utilities.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_responsive-utilities.scss";
 
-// Site Body Styles
-.container {
-  margin: 0 auto;
-}
-
-.center {
-  display: block;
-  margin: 0 auto;
-}
-
 a {
   @include transition(all 0.3s ease-out)
 }

@@ -4988,13 +4988,6 @@ a.thumbnail.active {
   .hidden-print {
     display: none !important; } }
 
-.container {
-  margin: 0 auto; }
-
-.center {
-  display: block;
-  margin: 0 auto; }
-
 a {
   transition: all 0.3s ease-out; }
 
