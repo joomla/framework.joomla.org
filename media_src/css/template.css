@@ -5091,13 +5091,7 @@ footer {
 @media screen and (max-width: 1199px) {
   .go {
     background-image: url(../images/j-framework-1200.png);
-    margin: 0 -10px; }
-  main, footer {
-    padding-left: 10px;
-    padding-right: 10px; } }
-
-@media screen and (max-width: 1199px) {
-  .go {
+    margin: 0 -10px;
     font-size: 31px; }
     .go .fa.mega {
       font-size: 180px; }
@@ -5108,6 +5102,9 @@ footer {
     .go .cta .btn {
       width: 40%;
       font-size: 19px; }
+  main, footer {
+    padding-left: 10px;
+    padding-right: 10px; }
   .involved-chunks div {
     width: 46%;
     margin: 1%;

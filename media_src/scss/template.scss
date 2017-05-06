@@ -244,16 +244,6 @@ footer {
   .go {
     background-image: url(../images/j-framework-1200.png);
     margin: 0 -10px;
-  }
-
-  main, footer {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}
-
-@media screen and (max-width: $screen-md-max) {
-  .go {
     font-size: 31px;
     .fa.mega {
       font-size: 180px;
@@ -268,6 +258,11 @@ footer {
       width: 40%;
       font-size: 19px;
     }
+  }
+
+  main, footer {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .involved-chunks div {
