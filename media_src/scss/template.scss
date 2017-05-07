@@ -123,11 +123,6 @@ h2 {
 
 .fa {
   color: $icon-color;
-  &.mega {
-    color: #ffffff;
-    font-size: 170px;
-    margin-top: -20px;
-  }
 }
 
 .rochen {
@@ -144,10 +139,13 @@ nav {
   color: #ffffff;
   height: 45px;
   padding: 8px 0;
-  font-size: 21px;
+  font-size: 18px;
   position: fixed;
   width: 100%;
   z-index: 9999;
+  @media screen and (min-width: $screen-md-min) {
+    font-size: 21px;
+  }
   a {
     color: #ffffff;
     &:hover {
@@ -167,47 +165,123 @@ nav {
     li {
       display: inline;
       line-height: 1.5;
-      margin-left: 5.5%;
+      margin-left: 6%;
+      @media screen and (min-width: 501px) {
+        margin-left: 10%;
+      }
+      @media screen and (min-width: $screen-md-min) {
+        margin-left: 5.5%;
+      }
       &:first-child {
         margin-left: 0;
       }
       span {
         vertical-align: top;
+        &.title {
+          display: none;
+          @media screen and (min-width: $screen-md-min) {
+            display: inline;
+          }
+        }
       }
     }
   }
 }
 
 main {
-  padding: 45px 0 20px;
+  padding: 45px 10px 20px;
+  @media screen and (min-width: $screen-lg-min) {
+    padding: 45px 0 20px;
+  }
 }
 
 .go {
-  background: url(../images/j-framework-full.png) no-repeat center center;
+  background: url(../images/j-framework-500.png) no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover; /* min-height:800px; */
+  background-size: cover;
   text-align: center;
   padding: 10px;
-  font-size: 34px;
+  font-size: 27px;
   color: #ffffff;
+  @media screen and (min-width: 501px) {
+    background-image: url(../images/j-framework-767.png);
+  }
+  @media screen and (min-width: $screen-md-min) {
+    background-image: url(../images/j-framework-1200.png);
+    font-size: 31px;
+  }
+  @media screen and (max-width: $screen-md-max) {
+    margin: 0 -10px;
+  }
+  @media screen and (min-width: $screen-lg-min) {
+    background-image: url(../images/j-framework-full.png);
+    font-size: 34px;
+  }
   h1 {
-    font-size: 110px;
+    font-size: 35px;
     margin: 0;
     line-height: 100%;
+    @media screen and (min-width: 501px) {
+      font-size: 50px;
+    }
+    @media screen and (min-width: $screen-md-min) {
+      font-size: 90px;
+    }
+    @media screen and (min-width: $screen-lg-min) {
+      font-size: 110px;
+    }
   }
   h2 {
-    font-size: 85px;
+    font-size: 30px;
     color: $go-h2;
     margin: -10px 0 0;
+    @media screen and (min-width: 501px) {
+      font-size: 40px;
+    }
+    @media screen and (min-width: $screen-md-min) {
+      font-size: 80px;
+    }
+    @media screen and (min-width: $screen-lg-min) {
+      font-size: 85px;
+    }
   }
   .cta {
     max-width: 767px;
     margin: 0 auto;
     .btn {
-      width: 40%;
-      font-size: 24px;
+      width: 100%;
+      font-size: 15px;
+      margin: 20px 0;
+      float: none;
+      @media screen and (min-width: 501px) {
+        margin: inherit;
+        float: inherit;
+        width: 40%;
+        font-size: 17px;
+      }
+      @media screen and (min-width: $screen-md-min) {
+        font-size: 19px;
+      }
+      @media screen and (min-width: $screen-lg-min) {
+        font-size: 24px;
+      }
+    }
+  }
+  .fa {
+    &.mega {
+      color: #ffffff;
+      font-size: 150px;
+      @media screen and (min-width: 501px) {
+        font-size: 160px;
+      }
+      @media screen and (min-width: $screen-md-min) {
+        font-size: 170px;
+      }
+      @media screen and (min-width: $screen-lg-min) {
+        font-size: 180px;
+      }
     }
   }
 }
@@ -219,17 +293,32 @@ main {
   text-align: center;
 }
 
-.involved-chunks div {
-  width: 22%;
-  margin: 1.5%;
-  padding: 1.5% 1.5% 60px;
-  float: left;
-  position: relative;
-  p {
-  	font-size: 14px;
-    &:last-child {
-      position: absolute;
-      bottom: 10px
+.involved-chunks {
+  div {
+    width: 96%;
+    margin: 1%;
+    padding: 1% 1% 60px;
+    float: left;
+    position: relative;
+    @media screen and (min-width: 501px) {
+      width: 46%;
+    }
+    @media screen and (min-width: 501px) and (max-width: $screen-md-max) {
+      &:nth-child(2n+1) {
+        clear: both;
+      }
+    }
+    @media screen and (min-width: $screen-lg-min) {
+      width: 22%;
+      margin: 1.5%;
+      padding: 1.5% 1.5% 60px;
+    }
+    p {
+      font-size: 14px;
+      &:last-child {
+        position: absolute;
+        bottom: 10px
+      }
     }
   }
 }
@@ -237,128 +326,20 @@ main {
 footer {
   background: $darker-black;
   color: #a4a4a4;
-}
-
-//template responsive
-@media screen and (max-width: $screen-md-max) {
-  .go {
-    background-image: url(../images/j-framework-1200.png);
-    margin: 0 -10px;
-    font-size: 31px;
-    .fa.mega {
-      font-size: 180px;
-    }
-    h1 {
-      font-size: 90px;
-    }
-    h2 {
-      font-size: 80px;
-    }
-    .cta .btn {
-      width: 40%;
-      font-size: 19px;
-    }
-  }
-
-  main, footer {
+  @media screen and (max-width: $screen-md-max) {
     padding-left: 10px;
     padding-right: 10px;
   }
-
-  .involved-chunks div {
-    width: 46%;
-    margin: 1%;
-    padding: 1% 1% 60px;
-
-    &:nth-child(2n+1) {
-      clear: both;
+  p {
+    @media screen and (max-width: $screen-sm-max) {
+      font-size: 12px;
     }
   }
 }
 
-@media (min-width: $screen-sm) and (max-width: $screen-sm-max) {
-  nav {
-    font-size: 18px;
-    ul {
-      li {
-        margin-left: 4%;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: $screen-sm-max) {
-  .go {
-    background-image: url(../images/j-framework-767.png);
-    font-size: 27px;
-    .fa.mega {
-      font-size: 160px;
-    }
-    h1 {
-      font-size: 50px;
-    }
-    h2 {
-      font-size: 40px;
-    }
-    .cta .btn {
-      width: 40%;
-      font-size: 17px;
-    }
-  }
-
-  .title {
-    display: none;
-  }
-
-  nav {
-    ul li {
-      margin-left: 10%;
-      &:first-child {
-        margin-left: 0;
-      }
-    }
-  }
-
-  footer p {
-    font-size: 12px;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .go {
-    background-image: url(../images/j-framework-500.png);
-    font-size: 27px;
-    .fa.mega {
-      font-size: 150px;
-    }
-    h1 {
-      font-size: 35px;
-    }
-    h2 {
-      font-size: 30px;
-    }
-    .cta .btn {
-      width: 100%;
-      float: none !important;
-      margin: 20px 0;
-      font-size: 15px;
-    }
-  }
-
-  .involved-chunks div {
-    width: 96%;
-    margin: 1%;
-    padding: 1% 1% 60px;
-  }
-
-  nav ul li {
-    margin-left: 6%;
-    &:first-child {
-      margin-left: 0;
-    }
-  }
-
-  .structure {
-    display: none;
+.structure {
+  display: none;
+  @media screen and (min-width: 501px) {
+    display: block;
   }
 }
