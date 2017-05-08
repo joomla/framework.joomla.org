@@ -94,7 +94,6 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
-		$container->share(AppCommands\InstallCommand::class, [$this, 'getInstallCommandClassService'], true);
 		$container->share(AppCommands\Router\CacheCommand::class, [$this, 'getRouterCacheCommandClassService'], true);
 		$container->share(AppCommands\Twig\ResetCacheCommand::class, [$this, 'getTwigResetCacheCommandClassService'], true);
 		$container->share(AppCommands\UpdateCommand::class, [$this, 'getUpdateCommandClassService'], true);
@@ -512,24 +511,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getInputCliClassService(Container $container) : Cli
 	{
 		return new Cli;
-	}
-
-	/**
-	 * Get the InstallCommand class service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  AppCommands\InstallCommand
-	 *
-	 * @since   1.0
-	 */
-	public function getInstallCommandClassService(Container $container) : AppCommands\InstallCommand
-	{
-		return new AppCommands\InstallCommand(
-			$container->get(DatabaseDriver::class),
-			$container->get(Input::class),
-			$container->get(JoomlaApplication\AbstractApplication::class)
-		);
 	}
 
 	/**
