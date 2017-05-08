@@ -71,6 +71,9 @@ class UpdateCommand extends AbstractController implements CommandInterface
 		// Run Composer install
 		$this->runCommand('cd ' . JPATH_ROOT . ' && composer install --no-dev -o 2>&1');
 
+		// Run Phinx Migrations
+		$this->runCommand('cd ' . JPATH_ROOT . ' && vendor/bin/phinx migrate 2>&1');
+
 		// Reset the Twig cache
 		$this->console->getCommand('twig:resetcache')->execute();
 
