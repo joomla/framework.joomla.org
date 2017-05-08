@@ -14,3 +14,4 @@ This application is the code powering the [framework.joomla.org](https://framewo
 1. Clone this repo on your web server
 2. Run the `composer install` command to install all dependencies
 3. Copy `etc/config.dist.json` to `etc/config.json` and configure your environment
+4. Run `vendor/bin/phinx migrate` to set up the database
