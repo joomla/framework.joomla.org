@@ -47,11 +47,7 @@ class DatabaseProvider implements ServiceProviderInterface
 						'prefix'   => $config->get('database.prefix'),
 					];
 
-					$db = DatabaseDriver::getInstance($options);
-					$db->setDebug($config->get('database.debug', false));
-					$db->setLogger($container->get('monolog.logger.database'));
-
-					return $db;
+					return DatabaseDriver::getInstance($options);
 				},
 				true
 			);

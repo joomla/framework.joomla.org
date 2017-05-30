@@ -5,8 +5,7 @@
 		"user"    : "",
 		"password": "",
 		"name"    : "",
-		"prefix"  : "",
-		"debug"   : false
+		"prefix"  : ""
 	},
 	"template": {
 		"debug": false,
