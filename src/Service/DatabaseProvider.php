@@ -8,7 +8,9 @@
 
 namespace Joomla\FrameworkWebsite\Service;
 
-use Joomla\Database\DatabaseDriver;
+use Joomla\Database\{
+	DatabaseDriver, DatabaseFactory, DatabaseInterface
+};
 use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
@@ -31,25 +33,53 @@ class DatabaseProvider implements ServiceProviderInterface
 	 */
 	public function register(Container $container)
 	{
-		$container->alias('db', DatabaseDriver::class)
-			->share(
-				DatabaseDriver::class,
-				function (Container $container) : DatabaseDriver
-				{
-					$config = $container->get('config');
+		$container->alias(DatabaseInterface::class, 'db')
+			->alias(DatabaseDriver::class, 'db')
+			->share('db', [$this, 'getDbService'], true);
 
-					$options = [
-						'driver'   => $config->get('database.driver'),
-						'host'     => $config->get('database.host'),
-						'user'     => $config->get('database.user'),
-						'password' => $config->get('database.password'),
-						'database' => $config->get('database.name'),
-						'prefix'   => $config->get('database.prefix'),
-					];
+		$container->alias(DatabaseFactory::class, 'db.factory')
+			->share('db.factory', [$this, 'getDbFactoryService'], true);
+	}
 
-					return DatabaseDriver::getInstance($options);
-				},
-				true
-			);
+	/**
+	 * Get the `db` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  DatabaseInterface
+	 *
+	 * @since   1.0
+	 */
+	public function getDbService(Container $container) : DatabaseInterface
+	{
+		$config = $container->get('config');
+
+		/** @var DatabaseFactory $factory */
+		$factory = $container->get('db.factory');
+
+		$options = [
+			'host'     => $config->get('database.host'),
+			'user'     => $config->get('database.user'),
+			'password' => $config->get('database.password'),
+			'database' => $config->get('database.name'),
+			'prefix'   => $config->get('database.prefix'),
+			'factory'  => $factory,
+		];
+
+		return $factory->getDriver($config->get('database.driver'), $options);
+	}
+
+	/**
+	 * Get the `db.factory` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  DatabaseFactory
+	 *
+	 * @since   1.0
+	 */
+	public function getDbFactoryService(Container $container) : DatabaseFactory
+	{
+		return new DatabaseFactory;
 	}
 }
