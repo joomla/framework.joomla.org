@@ -86,8 +86,7 @@ class LoggingProvider implements ServiceProviderInterface
 		/** @var \Joomla\Registry\Registry $config */
 		$config = $container->get('config');
 
-		// If database debugging is enabled then force the logger's error level to DEBUG, otherwise use the level defined in the app config
-		$level = $config->get('database.debug', false) ? 'DEBUG' : strtoupper($config->get('log.database', $config->get('log.level', 'error')));
+		$level = strtoupper($config->get('log.database', $config->get('log.level', 'error')));
 
 		return new StreamHandler(JPATH_ROOT . '/logs/framework.log', constant('\\Monolog\\Logger::' . $level));
 	}
