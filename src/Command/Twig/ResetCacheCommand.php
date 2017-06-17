@@ -14,6 +14,7 @@ use Joomla\Filesystem\Folder;
 use Joomla\FrameworkWebsite\CommandInterface;
 use Joomla\Input\Input;
 use Joomla\Renderer\TwigRenderer;
+use Twig\Error\Error as TwigError;
 
 /**
  * Twig cache reset command
@@ -97,7 +98,7 @@ class ResetCacheCommand extends AbstractController implements CommandInterface
 			{
 				$engine->load($template);
 			}
-			catch (\Twig_Error $e)
+			catch (TwigError $e)
 			{
 				$errorFiles[] = $file;
 			}

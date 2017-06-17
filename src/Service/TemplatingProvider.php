@@ -24,6 +24,13 @@ use Symfony\Component\Asset\{
 use Symfony\Component\Asset\VersionStrategy\{
 	EmptyVersionStrategy, StaticVersionStrategy
 };
+use Twig\Cache\{
+	FilesystemCache, NullCache
+};
+use Twig\Environment;
+use Twig\Extension\DebugExtension;
+use Twig\Loader\FilesystemLoader;
+use Twig\RuntimeLoader\ContainerRuntimeLoader;
 
 /**
  * Templating service provider
@@ -108,23 +115,23 @@ class TemplatingProvider implements ServiceProviderInterface
 		$debug        = $config->get('template.debug', false);
 
 		// Instantiate the Twig environment
-		$environment = new \Twig_Environment(new \Twig_Loader_Filesystem([JPATH_TEMPLATES]), ['debug' => $debug]);
+		$environment = new Environment(new FilesystemLoader([JPATH_TEMPLATES]), ['debug' => $debug]);
 
 		// Add a global tracking the debug state
 		$environment->addGlobal('fwDebug', $debug);
 
 		// Set up the environment's caching mechanism
-		$cacheService = new \Twig_Cache_Null;
+		$cacheService = new NullCache;
 
 		if ($debug === false && $cacheEnabled !== false)
 		{
-			$cacheService = new \Twig_Cache_Filesystem(JPATH_ROOT . '/' . $cachePath);
+			$cacheService = new FilesystemCache(JPATH_ROOT . '/' . $cachePath);
 		}
 
 		$environment->setCache($cacheService);
 
 		// Add the Twig runtime loader
-		$loader = new \Twig_ContainerRuntimeLoader($container);
+		$loader = new ContainerRuntimeLoader($container);
 
 		$environment->addRuntimeLoader($loader);
 
@@ -134,7 +141,7 @@ class TemplatingProvider implements ServiceProviderInterface
 		// Add the debug extension if enabled
 		if ($debug)
 		{
-			$environment->addExtension(new \Twig_Extension_Debug);
+			$environment->addExtension(new DebugExtension);
 		}
 
 		return new TwigRenderer($environment);

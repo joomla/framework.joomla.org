@@ -8,43 +8,48 @@
 
 namespace Joomla\FrameworkWebsite\Renderer;
 
+use Twig\Extension\AbstractExtension;
+use Twig\{
+	TwigFilter, TwigFunction
+};
+
 /**
  * Framework site's Twig extension class
  *
  * @since  1.0
  */
-class FrameworkExtension extends \Twig_Extension
+class FrameworkExtension extends AbstractExtension
 {
 	/**
 	 * Returns a list of filters to add to the existing list
 	 *
-	 * @return  \Twig_Filter[]  An array of \Twig_Filter instances
+	 * @return  TwigFilter[]  An array of TwigFilter instances
 	 *
 	 * @since   1.0
 	 */
 	public function getFilters()
 	{
 		return [
-			new \Twig_Filter('get_class', 'get_class'),
-			new \Twig_Filter('strip_root_path', [$this, 'stripRootPath'])
+			new TwigFilter('get_class', 'get_class'),
+			new TwigFilter('strip_root_path', [$this, 'stripRootPath'])
 		];
 	}
 
 	/**
 	 * Returns a list of functions to add to the existing list.
 	 *
-	 * @return  \Twig_Function[]  An array of \Twig_Function instances
+	 * @return  TwigFunction[]  An array of TwigFunction instances
 	 *
 	 * @since   1.0
 	 */
 	public function getFunctions()
 	{
 		return [
-			new \Twig_Function('asset', [FrameworkTwigRuntime::class, 'getAssetUri']),
-			new \Twig_Function('preload', [FrameworkTwigRuntime::class, 'preloadAsset']),
-			new \Twig_Function('request_uri', [FrameworkTwigRuntime::class, 'getRequestUri']),
-			new \Twig_Function('route', [FrameworkTwigRuntime::class, 'getRouteUri']),
-			new \Twig_Function('url', [FrameworkTwigRuntime::class, 'getRouteUrl']),
+			new TwigFunction('asset', [FrameworkTwigRuntime::class, 'getAssetUri']),
+			new TwigFunction('preload', [FrameworkTwigRuntime::class, 'preloadAsset']),
+			new TwigFunction('request_uri', [FrameworkTwigRuntime::class, 'getRequestUri']),
+			new TwigFunction('route', [FrameworkTwigRuntime::class, 'getRouteUri']),
+			new TwigFunction('url', [FrameworkTwigRuntime::class, 'getRouteUrl']),
 		];
 	}
 
