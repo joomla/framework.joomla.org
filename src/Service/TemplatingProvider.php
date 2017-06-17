@@ -63,9 +63,10 @@ class TemplatingProvider implements ServiceProviderInterface
 			->alias(\Twig_CacheInterface::class, 'twig.cache')
 			->share('twig.cache', [$this, 'getTwigCacheService'], true);
 
+		// This service cannot be protected as it is decorated when the debug bar is available
 		$container->alias(Environment::class, 'twig.environment')
 			->alias(\Twig_Environment::class, 'twig.environment')
-			->share('twig.environment', [$this, 'getTwigEnvironmentService'], true);
+			->share('twig.environment', [$this, 'getTwigEnvironmentService']);
 
 		$container->alias(DebugExtension::class, 'twig.extension.debug')
 			->alias(\Twig_Extension_Debug::class, 'twig.extension.debug')
@@ -100,10 +101,13 @@ class TemplatingProvider implements ServiceProviderInterface
 		$version = file_exists(JPATH_ROOT . '/cache/deployed.txt') ? trim(file_get_contents(JPATH_ROOT . '/cache/deployed.txt')) : md5(get_class($this));
 		$context = new ApplicationContext($container->get(AbstractApplication::class));
 
+		$unversionedStrategy = new PathPackage('media', new EmptyVersionStrategy, $context);
+
 		return new Packages(
 			new PathPackage('media', new StaticVersionStrategy($version), $context),
 			[
-				'img' => new PathPackage('media', new EmptyVersionStrategy, $context)
+				'img'         => $unversionedStrategy,
+				'unversioned' => $unversionedStrategy,
 			]
 		);
 	}
@@ -184,7 +188,8 @@ class TemplatingProvider implements ServiceProviderInterface
 			$environment->addExtension($container->get('twig.extension.debug'));
 		}
 
-		// Add a global tracking the debug state
+		// Add a global tracking the debug states
+		$environment->addGlobal('appDebug', $config->get('debug', false));
 		$environment->addGlobal('fwDebug', $debug);
 
 		return $environment;

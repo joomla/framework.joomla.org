@@ -26,5 +26,6 @@
 	"router": {
 		"cache": false
 	},
-	"errorReporting": 0
+	"errorReporting": 0,
+	"debug": false
 }

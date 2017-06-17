@@ -14,6 +14,7 @@ use Joomla\Database\{
 use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
+use Joomla\Registry\Registry;
 
 /**
  * Database service provider
@@ -52,6 +53,7 @@ class DatabaseProvider implements ServiceProviderInterface
 	 */
 	public function getDbService(Container $container) : DatabaseInterface
 	{
+		/** @var Registry $config */
 		$config = $container->get('config');
 
 		/** @var DatabaseFactory $factory */

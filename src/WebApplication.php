@@ -8,6 +8,7 @@
 
 namespace Joomla\FrameworkWebsite;
 
+use DebugBar\DebugBar;
 use Joomla\Application\AbstractWebApplication;
 use Joomla\Controller\ControllerInterface;
 use Joomla\DI\{
@@ -29,6 +30,14 @@ use Zend\Diactoros\Response\{
 class WebApplication extends AbstractWebApplication implements ContainerAwareInterface
 {
 	use ContainerAwareTrait;
+
+	/**
+	 * Application debug bar
+	 *
+	 * @var    DebugBar
+	 * @since  1.0
+	 */
+	private $debugBar;
 
 	/**
 	 * Application router
@@ -69,12 +78,17 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 				['exception' => $throwable]
 			);
 
+			if ($this->debugBar)
+			{
+				$this->debugBar['exceptions']->addThrowable($throwable);
+			}
+
 			$this->allowCache(false);
 
-			// TODO - The error handler will need to be refactored to fully account for being aware of route formats and Response objects
 			switch ($this->mimeType)
 			{
 				case 'application/json' :
+				case ($this->getResponse() instanceof JsonResponse) :
 					$data = [
 						'code'    => $throwable->getCode(),
 						'message' => $throwable->getMessage(),
@@ -142,7 +156,52 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 			$this->setHeader('Link', (new HttpHeaderSerializer)->serialize($links));
 		}
 
+		// Render the debug bar output if able
+		if ($this->debugBar && !($this->mimeType === 'application/json' || $this->getResponse() instanceof JsonResponse))
+		{
+			$debugBarOutput = $this->debugBar->getJavascriptRenderer()->render();
+
+			// Fetch the body
+			$body = $this->getBody();
+
+			// If for whatever reason we're missing the closing body tag, just append the scripts
+			if (!stristr($body, '</body>'))
+			{
+				$body .= $debugBarOutput;
+			}
+			else
+			{
+				// Find the closing tag and put the scripts in
+				$pos = strripos($body, '</body>');
+
+				if ($pos !== false)
+				{
+					$body = substr_replace($body, $debugBarOutput . '</body>', $pos, strlen('</body>'));
+				}
+			}
+
+			// Reset the body
+			$this->setBody($body);
+
+		}
+
 		parent::respond();
+	}
+
+	/**
+	 * Set the application's debug bar
+	 *
+	 * @param   DebugBar  $debugBar  DebugBar object to set
+	 *
+	 * @return  $this
+	 *
+	 * @since   1.0
+	 */
+	public function setDebugBar(DebugBar $debugBar) : WebApplication
+	{
+		$this->debugBar = $debugBar;
+
+		return $this;
 	}
 
 	/**

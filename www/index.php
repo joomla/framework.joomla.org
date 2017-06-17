@@ -31,6 +31,12 @@ try
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
 
+	// Conditionally include the DebugBar service provider based on the app being in debug mode
+	if ((bool) $container->get('config')->get('debug', false))
+	{
+		$container->registerServiceProvider(new Joomla\FrameworkWebsite\Service\DebugBarProvider);
+	}
+
 	// Alias the web application to Joomla's base application class as this is the primary application for the environment
 	$container->alias(Joomla\Application\AbstractApplication::class, Joomla\Application\AbstractWebApplication::class);
 

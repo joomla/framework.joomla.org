@@ -37,7 +37,6 @@ class LoggingProvider implements ServiceProviderInterface
 		 * Monolog Handlers
 		 */
 		$container->share('monolog.handler.application', [$this, 'getMonologHandlerApplicationService'], true);
-		$container->share('monolog.handler.database', [$this, 'getMonologHandlerDatabaseService'], true);
 
 		/*
 		 * Monolog Processors
@@ -50,7 +49,6 @@ class LoggingProvider implements ServiceProviderInterface
 		 */
 		$container->share('monolog.logger.application.cli', [$this, 'getMonologLoggerApplicationCliService'], true);
 		$container->share('monolog.logger.application.web', [$this, 'getMonologLoggerApplicationWebService'], true);
-		$container->share('monolog.logger.database', [$this, 'getMonologLoggerDatabaseService'], true);
 	}
 
 	/**
@@ -68,25 +66,6 @@ class LoggingProvider implements ServiceProviderInterface
 		$config = $container->get('config');
 
 		$level = strtoupper($config->get('log.application', $config->get('log.level', 'error')));
-
-		return new StreamHandler(JPATH_ROOT . '/logs/framework.log', constant('\\Monolog\\Logger::' . $level));
-	}
-
-	/**
-	 * Get the `monolog.handler.database` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  StreamHandler
-	 *
-	 * @since   1.0
-	 */
-	public function getMonologHandlerDatabaseService(Container $container) : StreamHandler
-	{
-		/** @var \Joomla\Registry\Registry $config */
-		$config = $container->get('config');
-
-		$level = strtoupper($config->get('log.database', $config->get('log.level', 'error')));
 
 		return new StreamHandler(JPATH_ROOT . '/logs/framework.log', constant('\\Monolog\\Logger::' . $level));
 	}
@@ -132,28 +111,6 @@ class LoggingProvider implements ServiceProviderInterface
 			[
 				$container->get('monolog.processor.psr3'),
 				$container->get('monolog.processor.web'),
-			]
-		);
-	}
-
-	/**
-	 * Get the `monolog.logger.database` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  Logger
-	 *
-	 * @since   1.0
-	 */
-	public function getMonologLoggerDatabaseService(Container $container) : Logger
-	{
-		return new Logger(
-			'Framework',
-			[
-				$container->get('monolog.handler.database'),
-			],
-			[
-				$container->get('monolog.processor.psr3'),
 			]
 		);
 	}

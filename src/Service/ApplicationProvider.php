@@ -670,12 +670,20 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getWebApplicationClassService(Container $container) : WebApplication
 	{
-		$application = new WebApplication($container->get(Input::class), $container->get('config'));
+		/** @var Registry $config */
+		$config = $container->get('config');
+
+		$application = new WebApplication($container->get(Input::class), $config);
 
 		// Inject extra services
 		$application->setContainer($container);
 		$application->setLogger($container->get('monolog.logger.application.web'));
 		$application->setRouter($container->get(Router::class));
+
+		if ($config->get('debug', false) && $container->has('debug.bar'))
+		{
+			$application->setDebugBar($container->get('debug.bar'));
+		}
 
 		return $application;
 	}

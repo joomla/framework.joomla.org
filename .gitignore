@@ -25,3 +25,7 @@
 
 # Node modules should be local
 node_modules/
+
+# DebugBar assets
+/www/media/css/debugbar.css
+/www/media/js/debugbar.js
