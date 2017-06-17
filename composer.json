@@ -28,7 +28,9 @@
         "symfony/yaml": "3.3.*",
         "theiconic/php-ga-measurement-protocol": "^2.0",
         "twig/twig": "~2.4",
-        "zendframework/zend-diactoros": "~1.4",
+        "zendframework/zend-diactoros": "~1.4"
+    },
+    "require-dev": {
         "maximebf/debugbar": "^1.13"
     },
     "autoload": {

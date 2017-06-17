@@ -17,8 +17,9 @@ use DebugBar\DataCollector\PDO\{
 	PDOCollector, TraceablePDO
 };
 use Joomla\Database\DatabaseInterface;
-use Joomla\DI\{
-	Container, ServiceProviderInterface
+use Joomla\DI\
+{
+	Container, Exception\DependencyResolutionException, ServiceProviderInterface
 };
 use Joomla\FrameworkWebsite\DebugBar\Twig\{
 	TraceableTwigEnvironment, TwigCollector
@@ -75,6 +76,11 @@ class DebugBarProvider implements ServiceProviderInterface
 	 */
 	public function getDebugBarService(Container $container) : DebugBar
 	{
+		if (!class_exists(StandardDebugBar::class))
+		{
+			throw new DependencyResolutionException(sprintf('The %s class is not loaded.', StandardDebugBar::class));
+		}
+
 		$debugBar = new StandardDebugBar;
 
 		// Add collectors
