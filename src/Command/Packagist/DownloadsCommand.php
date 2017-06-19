@@ -65,7 +65,7 @@ class DownloadsCommand extends AbstractController implements CommandInterface
 		}
 		else
 		{
-			$this->getApplication()->out('<error>Error storing download counts.');
+			$this->getApplication()->out('<error>Error storing download counts.</error>');
 		}
 
 		return true;
