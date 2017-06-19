@@ -1,31 +1,35 @@
 {
-	"database": {
-		"driver"  : "mysql",
-		"host"    : "",
-		"user"    : "",
-		"password": "",
-		"name"    : "",
-		"prefix"  : ""
-	},
-	"template": {
-		"debug": false,
-		"cache": {
-			"enabled": false,
-			"path": "cache/twig"
-		}
-	},
-	"analytics": {
-		"enabled": false,
-		"account": ""
-	},
-	"log": {
-		"level": "error",
-		"application": "error",
-		"database": "error"
-	},
-	"router": {
-		"cache": false
-	},
-	"errorReporting": 0,
-	"debug": false
+    "database": {
+        "driver": "mysql",
+        "host": "",
+        "user": "",
+        "password": "",
+        "name": "",
+        "prefix": ""
+    },
+    "template": {
+        "debug": false,
+        "cache": {
+            "enabled": false,
+            "path": "cache/twig"
+        }
+    },
+    "analytics": {
+        "enabled": false,
+        "account": ""
+    },
+    "log": {
+        "level": "error",
+        "application": "error",
+        "database": "error"
+    },
+    "router": {
+        "cache": false
+    },
+    "cache": {
+        "enabled": false,
+        "adapter": "filesystem"
+    },
+    "errorReporting": 0,
+    "debug": false
 }

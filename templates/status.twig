@@ -12,6 +12,7 @@
             <tr>
                 <th>Package</th>
                 <th>Version</th>
+                <th>Downloads</th>
                 <th class="hidden-xs hidden-sm"># of Tests</th>
                 <th class="hidden-xs hidden-sm"># of Assertions</th>
                 <th class="hidden-xs hidden-sm">Tests with Failures</th>
@@ -22,6 +23,7 @@
             </tr>
         </thead>
         <tbody>
+            {% set _totalDownloads = 0 %}
             {% set _totalTests = 0 %}
             {% set _totalAssertions = 0 %}
             {% set _totalFailures = 0 %}
@@ -37,6 +39,14 @@
                     {% endif %}
                 </td>
                 <td>{{ release.version }}</td>
+                <td>
+                    {% if downloads[package] != false %}
+                        {% set _totalDownloads = _totalDownloads + downloads[package] %}
+                        {{ downloads[package]|number_format }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
                 {% if release.id %}
                     {% set _totalTests = _totalTests + release.tests %}
                     {% set _totalAssertions = _totalAssertions + release.assertions %}
@@ -100,11 +110,12 @@
             <tr>
                 <th>Totals</th>
                 <th></th>
-                <th class="hidden-xs hidden-sm">{{ _totalTests }}</th>
-                <th class="hidden-xs hidden-sm">{{ _totalAssertions }}</th>
-                <th class="hidden-xs hidden-sm">{{ _totalFailures }}</th>
-                <th class="hidden-xs hidden-sm">{{ _totalErrors }}</th>
-                <th colspan="3">Lines Covered: {{ _totalCoveredLines }}<br />Total Lines: {{ _totalLines }}<br />{{ ((_totalCoveredLines / _totalLines) * 100)|number_format(2) }}% Coverage</th>
+                <th>{{ _totalDownloads|number_format }}</th>
+                <th class="hidden-xs hidden-sm">{{ _totalTests|number_format }}</th>
+                <th class="hidden-xs hidden-sm">{{ _totalAssertions|number_format }}</th>
+                <th class="hidden-xs hidden-sm">{{ _totalFailures|number_format }}</th>
+                <th class="hidden-xs hidden-sm">{{ _totalErrors|number_format }}</th>
+                <th colspan="3">Lines Covered: {{ _totalCoveredLines|number_format }}<br />Total Lines: {{ _totalLines|number_format }}<br />{{ ((_totalCoveredLines / _totalLines) * 100)|number_format(2) }}% Coverage</th>
             </tr>
         </tfoot>
     </table>

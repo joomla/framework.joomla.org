@@ -73,6 +73,7 @@ class PackageHtmlView extends BaseHtmlView
 	{
 		$this->setData([
 			'releases'          => $this->model->getPackageHistory($this->package),
+			'package'           => $this->package,
 			'packageName'       => $this->helper->getPackageDisplayName($this->package),
 			'repoName'          => $this->helper->getPackageRepositoryName($this->package),
 			'packageDeprecated' => $this->helper->getPackageDeprecated($this->package),

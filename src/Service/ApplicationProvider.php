@@ -21,6 +21,7 @@ use Joomla\FrameworkWebsite\Controller\
 {
 	Api\PackageControllerGet, Api\StatusControllerGet, HomepageController, PackageController, PageController, StatusController
 };
+use Joomla\FrameworkWebsite\Helper\PackagistHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\View\{
 	Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
@@ -34,6 +35,7 @@ use Joomla\Renderer\{
 	RendererInterface, TwigRenderer
 };
 use Joomla\Router\Router;
+use Psr\Cache\CacheItemPoolInterface;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
@@ -74,6 +76,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(Helper::class, 'application.helper')
 			->share('application.helper', [$this, 'getApplicationHelperService'], true);
 
+		$container->alias(PackagistHelper::class, 'application.helper.packagist')
+			->share('application.helper.packagist', [$this, 'getApplicationHelperPackagistService'], true);
+
 		$container->share('application.packages', [$this, 'getApplicationPackagesService'], true);
 
 		$container->alias(Router::class, 'application.router')
@@ -95,6 +100,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
+		$container->share(AppCommands\Packagist\DownloadsCommand::class, [$this, 'getPackagistDownloadsCommandClassService'], true);
 		$container->share(AppCommands\Packagist\SyncCommand::class, [$this, 'getPackagistSyncCommandClassService'], true);
 		$container->share(AppCommands\Router\CacheCommand::class, [$this, 'getRouterCacheCommandClassService'], true);
 		$container->share(AppCommands\Twig\ResetCacheCommand::class, [$this, 'getTwigResetCacheCommandClassService'], true);
@@ -167,6 +173,23 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getApplicationHelperService(Container $container) : Helper
 	{
 		$helper = new Helper;
+		$helper->setPackages($container->get('application.packages'));
+
+		return $helper;
+	}
+
+	/**
+	 * Get the `application.helper.packagist` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  PackagistHelper
+	 *
+	 * @since   1.0
+	 */
+	public function getApplicationHelperPackagistService(Container $container) : PackagistHelper
+	{
+		$helper = new PackagistHelper($container->get(Http::class), $container->get(CacheItemPoolInterface::class));
 		$helper->setPackages($container->get('application.packages'));
 
 		return $helper;
@@ -464,6 +487,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new StatusController(
 			$container->get(StatusHtmlView::class),
+			$container->get(PackagistHelper::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
@@ -530,6 +554,24 @@ class ApplicationProvider implements ServiceProviderInterface
 		$model->setPackages($container->get('application.packages'));
 
 		return $model;
+	}
+
+	/**
+	 * Get the Packagist\DownloadsCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\Packagist\DownloadsCommand
+	 *
+	 * @since   1.0
+	 */
+	public function getPackagistDownloadsCommandClassService(Container $container) : AppCommands\Packagist\DownloadsCommand
+	{
+		return new AppCommands\Packagist\DownloadsCommand(
+			$container->get(PackagistHelper::class),
+			$container->get(Input::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
+		);
 	}
 
 	/**

@@ -19,7 +19,7 @@ use Joomla\Http\Http;
 use Joomla\Input\Input;
 
 /**
- * Help command
+ * Command to synchronize the release listing with Packagist
  *
  * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object

@@ -10,6 +10,7 @@ namespace Joomla\FrameworkWebsite\Controller;
 
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
+use Joomla\FrameworkWebsite\Helper\PackagistHelper;
 use Joomla\FrameworkWebsite\View\Status\StatusHtmlView;
 use Joomla\Input\Input;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -25,6 +26,14 @@ use Zend\Diactoros\Response\HtmlResponse;
 class StatusController extends AbstractController
 {
 	/**
+	 * The packagist helper object
+	 *
+	 * @var    PackagistHelper
+	 * @since  1.0
+	 */
+	private $packagistHelper;
+
+	/**
 	 * The view object.
 	 *
 	 * @var    StatusHtmlView
@@ -35,17 +44,19 @@ class StatusController extends AbstractController
 	/**
 	 * Constructor.
 	 *
-	 * @param   StatusHtmlView       $view   The view object.
-	 * @param   Input                $input  The input object.
-	 * @param   AbstractApplication  $app    The application object.
+	 * @param   StatusHtmlView       $view             The view object.
+	 * @param   PackagistHelper      $packagistHelper  The packagist helper object.
+	 * @param   Input                $input            The input object.
+	 * @param   AbstractApplication  $app              The application object.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(StatusHtmlView $view, Input $input = null, AbstractApplication $app = null)
+	public function __construct(StatusHtmlView $view, PackagistHelper $packagistHelper, Input $input = null, AbstractApplication $app = null)
 	{
 		parent::__construct($input, $app);
 
-		$this->view = $view;
+		$this->packagistHelper = $packagistHelper;
+		$this->view            = $view;
 	}
 
 	/**
@@ -59,6 +70,8 @@ class StatusController extends AbstractController
 	{
 		// Enable browser caching
 		$this->getApplication()->allowCache(true);
+
+		$this->view->addData('downloads', $this->packagistHelper->getDownloadCounts());
 
 		$this->getApplication()->setResponse(new HtmlResponse($this->view->render()));
 
