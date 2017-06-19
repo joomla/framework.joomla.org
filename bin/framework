@@ -28,6 +28,7 @@ try
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\DatabaseProvider)
+		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
 
@@ -68,8 +69,8 @@ catch (\Throwable $e)
 
 	// Log the error for reference
 	$container->get('monolog.logger.application.cli')->error(
-		sprintf('Uncaught Throwable of type %s caught.', get_class($throwable)),
-		['exception' => $throwable]
+		sprintf('Uncaught Throwable of type %s caught.', get_class($e)),
+		['exception' => $e]
 	);
 
 	fwrite(STDOUT, "\nERROR: " . $e->getMessage() . "\n");

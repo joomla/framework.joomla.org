@@ -58,7 +58,7 @@
                 {% elseif repoName in ['compat', 'test'] %}
                 <td colspan="6" class="text-center">This package is not unit tested</td>
                 {% else %}
-                <td colspan="5" class="text-center">This package does not have a test report</td>
+                <td colspan="5" class="text-center">This release does not have a test report</td>
                 <td>
                     <a href="https://travis-ci.org/joomla-framework/{{ repoName }}">
                         <img src="https://travis-ci.org/joomla-framework/{{ repoName }}.png?branch={{ release.version }}" alt="Build Status"/>

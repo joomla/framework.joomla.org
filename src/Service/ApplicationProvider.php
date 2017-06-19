@@ -25,6 +25,7 @@ use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\View\{
 	Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
 };
+use Joomla\Http\Http;
 use Joomla\Input\{
 	Cli, Input
 };
@@ -94,6 +95,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
+		$container->share(AppCommands\Packagist\SyncCommand::class, [$this, 'getPackagistSyncCommandClassService'], true);
 		$container->share(AppCommands\Router\CacheCommand::class, [$this, 'getRouterCacheCommandClassService'], true);
 		$container->share(AppCommands\Twig\ResetCacheCommand::class, [$this, 'getTwigResetCacheCommandClassService'], true);
 		$container->share(AppCommands\UpdateCommand::class, [$this, 'getUpdateCommandClassService'], true);
@@ -531,21 +533,26 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the Twig\ResetCacheCommand class service
+	 * Get the Packagist\SyncCommand class service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  AppCommands\Twig\ResetCacheCommand
+	 * @return  AppCommands\Packagist\SyncCommand
 	 *
 	 * @since   1.0
 	 */
-	public function getTwigResetCacheCommandClassService(Container $container) : AppCommands\Twig\ResetCacheCommand
+	public function getPackagistSyncCommandClassService(Container $container) : AppCommands\Packagist\SyncCommand
 	{
-		return new AppCommands\Twig\ResetCacheCommand(
-			$container->get(TwigRenderer::class),
+		$command = new AppCommands\Packagist\SyncCommand(
+			$container->get(Http::class),
+			$container->get(PackageModel::class),
 			$container->get(Input::class),
 			$container->get(JoomlaApplication\AbstractApplication::class)
 		);
+
+		$command->setPackages($container->get('application.packages'));
+
+		return $command;
 	}
 
 	/**
@@ -561,6 +568,24 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new AppCommands\Router\CacheCommand(
 			$container->get(Router::class),
+			$container->get(Input::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
+		);
+	}
+
+	/**
+	 * Get the Twig\ResetCacheCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\Twig\ResetCacheCommand
+	 *
+	 * @since   1.0
+	 */
+	public function getTwigResetCacheCommandClassService(Container $container) : AppCommands\Twig\ResetCacheCommand
+	{
+		return new AppCommands\Twig\ResetCacheCommand(
+			$container->get(TwigRenderer::class),
 			$container->get(Input::class),
 			$container->get(JoomlaApplication\AbstractApplication::class)
 		);

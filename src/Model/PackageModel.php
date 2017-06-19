@@ -50,6 +50,28 @@ class PackageModel implements DatabaseModelInterface
 	}
 
 	/**
+	 * Add a release for a package
+	 *
+	 * @param   string  $package  The package to add the release for
+	 * @param   string  $version  The package's release version
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function addRelease(string $package, string $version)
+	{
+		$db = $this->getDb();
+
+		$data = (object) [
+			'package' => $package,
+			'version' => $version,
+		];
+
+		$db->insertObject('#__packages', $data);
+	}
+
+	/**
 	 * Fetches the latest releases for each Framework package
 	 *
 	 * @return  \stdClass[]
@@ -67,13 +89,12 @@ class PackageModel implements DatabaseModelInterface
 		$subQuery = $db->getQuery(true)
 			->select($db->quoteName(['id', 'package', 'version']))
 			->from($db->quoteName('#__packages'))
-			->order('package, version DESC');
+			->order('package ASC, version DESC');
 
 		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select('*')
-			->from('(' . (string) $subQuery . ') AS sub')
-			->group('package');
+			->from('(' . (string) $subQuery . ') AS sub');
 
 		$packs = $db->setQuery($query)->loadObjectList();
 
@@ -82,11 +103,17 @@ class PackageModel implements DatabaseModelInterface
 		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true);
 
+		$addedPacks = [];
+
 		foreach ($packs as $key => $pack)
 		{
-			$queryKey = "package$key";
-			$inString .= ":$queryKey,";
-			$query->bind($queryKey, $pack->id, \PDO::PARAM_INT);
+			if (!in_array($pack->package, $addedPacks))
+			{
+				$addedPacks[] = $pack->package;
+				$queryKey = "package$key";
+				$inString .= ":$queryKey,";
+				$query->bind($queryKey, $pack->id, \PDO::PARAM_INT);
+			}
 		}
 
 		$query->select('*')
@@ -100,6 +127,12 @@ class PackageModel implements DatabaseModelInterface
 		// Loop through the packs and build the reports
 		foreach ($packs as $pack)
 		{
+			// Skip if package is already included
+			if (isset($reports[$pack->package]))
+			{
+				continue;
+			}
+
 			// If we didn't get any data, build a new object
 			if (!isset($packageTests[$pack->id]))
 			{
@@ -238,5 +271,33 @@ class PackageModel implements DatabaseModelInterface
 		}
 
 		return $reports;
+	}
+
+	/**
+	 * Check if the package has a release at the given version
+	 *
+	 * @param   string  $package  The package to check for the release on
+	 * @param   string  $version  The version to check for
+	 *
+	 * @return  bool
+	 *
+	 * @since   1.0
+	 */
+	public function hasRelease(string $package, string $version) : bool
+	{
+		$db = $this->getDb();
+
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true)
+			->select($db->quoteName('id'))
+			->from($db->quoteName('#__packages'))
+			->where($db->quoteName('package') . ' = :package')
+			->where($db->quoteName('version') . ' = :version')
+			->bind('package', $package, \PDO::PARAM_STR)
+			->bind('version', $version, \PDO::PARAM_STR);
+
+		$id = $db->setQuery($query)->loadResult();
+
+		return $id !== null;
 	}
 }

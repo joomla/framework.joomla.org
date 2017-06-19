@@ -12,6 +12,7 @@
         "joomla/di": "~2.0@dev",
         "joomla/event": "~2.0@dev",
         "joomla/filesystem": "~2.0@dev",
+        "joomla/http": "~2.0@dev",
         "joomla/model": "~2.0@dev",
         "joomla/registry": "~2.0@dev",
         "joomla/renderer": "~2.0@dev",
