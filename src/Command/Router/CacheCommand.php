@@ -8,10 +8,11 @@
 
 namespace Joomla\FrameworkWebsite\Command\Router;
 
-use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
+use Joomla\DI\{
+	ContainerAwareInterface, ContainerAwareTrait
+};
 use Joomla\FrameworkWebsite\CommandInterface;
-use Joomla\Input\Input;
 use Joomla\Router\Router;
 
 /**
@@ -22,31 +23,9 @@ use Joomla\Router\Router;
  *
  * @since          1.0
  */
-class CacheCommand extends AbstractController implements CommandInterface
+class CacheCommand extends AbstractController implements CommandInterface, ContainerAwareInterface
 {
-	/**
-	 * The application router
-	 *
-	 * @var    Router
-	 * @since  1.0
-	 */
-	private $router;
-
-	/**
-	 * Instantiate the controller.
-	 *
-	 * @param   Router               $router  The application router.
-	 * @param   Input                $input   The input object.
-	 * @param   AbstractApplication  $app     The application object.
-	 *
-	 * @since   1.0
-	 */
-	public function __construct(Router $router, Input $input = null, AbstractApplication $app = null)
-	{
-		parent::__construct($input, $app);
-
-		$this->router = $router;
-	}
+	use ContainerAwareTrait;
 
 	/**
 	 * Execute the controller.
@@ -61,9 +40,7 @@ class CacheCommand extends AbstractController implements CommandInterface
 		$this->getApplication()->outputTitle('Cache Router');
 
 		// Check if caching is enabled
-		$twigCache = $this->getApplication()->get('router.cache', false);
-
-		if ($twigCache === false)
+		if ($this->getApplication()->get('router.cache', false) === false)
 		{
 			$this->getApplication()->out('<info>Router caching is disabled.</info>');
 
@@ -72,7 +49,25 @@ class CacheCommand extends AbstractController implements CommandInterface
 
 		$this->getApplication()->out('<info>Resetting Router Cache</info>');
 
-		file_put_contents(JPATH_ROOT . '/cache/CompiledRouter.php', $this->compileRouter());
+		$compiledFile = JPATH_ROOT . '/cache/CompiledRouter.php';
+
+		// First remove the compiled router file
+		if (file_exists($compiledFile) && !@unlink($compiledFile))
+		{
+			$this->getApplication()->out('<error>Error removing compiled router file</error>');
+
+			return false;
+		}
+
+		// Clear the stat cache just to make sure we're clear
+		clearstatcache();
+
+		// Force reload the router service
+		/** @var Router $router */
+		$router = $this->getContainer()->getNewInstance('application.router');
+
+		// Now compile it
+		file_put_contents($compiledFile, $this->compileRouter($router));
 
 		$this->getApplication()->out('<info>The router has been cached.</info>');
 
@@ -106,19 +101,21 @@ class CacheCommand extends AbstractController implements CommandInterface
 	/**
 	 * Compile the router into a PHP file
 	 *
+	 * @param   Router  $router  THe router to be compiled
+	 *
 	 * @return  string
 	 *
 	 * @since   1.0
 	 */
-	private function compileRouter() : string
+	private function compileRouter(Router $router) : string
 	{
 		// Make the routes data available for the compiled router
-		$refl = new \ReflectionClass($this->router);
+		$refl = new \ReflectionClass($router);
 
 		$routesProperty = $refl->getProperty('routes');
 		$routesProperty->setAccessible(true);
 
-		$routeData = $routesProperty->getValue($this->router);
+		$routeData = $routesProperty->getValue($router);
 
 		$router = <<<PHP
 <?php

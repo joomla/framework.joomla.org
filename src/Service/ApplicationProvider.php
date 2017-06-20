@@ -658,11 +658,14 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getRouterCacheCommandClassService(Container $container) : AppCommands\Router\CacheCommand
 	{
-		return new AppCommands\Router\CacheCommand(
-			$container->get(Router::class),
+		$command = new AppCommands\Router\CacheCommand(
 			$container->get(Input::class),
 			$container->get(JoomlaApplication\AbstractApplication::class)
 		);
+
+		$command->setContainer($container);
+
+		return $command;
 	}
 
 	/**
