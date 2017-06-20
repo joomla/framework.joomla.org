@@ -9,12 +9,10 @@
 namespace Joomla\FrameworkWebsite\Command\Router;
 
 use Joomla\Application\AbstractApplication;
-use Joomla\Cache\Item\Item;
 use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\CommandInterface;
 use Joomla\Input\Input;
 use Joomla\Router\Router;
-use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Router cache command
@@ -27,14 +25,6 @@ use Psr\Cache\CacheItemPoolInterface;
 class CacheCommand extends AbstractController implements CommandInterface
 {
 	/**
-	 * The cache pool
-	 *
-	 * @var    CacheItemPoolInterface
-	 * @since  1.0
-	 */
-	private $cache;
-
-	/**
 	 * The application router
 	 *
 	 * @var    Router
@@ -45,14 +35,13 @@ class CacheCommand extends AbstractController implements CommandInterface
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   Router                  $router  The application router.
-	 * @param   CacheItemPoolInterface  $cache   The cache pool.
-	 * @param   Input                   $input   The input object.
-	 * @param   AbstractApplication     $app     The application object.
+	 * @param   Router               $router  The application router.
+	 * @param   Input                $input   The input object.
+	 * @param   AbstractApplication  $app     The application object.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(Router $router, CacheItemPoolInterface $cache, Input $input = null, AbstractApplication $app = null)
+	public function __construct(Router $router, Input $input = null, AbstractApplication $app = null)
 	{
 		parent::__construct($input, $app);
 
