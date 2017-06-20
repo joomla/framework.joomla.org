@@ -303,12 +303,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/application.git",
-                "reference": "255bc748630e9722b27fd3df6ede8f8f0cbdb3d6"
+                "reference": "61c9b006576630c133c72f4e7ddd0166f5602baf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/application/zipball/255bc748630e9722b27fd3df6ede8f8f0cbdb3d6",
-                "reference": "255bc748630e9722b27fd3df6ede8f8f0cbdb3d6",
+                "url": "https://api.github.com/repos/joomla-framework/application/zipball/61c9b006576630c133c72f4e7ddd0166f5602baf",
+                "reference": "61c9b006576630c133c72f4e7ddd0166f5602baf",
                 "shasum": ""
             },
             "require": {
@@ -353,7 +353,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2017-05-29 11:08:10"
+            "time": "2017-06-20 02:25:07"
         },
         {
             "name": "joomla/cache",

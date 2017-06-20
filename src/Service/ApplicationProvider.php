@@ -19,7 +19,7 @@ use Joomla\FrameworkWebsite\{
 use Joomla\FrameworkWebsite\Command as AppCommands;
 use Joomla\FrameworkWebsite\Controller\
 {
-	Api\PackageControllerGet, Api\StatusControllerGet, HomepageController, PackageController, PageController, StatusController
+	Api\PackageControllerGet, Api\StatusControllerGet, HomepageController, PackageController, PageController, StatusController, WrongCmsController
 };
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
@@ -128,6 +128,9 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->alias(StatusController::class, 'controller.status')
 			->share('controller.status', [$this, 'getControllerStatusService'], true);
+
+		$container->alias(WrongCmsController::class, 'controller.wrong.cms')
+			->share('controller.wrong.cms', [$this, 'getControllerWrongCmsService'], true);
 
 		// Models
 		$container->alias(PackageModel::class, 'model.package')
@@ -248,6 +251,34 @@ class ApplicationProvider implements ServiceProviderInterface
 		}
 
 		$router = new Router;
+
+		/*
+		 * CMS Admin Panels
+		 */
+		$router->get(
+			'/administrator',
+			WrongCmsController::class
+		);
+
+		$router->get(
+			'/administrator/*',
+			WrongCmsController::class
+		);
+
+		$router->get(
+			'/wp-admin',
+			WrongCmsController::class
+		);
+
+		$router->get(
+			'/wp-admin/*',
+			WrongCmsController::class
+		);
+
+		$router->get(
+			'wp-login.php',
+			WrongCmsController::class
+		);
 
 		/*
 		 * Web routes
@@ -490,6 +521,23 @@ class ApplicationProvider implements ServiceProviderInterface
 		return new StatusController(
 			$container->get(StatusHtmlView::class),
 			$container->get(PackagistHelper::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the `controller.wrong.cms` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  WrongCmsController
+	 *
+	 * @since   1.0
+	 */
+	public function getControllerWrongCmsService(Container $container) : WrongCmsController
+	{
+		return new WrongCmsController(
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);

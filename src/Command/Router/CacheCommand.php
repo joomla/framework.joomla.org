@@ -45,7 +45,6 @@ class CacheCommand extends AbstractController implements CommandInterface
 	{
 		parent::__construct($input, $app);
 
-		$this->cache  = $cache;
 		$this->router = $router;
 	}
 
