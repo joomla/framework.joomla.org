@@ -240,9 +240,11 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getApplicationRouterService(Container $container) : Router
 	{
 		// Check for a cached router and use it
-		if (file_exists(JPATH_ROOT . '/cache/router.txt'))
+		if (file_exists(JPATH_ROOT . '/cache/CompiledRouter.php'))
 		{
-			return unserialize(file_get_contents(JPATH_ROOT . '/cache/router.txt'));
+			require_once JPATH_ROOT . '/cache/CompiledRouter.php';
+
+			return new \CompiledRouter;
 		}
 
 		$router = new Router;
@@ -610,6 +612,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new AppCommands\Router\CacheCommand(
 			$container->get(Router::class),
+			$container->get(CacheItemPoolInterface::class),
 			$container->get(Input::class),
 			$container->get(JoomlaApplication\AbstractApplication::class)
 		);
