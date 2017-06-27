@@ -8,8 +8,31 @@
 <section class="contribute container">
     <h2>Contributing to the Joomla! Framework</h2>
 
+    <h3>Repository Structure</h3>
+    <p>As of June 2017, the individual repositories in the <a href="https://github.com/joomla-framework">Joomla! Framework GitHub organization</a> are generally structured the same.</p>
+
+    <h4>Branches</h4>
+    <p>Most repositories have two branches representing the two major Framework versions; 1.x and 2.0.</p>
+    <ul>
+        <li>Except for the noted exceptions below, the <code>master</code> branch represents the stable 1.x branch and the <code>2.0-dev</code> branch represents the upcoming 2.0 release</li>
+        <li>The Crypt and Form packages use the <code>master</code> for 2.0 and a <code>1.x-dev</code> branch for 1.x</li>
+        <li>The Log package has no 2.0 branch since this package has been deprecated</li>
+        <li>The Renderer package is not part of Framework 1.x, therefore its <code>master</code> branch represents the 2.0 release</li>
+    </ul>
+
+    <h4>File Structure</h4>
+    <p>Joomla! Framework packages are <a href="http://www.php-fig.org/psr/psr-4/">PSR-4</a> compliant and follow a common filesystem structure.</p>
+    <ul>
+        <li><code>.github</code> - GitHub repository metadata (contributing guidelines, issue and pull request templates)</li>
+        <li><code>.travis</code> - Configuration files for the Travis-CI platform, including the directory where the PHP_CodeSniffer submodule is checked out to</li>
+        <li><code>docs</code> - As part of the Framework 2.0 release, documentation is being added to each package; this directory is not present in the 1.x branches</li>
+        <li><code>src</code> - The production code for the package</li>
+        <li><code>tests</code> - The test suite for the package</li>
+    </ul>
+    <p><span class="label label-info">NOTE</span> The Crypt and Form 1.x branches are still structured for <a href="http://www.php-fig.org/psr/psr-0/">PSR-0</a> support due to backward compatibility implications with migrating to PSR-4 and as such those branches have a slightly different repository structure. Additionally, the Session package's 1.x branch was not migrated to PSR-4 and still follows the PSR-0 structure.</p>
+
     <h3>Issues/Pull Requests</h3>
-    <p>Issue tracking and pull requests are managed via <a href="https://github.com">GitHub</a> in each package's repository. All of the Framework's packages are listed under the <a href="https://github.com/joomla-framework">Joomla! Framework organization</a>. You can find the documentation about how to fork a repository and start contributing to the Joomla! Framework at <a href="https://help.github.com/articles/fork-a-repo/">https://help.github.com/articles/fork-a-repo</a>.</p>
+    <p>Issue tracking and pull requests are managed via <a href="https://github.com">GitHub</a> in each package's repository. All of the Framework's packages are listed under the Joomla! Framework organization. You can find the documentation about how to fork a repository and start contributing to the Joomla! Framework at <a href="https://help.github.com/articles/fork-a-repo/">https://help.github.com/articles/fork-a-repo</a>.</p>
     <p>All contributions are welcome to be submitted for review for inclusion in the Framework, but before they will be accepted, we ask that you follow these simple guidelines:</p>
     <ul>
         <li><a href="#joomla-contributor-agreement">Joomla! Contributor Agreement</a></li>
@@ -41,6 +64,14 @@
     <p>Whether your pull request is a bug fix or introduces new classes or methods to the Framework, we ask that you include unit tests for your changes. We understand that not all users submitting pull requests will be proficient with PHPUnit. The maintainers and community as a whole are a helpful group and can help you with writing tests. PHPUnit, and any additional testing dependencies, is installed as part of a <code>composer install</code>, helpful when you are cloning a package's git repository. Please see <a href="https://phpunit.de/manual/current/en/index.html">https://phpunit.de/manual/current/en/index.html</a> for the full PHPUnit documentation.</p>
 
     <h3 id="documentation">Documentation</h3>
-    <p>Documentation for each package in the Joomla! Framework can be found in the <code>README.md</code> file in the root of the repository. The file uses GitHub Flavored Markdown format. You can find out more about this format at <a href="https://help.github.com/categories/writing-on-github/">https://help.github.com/categories/writing-on-github/</a>. When contributing new features to existing packages, please add notes about the new features to the existing <code>README.md</code> files in the packages you change. When submitting new packages, documentation in the form of a <code>README.md</code> file will be required with your pull request. The package documentation should explain how a developer should should be able to get started using the code in the package. The documentation should explain an explanation of the classes and/or interfaces and provide several simple examples.</p>
+    <p>For Framework 1.x releases, documentation for each package can be found in the <code>README.md</code> file in the root of the repository. As of 2.0, each repository will have a dedicated <code>docs</code> directory.</p>
+    <p>The <code>docs</code> directory structure at a minimum uses the following format:</p>
+    <ul>
+        <li><code>classes</code> - This directory contains documentation about the package's classes, interfaces, and traits, including summaries of the object's purpose and example uses</li>
+        <li><code>index.md</code> - This is a file which will be used as a navigational menu when the package documentation is integrated into this site</li>
+        <li><code>overview.md</code> - This is an overview of the package and its use</li>
+        <li><code>v1-to-v2-update.md</code> - This file will highlight backward compatibility breaking changes in each package while migrating from 1.x to 2.0</li>
+    </ul>
+    <p>The documentation files use  <a href="https://help.github.com/categories/writing-on-github/">GitHub Flavored Markdown</a>. When contributing new features to existing packages, please add notes about the new features to the existing <code>README.md</code> file in the packages you change or add new files to the <code>docs</code> directory (depending on the branch you are submitting the change to). When submitting new packages, documentation in the form of a <code>README.md</code> file will be required with your pull request. The package documentation should explain how a developer should should be able to get started using the code in the package. The documentation should give an explanation of the classes, interfaces, and/or traits, and provide several simple examples.</p>
 </section>
 {% endblock %}
