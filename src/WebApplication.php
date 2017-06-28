@@ -182,7 +182,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 
 			// Reset the body
 			$this->setBody($body);
-
 		}
 
 		parent::respond();

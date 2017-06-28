@@ -146,6 +146,7 @@ PHP;
 }
 
 PHP;
+
 		return $router;
 	}
 
