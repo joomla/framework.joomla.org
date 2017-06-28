@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<ruleset name="Joomla">
+
+    <arg name="report" value="full"/>
+    <arg name="tab-width" value="4"/>
+    <arg name="encoding" value="utf-8"/>
+    <arg value="sp"/>
+    <arg name="colors" />
+
+    <!-- Exclude folders not containing production code -->
+    <exclude-pattern>*/cache/*</exclude-pattern>
+    <exclude-pattern>*/etc/*</exclude-pattern>
+    <exclude-pattern>*/logs/*</exclude-pattern>
+    <exclude-pattern>*/media_src/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/testconfigs/*</exclude-pattern>
+    <exclude-pattern>*/www/*</exclude-pattern>
+
+    <!-- Exclude 3rd party libraries. -->
+    <exclude-pattern>*/src/DebugBar/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+
+    <!-- Exclude non-PHP files -->
+    <exclude-pattern>*/Gruntfile.js</exclude-pattern>
+
+    <rule ref="Joomla">
+        <exclude name="Joomla.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
+        <exclude name="Joomla.NamingConventions.ValidVariableName.NotCamelCaps"/>
+        <exclude name="Joomla.NamingConventions.ValidFunctionName.ScopeNotCamelCaps"/>
+        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+    </rule>
+
+    <rule ref="Joomla.Classes.InstantiateNewClasses">
+        <properties>
+            <property name="shortArraySyntax" value="true"/>
+        </properties>
+    </rule>
+
+    <rule ref="Joomla.Commenting.FileComment.MissingPackageTag">
+        <exclude-pattern>*/phinx.php</exclude-pattern>
+    </rule>
+</ruleset>

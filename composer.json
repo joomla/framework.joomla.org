@@ -33,6 +33,7 @@
         "zendframework/zend-diactoros": "~1.4"
     },
     "require-dev": {
+        "joomla/coding-standards": "dev-master",
         "maximebf/debugbar": "^1.13"
     },
     "autoload": {
