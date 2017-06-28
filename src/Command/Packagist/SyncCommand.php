@@ -10,8 +10,7 @@ namespace Joomla\FrameworkWebsite\Command\Packagist;
 
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
-use Joomla\FrameworkWebsite\
-{
+use Joomla\FrameworkWebsite\{
 	CommandInterface, PackageAware
 };
 use Joomla\FrameworkWebsite\Model\PackageModel;
@@ -157,7 +156,7 @@ class SyncCommand extends AbstractController implements CommandInterface
 	 *
 	 * @param   string  $version  Version string to check
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

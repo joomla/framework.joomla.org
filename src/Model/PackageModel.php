@@ -279,7 +279,7 @@ class PackageModel implements DatabaseModelInterface
 	 * @param   string  $package  The package to check for the release on
 	 * @param   string  $version  The version to check for
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

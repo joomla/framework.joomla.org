@@ -22,7 +22,7 @@ class Helper
 	 *
 	 * @param   string  $package  Package name
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
