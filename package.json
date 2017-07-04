@@ -6,6 +6,9 @@
     "autoprefixer": "^6.6.1",
     "bootstrap-sass": "3.3.7",
     "font-awesome": "4.7.0",
+    "smooth-scroll": "^11.1.0"
+  },
+  "devDependencies": {
     "grunt": "latest",
     "grunt-contrib-clean": "latest",
     "grunt-contrib-concat": "latest",
@@ -13,8 +16,7 @@
     "grunt-contrib-cssmin": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-postcss": "0.8.0",
-    "grunt-sass": "^2.0.0",
-    "smooth-scroll": "github:cferdinandi/smooth-scroll"
+    "grunt-sass": "^2.0.0"
   },
   "license": "GPL-2.0+"
 }
