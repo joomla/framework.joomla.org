@@ -12,6 +12,7 @@ use Joomla\Application\AbstractApplication;
 use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
+use Joomla\FrameworkWebsite\Asset\MixPathPackage;
 use Joomla\FrameworkWebsite\Renderer\{
 	ApplicationContext, FrameworkExtension, FrameworkTwigRuntime
 };
@@ -21,8 +22,9 @@ use Joomla\Renderer\{
 use Symfony\Component\Asset\{
 	Packages, PathPackage
 };
-use Symfony\Component\Asset\VersionStrategy\{
-	EmptyVersionStrategy, StaticVersionStrategy
+use Symfony\Component\Asset\VersionStrategy\
+{
+	EmptyVersionStrategy, JsonManifestVersionStrategy, StaticVersionStrategy
 };
 use Twig\Cache\{
 	CacheInterface, FilesystemCache, NullCache
@@ -110,12 +112,14 @@ class TemplatingProvider implements ServiceProviderInterface
 		$mediaPath = $app->get('uri.media.path', '/media/');
 
 		$unversionedStrategy = new PathPackage($mediaPath, new EmptyVersionStrategy, $context);
+		$mixStrategy         = new MixPathPackage($mediaPath, new JsonManifestVersionStrategy(JPATH_ROOT . '/www/mix-manifest.json'), $context);
 
 		return new Packages(
 			new PathPackage($mediaPath, new StaticVersionStrategy($version, $versionFormat), $context),
 			[
 				'img'         => $unversionedStrategy,
 				'unversioned' => $unversionedStrategy,
+				'mix'         => $mixStrategy
 			]
 		);
 	}

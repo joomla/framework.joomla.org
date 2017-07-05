@@ -4,7 +4,7 @@
         <!-- For Responsive -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" href="{{ preload(asset('css/template.css')) }}" type="text/css">
+        <link rel="stylesheet" href="{{ preload(asset('css/template.css', 'mix')) }}" type="text/css">
         {% if appDebug %}
             <link rel="stylesheet" href="{{ asset('css/debugbar.css', 'unversioned') }}" type="text/css">
         {% endif %}
@@ -85,7 +85,7 @@
             </div>
         </footer>
 
-        <script src="{{ preload(asset('js/template.js')) }}"></script>
+        <script src="{{ preload(asset('js/template.js', 'mix')) }}"></script>
         {% block bodyJavaScript %}{% endblock %}
         {% if appDebug %}
             <script src="{{ asset('js/debugbar.js', 'unversioned') }}"></script>

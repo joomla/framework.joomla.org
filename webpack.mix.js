@@ -20,5 +20,8 @@ mix
         ]
     });
 
+// Version assets
+mix.version();
+
 // Copy Font Awesome icons
 mix.copy('node_modules/font-awesome/fonts', 'www/media/fonts');
