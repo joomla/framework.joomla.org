@@ -1,7 +1,10 @@
 {
-  "name": "joomla.framework.site",
-  "version": "0.0.1",
-  "description": "Joomla Framework Site",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
   "dependencies": {
     "autoprefixer": "^6.6.1",
     "bootstrap-sass": "3.3.7",
@@ -9,14 +12,8 @@
     "smooth-scroll": "^11.1.0"
   },
   "devDependencies": {
-    "grunt": "latest",
-    "grunt-contrib-clean": "latest",
-    "grunt-contrib-concat": "latest",
-    "grunt-contrib-copy": "latest",
-    "grunt-contrib-cssmin": "latest",
-    "grunt-contrib-uglify": "latest",
-    "grunt-postcss": "0.8.0",
-    "grunt-sass": "^2.0.0"
+    "cross-env": "^3.2.3",
+    "laravel-mix": "^1.0.0"
   },
   "license": "GPL-2.0+"
 }
