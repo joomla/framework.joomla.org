@@ -98,16 +98,21 @@ class TemplatingProvider implements ServiceProviderInterface
 	 */
 	public function getAssetPackagesService(Container $container) : Packages
 	{
+		/** @var AbstractApplication $app */
+		$app = $container->get(AbstractApplication::class);
+
 		$version = file_exists(JPATH_ROOT . '/cache/deployed.txt') ? trim(file_get_contents(JPATH_ROOT . '/cache/deployed.txt')) : '';
-		$context = new ApplicationContext($container->get(AbstractApplication::class));
+		$context = new ApplicationContext($app);
 
 		// If we have a version, set to null to use the strategy's default format
 		$versionFormat = $version ? null : '%s';
 
-		$unversionedStrategy = new PathPackage('media', new EmptyVersionStrategy, $context);
+		$mediaPath = $app->get('uri.media.path', '/media/');
+
+		$unversionedStrategy = new PathPackage($mediaPath, new EmptyVersionStrategy, $context);
 
 		return new Packages(
-			new PathPackage('media', new StaticVersionStrategy($version, $versionFormat), $context),
+			new PathPackage($mediaPath, new StaticVersionStrategy($version, $versionFormat), $context),
 			[
 				'img'         => $unversionedStrategy,
 				'unversioned' => $unversionedStrategy,
