@@ -520,7 +520,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new StatusController(
 			$container->get(StatusHtmlView::class),
-			$container->get(PackagistHelper::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
@@ -755,6 +754,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		$view = new StatusHtmlView(
 			$container->get('model.package'),
+			$container->get(PackagistHelper::class),
 			$container->get('renderer')
 		);
 
