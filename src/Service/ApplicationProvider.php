@@ -427,8 +427,8 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getControllerApiPackageService(Container $container) : PackageControllerGet
 	{
 		return new PackageControllerGet(
-			$container->get(Analytics::class),
 			$container->get(PackageJsonView::class),
+			$container->get(Analytics::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
@@ -446,8 +446,8 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getControllerApiStatusService(Container $container) : StatusControllerGet
 	{
 		return new StatusControllerGet(
-			$container->get(Analytics::class),
 			$container->get(StatusJsonView::class),
+			$container->get(Analytics::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);

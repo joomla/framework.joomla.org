@@ -10,6 +10,7 @@ namespace Joomla\FrameworkWebsite\Controller\Api;
 
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
+use Joomla\FrameworkWebsite\Controller\AnalyticsController;
 use Joomla\FrameworkWebsite\View\Package\PackageJsonView;
 use Joomla\Input\Input;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
@@ -17,15 +18,10 @@ use TheIconic\Tracking\GoogleAnalytics\Analytics;
 /**
  * API Controller handling a package's status data listing
  *
- * @method         \Joomla\FrameworkWebsite\WebApplication  getApplication()  Get the application object.
- * @property-read  \Joomla\FrameworkWebsite\WebApplication  $app              Application object
- *
- * @since          1.0
+ * @since  1.0
  */
-class PackageControllerGet extends AbstractController
+class PackageControllerGet extends AnalyticsController
 {
-	use AnalyticsController;
-
 	/**
 	 * The view object.
 	 *
@@ -37,19 +33,18 @@ class PackageControllerGet extends AbstractController
 	/**
 	 * Constructor.
 	 *
-	 * @param   Analytics            $analytics  Analytics object.
 	 * @param   PackageJsonView      $view       The view object.
+	 * @param   Analytics            $analytics  Analytics object.
 	 * @param   Input                $input      The input object.
 	 * @param   AbstractApplication  $app        The application object.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(Analytics $analytics, PackageJsonView $view, Input $input = null, AbstractApplication $app = null)
+	public function __construct(PackageJsonView $view, Analytics $analytics, Input $input = null, AbstractApplication $app = null)
 	{
-		parent::__construct($input, $app);
+		parent::__construct($analytics, $input, $app);
 
-		$this->analytics = $analytics;
-		$this->view      = $view;
+		$this->view = $view;
 	}
 
 	/**

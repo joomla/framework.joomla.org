@@ -6,19 +6,23 @@
  * @license    http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License Version 2 or Later
  */
 
-namespace Joomla\FrameworkWebsite\Controller\Api;
+namespace Joomla\FrameworkWebsite\Controller;
 
-use Joomla\FrameworkWebsite\WebApplication;
+use Joomla\Application\AbstractApplication;
+use Joomla\Controller\AbstractController;
 use Joomla\Input\Input;
 use Ramsey\Uuid\Uuid;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
- * Trait defining controllers which report analytics
+ * Base class for controllers which report analytics data to Google
  *
- * @since  1.0
+ * @method         \Joomla\FrameworkWebsite\WebApplication  getApplication()  Get the application object.
+ * @property-read  \Joomla\FrameworkWebsite\WebApplication  $app              Application object
+ *
+ * @since          1.0
  */
-trait AnalyticsController
+abstract class AnalyticsController extends AbstractController
 {
 	/**
 	 * Analytics object.
@@ -29,24 +33,21 @@ trait AnalyticsController
 	private $analytics;
 
 	/**
-	 * Get the application object.
+	 * Constructor.
 	 *
-	 * @return  WebApplication  The application object.
+	 * @param   Analytics            $analytics  Analytics object.
+	 * @param   StatusJsonView       $view       The view object.
+	 * @param   Input                $input      The input object.
+	 * @param   AbstractApplication  $app        The application object.
 	 *
 	 * @since   1.0
-	 * @throws  \UnexpectedValueException if the application has not been set.
 	 */
-	abstract public function getApplication();
+	public function __construct(Analytics $analytics, Input $input = null, AbstractApplication $app = null)
+	{
+		parent::__construct($input, $app);
 
-	/**
-	 * Get the input object.
-	 *
-	 * @return  Input  The input object.
-	 *
-	 * @since   1.0
-	 * @throws  \UnexpectedValueException
-	 */
-	abstract public function getInput();
+		$this->analytics = $analytics;
+	}
 
 	/**
 	 * Send Google Analytics data
@@ -55,7 +56,7 @@ trait AnalyticsController
 	 *
 	 * @since   1.0
 	 */
-	private function sendAnalytics()
+	protected function sendAnalytics()
 	{
 		// On a GET request, submit analytics data if enabled
 		if ($this->getInput()->getMethod() === 'GET'
