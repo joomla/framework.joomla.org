@@ -15,8 +15,6 @@ use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Helper interacting with the Packagist API
- *
- * @since  1.0
  */
 class PackagistHelper
 {
@@ -25,24 +23,21 @@ class PackagistHelper
 	/**
 	 * The cache adapter
 	 *
-	 * @var    CacheItemPoolInterface
-	 * @since  1.0
+	 * @var  CacheItemPoolInterface
 	 */
 	private $cache;
 
 	/**
 	 * The HTTP driver
 	 *
-	 * @var    Http
-	 * @since  1.0
+	 * @var  Http
 	 */
 	private $http;
 
 	/**
 	 * The cache key
 	 *
-	 * @var    string
-	 * @since  1.0
+	 * @var  string
 	 */
 	private $cacheKey = 'downloads.count';
 
@@ -51,8 +46,6 @@ class PackagistHelper
 	 *
 	 * @param   Http                    $http   The HTTP driver.
 	 * @param   CacheItemPoolInterface  $cache  The cache adapter.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(Http $http, CacheItemPoolInterface $cache)
 	{
@@ -64,8 +57,6 @@ class PackagistHelper
 	 * Fetch the download counts for all packages.
 	 *
 	 * @return  array
-	 *
-	 * @since   1.0
 	 */
 	public function fetchDownloadCounts() : array
 	{
@@ -95,8 +86,6 @@ class PackagistHelper
 	 * Fetch the download counts data from the data store
 	 *
 	 * @return  array
-	 *
-	 * @since   1.0
 	 */
 	public function getDownloadCounts() : array
 	{
@@ -129,8 +118,6 @@ class PackagistHelper
 	 * @param   array  $counts  Array containing the count data
 	 *
 	 * @return  bool  Result of the cache save operation
-	 *
-	 * @since   1.0
 	 */
 	public function saveCountsToCache(array $counts) : bool
 	{

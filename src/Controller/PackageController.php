@@ -19,16 +19,13 @@ use Zend\Diactoros\Response\HtmlResponse;
  *
  * @method         \Joomla\FrameworkWebsite\WebApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\WebApplication  $app              Application object
- *
- * @since          1.0
  */
 class PackageController extends AbstractController
 {
 	/**
 	 * The view object.
 	 *
-	 * @var    PackageHtmlView
-	 * @since  1.0
+	 * @var  PackageHtmlView
 	 */
 	private $view;
 
@@ -38,8 +35,6 @@ class PackageController extends AbstractController
 	 * @param   PackageHtmlView      $view   The view object.
 	 * @param   Input                $input  The input object.
 	 * @param   AbstractApplication  $app    The application object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(PackageHtmlView $view, Input $input = null, AbstractApplication $app = null)
 	{
@@ -52,8 +47,6 @@ class PackageController extends AbstractController
 	 * Execute the controller.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   1.0
 	 */
 	public function execute() : bool
 	{

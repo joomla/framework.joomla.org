@@ -15,8 +15,6 @@ use Twig\{
 
 /**
  * Framework site's Twig extension class
- *
- * @since  1.0
  */
 class FrameworkExtension extends AbstractExtension
 {
@@ -24,8 +22,6 @@ class FrameworkExtension extends AbstractExtension
 	 * Returns a list of filters to add to the existing list
 	 *
 	 * @return  TwigFilter[]  An array of TwigFilter instances
-	 *
-	 * @since   1.0
 	 */
 	public function getFilters()
 	{
@@ -39,8 +35,6 @@ class FrameworkExtension extends AbstractExtension
 	 * Returns a list of functions to add to the existing list.
 	 *
 	 * @return  TwigFunction[]  An array of TwigFunction instances
-	 *
-	 * @since   1.0
 	 */
 	public function getFunctions()
 	{
@@ -59,8 +53,6 @@ class FrameworkExtension extends AbstractExtension
 	 * @param   string  $string  The string to process
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function stripRootPath(string $string) : string
 	{

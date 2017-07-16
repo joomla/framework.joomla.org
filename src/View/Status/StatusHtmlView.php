@@ -15,24 +15,20 @@ use Joomla\View\BaseHtmlView;
 
 /**
  * Status dashboard HTML view class for the application
- *
- * @since  1.0
  */
 class StatusHtmlView extends BaseHtmlView
 {
 	/**
 	 * The model object.
 	 *
-	 * @var    PackageModel
-	 * @since  1.0
+	 * @var  PackageModel
 	 */
 	private $model;
 
 	/**
 	 * The packagist helper object
 	 *
-	 * @var    PackagistHelper
-	 * @since  1.0
+	 * @var  PackagistHelper
 	 */
 	private $packagistHelper;
 
@@ -42,8 +38,6 @@ class StatusHtmlView extends BaseHtmlView
 	 * @param   PackageModel       $model            The model object.
 	 * @param   PackagistHelper    $packagistHelper  The Packagist helper object.
 	 * @param   RendererInterface  $renderer         The renderer object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(PackageModel $model, PackagistHelper $packagistHelper, RendererInterface $renderer)
 	{
@@ -57,8 +51,6 @@ class StatusHtmlView extends BaseHtmlView
 	 * Method to render the view
 	 *
 	 * @return  string  The rendered view
-	 *
-	 * @since   1.0
 	 */
 	public function render()
 	{

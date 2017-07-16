@@ -12,8 +12,6 @@ use Symfony\Component\Asset\PathPackage as BasePathPackage;
 
 /**
  * Extended path package for resolving assets from a Laravel Mix manifest
- *
- * @since  1.0
  */
 class MixPathPackage extends BasePathPackage
 {
@@ -23,8 +21,6 @@ class MixPathPackage extends BasePathPackage
 	 * @param   string  $path  A path
 	 *
 	 * @return  string  The public path
-	 *
-	 * @since   1.0
 	 */
 	public function getUrl($path)
 	{
@@ -35,7 +31,7 @@ class MixPathPackage extends BasePathPackage
 
 		$versionedPath = $this->getVersionStrategy()->applyVersion($this->getBasePath() . $path);
 
-		// if absolute or begins with /, we're done
+		// If absolute or begins with /, we're done
 		if ($this->isAbsoluteUrl($versionedPath) || ($versionedPath && '/' === $versionedPath[0]))
 		{
 			return $versionedPath;

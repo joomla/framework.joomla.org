@@ -17,24 +17,20 @@ use Symfony\Component\Asset\Packages;
 
 /**
  * Twig runtime class
- *
- * @since  1.0
  */
 class FrameworkTwigRuntime
 {
 	/**
 	 * Application object
 	 *
-	 * @var    AbstractApplication
-	 * @since  1.0
+	 * @var  AbstractApplication
 	 */
 	private $app;
 
 	/**
 	 * Packages object to look up asset paths
 	 *
-	 * @var    Packages
-	 * @since  1.0
+	 * @var  Packages
 	 */
 	private $packages;
 
@@ -43,8 +39,6 @@ class FrameworkTwigRuntime
 	 *
 	 * @param   AbstractApplication  $app       The application object
 	 * @param   Packages             $packages  Packages object to look up asset paths
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(AbstractApplication $app, Packages $packages)
 	{
@@ -60,7 +54,6 @@ class FrameworkTwigRuntime
 	 *
 	 * @return  string
 	 *
-	 * @since   1.0
 	 * @note    Do not typehint $packageName until PHP 7.1 is the minimum because the underlying implementation depends on a null value
 	 */
 	public function getAssetUri(string $path, $packageName = null) : string
@@ -72,8 +65,6 @@ class FrameworkTwigRuntime
 	 * Retrieves the current URI
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getRequestUri() : string
 	{
@@ -86,8 +77,6 @@ class FrameworkTwigRuntime
 	 * @param   string  $route  Route to get the path for
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getRouteUri(string $route = '') : string
 	{
@@ -100,8 +89,6 @@ class FrameworkTwigRuntime
 	 * @param   string  $route  Route to get the URL for
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getRouteUrl(string $route = '') : string
 	{
@@ -114,8 +101,6 @@ class FrameworkTwigRuntime
 	 * @param   string  $uri  The URI for the resource to preload
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function preloadAsset(string $uri) : string
 	{

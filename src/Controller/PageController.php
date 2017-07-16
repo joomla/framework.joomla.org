@@ -19,24 +19,20 @@ use Zend\Diactoros\Response\HtmlResponse;
  *
  * @method         \Joomla\FrameworkWebsite\WebApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\WebApplication  $app              Application object
- *
- * @since          1.0
  */
 class PageController extends AbstractController
 {
 	/**
 	 * Container defining layouts which shouldn't be routable
 	 *
-	 * @var    array
-	 * @since  1.0
+	 * @var  array
 	 */
 	private $excludedLayouts = ['exception', 'homepage', 'index', 'package'];
 
 	/**
 	 * The template renderer.
 	 *
-	 * @var    RendererInterface
-	 * @since  1.0
+	 * @var  RendererInterface
 	 */
 	private $renderer;
 
@@ -46,8 +42,6 @@ class PageController extends AbstractController
 	 * @param   RendererInterface    $renderer  The template renderer.
 	 * @param   Input                $input     The input object.
 	 * @param   AbstractApplication  $app       The application object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(RendererInterface $renderer, Input $input = null, AbstractApplication $app = null)
 	{
@@ -60,8 +54,6 @@ class PageController extends AbstractController
 	 * Execute the controller.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   1.0
 	 */
 	public function execute() : bool
 	{

@@ -21,16 +21,13 @@ use Twig\Error\Error as TwigError;
  *
  * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object
- *
- * @since          1.0
  */
 class ResetCacheCommand extends AbstractController implements CommandInterface
 {
 	/**
 	 * The template renderer
 	 *
-	 * @var    TwigRenderer
-	 * @since  1.0
+	 * @var  TwigRenderer
 	 */
 	private $renderer;
 
@@ -40,8 +37,6 @@ class ResetCacheCommand extends AbstractController implements CommandInterface
 	 * @param   TwigRenderer         $renderer  The template renderer
 	 * @param   Input                $input     The input object.
 	 * @param   AbstractApplication  $app       The application object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(TwigRenderer $renderer, Input $input = null, AbstractApplication $app = null)
 	{
@@ -54,9 +49,6 @@ class ResetCacheCommand extends AbstractController implements CommandInterface
 	 * Execute the controller.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   1.0
-	 * @throws  \RuntimeException
 	 */
 	public function execute()
 	{
@@ -122,8 +114,6 @@ class ResetCacheCommand extends AbstractController implements CommandInterface
 	 * Get the command's description
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getDescription() : string
 	{
@@ -134,8 +124,6 @@ class ResetCacheCommand extends AbstractController implements CommandInterface
 	 * Get the command's title
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getTitle() : string
 	{

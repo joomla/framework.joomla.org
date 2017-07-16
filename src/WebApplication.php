@@ -24,8 +24,6 @@ use Zend\Diactoros\Response\{
 
 /**
  * Web application class
- *
- * @since  1.0
  */
 class WebApplication extends AbstractWebApplication implements ContainerAwareInterface
 {
@@ -34,16 +32,14 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	/**
 	 * Application debug bar
 	 *
-	 * @var    DebugBar
-	 * @since  1.0
+	 * @var  DebugBar
 	 */
 	private $debugBar;
 
 	/**
 	 * Application router
 	 *
-	 * @var    Router
-	 * @since  1.0
+	 * @var  Router
 	 */
 	private $router;
 
@@ -51,8 +47,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 * Method to run the application routines
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	protected function doExecute()
 	{
@@ -131,8 +125,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 * @param   boolean  $forceNew  If true, force a new token to be created
 	 *
 	 * @return  string  Hashed var name
-	 *
-	 * @since   1.0
 	 */
 	public function getFormToken($forceNew = false)
 	{
@@ -143,8 +135,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 * Method to send the application response to the client.  All headers will be sent prior to the main application output data.
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	protected function respond()
 	{
@@ -193,8 +183,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 * @param   DebugBar  $debugBar  DebugBar object to set
 	 *
 	 * @return  $this
-	 *
-	 * @since   1.0
 	 */
 	public function setDebugBar(DebugBar $debugBar) : WebApplication
 	{
@@ -209,8 +197,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 * @param   Router  $router  Router object to set
 	 *
 	 * @return  $this
-	 *
-	 * @since   1.0
 	 */
 	public function setRouter(Router $router) : WebApplication
 	{

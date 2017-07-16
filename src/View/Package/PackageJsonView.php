@@ -22,16 +22,14 @@ class PackageJsonView extends BaseJsonView
 	/**
 	 * The model object
 	 *
-	 * @var    PackageModel
-	 * @since  1.0
+	 * @var  PackageModel
 	 */
 	protected $model;
 
 	/**
 	 * The active package
 	 *
-	 * @var    string
-	 * @since  1.0
+	 * @var  string
 	 */
 	private $package = '';
 
@@ -39,8 +37,6 @@ class PackageJsonView extends BaseJsonView
 	 * Instantiate the view.
 	 *
 	 * @param   PackageModel  $model  The model object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(PackageModel $model)
 	{
@@ -51,9 +47,6 @@ class PackageJsonView extends BaseJsonView
 	 * Method to render the view
 	 *
 	 * @return  string  The rendered view
-	 *
-	 * @since   1.0
-	 * @throws  \RuntimeException
 	 */
 	public function render()
 	{
@@ -76,8 +69,6 @@ class PackageJsonView extends BaseJsonView
 	 * @param   string  $package  The active package name
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	public function setPackage(string $package)
 	{

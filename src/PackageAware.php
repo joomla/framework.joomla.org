@@ -12,16 +12,13 @@ use Joomla\Registry\Registry;
 
 /**
  * Trait for objects which are package aware
- *
- * @since  1.0
  */
 trait PackageAware
 {
 	/**
 	 * Registry containing the package data
 	 *
-	 * @var    Registry
-	 * @since  1.0
+	 * @var  Registry
 	 */
 	protected $packages;
 
@@ -30,7 +27,6 @@ trait PackageAware
 	 *
 	 * @return  Registry
 	 *
-	 * @since   1.0
 	 * @throws  \UnexpectedValueException May be thrown if the registry has not been set.
 	 */
 	public function getPackages() : Registry
@@ -49,8 +45,6 @@ trait PackageAware
 	 * @param   Registry  $packages  The package registry
 	 *
 	 * @return  $this
-	 *
-	 * @since   1.0
 	 */
 	public function setPackages(Registry $packages)
 	{

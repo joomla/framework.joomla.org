@@ -16,8 +16,6 @@ use Zend\Diactoros\Response\TextResponse;
  *
  * @method         \Joomla\FrameworkWebsite\WebApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\WebApplication  $app              Application object
- *
- * @since          1.0
  */
 class WrongCmsController extends AbstractController
 {
@@ -25,8 +23,6 @@ class WrongCmsController extends AbstractController
 	 * Execute the controller.
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function execute()
 	{

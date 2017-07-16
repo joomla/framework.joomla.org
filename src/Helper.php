@@ -10,8 +10,6 @@ namespace Joomla\FrameworkWebsite;
 
 /**
  * Utility helper class
- *
- * @since  1.0
  */
 class Helper
 {
@@ -23,8 +21,6 @@ class Helper
 	 * @param   string  $package  Package name
 	 *
 	 * @return  boolean
-	 *
-	 * @since   1.0
 	 */
 	public function getPackageDeprecated(string $package) : bool
 	{
@@ -37,8 +33,6 @@ class Helper
 	 * @param   string  $package  Package name
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getPackageDisplayName(string $package) : string
 	{
@@ -51,8 +45,6 @@ class Helper
 	 * @param   string  $package  Package name
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getPackageRepositoryName(string $package) : string
 	{

@@ -20,8 +20,6 @@ use Joomla\Router\Router;
  *
  * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object
- *
- * @since          1.0
  */
 class CacheCommand extends AbstractController implements CommandInterface, ContainerAwareInterface
 {
@@ -31,9 +29,6 @@ class CacheCommand extends AbstractController implements CommandInterface, Conta
 	 * Execute the controller.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   1.0
-	 * @throws  \RuntimeException
 	 */
 	public function execute()
 	{
@@ -78,8 +73,6 @@ class CacheCommand extends AbstractController implements CommandInterface, Conta
 	 * Get the command's description
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getDescription() : string
 	{
@@ -90,8 +83,6 @@ class CacheCommand extends AbstractController implements CommandInterface, Conta
 	 * Get the command's title
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getTitle() : string
 	{
@@ -104,8 +95,6 @@ class CacheCommand extends AbstractController implements CommandInterface, Conta
 	 * @param   Router  $router  THe router to be compiled
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	private function compileRouter(Router $router) : string
 	{
@@ -186,8 +175,6 @@ PHP;
 	 * @param   array  $a  The array to get as a string.
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	private function getArrayString(array $a) : string
 	{

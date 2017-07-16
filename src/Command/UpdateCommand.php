@@ -20,16 +20,13 @@ use Joomla\Input\Input;
  *
  * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object
- *
- * @since          1.0
  */
 class UpdateCommand extends AbstractController implements CommandInterface
 {
 	/**
 	 * The application's console object
 	 *
-	 * @var    Console
-	 * @since  1.0
+	 * @var  Console
 	 */
 	private $console;
 
@@ -39,8 +36,6 @@ class UpdateCommand extends AbstractController implements CommandInterface
 	 * @param   Console              $console  The application's console object
 	 * @param   Input                $input    The input object.
 	 * @param   AbstractApplication  $app      The application object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(Console $console, Input $input = null, AbstractApplication $app = null)
 	{
@@ -54,7 +49,6 @@ class UpdateCommand extends AbstractController implements CommandInterface
 	 *
 	 * @return  boolean
 	 *
-	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
 	public function execute()
@@ -102,8 +96,6 @@ class UpdateCommand extends AbstractController implements CommandInterface
 	 * Get the command's description
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getDescription() : string
 	{
@@ -114,8 +106,6 @@ class UpdateCommand extends AbstractController implements CommandInterface
 	 * Get the command's title
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getTitle() : string
 	{
@@ -129,7 +119,6 @@ class UpdateCommand extends AbstractController implements CommandInterface
 	 *
 	 * @return  string  Return data from the command
 	 *
-	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
 	private function runCommand(string $command) : string

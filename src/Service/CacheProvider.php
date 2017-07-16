@@ -18,8 +18,6 @@ use Psr\Cache\CacheItemPoolInterface as PsrCacheItemPoolInterface;
 
 /**
  * Cache service provider
- *
- * @since  1.0
  */
 class CacheProvider implements ServiceProviderInterface
 {
@@ -29,8 +27,6 @@ class CacheProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{
@@ -47,7 +43,7 @@ class CacheProvider implements ServiceProviderInterface
 	 *
 	 * @return  PsrCacheItemPoolInterface
 	 *
-	 * @since   1.0
+	 * @throws  \InvalidArgumentException
 	 */
 	public function getCacheService(Container $container) : PsrCacheItemPoolInterface
 	{

@@ -19,8 +19,6 @@ use Monolog\Processor\{
 
 /**
  * Logging service provider
- *
- * @since  1.0
  */
 class LoggingProvider implements ServiceProviderInterface
 {
@@ -57,8 +55,6 @@ class LoggingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  StreamHandler
-	 *
-	 * @since   1.0
 	 */
 	public function getMonologHandlerApplicationService(Container $container) : StreamHandler
 	{
@@ -76,8 +72,6 @@ class LoggingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Logger
-	 *
-	 * @since   1.0
 	 */
 	public function getMonologLoggerApplicationCliService(Container $container) : Logger
 	{
@@ -98,8 +92,6 @@ class LoggingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Logger
-	 *
-	 * @since   1.0
 	 */
 	public function getMonologLoggerApplicationWebService(Container $container) : Logger
 	{
@@ -121,8 +113,6 @@ class LoggingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  PsrLogMessageProcessor
-	 *
-	 * @since   1.0
 	 */
 	public function getMonologProcessorPsr3Service(Container $container) : PsrLogMessageProcessor
 	{
@@ -135,8 +125,6 @@ class LoggingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  WebProcessor
-	 *
-	 * @since   1.0
 	 */
 	public function getMonologProcessorWebService(Container $container) : WebProcessor
 	{

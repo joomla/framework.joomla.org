@@ -11,8 +11,9 @@ namespace Joomla\FrameworkWebsite\Controller;
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\Input\Input;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
+use Psr\Log\{
+	LoggerAwareInterface, LoggerAwareTrait
+};
 use Ramsey\Uuid\Uuid;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
@@ -21,8 +22,6 @@ use TheIconic\Tracking\GoogleAnalytics\Analytics;
  *
  * @method         \Joomla\FrameworkWebsite\WebApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\WebApplication  $app              Application object
- *
- * @since          1.0
  */
 abstract class AnalyticsController extends AbstractController implements LoggerAwareInterface
 {
@@ -31,8 +30,7 @@ abstract class AnalyticsController extends AbstractController implements LoggerA
 	/**
 	 * Analytics object.
 	 *
-	 * @var    Analytics
-	 * @since  1.0
+	 * @var  Analytics
 	 */
 	private $analytics;
 
@@ -40,11 +38,8 @@ abstract class AnalyticsController extends AbstractController implements LoggerA
 	 * Constructor.
 	 *
 	 * @param   Analytics            $analytics  Analytics object.
-	 * @param   StatusJsonView       $view       The view object.
 	 * @param   Input                $input      The input object.
 	 * @param   AbstractApplication  $app        The application object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(Analytics $analytics, Input $input = null, AbstractApplication $app = null)
 	{
@@ -57,8 +52,6 @@ abstract class AnalyticsController extends AbstractController implements LoggerA
 	 * Send Google Analytics data
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	protected function sendAnalytics()
 	{

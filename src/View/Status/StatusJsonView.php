@@ -13,16 +13,13 @@ use Joomla\View\BaseJsonView;
 
 /**
  * Status dashboard JSON view class for the application
- *
- * @since  1.0
  */
 class StatusJsonView extends BaseJsonView
 {
 	/**
 	 * The model object.
 	 *
-	 * @var    PackageModel
-	 * @since  1.0
+	 * @var  PackageModel
 	 */
 	protected $model;
 
@@ -30,8 +27,6 @@ class StatusJsonView extends BaseJsonView
 	 * Instantiate the view.
 	 *
 	 * @param   PackageModel  $model  The model object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(PackageModel $model)
 	{
@@ -42,8 +37,6 @@ class StatusJsonView extends BaseJsonView
 	 * Method to render the view
 	 *
 	 * @return  string  The rendered view
-	 *
-	 * @since   1.0
 	 */
 	public function render()
 	{

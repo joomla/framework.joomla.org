@@ -24,6 +24,7 @@
     <exclude-pattern>*/Gruntfile.js</exclude-pattern>
 
     <rule ref="Joomla">
+        <exclude name="Joomla.Commenting.ClassComment.MissingSinceTag"/>
         <exclude name="Joomla.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
         <exclude name="Joomla.NamingConventions.ValidVariableName.NotCamelCaps"/>
         <exclude name="Joomla.NamingConventions.ValidFunctionName.ScopeNotCamelCaps"/>

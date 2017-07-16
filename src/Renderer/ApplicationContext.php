@@ -14,16 +14,13 @@ use Symfony\Component\Asset\Context\ContextInterface;
 
 /**
  * Joomla! application aware context
- *
- * @since  1.0
  */
 class ApplicationContext implements ContextInterface
 {
 	/**
 	 * Application object
 	 *
-	 * @var    AbstractApplication
-	 * @since  1.0
+	 * @var  AbstractApplication
 	 */
 	private $app;
 
@@ -31,8 +28,6 @@ class ApplicationContext implements ContextInterface
 	 * Constructor
 	 *
 	 * @param   AbstractApplication  $app  The application object
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(AbstractApplication $app)
 	{
@@ -43,8 +38,6 @@ class ApplicationContext implements ContextInterface
 	 * Gets the base path.
 	 *
 	 * @return  string  The base path
-	 *
-	 * @since   1.0
 	 */
 	public function getBasePath()
 	{
@@ -55,8 +48,6 @@ class ApplicationContext implements ContextInterface
 	 * Checks whether the request is secure or not.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   1.0
 	 */
 	public function isSecure()
 	{

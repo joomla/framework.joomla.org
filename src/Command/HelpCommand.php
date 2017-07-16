@@ -22,16 +22,13 @@ use Joomla\Input\Input;
  *
  * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object
- *
- * @since          1.0
  */
 class HelpCommand extends AbstractController implements CommandInterface
 {
 	/**
 	 * The application's console object
 	 *
-	 * @var    Console
-	 * @since  1.0
+	 * @var  Console
 	 */
 	private $console;
 
@@ -41,8 +38,6 @@ class HelpCommand extends AbstractController implements CommandInterface
 	 * @param   Console              $console  The application's console object
 	 * @param   Input                $input    The input object.
 	 * @param   AbstractApplication  $app      The application object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(Console $console, Input $input = null, AbstractApplication $app = null)
 	{
@@ -55,8 +50,6 @@ class HelpCommand extends AbstractController implements CommandInterface
 	 * Execute the controller.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   1.0
 	 */
 	public function execute()
 	{
@@ -101,8 +94,6 @@ class HelpCommand extends AbstractController implements CommandInterface
 	 * Get the command's description
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getDescription() : string
 	{
@@ -113,8 +104,6 @@ class HelpCommand extends AbstractController implements CommandInterface
 	 * Get the command's title
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function getTitle() : string
 	{

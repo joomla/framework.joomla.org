@@ -17,16 +17,13 @@ use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
  * API Controller handling a package's status data listing
- *
- * @since  1.0
  */
 class PackageControllerGet extends AnalyticsController
 {
 	/**
 	 * The view object.
 	 *
-	 * @var    PackageJsonView
-	 * @since  1.0
+	 * @var  PackageJsonView
 	 */
 	private $view;
 
@@ -37,8 +34,6 @@ class PackageControllerGet extends AnalyticsController
 	 * @param   Analytics            $analytics  Analytics object.
 	 * @param   Input                $input      The input object.
 	 * @param   AbstractApplication  $app        The application object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(PackageJsonView $view, Analytics $analytics, Input $input = null, AbstractApplication $app = null)
 	{
@@ -51,8 +46,6 @@ class PackageControllerGet extends AnalyticsController
 	 * Execute the controller.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   1.0
 	 */
 	public function execute() : bool
 	{

@@ -18,8 +18,6 @@ use Joomla\Registry\Registry;
 
 /**
  * Database service provider
- *
- * @since  1.0
  */
 class DatabaseProvider implements ServiceProviderInterface
 {
@@ -29,8 +27,6 @@ class DatabaseProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{
@@ -48,8 +44,6 @@ class DatabaseProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  DatabaseInterface
-	 *
-	 * @since   1.0
 	 */
 	public function getDbService(Container $container) : DatabaseInterface
 	{
@@ -77,8 +71,6 @@ class DatabaseProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  DatabaseFactory
-	 *
-	 * @since   1.0
 	 */
 	public function getDbFactoryService(Container $container) : DatabaseFactory
 	{

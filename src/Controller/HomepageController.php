@@ -19,16 +19,13 @@ use Zend\Diactoros\Response\HtmlResponse;
  *
  * @method         \Joomla\FrameworkWebsite\WebApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\WebApplication  $app              Application object
- *
- * @since          1.0
  */
 class HomepageController extends AbstractController
 {
 	/**
 	 * The template renderer.
 	 *
-	 * @var    RendererInterface
-	 * @since  1.0
+	 * @var  RendererInterface
 	 */
 	private $renderer;
 
@@ -38,8 +35,6 @@ class HomepageController extends AbstractController
 	 * @param   RendererInterface    $renderer  The template renderer.
 	 * @param   Input                $input     The input object.
 	 * @param   AbstractApplication  $app       The application object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(RendererInterface $renderer, Input $input = null, AbstractApplication $app = null)
 	{
@@ -52,8 +47,6 @@ class HomepageController extends AbstractController
 	 * Execute the controller.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   1.0
 	 */
 	public function execute() : bool
 	{

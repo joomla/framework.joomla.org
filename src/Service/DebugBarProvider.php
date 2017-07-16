@@ -27,8 +27,6 @@ use Joomla\FrameworkWebsite\DebugBar\Twig\{
 
 /**
  * Debug bar service provider
- *
- * @since  1.0
  */
 class DebugBarProvider implements ServiceProviderInterface
 {
@@ -38,8 +36,6 @@ class DebugBarProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{
@@ -71,8 +67,6 @@ class DebugBarProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  DebugBar
-	 *
-	 * @since   1.0
 	 */
 	public function getDebugBarService(Container $container) : DebugBar
 	{
@@ -102,8 +96,6 @@ class DebugBarProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  MonologCollector
-	 *
-	 * @since   1.0
 	 */
 	public function getDebugCollectorMonologService(Container $container) : MonologCollector
 	{
@@ -119,8 +111,6 @@ class DebugBarProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  PDOCollector
-	 *
-	 * @since   1.0
 	 */
 	public function getDebugCollectorPdoService(Container $container) : PDOCollector
 	{
@@ -137,8 +127,6 @@ class DebugBarProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  TwigCollector
-	 *
-	 * @since   1.0
 	 */
 	public function getDebugCollectorTwigService(Container $container) : TwigCollector
 	{

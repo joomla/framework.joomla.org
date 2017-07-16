@@ -15,24 +15,20 @@ use Joomla\View\BaseHtmlView;
 
 /**
  * Package HTML view class for the application
- *
- * @since  1.0
  */
 class PackageHtmlView extends BaseHtmlView
 {
 	/**
 	 * Helper object
 	 *
-	 * @var    Helper
-	 * @since  1.0
+	 * @var  Helper
 	 */
 	private $helper;
 
 	/**
 	 * The model object
 	 *
-	 * @var    PackageModel
-	 * @since  1.0
+	 * @var  PackageModel
 	 */
 	protected $model;
 
@@ -50,8 +46,6 @@ class PackageHtmlView extends BaseHtmlView
 	 * @param   PackageModel       $model     The model object.
 	 * @param   RendererInterface  $renderer  The renderer object.
 	 * @param   Helper             $helper    Helper object.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(PackageModel $model, RendererInterface $renderer, Helper $helper)
 	{
@@ -65,9 +59,6 @@ class PackageHtmlView extends BaseHtmlView
 	 * Method to render the view
 	 *
 	 * @return  string  The rendered view
-	 *
-	 * @since   1.0
-	 * @throws  \RuntimeException
 	 */
 	public function render()
 	{
@@ -90,8 +81,6 @@ class PackageHtmlView extends BaseHtmlView
 	 * @param   string  $package  The active package name
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	public function setPackage(string $package)
 	{

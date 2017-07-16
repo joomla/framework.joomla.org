@@ -17,8 +17,6 @@ use Joomla\Http\{
 
 /**
  * HTTP service provider
- *
- * @since  1.0
  */
 class HttpProvider implements ServiceProviderInterface
 {
@@ -28,8 +26,6 @@ class HttpProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{
@@ -46,8 +42,6 @@ class HttpProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Http
-	 *
-	 * @since   1.0
 	 */
 	public function getHttpService(Container $container) : Http
 	{
@@ -63,8 +57,6 @@ class HttpProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  HttpFactory
-	 *
-	 * @since   1.0
 	 */
 	public function getHttpFactoryService(Container $container) : HttpFactory
 	{

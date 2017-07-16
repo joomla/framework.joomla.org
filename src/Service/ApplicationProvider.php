@@ -17,8 +17,7 @@ use Joomla\FrameworkWebsite\{
 	CliApplication, Console, Helper, WebApplication
 };
 use Joomla\FrameworkWebsite\Command as AppCommands;
-use Joomla\FrameworkWebsite\Controller\
-{
+use Joomla\FrameworkWebsite\Controller\{
 	Api\PackageControllerGet, Api\StatusControllerGet, HomepageController, PackageController, PageController, StatusController, WrongCmsController
 };
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
@@ -41,8 +40,6 @@ use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
  * Application service provider
- *
- * @since  1.0
  */
 class ApplicationProvider implements ServiceProviderInterface
 {
@@ -52,8 +49,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{
@@ -157,8 +152,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Analytics
-	 *
-	 * @since   1.0
 	 */
 	public function getAnalyticsService(Container $container)
 	{
@@ -171,8 +164,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Helper
-	 *
-	 * @since   1.0
 	 */
 	public function getApplicationHelperService(Container $container) : Helper
 	{
@@ -188,8 +179,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  PackagistHelper
-	 *
-	 * @since   1.0
 	 */
 	public function getApplicationHelperPackagistService(Container $container) : PackagistHelper
 	{
@@ -205,8 +194,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Registry
-	 *
-	 * @since   1.0
 	 */
 	public function getApplicationPackagesService(Container $container) : Registry
 	{
@@ -219,8 +206,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  ChainedRouter
-	 *
-	 * @since   1.0
 	 */
 	public function getApplicationRouterChainedService(Container $container) : ChainedRouter
 	{
@@ -238,8 +223,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Router
-	 *
-	 * @since   1.0
 	 */
 	public function getApplicationRouterService(Container $container) : Router
 	{
@@ -326,8 +309,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  CliApplication
-	 *
-	 * @since   1.0
 	 */
 	public function getCliApplicationClassService(Container $container) : CliApplication
 	{
@@ -350,8 +331,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  JoomlaApplication\Cli\CliInput
-	 *
-	 * @since   1.0
 	 */
 	public function getCliInputClassService(Container $container) : JoomlaApplication\Cli\CliInput
 	{
@@ -364,8 +343,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  JoomlaApplication\Cli\CliOutput
-	 *
-	 * @since   1.0
 	 */
 	public function getCliOutputClassService(Container $container) : JoomlaApplication\Cli\Output\Stdout
 	{
@@ -378,8 +355,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  JoomlaApplication\Cli\Output\Processor\ColorProcessor
-	 *
-	 * @since   1.0
 	 */
 	public function getColorProcessorClassService(Container $container) : JoomlaApplication\Cli\Output\Processor\ColorProcessor
 	{
@@ -405,8 +380,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Console
-	 *
-	 * @since   1.0
 	 */
 	public function getConsoleClassService(Container $container) : Console
 	{
@@ -422,8 +395,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  PackageControllerGet
-	 *
-	 * @since   1.0
 	 */
 	public function getControllerApiPackageService(Container $container) : PackageControllerGet
 	{
@@ -445,8 +416,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  StatusControllerGet
-	 *
-	 * @since   1.0
 	 */
 	public function getControllerApiStatusService(Container $container) : StatusControllerGet
 	{
@@ -468,8 +437,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  HomepageController
-	 *
-	 * @since   1.0
 	 */
 	public function getControllerHomepageService(Container $container) : HomepageController
 	{
@@ -486,8 +453,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  PackageController
-	 *
-	 * @since   1.0
 	 */
 	public function getControllerPackageService(Container $container) : PackageController
 	{
@@ -504,8 +469,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  PageController
-	 *
-	 * @since   1.0
 	 */
 	public function getControllerPageService(Container $container) : PageController
 	{
@@ -522,8 +485,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  StatusController
-	 *
-	 * @since   1.0
 	 */
 	public function getControllerStatusService(Container $container) : StatusController
 	{
@@ -540,8 +501,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  WrongCmsController
-	 *
-	 * @since   1.0
 	 */
 	public function getControllerWrongCmsService(Container $container) : WrongCmsController
 	{
@@ -557,8 +516,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  AppCommands\HelpCommand
-	 *
-	 * @since   1.0
 	 */
 	public function getHelpCommandClassService(Container $container) : AppCommands\HelpCommand
 	{
@@ -575,8 +532,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Input
-	 *
-	 * @since   1.0
 	 */
 	public function getInputClassService(Container $container) : Input
 	{
@@ -589,8 +544,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Cli
-	 *
-	 * @since   1.0
 	 */
 	public function getInputCliClassService(Container $container) : Cli
 	{
@@ -603,8 +556,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  PackageModel
-	 *
-	 * @since   1.0
 	 */
 	public function getModelPackageService(Container $container) : PackageModel
 	{
@@ -620,8 +571,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  AppCommands\Packagist\DownloadsCommand
-	 *
-	 * @since   1.0
 	 */
 	public function getPackagistDownloadsCommandClassService(Container $container) : AppCommands\Packagist\DownloadsCommand
 	{
@@ -638,8 +587,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  AppCommands\Packagist\SyncCommand
-	 *
-	 * @since   1.0
 	 */
 	public function getPackagistSyncCommandClassService(Container $container) : AppCommands\Packagist\SyncCommand
 	{
@@ -661,8 +608,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  AppCommands\Router\CacheCommand
-	 *
-	 * @since   1.0
 	 */
 	public function getRouterCacheCommandClassService(Container $container) : AppCommands\Router\CacheCommand
 	{
@@ -682,8 +627,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  AppCommands\Twig\ResetCacheCommand
-	 *
-	 * @since   1.0
 	 */
 	public function getTwigResetCacheCommandClassService(Container $container) : AppCommands\Twig\ResetCacheCommand
 	{
@@ -700,8 +643,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  AppCommands\UpdateCommand
-	 *
-	 * @since   1.0
 	 */
 	public function getUpdateCommandClassService(Container $container) : AppCommands\UpdateCommand
 	{
@@ -718,8 +659,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  PackageHtmlView
-	 *
-	 * @since   1.0
 	 */
 	public function getViewPackageHtmlService(Container $container) : PackageHtmlView
 	{
@@ -740,8 +679,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  PackageJsonView
-	 *
-	 * @since   1.0
 	 */
 	public function getViewPackageJsonService(Container $container) : PackageJsonView
 	{
@@ -756,8 +693,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  StatusHtmlView
-	 *
-	 * @since   1.0
 	 */
 	public function getViewStatusHtmlService(Container $container) : StatusHtmlView
 	{
@@ -778,8 +713,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  StatusJsonView
-	 *
-	 * @since   1.0
 	 */
 	public function getViewStatusJsonService(Container $container) : StatusJsonView
 	{
@@ -794,8 +727,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  WebApplication
-	 *
-	 * @since   1.0
 	 */
 	public function getWebApplicationClassService(Container $container) : WebApplication
 	{

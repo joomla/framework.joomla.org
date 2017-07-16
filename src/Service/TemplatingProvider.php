@@ -22,8 +22,7 @@ use Joomla\Renderer\{
 use Symfony\Component\Asset\{
 	Packages, PathPackage
 };
-use Symfony\Component\Asset\VersionStrategy\
-{
+use Symfony\Component\Asset\VersionStrategy\{
 	EmptyVersionStrategy, JsonManifestVersionStrategy, StaticVersionStrategy
 };
 use Twig\Cache\{
@@ -38,8 +37,6 @@ use Twig\RuntimeLoader\ContainerRuntimeLoader;
 
 /**
  * Templating service provider
- *
- * @since  1.0
  */
 class TemplatingProvider implements ServiceProviderInterface
 {
@@ -49,8 +46,6 @@ class TemplatingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{
@@ -95,8 +90,6 @@ class TemplatingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Packages
-	 *
-	 * @since   1.0
 	 */
 	public function getAssetPackagesService(Container $container) : Packages
 	{
@@ -130,8 +123,6 @@ class TemplatingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  RendererInterface
-	 *
-	 * @since   1.0
 	 */
 	public function getRendererService(Container $container) : RendererInterface
 	{
@@ -144,8 +135,6 @@ class TemplatingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  \Twig_CacheInterface
-	 *
-	 * @since   1.0
 	 */
 	public function getTwigCacheService(Container $container) : \Twig_CacheInterface
 	{
@@ -171,8 +160,6 @@ class TemplatingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Environment
-	 *
-	 * @since   1.0
 	 */
 	public function getTwigEnvironmentService(Container $container) : Environment
 	{
@@ -213,8 +200,6 @@ class TemplatingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  DebugExtension
-	 *
-	 * @since   1.0
 	 */
 	public function getTwigExtensionDebugService(Container $container) : DebugExtension
 	{
@@ -227,8 +212,6 @@ class TemplatingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  FrameworkExtension
-	 *
-	 * @since   1.0
 	 */
 	public function getTwigExtensionFrameworkService(Container $container) : FrameworkExtension
 	{
@@ -241,8 +224,6 @@ class TemplatingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  \Twig_LoaderInterface
-	 *
-	 * @since   1.0
 	 */
 	public function getTwigLoaderService(Container $container) : \Twig_LoaderInterface
 	{
@@ -255,8 +236,6 @@ class TemplatingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  FrameworkTwigRuntime
-	 *
-	 * @since   1.0
 	 */
 	public function getTwigRuntimeFrameworkService(Container $container) : FrameworkTwigRuntime
 	{
@@ -269,8 +248,6 @@ class TemplatingProvider implements ServiceProviderInterface
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  ContainerRuntimeLoader
-	 *
-	 * @since   1.0
 	 */
 	public function getTwigRuntimeLoaderService(Container $container) : ContainerRuntimeLoader
 	{

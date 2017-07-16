@@ -19,8 +19,6 @@ use Joomla\Model\{
 
 /**
  * Model class for the package view
- *
- * @since  1.0
  */
 class PackageModel implements DatabaseModelInterface
 {
@@ -29,8 +27,7 @@ class PackageModel implements DatabaseModelInterface
 	/**
 	 * Helper object
 	 *
-	 * @var    Helper
-	 * @since  1.0
+	 * @var  Helper
 	 */
 	private $helper;
 
@@ -39,8 +36,6 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @param   Helper          $helper  Helper object.
 	 * @param   DatabaseDriver  $db      The database adapter.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(Helper $helper, DatabaseDriver $db)
 	{
@@ -56,8 +51,6 @@ class PackageModel implements DatabaseModelInterface
 	 * @param   string  $version  The package's release version
 	 *
 	 * @return  void
-	 *
-	 * @since   1.0
 	 */
 	public function addRelease(string $package, string $version)
 	{
@@ -75,8 +68,6 @@ class PackageModel implements DatabaseModelInterface
 	 * Fetches the latest releases for each Framework package
 	 *
 	 * @return  \stdClass[]
-	 *
-	 * @since   1.0
 	 */
 	public function getLatestReleases() : array
 	{
@@ -171,7 +162,6 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @return  \stdClass[]
 	 *
-	 * @since   1.0
 	 * @throws  \RuntimeException
 	 */
 	public function getPackageHistory(string $package) : array
@@ -280,8 +270,6 @@ class PackageModel implements DatabaseModelInterface
 	 * @param   string  $version  The version to check for
 	 *
 	 * @return  boolean
-	 *
-	 * @since   1.0
 	 */
 	public function hasRelease(string $package, string $version) : bool
 	{
