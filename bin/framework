@@ -39,6 +39,10 @@ try
     // Alias the Joomla\Input\Input service to the CLI input class (overloads the original definition)
     $container->alias(Joomla\Input\Input::class, Joomla\Input\Cli::class);
 
+    // Alias the CLI logger to the PSR-3 interface as this is the primary logger for the environment
+	$container->alias(Monolog\Logger::class, 'monolog.logger.application.cli')
+		->alias(Psr\Log\LoggerInterface::class, 'monolog.logger.application.cli');
+
     // Force error reporting to maximum
     error_reporting(-1);
     ini_set('display_errors', true);

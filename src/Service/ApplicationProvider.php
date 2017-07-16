@@ -36,6 +36,7 @@ use Joomla\Renderer\{
 };
 use Joomla\Router\Router;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\Log\LoggerInterface;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
@@ -338,7 +339,7 @@ class ApplicationProvider implements ServiceProviderInterface
 			$container->get(Console::class)
 		);
 
-		$application->setLogger($container->get('monolog.logger.application.cli'));
+		$application->setLogger($container->get(LoggerInterface::class));
 
 		return $application;
 	}
@@ -426,12 +427,16 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getControllerApiPackageService(Container $container) : PackageControllerGet
 	{
-		return new PackageControllerGet(
+		$controller = new PackageControllerGet(
 			$container->get(PackageJsonView::class),
 			$container->get(Analytics::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
+
+		$controller->setLogger($container->get(LoggerInterface::class));
+
+		return $controller;
 	}
 
 	/**
@@ -445,12 +450,16 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getControllerApiStatusService(Container $container) : StatusControllerGet
 	{
-		return new StatusControllerGet(
+		$controller = new StatusControllerGet(
 			$container->get(StatusJsonView::class),
 			$container->get(Analytics::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
+
+		$controller->setLogger($container->get(LoggerInterface::class));
+
+		return $controller;
 	}
 
 	/**
@@ -797,7 +806,7 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		// Inject extra services
 		$application->setContainer($container);
-		$application->setLogger($container->get('monolog.logger.application.web'));
+		$application->setLogger($container->get(LoggerInterface::class));
 		$application->setRouter($container->get(Router::class));
 
 		if ($config->get('debug', false) && $container->has('debug.bar'))

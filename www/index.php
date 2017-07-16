@@ -42,6 +42,10 @@ try
 	// Alias the web application to Joomla's base application class as this is the primary application for the environment
 	$container->alias(Joomla\Application\AbstractApplication::class, Joomla\Application\AbstractWebApplication::class);
 
+	// Alias the web logger to the PSR-3 interface as this is the primary logger for the environment
+	$container->alias(Monolog\Logger::class, 'monolog.logger.application.web')
+		->alias(Psr\Log\LoggerInterface::class, 'monolog.logger.application.web');
+
 	// Set error reporting based on config
 	$errorReporting = (int) $container->get('config')->get('errorReporting', 0);
 	error_reporting($errorReporting);

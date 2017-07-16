@@ -11,6 +11,8 @@ namespace Joomla\FrameworkWebsite\Controller;
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\Input\Input;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Ramsey\Uuid\Uuid;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
@@ -22,8 +24,10 @@ use TheIconic\Tracking\GoogleAnalytics\Analytics;
  *
  * @since          1.0
  */
-abstract class AnalyticsController extends AbstractController
+abstract class AnalyticsController extends AbstractController implements LoggerAwareInterface
 {
+	use LoggerAwareTrait;
+
 	/**
 	 * Analytics object.
 	 *
@@ -78,7 +82,10 @@ abstract class AnalyticsController extends AbstractController
 			}
 			catch (\Exception $e)
 			{
-				// TODO - Incorporate support for a logger to record the error
+				$this->logger->warning(
+					$e->getMessage(),
+					['exception' => $e]
+				);
 			}
 		}
 	}
