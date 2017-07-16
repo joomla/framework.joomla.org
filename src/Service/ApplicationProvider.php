@@ -96,6 +96,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
+		$container->share(AppCommands\Package\SyncCommand::class, [$this, 'getPackageSyncCommandClassService'], true);
 		$container->share(AppCommands\Packagist\DownloadsCommand::class, [$this, 'getPackagistDownloadsCommandClassService'], true);
 		$container->share(AppCommands\Packagist\SyncCommand::class, [$this, 'getPackagistSyncCommandClassService'], true);
 		$container->share(AppCommands\Router\CacheCommand::class, [$this, 'getRouterCacheCommandClassService'], true);
@@ -559,10 +560,24 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getModelPackageService(Container $container) : PackageModel
 	{
-		$model = new PackageModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
-		$model->setPackages($container->get('application.packages'));
+		return new PackageModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
+	}
 
-		return $model;
+	/**
+	 * Get the Package\SyncCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\Package\SyncCommand
+	 */
+	public function getPackageSyncCommandClassService(Container $container) : AppCommands\Package\SyncCommand
+	{
+		return new AppCommands\Package\SyncCommand(
+			$container->get(Helper::class),
+			$container->get(PackageModel::class),
+			$container->get(Input::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
+		);
 	}
 
 	/**

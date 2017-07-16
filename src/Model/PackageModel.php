@@ -10,9 +10,7 @@ namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Mysql\MysqlQuery;
-use Joomla\FrameworkWebsite\{
-	Helper, PackageAware
-};
+use Joomla\FrameworkWebsite\Helper;
 use Joomla\Model\{
 	DatabaseModelInterface, DatabaseModelTrait
 };
@@ -22,7 +20,7 @@ use Joomla\Model\{
  */
 class PackageModel implements DatabaseModelInterface
 {
-	use DatabaseModelTrait, PackageAware;
+	use DatabaseModelTrait;
 
 	/**
 	 * Helper object
@@ -42,6 +40,32 @@ class PackageModel implements DatabaseModelInterface
 		$this->setDb($db);
 
 		$this->helper = $helper;
+	}
+
+	/**
+	 * Add a package
+	 *
+	 * @param   string   $packageName   The package name as registered with Packagist
+	 * @param   string   $displayName   The package's display name
+	 * @param   string   $repoName      The package's repo name
+	 * @param   boolean  $isStable      Flag indicating the package is stable
+	 * @param   boolean  $isDeprecated  Flag indicating the package is deprecated
+	 *
+	 * @return  void
+	 */
+	public function addPackage(string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated)
+	{
+		$db = $this->getDb();
+
+		$data = (object) [
+			'package'    => $packageName,
+			'display'    => $displayName,
+			'repo'       => $repoName,
+			'stable'     => (int) $isStable,
+			'deprecated' => (int) $isDeprecated,
+		];
+
+		$db->insertObject('#__packages', $data);
 	}
 
 	/**
@@ -264,6 +288,23 @@ class PackageModel implements DatabaseModelInterface
 	}
 
 	/**
+	 * Get the package data
+	 *
+	 * @return  array
+	 */
+	public function getPackageNames() : array
+	{
+		$db = $this->getDb();
+
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true)
+			->select(['id', 'package'])
+			->from($db->quoteName('#__packages'));
+
+		return $db->setQuery($query)->loadAssocList('id', 'package');
+	}
+
+	/**
 	 * Check if the package has a release at the given version
 	 *
 	 * @param   string  $package  The package to check for the release on
@@ -287,5 +328,33 @@ class PackageModel implements DatabaseModelInterface
 		$id = $db->setQuery($query)->loadResult();
 
 		return $id !== null;
+	}
+
+	/**
+	 * Add a package
+	 *
+	 * @param   integer  $packageId     The local package ID
+	 * @param   string   $packageName   The package name as registered with Packagist
+	 * @param   string   $displayName   The package's display name
+	 * @param   string   $repoName      The package's repo name
+	 * @param   boolean  $isStable      Flag indicating the package is stable
+	 * @param   boolean  $isDeprecated  Flag indicating the package is deprecated
+	 *
+	 * @return  void
+	 */
+	public function updatePackage(int $packageId, string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated)
+	{
+		$db = $this->getDb();
+
+		$data = (object) [
+			'id'         => $packageId,
+			'package'    => $packageName,
+			'display'    => $displayName,
+			'repo'       => $repoName,
+			'stable'     => (int) $isStable,
+			'deprecated' => (int) $isDeprecated,
+		];
+
+		$db->updateObject('#__packages', $data, 'id');
 	}
 }
