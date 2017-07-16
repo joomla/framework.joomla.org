@@ -475,12 +475,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/database.git",
-                "reference": "a96ebad17c104412f086b1479826a5d226ff29fb"
+                "reference": "2e760c99d9e6953de2376f0f8b5028bb299e5045"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/database/zipball/a96ebad17c104412f086b1479826a5d226ff29fb",
-                "reference": "a96ebad17c104412f086b1479826a5d226ff29fb",
+                "url": "https://api.github.com/repos/joomla-framework/database/zipball/2e760c99d9e6953de2376f0f8b5028bb299e5045",
+                "reference": "2e760c99d9e6953de2376f0f8b5028bb299e5045",
                 "shasum": ""
             },
             "require": {
@@ -526,7 +526,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2017-06-23 19:02:37"
+            "time": "2017-07-12 00:53:12"
         },
         {
             "name": "joomla/di",
@@ -534,12 +534,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/di.git",
-                "reference": "a5c22dcfd2b26bda19349f432ded426e02f3519a"
+                "reference": "5ce15e3491402f91eeb495739a8e86c8ba93b881"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/di/zipball/a5c22dcfd2b26bda19349f432ded426e02f3519a",
-                "reference": "a5c22dcfd2b26bda19349f432ded426e02f3519a",
+                "url": "https://api.github.com/repos/joomla-framework/di/zipball/5ce15e3491402f91eeb495739a8e86c8ba93b881",
+                "reference": "5ce15e3491402f91eeb495739a8e86c8ba93b881",
                 "shasum": ""
             },
             "require": {
@@ -578,7 +578,7 @@
                 "ioc",
                 "joomla"
             ],
-            "time": "2017-06-27 00:38:25"
+            "time": "2017-07-03 00:57:27"
         },
         {
             "name": "joomla/event",
@@ -676,16 +676,16 @@
         },
         {
             "name": "joomla/filter",
-            "version": "1.3.2",
+            "version": "1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/filter.git",
-                "reference": "1183f96e2dab5bf952415442e54bd67c083f3766"
+                "reference": "1ee770b83790c02d0fbcef77ad0647153e1faf74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/1183f96e2dab5bf952415442e54bd67c083f3766",
-                "reference": "1183f96e2dab5bf952415442e54bd67c083f3766",
+                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/1ee770b83790c02d0fbcef77ad0647153e1faf74",
+                "reference": "1ee770b83790c02d0fbcef77ad0647153e1faf74",
                 "shasum": ""
             },
             "require": {
@@ -722,7 +722,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2017-05-14T18:12:10+00:00"
+            "time": "2017-07-04T15:07:30+00:00"
         },
         {
             "name": "joomla/http",
@@ -883,12 +883,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/registry.git",
-                "reference": "92bb9c51bd6f9cecd46a5aeedcf404e73e5589ea"
+                "reference": "832706d39c902e09c5a16c0156ecd47277b00706"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/registry/zipball/92bb9c51bd6f9cecd46a5aeedcf404e73e5589ea",
-                "reference": "92bb9c51bd6f9cecd46a5aeedcf404e73e5589ea",
+                "url": "https://api.github.com/repos/joomla-framework/registry/zipball/832706d39c902e09c5a16c0156ecd47277b00706",
+                "reference": "832706d39c902e09c5a16c0156ecd47277b00706",
                 "shasum": ""
             },
             "require": {
@@ -898,7 +898,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^4.8.35|^5.4.3|~6.0",
                 "squizlabs/php_codesniffer": "1.*",
-                "symfony/yaml": "~2.7|~3.0"
+                "symfony/yaml": "~2.7|~3.0|~4.0"
             },
             "suggest": {
                 "symfony/yaml": "Install symfony/yaml if you require YAML support."
@@ -925,7 +925,7 @@
                 "joomla",
                 "registry"
             ],
-            "time": "2017-05-27 01:17:43"
+            "time": "2017-07-09 14:44:16"
         },
         {
             "name": "joomla/renderer",
@@ -992,12 +992,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/router.git",
-                "reference": "328f7e49b38ea3a2915313e2a54e91d8e4b6738c"
+                "reference": "953f5d5852292869ae646ce0da662170522f4298"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/router/zipball/328f7e49b38ea3a2915313e2a54e91d8e4b6738c",
-                "reference": "328f7e49b38ea3a2915313e2a54e91d8e4b6738c",
+                "url": "https://api.github.com/repos/joomla-framework/router/zipball/953f5d5852292869ae646ce0da662170522f4298",
+                "reference": "953f5d5852292869ae646ce0da662170522f4298",
                 "shasum": ""
             },
             "require": {
@@ -1033,7 +1033,7 @@
                 "joomla",
                 "router"
             ],
-            "time": "2017-05-27 01:17:54"
+            "time": "2017-07-02 02:27:15"
         },
         {
             "name": "joomla/string",
@@ -1107,12 +1107,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/uri.git",
-                "reference": "00df4c66feadcf00a5bb534859ac70a5e461ffb5"
+                "reference": "0bb88f26235254a6e70a02b0e4c50fafd7379019"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/uri/zipball/00df4c66feadcf00a5bb534859ac70a5e461ffb5",
-                "reference": "00df4c66feadcf00a5bb534859ac70a5e461ffb5",
+                "url": "https://api.github.com/repos/joomla-framework/uri/zipball/0bb88f26235254a6e70a02b0e4c50fafd7379019",
+                "reference": "0bb88f26235254a6e70a02b0e4c50fafd7379019",
                 "shasum": ""
             },
             "require": {
@@ -1145,7 +1145,7 @@
                 "joomla",
                 "uri"
             ],
-            "time": "2017-06-24 17:56:50"
+            "time": "2017-06-28 23:33:08"
         },
         {
             "name": "joomla/utilities",
@@ -1808,7 +1808,7 @@
         },
         {
             "name": "symfony/asset",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset.git",
@@ -1864,16 +1864,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "35716d4904e0506a7a5a9bcf23f854aeb5719bca"
+                "reference": "a094618deb9a3fe1c3cf500a796e167d0495a274"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/35716d4904e0506a7a5a9bcf23f854aeb5719bca",
-                "reference": "35716d4904e0506a7a5a9bcf23f854aeb5719bca",
+                "url": "https://api.github.com/repos/symfony/config/zipball/a094618deb9a3fe1c3cf500a796e167d0495a274",
+                "reference": "a094618deb9a3fe1c3cf500a796e167d0495a274",
                 "shasum": ""
             },
             "require": {
@@ -1881,10 +1881,12 @@
                 "symfony/filesystem": "~2.8|~3.0"
             },
             "conflict": {
-                "symfony/dependency-injection": "<3.3"
+                "symfony/dependency-injection": "<3.3",
+                "symfony/finder": "<3.3"
             },
             "require-dev": {
                 "symfony/dependency-injection": "~3.3",
+                "symfony/finder": "~3.3",
                 "symfony/yaml": "~3.0"
             },
             "suggest": {
@@ -1920,20 +1922,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-02T18:07:20+00:00"
+            "time": "2017-06-16T12:40:34+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "70d2a29b2911cbdc91a7e268046c395278238b2e"
+                "reference": "a97e45d98c59510f085fa05225a1acb74dfe0546"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/70d2a29b2911cbdc91a7e268046c395278238b2e",
-                "reference": "70d2a29b2911cbdc91a7e268046c395278238b2e",
+                "url": "https://api.github.com/repos/symfony/console/zipball/a97e45d98c59510f085fa05225a1acb74dfe0546",
+                "reference": "a97e45d98c59510f085fa05225a1acb74dfe0546",
                 "shasum": ""
             },
             "require": {
@@ -1989,20 +1991,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-02T19:24:58+00:00"
+            "time": "2017-07-03T13:19:36+00:00"
         },
         {
             "name": "symfony/debug",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "e9c50482841ef696e8fa1470d950a79c8921f45d"
+                "reference": "63b85a968486d95ff9542228dc2e4247f16f9743"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/e9c50482841ef696e8fa1470d950a79c8921f45d",
-                "reference": "e9c50482841ef696e8fa1470d950a79c8921f45d",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/63b85a968486d95ff9542228dc2e4247f16f9743",
+                "reference": "63b85a968486d95ff9542228dc2e4247f16f9743",
                 "shasum": ""
             },
             "require": {
@@ -2045,20 +2047,20 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-01T21:01:25+00:00"
+            "time": "2017-07-05T13:02:37+00:00"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "c709670bf64721202ddbe4162846f250735842c0"
+                "reference": "311fa718389efbd8b627c272b9324a62437018cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/c709670bf64721202ddbe4162846f250735842c0",
-                "reference": "c709670bf64721202ddbe4162846f250735842c0",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/311fa718389efbd8b627c272b9324a62437018cc",
+                "reference": "311fa718389efbd8b627c272b9324a62437018cc",
                 "shasum": ""
             },
             "require": {
@@ -2094,7 +2096,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-28T14:08:56+00:00"
+            "time": "2017-06-24T09:29:48+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2157,7 +2159,7 @@
         },
         {
             "name": "symfony/web-link",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/web-link.git",
@@ -2228,16 +2230,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "9752a30000a8ca9f4b34b5227d15d0101b96b063"
+                "reference": "1f93a8d19b8241617f5074a123e282575b821df8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/9752a30000a8ca9f4b34b5227d15d0101b96b063",
-                "reference": "9752a30000a8ca9f4b34b5227d15d0101b96b063",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/1f93a8d19b8241617f5074a123e282575b821df8",
+                "reference": "1f93a8d19b8241617f5074a123e282575b821df8",
                 "shasum": ""
             },
             "require": {
@@ -2279,20 +2281,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-02T22:05:06+00:00"
+            "time": "2017-06-15T12:58:50+00:00"
         },
         {
             "name": "theiconic/php-ga-measurement-protocol",
-            "version": "v2.7.0",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theiconic/php-ga-measurement-protocol.git",
-                "reference": "88eaba4b7c6bdc6ce7a1e31890f544a881a2c5a6"
+                "reference": "26c09a43a25235da85131c0fa060ec1fe2b2f16f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/theiconic/php-ga-measurement-protocol/zipball/88eaba4b7c6bdc6ce7a1e31890f544a881a2c5a6",
-                "reference": "88eaba4b7c6bdc6ce7a1e31890f544a881a2c5a6",
+                "url": "https://api.github.com/repos/theiconic/php-ga-measurement-protocol/zipball/26c09a43a25235da85131c0fa060ec1fe2b2f16f",
+                "reference": "26c09a43a25235da85131c0fa060ec1fe2b2f16f",
                 "shasum": ""
             },
             "require": {
@@ -2320,7 +2322,7 @@
                 }
             ],
             "description": "Send data to Google Analytics from the server using PHP. This library fully implements GA measurement protocol.",
-            "time": "2017-05-13T12:36:04+00:00"
+            "time": "2017-06-30T02:41:52+00:00"
         },
         {
             "name": "twig/twig",
@@ -2448,12 +2450,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla/coding-standards.git",
-                "reference": "47594ec4e7dd5f1c5a49b65ccb34d8b4dc2c0b81"
+                "reference": "8c08db51a45b2e13377fdf601c5748ec37e0f293"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla/coding-standards/zipball/47594ec4e7dd5f1c5a49b65ccb34d8b4dc2c0b81",
-                "reference": "47594ec4e7dd5f1c5a49b65ccb34d8b4dc2c0b81",
+                "url": "https://api.github.com/repos/joomla/coding-standards/zipball/8c08db51a45b2e13377fdf601c5748ec37e0f293",
+                "reference": "8c08db51a45b2e13377fdf601c5748ec37e0f293",
                 "shasum": ""
             },
             "require": {
@@ -2466,7 +2468,7 @@
             "type": "phpcodesniffer-standard",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2487,7 +2489,7 @@
                 "php codesniffer",
                 "phpcs"
             ],
-            "time": "2017-06-10T20:18:49+00:00"
+            "time": "2017-06-30T14:22:06+00:00"
         },
         {
             "name": "maximebf/debugbar",
@@ -2630,16 +2632,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "347c4247a3e40018810b476fcd5dec36d46d08dc"
+                "reference": "9ee920bba1d2ce877496dcafca7cbffff4dbe08a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/347c4247a3e40018810b476fcd5dec36d46d08dc",
-                "reference": "347c4247a3e40018810b476fcd5dec36d46d08dc",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/9ee920bba1d2ce877496dcafca7cbffff4dbe08a",
+                "reference": "9ee920bba1d2ce877496dcafca7cbffff4dbe08a",
                 "shasum": ""
             },
             "require": {
@@ -2694,7 +2696,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2017-06-02T09:10:29+00:00"
+            "time": "2017-07-05T13:02:37+00:00"
         }
     ],
     "aliases": [],
