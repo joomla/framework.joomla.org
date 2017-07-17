@@ -118,13 +118,13 @@ class ReleaseModel implements DatabaseModelInterface
 	/**
 	 * Get the release history for a package
 	 *
-	 * @param   string  $package  The package to retrieve the history for
+	 * @param   \stdClass  $package  The package to retrieve the history for
 	 *
 	 * @return  \stdClass[]
 	 *
 	 * @throws  \RuntimeException
 	 */
-	public function getPackageHistory(string $package) : array
+	public function getPackageHistory(\stdClass $package) : array
 	{
 		// Get the package data for the package specified via the route
 		$db = $this->getDb();
@@ -132,91 +132,60 @@ class ReleaseModel implements DatabaseModelInterface
 		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select('*')
-			->from($db->quoteName('#__packages'))
-			->where($db->quoteName('package') . ' = :package')
+			->from($db->quoteName('#__releases'))
+			->where($db->quoteName('package_id') . ' = :packageId')
 			->order('version ASC');
 
-		$query->bind('package', $package, \PDO::PARAM_STR);
+		$query->bind('packageId', $package->id, \PDO::PARAM_INT);
 
-		$packs = $db->setQuery($query)->loadObjectList();
+		$releases = $db->setQuery($query)->loadObjectList();
 
 		// Bail if we don't have any data for the given package
-		if (!count($packs))
+		if (!count($releases))
 		{
-			throw new \RuntimeException(sprintf('Unable to find package data for the specified package `%s`', $package), 404);
+			throw new \RuntimeException(sprintf('Unable to find release data for the `%s` package', $package->display), 404);
 		}
 
 		// Loop through the packs and get the reports
 		$i = 0;
 
-		$inString = '';
-
-		/** @var MysqlQuery $query */
-		$query = $db->getQuery(true);
-
-		foreach ($packs as $key => $pack)
-		{
-			$queryKey = "package$key";
-			$inString .= ":$queryKey,";
-			$query->bind($queryKey, $pack->id, \PDO::PARAM_INT);
-		}
-
-		$query->select('*')
-			->from($db->quoteName('#__test_results'))
-			->where($db->quoteName('package_id') . ' IN (' . rtrim($inString, ',') . ')');
-
-		$releaseTests = $db->setQuery($query)->loadObjectList('package_id');
-
 		$reports = [];
 
-		foreach ($packs as $pack)
+		foreach ($releases as $release)
 		{
-			// If we didn't get any data, build a new object
-			if (!isset($releaseTests[$pack->id]))
+			$release->lines_percentage = 0;
+
+			if ($release->total_lines > 0)
 			{
-				$result = new \stdClass;
+				$release->lines_percentage = $release->lines_covered / $release->total_lines * 100;
 			}
-			// Otherwise compute report percentages
-			else
-			{
-				$result = $releaseTests[$pack->id];
-
-				$result->lines_percentage = 0;
-
-				if ($result->total_lines > 0)
-				{
-					$result->lines_percentage = $result->lines_covered / $result->total_lines * 100;
-				}
-			}
-
-			$result->version = $pack->version;
 
 			// Compute the delta to the previous build
 			if ($i !== 0)
 			{
 				$previous = $reports[$i - 1];
 
-				$result->newTests      = 0;
-				$result->newAssertions = 0;
-				$result->addedCoverage = 0;
+				$release->newTests      = 0;
+				$release->newAssertions = 0;
+				$release->addedCoverage = 0;
 
-				if (isset($result->tests) && isset($previous->tests))
+				if (isset($release->tests) && isset($previous->tests))
 				{
-					$result->newTests = $result->tests - $previous->tests;
+					$release->newTests = $release->tests - $previous->tests;
 				}
 
-				if (isset($result->assertions) && isset($previous->assertions))
+				if (isset($release->assertions) && isset($previous->assertions))
 				{
-					$result->newAssertions = $result->assertions - $previous->assertions;
+					$release->newAssertions = $release->assertions - $previous->assertions;
 				}
 
-				if (isset($result->lines_percentage) && isset($previous->lines_percentage))
+				if (isset($release->lines_percentage) && isset($previous->lines_percentage))
 				{
-					$result->addedCoverage = $result->lines_percentage - $previous->lines_percentage;
+					$release->addedCoverage = $release->lines_percentage - $previous->lines_percentage;
 				}
 			}
 
-			$reports[$i] = $result;
+			$reports[$i] = $release;
 			$i++;
 		}
 

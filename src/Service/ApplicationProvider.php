@@ -696,8 +696,9 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		$view = new PackageHtmlView(
 			$container->get('model.package'),
-			$container->get('renderer'),
-			$container->get(Helper::class)
+			$container->get('model.release'),
+			$container->get(Helper::class),
+			$container->get('renderer')
 		);
 
 		$view->setLayout('package.twig');

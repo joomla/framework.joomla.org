@@ -1,13 +1,13 @@
-{% extends "index.twig" %}
+{% extends 'index.twig' %}
 
-{% block title %}Joomla! Framework Status - {{ packageName }} Package{% endblock %}
+{% block title %}Joomla! Framework Status - {{ package.display }} Package{% endblock %}
 
-{% block metaDescription %}Release history for the Joomla! Framework {{ packageName }} package.{% endblock %}
+{% block metaDescription %}Release history for the Joomla! Framework {{ package.display }} package.{% endblock %}
 
 {% block content %}
 <section class="status container">
-    <h1>Release Data for {{ packageName }} Package <a href="https://github.com/joomla-framework/{{ repoName }}"><span class="fa fa-github"></span></a></h1>
-    {% if packageDeprecated %}
+    <h1>Release Data for {{ package.display }} Package <a href="https://github.com/joomla-framework/{{ package.repo }}"><span class="fa fa-github"></span></a></h1>
+    {% if package.deprecated %}
         <div class="alert alert-warning">
             <h4>Deprecated Package</h4>
             <p>This package has been deprecated and will soon no longer be supported.</p>
@@ -29,41 +29,41 @@
             {% for release in releases %}
             <tr>
                 <td>{{ release.version }}</td>
-                {% if release.id %}
-                <td>
-                    {{ release.tests }}
-                    {% if release.newTests %}
-                        <span class="pull-right label label-{{ release.newTests > 0 ? 'success' : 'danger' }}">{{ release.newTests }}</span>
-                    {% endif %}
-                </td>
-                <td>
-                    {{ release.assertions }}
-                    {% if release.newAssertions %}
-                        <span class="pull-right label label-{{ release.newAssertions > 0 ? 'success' : 'danger' }}">{{ release.newAssertions }}</span>
-                    {% endif %}
-                </td>
-                <td>{{ release.failures }}</td>
-                <td>{{ release.errors }}</td>
-                <td>
-                    {{ release.lines_covered }}/{{ release.total_lines}} ({{ release.lines_percentage|number_format(2) }}%)
-                    {% if release.addedCoverage %}
-                        <span class="pull-right label label-{{ release.addedCoverage > 0 ? 'success' : 'danger' }}">{{ release.addedCoverage|number_format(2) }}%</span>
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="https://travis-ci.org/joomla-framework/{{ repoName }}">
-                        <img src="https://travis-ci.org/joomla-framework/{{ repoName }}.png?branch={{ release.version }}" alt="Build Status"/>
-                    </a>
-                </td>
-                {% elseif repoName in ['compat', 'test'] %}
-                <td colspan="6" class="text-center">This package is not unit tested</td>
+                {% if package.repo in ['compat', 'test'] %}
+                    <td colspan="6" class="text-center">This package is not unit tested</td>
+                {% elseif release.tests == 0 %}
+                    <td colspan="5" class="text-center">This release does not have a test report</td>
+                    <td>
+                        <a href="https://travis-ci.org/joomla-framework/{{ package.repo }}">
+                            <img src="https://travis-ci.org/joomla-framework/{{ package.repo }}.png?branch={{ release.version }}" alt="Build Status">
+                        </a>
+                    </td>
                 {% else %}
-                <td colspan="5" class="text-center">This release does not have a test report</td>
-                <td>
-                    <a href="https://travis-ci.org/joomla-framework/{{ repoName }}">
-                        <img src="https://travis-ci.org/joomla-framework/{{ repoName }}.png?branch={{ release.version }}" alt="Build Status"/>
-                    </a>
-                </td>
+                    <td>
+                        {{ release.tests }}
+                        {% if release.newTests %}
+                            <span class="pull-right label label-{{ release.newTests > 0 ? 'success' : 'danger' }}">{{ release.newTests }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ release.assertions }}
+                        {% if release.newAssertions %}
+                            <span class="pull-right label label-{{ release.newAssertions > 0 ? 'success' : 'danger' }}">{{ release.newAssertions }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ release.failures }}</td>
+                    <td>{{ release.errors }}</td>
+                    <td>
+                        {{ release.lines_covered }}/{{ release.total_lines}} ({{ release.lines_percentage|number_format(2) }}%)
+                        {% if release.addedCoverage %}
+                            <span class="pull-right label label-{{ release.addedCoverage > 0 ? 'success' : 'danger' }}">{{ release.addedCoverage|number_format(2) }}%</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="https://travis-ci.org/joomla-framework/{{ package.repo }}">
+                            <img src="https://travis-ci.org/joomla-framework/{{ package.repo }}.png?branch={{ release.version }}" alt="Build Status">
+                        </a>
+                    </td>
                 {% endif %}
             </tr>
             {% endfor %}

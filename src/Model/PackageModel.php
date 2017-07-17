@@ -69,6 +69,37 @@ class PackageModel implements DatabaseModelInterface
 	}
 
 	/**
+	 * Get a package's data
+	 *
+	 * @param   string  $packageName  The package to lookup
+	 *
+	 * @return  \stdClass
+	 *
+	 * @throws  \RuntimeException
+	 */
+	public function getPackage(string $packageName) : \stdClass
+	{
+		$db = $this->getDb();
+
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__packages'))
+			->where($db->quoteName('package') . ' = :package');
+
+		$query->bind('package', $packageName, \PDO::PARAM_STR);
+
+		$package = $db->setQuery($query)->loadObject();
+
+		if (!$package)
+		{
+			throw new \RuntimeException(sprintf('Unable to find release data for the `%s` package', $package->display), 404);
+		}
+
+		return $package;
+	}
+
+	/**
 	 * Get the known package names
 	 *
 	 * @return  array
