@@ -75,7 +75,7 @@ class ReleaseModel implements DatabaseModelInterface
 
 		/** @var MysqlQuery $subQuery */
 		$subQuery = $db->getQuery(true)
-			->select($db->quoteName('*'))
+			->select('*')
 			->from($db->quoteName('#__releases'))
 			->order('package_id ASC, version DESC');
 
