@@ -278,6 +278,11 @@ class ApplicationProvider implements ServiceProviderInterface
 			HomepageController::class
 		);
 
+		$router->head(
+			'/',
+			HomepageController::class
+		);
+
 		$router->get(
 			'/status',
 			StatusController::class
