@@ -751,7 +751,8 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getViewStatusJsonService(Container $container) : StatusJsonView
 	{
 		return new StatusJsonView(
-			$container->get('model.package')
+			$container->get('model.package'),
+			$container->get('model.release')
 		);
 	}
 

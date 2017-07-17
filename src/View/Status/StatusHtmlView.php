@@ -28,18 +28,18 @@ class StatusHtmlView extends BaseHtmlView
 	private $packageModel;
 
 	/**
-	 * The release model object.
-	 *
-	 * @var  ReleaseModel
-	 */
-	private $releaseModel;
-
-	/**
 	 * The packagist helper object
 	 *
 	 * @var  PackagistHelper
 	 */
 	private $packagistHelper;
+
+	/**
+	 * The release model object.
+	 *
+	 * @var  ReleaseModel
+	 */
+	private $releaseModel;
 
 	/**
 	 * Instantiate the view.
