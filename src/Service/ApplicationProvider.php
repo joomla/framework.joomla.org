@@ -21,7 +21,9 @@ use Joomla\FrameworkWebsite\Controller\{
 	Api\PackageControllerGet, Api\StatusControllerGet, HomepageController, PackageController, PageController, StatusController, WrongCmsController
 };
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
-use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\{
+	PackageModel, ReleaseModel
+};
 use Joomla\FrameworkWebsite\View\{
 	Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
 };
@@ -132,6 +134,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		// Models
 		$container->alias(PackageModel::class, 'model.package')
 			->share('model.package', [$this, 'getModelPackageService'], true);
+
+		$container->alias(ReleaseModel::class, 'model.release')
+			->share('model.release', [$this, 'getModelReleaseService'], true);
 
 		// Views
 		$container->alias(PackageHtmlView::class, 'view.package.html')
@@ -564,6 +569,18 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the `model.release` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ReleaseModel
+	 */
+	public function getModelReleaseService(Container $container) : ReleaseModel
+	{
+		return new ReleaseModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
+	}
+
+	/**
 	 * Get the Package\SyncCommand class service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -713,6 +730,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		$view = new StatusHtmlView(
 			$container->get('model.package'),
+			$container->get('model.release'),
 			$container->get(PackagistHelper::class),
 			$container->get('renderer')
 		);
