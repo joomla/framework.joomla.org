@@ -716,7 +716,8 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getViewPackageJsonService(Container $container) : PackageJsonView
 	{
 		return new PackageJsonView(
-			$container->get('model.package')
+			$container->get('model.package'),
+			$container->get('model.release')
 		);
 	}
 
