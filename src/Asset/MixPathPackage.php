@@ -8,13 +8,44 @@
 
 namespace Joomla\FrameworkWebsite\Asset;
 
-use Symfony\Component\Asset\PathPackage as BasePathPackage;
+use Symfony\Component\Asset\Context\ContextInterface;
+use Symfony\Component\Asset\{
+	Package, PathPackage as BasePathPackage
+};
+use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
 
 /**
  * Extended path package for resolving assets from a Laravel Mix manifest
  */
 class MixPathPackage extends BasePathPackage
 {
+	/**
+	 * Decorated Package instance
+	 *
+	 * @var  Package
+	 */
+	private $decoratedPackage;
+
+	/**
+	 * Constructor
+	 *
+	 * @param   Package                   $decoratedPackage  Decorated Package instance
+	 * @param   string                    $basePath          The base path to be prepended to relative paths
+	 * @param   VersionStrategyInterface  $versionStrategy   The version strategy
+	 * @param   ContextInterface          $context           The context
+	 */
+	public function __construct(
+		Package $decoratedPackage,
+		string $basePath,
+		VersionStrategyInterface $versionStrategy,
+		ContextInterface $context = null
+	)
+	{
+		parent::__construct($basePath, $versionStrategy, $context);
+
+		$this->decoratedPackage = $decoratedPackage;
+	}
+
 	/**
 	 * Returns an absolute or root-relative public path.
 	 *
@@ -29,12 +60,13 @@ class MixPathPackage extends BasePathPackage
 			return $path;
 		}
 
-		$versionedPath = $this->getVersionStrategy()->applyVersion($this->getBasePath() . $path);
+		$editedPath = ltrim($path, '/');
 
-		// If absolute or begins with /, we're done
-		if ($this->isAbsoluteUrl($versionedPath) || ($versionedPath && '/' === $versionedPath[0]))
+		$versionedPath = $this->getVersionStrategy()->applyVersion("/$editedPath");
+
+		if ($versionedPath === $path)
 		{
-			return $versionedPath;
+			return $this->decoratedPackage->getUrl($path);
 		}
 
 		return $this->getBasePath() . ltrim($versionedPath, '/');

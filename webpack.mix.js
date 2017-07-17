@@ -1,20 +1,18 @@
 let mix = require('laravel-mix');
 
 // Configure base path for mix stuff going to web
-mix.setPublicPath('www/');
+mix.setPublicPath('www/media/');
 
 // Configure base path for media assets
-mix.setResourceRoot('/media');
+mix.setResourceRoot('/media/');
 
 // Core app JS
-mix.js('assets/js/template.js', 'media/js');
+mix.js('assets/js/template.js', 'js');
 
 // Core app CSS
 mix
-    .sass('assets/scss/template.scss', 'media/css')
+    .sass('assets/scss/template.scss', 'css')
     .options({
-        // TODO - Eventually we'll want to postprocess URLs
-        processCssUrls: false,
         postCss: [
             require('autoprefixer')({ browsers: 'last 2 versions' })
         ]
@@ -22,6 +20,3 @@ mix
 
 // Version assets
 mix.version();
-
-// Copy Font Awesome icons
-mix.copy('node_modules/font-awesome/fonts', 'www/media/fonts');

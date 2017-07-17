@@ -55,7 +55,13 @@ class SyncCommand extends AbstractController implements CommandInterface
 	 * @param   Input                $input         The input object.
 	 * @param   AbstractApplication  $app           The application object.
 	 */
-	public function __construct(Http $http, PackageModel $packageModel, ReleaseModel $releaseModel, Input $input = null, AbstractApplication $app = null)
+	public function __construct(
+		Http $http,
+		PackageModel $packageModel,
+		ReleaseModel $releaseModel,
+		Input $input = null,
+		AbstractApplication $app = null
+	)
 	{
 		parent::__construct($input, $app);
 

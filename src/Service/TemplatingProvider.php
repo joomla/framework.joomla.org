@@ -104,8 +104,15 @@ class TemplatingProvider implements ServiceProviderInterface
 
 		$mediaPath = $app->get('uri.media.path', '/media/');
 
+		$defaultPackage = new PathPackage($mediaPath, new StaticVersionStrategy($version, $versionFormat), $context);
+
 		$unversionedStrategy = new PathPackage($mediaPath, new EmptyVersionStrategy, $context);
-		$mixStrategy         = new MixPathPackage($mediaPath, new JsonManifestVersionStrategy(JPATH_ROOT . '/www/mix-manifest.json'), $context);
+		$mixStrategy         = new MixPathPackage(
+			$defaultPackage,
+			$mediaPath,
+			new JsonManifestVersionStrategy(JPATH_ROOT . '/www/media/mix-manifest.json'),
+			$context
+		);
 
 		return new Packages(
 			new PathPackage($mediaPath, new StaticVersionStrategy($version, $versionFormat), $context),
