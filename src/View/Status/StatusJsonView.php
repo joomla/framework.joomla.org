@@ -8,7 +8,9 @@
 
 namespace Joomla\FrameworkWebsite\View\Status;
 
-use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\{
+	PackageModel, ReleaseModel
+};
 use Joomla\View\BaseJsonView;
 
 /**
@@ -17,20 +19,29 @@ use Joomla\View\BaseJsonView;
 class StatusJsonView extends BaseJsonView
 {
 	/**
-	 * The model object.
+	 * The package model object.
 	 *
 	 * @var  PackageModel
 	 */
-	protected $model;
+	private $packageModel;
+
+	/**
+	 * The release model object.
+	 *
+	 * @var  ReleaseModel
+	 */
+	private $releaseModel;
 
 	/**
 	 * Instantiate the view.
 	 *
-	 * @param   PackageModel  $model  The model object.
+	 * @param   PackageModel  $packageModel  The package model object.
+	 * @param   ReleaseModel  $releaseModel  The release model object.
 	 */
-	public function __construct(PackageModel $model)
+	public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel)
 	{
-		$this->model = $model;
+		$this->packageModel = $packageModel;
+		$this->releaseModel = $releaseModel;
 	}
 
 	/**
@@ -40,15 +51,15 @@ class StatusJsonView extends BaseJsonView
 	 */
 	public function render()
 	{
-		$packages = $this->model->getLatestReleases();
+		$releases = $this->releaseModel->getLatestReleases($this->packageModel->getPackages());
 
 		// Remove the ID and package ID for each item
-		foreach ($packages as $package)
+		foreach ($releases as $release)
 		{
-			unset($package->id, $package->package_id);
+			unset($release->id, $release->package->id);
 		}
 
-		$this->setData(['packages' => $packages]);
+		$this->setData(['packages' => array_values($releases)]);
 
 		return parent::render();
 	}

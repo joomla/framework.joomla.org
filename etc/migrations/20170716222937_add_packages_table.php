@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreatePackagesTable extends AbstractMigration
+class AddPackagesTable extends AbstractMigration
 {
 	/**
 	 * Change Method.
@@ -29,7 +29,10 @@ class CreatePackagesTable extends AbstractMigration
 	{
 		$this->table('packages')
 			->addColumn('package', 'string', ['limit' => 50, 'null' => false])
-			->addColumn('version', 'string', ['limit' => 25, 'null' => false])
+			->addColumn('display', 'string', ['limit' => 50, 'null' => false])
+			->addColumn('repo', 'string', ['limit' => 50, 'null' => false])
+			->addColumn('stable', 'boolean', ['default' => true])
+			->addColumn('deprecated', 'boolean', ['default' => false])
 			->create();
 	}
 }

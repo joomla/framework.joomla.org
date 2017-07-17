@@ -8,8 +8,9 @@
 
 namespace Joomla\FrameworkWebsite\View\Package;
 
-use Joomla\FrameworkWebsite\Helper;
-use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\{
+	PackageModel, ReleaseModel
+};
 use Joomla\View\BaseJsonView;
 
 /**
@@ -20,13 +21,6 @@ use Joomla\View\BaseJsonView;
 class PackageJsonView extends BaseJsonView
 {
 	/**
-	 * The model object
-	 *
-	 * @var  PackageModel
-	 */
-	protected $model;
-
-	/**
 	 * The active package
 	 *
 	 * @var  string
@@ -34,13 +28,29 @@ class PackageJsonView extends BaseJsonView
 	private $package = '';
 
 	/**
+	 * The package model object.
+	 *
+	 * @var  PackageModel
+	 */
+	private $packageModel;
+
+	/**
+	 * The release model object.
+	 *
+	 * @var  ReleaseModel
+	 */
+	private $releaseModel;
+
+	/**
 	 * Instantiate the view.
 	 *
-	 * @param   PackageModel  $model  The model object.
+	 * @param   PackageModel  $packageModel  The package model object.
+	 * @param   ReleaseModel  $releaseModel  The release model object.
 	 */
-	public function __construct(PackageModel $model)
+	public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel)
 	{
-		$this->model  = $model;
+		$this->packageModel = $packageModel;
+		$this->releaseModel = $releaseModel;
 	}
 
 	/**
@@ -50,13 +60,23 @@ class PackageJsonView extends BaseJsonView
 	 */
 	public function render()
 	{
-		$releases = $this->model->getPackageHistory($this->package);
+		$package = $this->packageModel->getPackage($this->package);
+		$releases = $this->releaseModel->getPackageHistory($package);
 
 		// Remove the ID and package ID for each item
 		foreach ($releases as $release)
 		{
 			unset($release->id, $release->package_id);
 		}
+
+		unset($package->id);
+
+		$this->setData(
+			[
+				'releases' => $releases,
+				'package'  => $package,
+			]
+		);
 
 		$this->setData(['releases' => $releases]);
 

@@ -9,7 +9,9 @@
 namespace Joomla\FrameworkWebsite\View\Package;
 
 use Joomla\FrameworkWebsite\Helper;
-use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\{
+	PackageModel, ReleaseModel
+};
 use Joomla\Renderer\RendererInterface;
 use Joomla\View\BaseHtmlView;
 
@@ -26,33 +28,41 @@ class PackageHtmlView extends BaseHtmlView
 	private $helper;
 
 	/**
-	 * The model object
-	 *
-	 * @var  PackageModel
-	 */
-	protected $model;
-
-	/**
 	 * The active package
 	 *
-	 * @var    string
-	 * @since  1.0
+	 * @var  string
 	 */
 	private $package = '';
 
 	/**
+	 * The package model object.
+	 *
+	 * @var  PackageModel
+	 */
+	private $packageModel;
+
+	/**
+	 * The release model object.
+	 *
+	 * @var  ReleaseModel
+	 */
+	private $releaseModel;
+
+	/**
 	 * Instantiate the view.
 	 *
-	 * @param   PackageModel       $model     The model object.
-	 * @param   RendererInterface  $renderer  The renderer object.
-	 * @param   Helper             $helper    Helper object.
+	 * @param   PackageModel       $packageModel     The package model object.
+	 * @param   ReleaseModel       $releaseModel     The release model object.
+	 * @param   Helper             $helper           Helper object.
+	 * @param   RendererInterface  $renderer         The renderer object.
 	 */
-	public function __construct(PackageModel $model, RendererInterface $renderer, Helper $helper)
+	public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, Helper $helper, RendererInterface $renderer)
 	{
 		parent::__construct($renderer);
 
-		$this->helper = $helper;
-		$this->model  = $model;
+		$this->helper       = $helper;
+		$this->packageModel = $packageModel;
+		$this->releaseModel = $releaseModel;
 	}
 
 	/**
@@ -62,13 +72,12 @@ class PackageHtmlView extends BaseHtmlView
 	 */
 	public function render()
 	{
+		$package = $this->packageModel->getPackage($this->package);
+
 		$this->setData(
 			[
-				'releases'          => $this->model->getPackageHistory($this->package),
-				'package'           => $this->package,
-				'packageName'       => $this->helper->getPackageDisplayName($this->package),
-				'repoName'          => $this->helper->getPackageRepositoryName($this->package),
-				'packageDeprecated' => $this->helper->getPackageDeprecated($this->package),
+				'releases' => $this->releaseModel->getPackageHistory($package),
+				'package'  => $package,
 			]
 		);
 

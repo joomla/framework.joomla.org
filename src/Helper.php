@@ -50,4 +50,16 @@ class Helper
 	{
 		return $this->getPackages()->get("packages.$package.repo", $package);
 	}
+
+	/**
+	 * Utility method to retrieve a package's stable status
+	 *
+	 * @param   string  $package  Package name
+	 *
+	 * @return  boolean
+	 */
+	public function getPackageStable(string $package) : bool
+	{
+		return $this->getPackages()->get("packages.$package.stable", true);
+	}
 }

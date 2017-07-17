@@ -21,7 +21,9 @@ use Joomla\FrameworkWebsite\Controller\{
 	Api\PackageControllerGet, Api\StatusControllerGet, HomepageController, PackageController, PageController, StatusController, WrongCmsController
 };
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
-use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\{
+	PackageModel, ReleaseModel
+};
 use Joomla\FrameworkWebsite\View\{
 	Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
 };
@@ -96,6 +98,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
+		$container->share(AppCommands\Package\SyncCommand::class, [$this, 'getPackageSyncCommandClassService'], true);
 		$container->share(AppCommands\Packagist\DownloadsCommand::class, [$this, 'getPackagistDownloadsCommandClassService'], true);
 		$container->share(AppCommands\Packagist\SyncCommand::class, [$this, 'getPackagistSyncCommandClassService'], true);
 		$container->share(AppCommands\Router\CacheCommand::class, [$this, 'getRouterCacheCommandClassService'], true);
@@ -131,6 +134,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		// Models
 		$container->alias(PackageModel::class, 'model.package')
 			->share('model.package', [$this, 'getModelPackageService'], true);
+
+		$container->alias(ReleaseModel::class, 'model.release')
+			->share('model.release', [$this, 'getModelReleaseService'], true);
 
 		// Views
 		$container->alias(PackageHtmlView::class, 'view.package.html')
@@ -559,10 +565,36 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getModelPackageService(Container $container) : PackageModel
 	{
-		$model = new PackageModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
-		$model->setPackages($container->get('application.packages'));
+		return new PackageModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
+	}
 
-		return $model;
+	/**
+	 * Get the `model.release` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ReleaseModel
+	 */
+	public function getModelReleaseService(Container $container) : ReleaseModel
+	{
+		return new ReleaseModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
+	}
+
+	/**
+	 * Get the Package\SyncCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\Package\SyncCommand
+	 */
+	public function getPackageSyncCommandClassService(Container $container) : AppCommands\Package\SyncCommand
+	{
+		return new AppCommands\Package\SyncCommand(
+			$container->get(Helper::class),
+			$container->get(PackageModel::class),
+			$container->get(Input::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
+		);
 	}
 
 	/**
@@ -590,16 +622,13 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getPackagistSyncCommandClassService(Container $container) : AppCommands\Packagist\SyncCommand
 	{
-		$command = new AppCommands\Packagist\SyncCommand(
+		return new AppCommands\Packagist\SyncCommand(
 			$container->get(Http::class),
 			$container->get(PackageModel::class),
+			$container->get(ReleaseModel::class),
 			$container->get(Input::class),
 			$container->get(JoomlaApplication\AbstractApplication::class)
 		);
-
-		$command->setPackages($container->get('application.packages'));
-
-		return $command;
 	}
 
 	/**
@@ -664,8 +693,9 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		$view = new PackageHtmlView(
 			$container->get('model.package'),
-			$container->get('renderer'),
-			$container->get(Helper::class)
+			$container->get('model.release'),
+			$container->get(Helper::class),
+			$container->get('renderer')
 		);
 
 		$view->setLayout('package.twig');
@@ -683,7 +713,8 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getViewPackageJsonService(Container $container) : PackageJsonView
 	{
 		return new PackageJsonView(
-			$container->get('model.package')
+			$container->get('model.package'),
+			$container->get('model.release')
 		);
 	}
 
@@ -698,6 +729,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		$view = new StatusHtmlView(
 			$container->get('model.package'),
+			$container->get('model.release'),
 			$container->get(PackagistHelper::class),
 			$container->get('renderer')
 		);
@@ -717,7 +749,8 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getViewStatusJsonService(Container $container) : StatusJsonView
 	{
 		return new StatusJsonView(
-			$container->get('model.package')
+			$container->get('model.package'),
+			$container->get('model.release')
 		);
 	}
 

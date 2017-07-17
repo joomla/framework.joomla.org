@@ -9,7 +9,9 @@
 namespace Joomla\FrameworkWebsite\View\Status;
 
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
-use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\{
+	PackageModel, ReleaseModel
+};
 use Joomla\Renderer\RendererInterface;
 use Joomla\View\BaseHtmlView;
 
@@ -19,11 +21,11 @@ use Joomla\View\BaseHtmlView;
 class StatusHtmlView extends BaseHtmlView
 {
 	/**
-	 * The model object.
+	 * The package model object.
 	 *
 	 * @var  PackageModel
 	 */
-	private $model;
+	private $packageModel;
 
 	/**
 	 * The packagist helper object
@@ -33,18 +35,27 @@ class StatusHtmlView extends BaseHtmlView
 	private $packagistHelper;
 
 	/**
+	 * The release model object.
+	 *
+	 * @var  ReleaseModel
+	 */
+	private $releaseModel;
+
+	/**
 	 * Instantiate the view.
 	 *
-	 * @param   PackageModel       $model            The model object.
+	 * @param   PackageModel       $packageModel     The package model object.
+	 * @param   ReleaseModel       $releaseModel     The release model object.
 	 * @param   PackagistHelper    $packagistHelper  The Packagist helper object.
 	 * @param   RendererInterface  $renderer         The renderer object.
 	 */
-	public function __construct(PackageModel $model, PackagistHelper $packagistHelper, RendererInterface $renderer)
+	public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, PackagistHelper $packagistHelper, RendererInterface $renderer)
 	{
 		parent::__construct($renderer);
 
-		$this->model           = $model;
+		$this->packageModel    = $packageModel;
 		$this->packagistHelper = $packagistHelper;
+		$this->releaseModel    = $releaseModel;
 	}
 
 	/**
@@ -57,7 +68,7 @@ class StatusHtmlView extends BaseHtmlView
 		$this->setData(
 			[
 				'downloads' => $this->packagistHelper->getDownloadCounts(),
-				'packages'  => $this->model->getLatestReleases(),
+				'releases'  => $this->releaseModel->getLatestReleases($this->packageModel->getPackages()),
 			]
 		);
 
