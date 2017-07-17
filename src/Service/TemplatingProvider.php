@@ -115,7 +115,7 @@ class TemplatingProvider implements ServiceProviderInterface
 		);
 
 		return new Packages(
-			new PathPackage($mediaPath, new StaticVersionStrategy($version, $versionFormat), $context),
+			$defaultPackage,
 			[
 				'img'         => $unversionedStrategy,
 				'unversioned' => $unversionedStrategy,
