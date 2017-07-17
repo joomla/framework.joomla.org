@@ -45,21 +45,21 @@ class ReleaseModel implements DatabaseModelInterface
 	/**
 	 * Add a release for a package
 	 *
-	 * @param   string  $package  The package to add the release for
-	 * @param   string  $version  The package's release version
+	 * @param   \stdClass  $package  The package to add the release for
+	 * @param   string     $version  The package's release version
 	 *
 	 * @return  void
 	 */
-	public function addRelease(string $package, string $version)
+	public function addRelease(\stdClass $package, string $version)
 	{
 		$db = $this->getDb();
 
 		$data = (object) [
-			'package' => $package,
-			'version' => $version,
+			'package_id' => $package->id,
+			'version'    => $version,
 		];
 
-		$db->insertObject('#__packages', $data);
+		$db->insertObject('#__releases', $data);
 	}
 
 	/**
@@ -195,22 +195,22 @@ class ReleaseModel implements DatabaseModelInterface
 	/**
 	 * Check if the package has a release at the given version
 	 *
-	 * @param   string  $package  The package to check for the release on
-	 * @param   string  $version  The version to check for
+	 * @param   \stdClass  $package  The package to check for the release on
+	 * @param   string     $version  The version to check for
 	 *
 	 * @return  boolean
 	 */
-	public function hasRelease(string $package, string $version) : bool
+	public function hasRelease(\stdClass $package, string $version) : bool
 	{
 		$db = $this->getDb();
 
 		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select($db->quoteName('id'))
-			->from($db->quoteName('#__packages'))
-			->where($db->quoteName('package') . ' = :package')
+			->from($db->quoteName('#__releases'))
+			->where($db->quoteName('package_id') . ' = :packageId')
 			->where($db->quoteName('version') . ' = :version')
-			->bind('package', $package, \PDO::PARAM_STR)
+			->bind('packageId', $package->id, \PDO::PARAM_INT)
 			->bind('version', $version, \PDO::PARAM_STR);
 
 		$id = $db->setQuery($query)->loadResult();

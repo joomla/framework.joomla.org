@@ -622,16 +622,13 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getPackagistSyncCommandClassService(Container $container) : AppCommands\Packagist\SyncCommand
 	{
-		$command = new AppCommands\Packagist\SyncCommand(
+		return new AppCommands\Packagist\SyncCommand(
 			$container->get(Http::class),
 			$container->get(PackageModel::class),
+			$container->get(ReleaseModel::class),
 			$container->get(Input::class),
 			$container->get(JoomlaApplication\AbstractApplication::class)
 		);
-
-		$command->setPackages($container->get('application.packages'));
-
-		return $command;
 	}
 
 	/**

@@ -10,10 +10,10 @@ namespace Joomla\FrameworkWebsite\Command\Packagist;
 
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
-use Joomla\FrameworkWebsite\{
-	CommandInterface, PackageAware
+use Joomla\FrameworkWebsite\CommandInterface;
+use Joomla\FrameworkWebsite\Model\{
+	PackageModel, ReleaseModel
 };
-use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\Http\Http;
 use Joomla\Input\Input;
 
@@ -25,8 +25,6 @@ use Joomla\Input\Input;
  */
 class SyncCommand extends AbstractController implements CommandInterface
 {
-	use PackageAware;
-
 	/**
 	 * The HTTP driver
 	 *
@@ -42,19 +40,28 @@ class SyncCommand extends AbstractController implements CommandInterface
 	private $packageModel;
 
 	/**
+	 * The release model object.
+	 *
+	 * @var  ReleaseModel
+	 */
+	private $releaseModel;
+
+	/**
 	 * Instantiate the controller.
 	 *
 	 * @param   Http                 $http          The HTTP driver.
 	 * @param   PackageModel         $packageModel  The package model.
+	 * @param   ReleaseModel         $releaseModel  The package model.
 	 * @param   Input                $input         The input object.
 	 * @param   AbstractApplication  $app           The application object.
 	 */
-	public function __construct(Http $http, PackageModel $packageModel, Input $input = null, AbstractApplication $app = null)
+	public function __construct(Http $http, PackageModel $packageModel, ReleaseModel $releaseModel, Input $input = null, AbstractApplication $app = null)
 	{
 		parent::__construct($input, $app);
 
 		$this->http         = $http;
 		$this->packageModel = $packageModel;
+		$this->releaseModel = $releaseModel;
 	}
 
 	/**
@@ -66,13 +73,13 @@ class SyncCommand extends AbstractController implements CommandInterface
 	{
 		$this->getApplication()->outputTitle('Sync Release Data with Packagist');
 
-		foreach (array_keys((array) $this->getPackages()->get('packages')) as $packageName)
+		foreach ($this->packageModel->getPackages() as $package)
 		{
 			$this->getApplication()->out(
-				sprintf('Processing <info>%s</info> package', $packageName)
+				sprintf('Processing <info>%s</info> package', $package->display)
 			);
 
-			$url = "https://packagist.org/packages/joomla/$packageName.json";
+			$url = "https://packagist.org/packages/joomla/{$package->package}.json";
 
 			try
 			{
@@ -88,22 +95,22 @@ class SyncCommand extends AbstractController implements CommandInterface
 					}
 
 					// Make sure this release is logged
-					if ($this->packageModel->hasRelease($packageName, $versionData->version))
+					if ($this->releaseModel->hasRelease($package, $versionData->version))
 					{
 						continue;
 					}
 
 					// Add the release
-					$this->packageModel->addRelease($packageName, $versionData->version);
+					$this->releaseModel->addRelease($package, $versionData->version);
 
 					$this->getApplication()->out(
-						sprintf('Added <info>%1$s</info> package at version <info>%2$s</info>', $packageName, $versionData->version)
+						sprintf('Added <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version)
 					);
 				}
 			}
 			catch (\RuntimeException $exception)
 			{
-				$message = "Could not fetch release data for $packageName from Packagist";
+				$message = "Could not fetch release data for {$package->display} from Packagist";
 
 				$this->getApplication()->getLogger()->warning(
 					$message,
