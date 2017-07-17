@@ -74,19 +74,6 @@ class UpdateCommand extends AbstractController implements CommandInterface
 		// Reset the router cache
 		$this->console->getCommand('router:cache')->execute();
 
-		// Write the current build to a local file
-		$this->getApplication()->out('<info>Writing build info</info>');
-
-		$path = JPATH_ROOT . '/cache/deployed.txt';
-
-		// Get the build information
-		$sha = trim($this->runCommand('cd ' . JPATH_ROOT . ' && git rev-parse --short HEAD 2>&1'));
-
-		if (!file_put_contents($path, $sha))
-		{
-			throw new \RuntimeException('Can not write to path: ' . $path);
-		}
-
 		$this->getApplication()->out('<info>Update complete</info>');
 
 		return true;

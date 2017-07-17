@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="stylesheet" href="{{ preload(asset('css/template.css', 'mix')) }}" type="text/css">
         {% if appDebug %}
-            <link rel="stylesheet" href="{{ asset('css/debugbar.css', 'unversioned') }}" type="text/css">
+            <link rel="stylesheet" href="{{ asset('css/debugbar.css') }}" type="text/css">
         {% endif %}
         <!-- End for Responsive -->
 
@@ -88,7 +88,7 @@
         <script src="{{ preload(asset('js/template.js', 'mix')) }}"></script>
         {% block bodyJavaScript %}{% endblock %}
         {% if appDebug %}
-            <script src="{{ asset('js/debugbar.js', 'unversioned') }}"></script>
+            <script src="{{ asset('js/debugbar.js') }}"></script>
         {% endif %}
     </body>
 </html>

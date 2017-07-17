@@ -23,7 +23,7 @@ use Symfony\Component\Asset\{
 	Packages, PathPackage
 };
 use Symfony\Component\Asset\VersionStrategy\{
-	EmptyVersionStrategy, JsonManifestVersionStrategy, StaticVersionStrategy
+	EmptyVersionStrategy, JsonManifestVersionStrategy
 };
 use Twig\Cache\{
 	CacheInterface, FilesystemCache, NullCache
@@ -96,18 +96,13 @@ class TemplatingProvider implements ServiceProviderInterface
 		/** @var AbstractApplication $app */
 		$app = $container->get(AbstractApplication::class);
 
-		$version = file_exists(JPATH_ROOT . '/cache/deployed.txt') ? trim(file_get_contents(JPATH_ROOT . '/cache/deployed.txt')) : '';
 		$context = new ApplicationContext($app);
-
-		// If we have a version, set to null to use the strategy's default format
-		$versionFormat = $version ? null : '%s';
 
 		$mediaPath = $app->get('uri.media.path', '/media/');
 
-		$defaultPackage = new PathPackage($mediaPath, new StaticVersionStrategy($version, $versionFormat), $context);
+		$defaultPackage = new PathPackage($mediaPath, new EmptyVersionStrategy, $context);
 
-		$unversionedStrategy = new PathPackage($mediaPath, new EmptyVersionStrategy, $context);
-		$mixStrategy         = new MixPathPackage(
+		$mixStrategy = new MixPathPackage(
 			$defaultPackage,
 			$mediaPath,
 			new JsonManifestVersionStrategy(JPATH_ROOT . '/www/media/mix-manifest.json'),
@@ -117,9 +112,7 @@ class TemplatingProvider implements ServiceProviderInterface
 		return new Packages(
 			$defaultPackage,
 			[
-				'img'         => $unversionedStrategy,
-				'unversioned' => $unversionedStrategy,
-				'mix'         => $mixStrategy
+				'mix' => $mixStrategy,
 			]
 		);
 	}
