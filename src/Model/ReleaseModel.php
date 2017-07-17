@@ -10,7 +10,6 @@ namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Mysql\MysqlQuery;
-use Joomla\FrameworkWebsite\Helper;
 use Joomla\Model\{
 	DatabaseModelInterface, DatabaseModelTrait
 };
@@ -23,23 +22,13 @@ class ReleaseModel implements DatabaseModelInterface
 	use DatabaseModelTrait;
 
 	/**
-	 * Helper object
-	 *
-	 * @var  Helper
-	 */
-	private $helper;
-
-	/**
 	 * Instantiate the model.
 	 *
-	 * @param   Helper          $helper  Helper object.
-	 * @param   DatabaseDriver  $db      The database adapter.
+	 * @param   DatabaseDriver  $db  The database adapter.
 	 */
-	public function __construct(Helper $helper, DatabaseDriver $db)
+	public function __construct(DatabaseDriver $db)
 	{
 		$this->setDb($db);
-
-		$this->helper = $helper;
 	}
 
 	/**

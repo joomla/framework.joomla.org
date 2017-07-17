@@ -565,7 +565,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getModelPackageService(Container $container) : PackageModel
 	{
-		return new PackageModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
+		return new PackageModel($container->get(DatabaseDriver::class));
 	}
 
 	/**
@@ -577,7 +577,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getModelReleaseService(Container $container) : ReleaseModel
 	{
-		return new ReleaseModel($container->get(Helper::class), $container->get(DatabaseDriver::class));
+		return new ReleaseModel($container->get(DatabaseDriver::class));
 	}
 
 	/**
