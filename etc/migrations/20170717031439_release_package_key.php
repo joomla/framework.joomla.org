@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class AddReleasesTable extends AbstractMigration
+class ReleasePackageKey extends AbstractMigration
 {
 	/**
 	 * Change Method.
@@ -28,14 +28,7 @@ class AddReleasesTable extends AbstractMigration
 	public function change()
 	{
 		$this->table('releases')
-			->addColumn('package_id', 'integer')
-			->addColumn('version', 'string', ['limit' => 25, 'null' => false])
-			->addColumn('tests', 'integer', ['null' => true, 'default' => 0])
-			->addColumn('assertions', 'integer', ['null' => true, 'default' => 0])
-			->addColumn('errors', 'integer', ['null' => true, 'default' => 0])
-			->addColumn('failures', 'integer', ['null' => true, 'default' => 0])
-			->addColumn('total_lines', 'integer', ['null' => true, 'default' => 0])
-			->addColumn('lines_covered', 'integer', ['null' => true, 'default' => 0])
-			->create();
+			->addForeignKey('package_id', $this->getAdapter()->getAdapterTableName('packages'), ['id'])
+			->update();
 	}
 }
