@@ -20,13 +20,16 @@ use Joomla\FrameworkWebsite\Command as AppCommands;
 use Joomla\FrameworkWebsite\Controller\{
 	Api\PackageControllerGet, Api\StatusControllerGet, HomepageController, PackageController, PageController, StatusController, WrongCmsController
 };
-use Joomla\FrameworkWebsite\Helper\PackagistHelper;
+use Joomla\FrameworkWebsite\Helper\{
+	GitHubHelper, PackagistHelper
+};
 use Joomla\FrameworkWebsite\Model\{
 	PackageModel, ReleaseModel
 };
 use Joomla\FrameworkWebsite\View\{
 	Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
 };
+use Joomla\Github\Github;
 use Joomla\Http\Http;
 use Joomla\Input\{
 	Cli, Input
@@ -73,6 +76,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(Helper::class, 'application.helper')
 			->share('application.helper', [$this, 'getApplicationHelperService'], true);
 
+		$container->alias(GitHubHelper::class, 'application.helper.github')
+			->share('application.helper.github', [$this, 'getApplicationHelperGithubService'], true);
+
 		$container->alias(PackagistHelper::class, 'application.helper.packagist')
 			->share('application.helper.packagist', [$this, 'getApplicationHelperPackagistService'], true);
 
@@ -97,6 +103,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
+		$container->share(AppCommands\GitHub\ContributorsCommand::class, [$this, 'getGitHubContributorsCommandClassService'], true);
 		$container->share(AppCommands\Package\SyncCommand::class, [$this, 'getPackageSyncCommandClassService'], true);
 		$container->share(AppCommands\Packagist\DownloadsCommand::class, [$this, 'getPackagistDownloadsCommandClassService'], true);
 		$container->share(AppCommands\Packagist\SyncCommand::class, [$this, 'getPackagistSyncCommandClassService'], true);
@@ -176,6 +183,18 @@ class ApplicationProvider implements ServiceProviderInterface
 		$helper->setPackages($container->get('application.packages'));
 
 		return $helper;
+	}
+
+	/**
+	 * Get the `application.helper.github` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  GitHubHelper
+	 */
+	public function getApplicationHelperGithubService(Container $container) : GitHubHelper
+	{
+		return new GitHubHelper($container->get(Github::class), $container->get(DatabaseInterface::class));
 	}
 
 	/**
@@ -517,6 +536,23 @@ class ApplicationProvider implements ServiceProviderInterface
 		return new WrongCmsController(
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the GitHub\ContributorsCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\GitHub\ContributorsCommand
+	 */
+	public function getGitHubContributorsCommandClassService(Container $container) : AppCommands\GitHub\ContributorsCommand
+	{
+		return new AppCommands\GitHub\ContributorsCommand(
+			$container->get(PackageModel::class),
+			$container->get(GitHubHelper::class),
+			$container->get(Input::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
 		);
 	}
 
