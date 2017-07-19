@@ -85,7 +85,7 @@ class GitHubHelper
 				$query->bind('github', $contributor->id, \PDO::PARAM_INT);
 				$query->bind('username', $contributor->login, \PDO::PARAM_STR);
 				$query->bind('avatar', $contributor->avatar_url, \PDO::PARAM_STR);
-				$query->bind('profile', $contributor->url, \PDO::PARAM_STR);
+				$query->bind('profile', $contributor->html_url, \PDO::PARAM_STR);
 
 				$this->database->setQuery($query)->execute();
 			}
