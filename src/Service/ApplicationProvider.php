@@ -9,7 +9,7 @@
 namespace Joomla\FrameworkWebsite\Service;
 
 use Joomla\Application as JoomlaApplication;
-use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
@@ -36,7 +36,6 @@ use Joomla\Renderer\{
 	RendererInterface, TwigRenderer
 };
 use Joomla\Router\Router;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
@@ -188,7 +187,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getApplicationHelperPackagistService(Container $container) : PackagistHelper
 	{
-		$helper = new PackagistHelper($container->get(Http::class), $container->get(CacheItemPoolInterface::class));
+		$helper = new PackagistHelper($container->get(Http::class), $container->get(DatabaseInterface::class));
 		$helper->setPackages($container->get('application.packages'));
 
 		return $helper;
@@ -570,7 +569,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getModelPackageService(Container $container) : PackageModel
 	{
-		return new PackageModel($container->get(DatabaseDriver::class));
+		return new PackageModel($container->get(DatabaseInterface::class));
 	}
 
 	/**
@@ -582,7 +581,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getModelReleaseService(Container $container) : ReleaseModel
 	{
-		return new ReleaseModel($container->get(DatabaseDriver::class));
+		return new ReleaseModel($container->get(DatabaseInterface::class));
 	}
 
 	/**
@@ -735,7 +734,6 @@ class ApplicationProvider implements ServiceProviderInterface
 		$view = new StatusHtmlView(
 			$container->get('model.package'),
 			$container->get('model.release'),
-			$container->get(PackagistHelper::class),
 			$container->get('renderer')
 		);
 

@@ -52,14 +52,9 @@ class DownloadsCommand extends AbstractController implements CommandInterface
 	{
 		$this->getApplication()->outputTitle('Sync Download Counts from Packagist');
 
-		if ($this->packagistHelper->saveCountsToCache($this->packagistHelper->fetchDownloadCounts()))
-		{
-			$this->getApplication()->out('<info>Update completed.</info>');
-		}
-		else
-		{
-			$this->getApplication()->out('<error>Error storing download counts.</error>');
-		}
+		$this->packagistHelper->syncDownloadCounts();
+
+		$this->getApplication()->out('<info>Update completed.</info>');
 
 		return true;
 	}

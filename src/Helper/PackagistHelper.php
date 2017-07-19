@@ -8,10 +8,11 @@
 
 namespace Joomla\FrameworkWebsite\Helper;
 
-use Joomla\Cache\Item\Item;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Database\Exception\ExecutionFailureException;
+use Joomla\Database\Mysql\MysqlQuery;
 use Joomla\FrameworkWebsite\PackageAware;
 use Joomla\Http\Http;
-use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Helper interacting with the Packagist API
@@ -21,11 +22,11 @@ class PackagistHelper
 	use PackageAware;
 
 	/**
-	 * The cache adapter
+	 * The database driver
 	 *
-	 * @var  CacheItemPoolInterface
+	 * @var  DatabaseInterface
 	 */
-	private $cache;
+	private $database;
 
 	/**
 	 * The HTTP driver
@@ -35,22 +36,15 @@ class PackagistHelper
 	private $http;
 
 	/**
-	 * The cache key
-	 *
-	 * @var  string
-	 */
-	private $cacheKey = 'downloads.count';
-
-	/**
 	 * Instantiate the helper.
 	 *
-	 * @param   Http                    $http   The HTTP driver.
-	 * @param   CacheItemPoolInterface  $cache  The cache adapter.
+	 * @param   Http               $http      The HTTP driver.
+	 * @param   DatabaseInterface  $database  The database driver.
 	 */
-	public function __construct(Http $http, CacheItemPoolInterface $cache)
+	public function __construct(Http $http, DatabaseInterface $database)
 	{
-		$this->cache = $cache;
-		$this->http  = $http;
+		$this->database = $database;
+		$this->http     = $http;
 	}
 
 	/**
@@ -58,7 +52,7 @@ class PackagistHelper
 	 *
 	 * @return  array
 	 */
-	public function fetchDownloadCounts() : array
+	private function fetchDownloadCounts() : array
 	{
 		$counts = [];
 
@@ -83,48 +77,40 @@ class PackagistHelper
 	}
 
 	/**
-	 * Fetch the download counts data from the data store
+	 * Fetch the download counts from Packagist and store them to the database
 	 *
-	 * @return  array
+	 * @return  void
+	 *
+	 * @throws  ExecutionFailureException
 	 */
-	public function getDownloadCounts() : array
+	public function syncDownloadCounts()
 	{
-		if ($this->cache->hasItem($this->cacheKey))
+		// Begin a transaction in case of error
+		$this->database->transactionStart();
+
+		try
 		{
-			$cacheItem = $this->cache->getItem($this->cacheKey);
+			foreach ($this->fetchDownloadCounts() as $package => $count)
+			{
+				/** @var MysqlQuery $query */
+				$query = $this->database->getQuery(true)
+					->update('#__packages')
+					->set($this->database->quoteName('downloads') . ' = :downloads')
+					->where($this->database->quoteName('package') . ' = :package');
 
-			if ($cacheItem->isHit())
-			{
-				$counts = $cacheItem->get();
+				$query->bind('downloads', $count, \PDO::PARAM_INT);
+				$query->bind('package', $package, \PDO::PARAM_STR);
+
+				$this->database->setQuery($query)->execute();
 			}
-			else
-			{
-				$counts = $this->fetchDownloadCounts();
-				$this->saveCountsToCache($counts);
-			}
+
+			$this->database->transactionCommit();
 		}
-		else
+		catch (ExecutionFailureException $exception)
 		{
-			$counts = $this->fetchDownloadCounts();
-			$this->saveCountsToCache($counts);
+			$this->database->transactionRollback();
+
+			throw $exception;
 		}
-
-		return $counts;
-	}
-
-	/**
-	 * Save the download count data to the cache store
-	 *
-	 * @param   array  $counts  Array containing the count data
-	 *
-	 * @return  bool  Result of the cache save operation
-	 */
-	public function saveCountsToCache(array $counts) : bool
-	{
-		// Cache for 59 minutes, the API can't handle anything over one hour right now
-		$cacheItem = (new Item($this->cacheKey, 3540))
-			->set($counts);
-
-		return $this->cache->save($cacheItem);
 	}
 }

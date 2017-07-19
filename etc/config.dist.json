@@ -26,10 +26,6 @@
     "router": {
         "cache": false
     },
-    "cache": {
-        "enabled": false,
-        "adapter": "filesystem"
-    },
     "errorReporting": 0,
     "debug": false
 }

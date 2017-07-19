@@ -53,9 +53,6 @@ The application's configuration is defined as follows:
     * `analytics.account` - The UA code of the Analytics account to send data to
 * Router - The `joomla/router` package is used to handle the application's routing
     * `router.cache` - Flag to enable the use of a compiled router file
-* Caching - The `joomla/cache` package is used to provide a caching API to store data
-    * `enabled` - Is the cache enabled?
-    * `adapter` - The cache adapter to use; the currently supported values can be found in the [CacheProvider](src/Service/CacheProvider.php) 
 * Logging - The `monolog/monolog` package is used for logging functionality
     * `log.level` - The default logging level to use for all application loggers, this defaults to the `ERROR` level
     * `log.application` - The logging level to use specifically for the `monolog.handler.application` logger; defaults to the `log.level` value

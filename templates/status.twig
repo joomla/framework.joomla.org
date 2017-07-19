@@ -40,12 +40,8 @@
                 </td>
                 <td>{{ release.version }}</td>
                 <td>
-                    {% if downloads[release.package.package] != false %}
-                        {% set _totalDownloads = _totalDownloads + downloads[release.package.package] %}
-                        {{ downloads[release.package.package]|number_format }}
-                    {% else %}
-                        N/A
-                    {% endif %}
+                    {% set _totalDownloads = _totalDownloads + release.package.downloads %}
+                    {{ release.package.downloads|number_format }}
                 </td>
                 {% if release.package.package in ['compat', 'test'] %}
                     <td colspan="7" class="text-center">This package is not unit tested</td>
