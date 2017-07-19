@@ -26,6 +26,15 @@
     "router": {
         "cache": false
     },
+    "github": {
+        "gh": {
+            "token": false
+        },
+        "api": {
+            "username": false,
+            "password": false
+        }
+    },
     "errorReporting": 0,
     "debug": false
 }
