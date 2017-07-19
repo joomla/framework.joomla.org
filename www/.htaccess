@@ -146,6 +146,15 @@ RewriteRule ^(.*)$ https://framework.joomla.org/$1 [R=301,L,QSA]
 
 
 ###########################################
+# ======== Redirect removed pages =========
+
+RewriteCond %{REQUEST_URI} ^/about
+RewriteRule ^(.*)$ /contributors [R=301,L,QSA]
+
+###########################################
+
+
+###########################################
 # ======== SEF URL Routing ========
 
 # If the request is not for a static asset or the PHPUnit coverage reports

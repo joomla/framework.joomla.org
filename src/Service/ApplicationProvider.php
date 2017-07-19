@@ -18,15 +18,18 @@ use Joomla\FrameworkWebsite\{
 };
 use Joomla\FrameworkWebsite\Command as AppCommands;
 use Joomla\FrameworkWebsite\Controller\{
-	Api\PackageControllerGet, Api\StatusControllerGet, HomepageController, PackageController, PageController, StatusController, WrongCmsController
+	Api\PackageControllerGet, Api\StatusControllerGet, ContributorsController, HomepageController, PackageController, PageController, StatusController, WrongCmsController
 };
-use Joomla\FrameworkWebsite\Helper\PackagistHelper;
+use Joomla\FrameworkWebsite\Helper\{
+	GitHubHelper, PackagistHelper
+};
 use Joomla\FrameworkWebsite\Model\{
-	PackageModel, ReleaseModel
+	ContributorModel, PackageModel, ReleaseModel
 };
 use Joomla\FrameworkWebsite\View\{
-	Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
+	Contributor\ContributorHtmlView, Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
 };
+use Joomla\Github\Github;
 use Joomla\Http\Http;
 use Joomla\Input\{
 	Cli, Input
@@ -73,6 +76,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(Helper::class, 'application.helper')
 			->share('application.helper', [$this, 'getApplicationHelperService'], true);
 
+		$container->alias(GitHubHelper::class, 'application.helper.github')
+			->share('application.helper.github', [$this, 'getApplicationHelperGithubService'], true);
+
 		$container->alias(PackagistHelper::class, 'application.helper.packagist')
 			->share('application.helper.packagist', [$this, 'getApplicationHelperPackagistService'], true);
 
@@ -97,6 +103,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
+		$container->share(AppCommands\GitHub\ContributorsCommand::class, [$this, 'getGitHubContributorsCommandClassService'], true);
 		$container->share(AppCommands\Package\SyncCommand::class, [$this, 'getPackageSyncCommandClassService'], true);
 		$container->share(AppCommands\Packagist\DownloadsCommand::class, [$this, 'getPackagistDownloadsCommandClassService'], true);
 		$container->share(AppCommands\Packagist\SyncCommand::class, [$this, 'getPackagistSyncCommandClassService'], true);
@@ -115,6 +122,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(StatusControllerGet::class, 'controller.api.status')
 			->share('controller.api.status', [$this, 'getControllerApiStatusService'], true);
 
+		$container->alias(ContributorsController::class, 'controller.contributors')
+			->share('controller.contributors', [$this, 'getControllerContributorsService'], true);
+
 		$container->alias(HomepageController::class, 'controller.homepage')
 			->share('controller.homepage', [$this, 'getControllerHomepageService'], true);
 
@@ -131,6 +141,9 @@ class ApplicationProvider implements ServiceProviderInterface
 			->share('controller.wrong.cms', [$this, 'getControllerWrongCmsService'], true);
 
 		// Models
+		$container->alias(ContributorModel::class, 'model.contributor')
+			->share('model.contributor', [$this, 'getModelContributorService'], true);
+
 		$container->alias(PackageModel::class, 'model.package')
 			->share('model.package', [$this, 'getModelPackageService'], true);
 
@@ -138,6 +151,9 @@ class ApplicationProvider implements ServiceProviderInterface
 			->share('model.release', [$this, 'getModelReleaseService'], true);
 
 		// Views
+		$container->alias(ContributorHtmlView::class, 'view.contributor.html')
+			->share('view.contributor.html', [$this, 'getViewContributorHtmlService'], true);
+
 		$container->alias(PackageHtmlView::class, 'view.package.html')
 			->share('view.package.html', [$this, 'getViewPackageHtmlService'], true);
 
@@ -176,6 +192,18 @@ class ApplicationProvider implements ServiceProviderInterface
 		$helper->setPackages($container->get('application.packages'));
 
 		return $helper;
+	}
+
+	/**
+	 * Get the `application.helper.github` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  GitHubHelper
+	 */
+	public function getApplicationHelperGithubService(Container $container) : GitHubHelper
+	{
+		return new GitHubHelper($container->get(Github::class), $container->get(DatabaseInterface::class));
 	}
 
 	/**
@@ -280,6 +308,11 @@ class ApplicationProvider implements ServiceProviderInterface
 		$router->head(
 			'/',
 			HomepageController::class
+		);
+
+		$router->get(
+			'/contributors',
+			ContributorsController::class
 		);
 
 		$router->get(
@@ -446,6 +479,22 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
+	 * @return  ContributorsController
+	 */
+	public function getControllerContributorsService(Container $container) : ContributorsController
+	{
+		return new ContributorsController(
+			$container->get(ContributorHtmlView::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the `controller.homepage` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
 	 * @return  HomepageController
 	 */
 	public function getControllerHomepageService(Container $container) : HomepageController
@@ -521,6 +570,23 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the GitHub\ContributorsCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\GitHub\ContributorsCommand
+	 */
+	public function getGitHubContributorsCommandClassService(Container $container) : AppCommands\GitHub\ContributorsCommand
+	{
+		return new AppCommands\GitHub\ContributorsCommand(
+			$container->get(PackageModel::class),
+			$container->get(GitHubHelper::class),
+			$container->get(Input::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
+		);
+	}
+
+	/**
 	 * Get the HelpCommand class service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -558,6 +624,18 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getInputCliClassService(Container $container) : Cli
 	{
 		return new Cli;
+	}
+
+	/**
+	 * Get the `model.contributor` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ContributorModel
+	 */
+	public function getModelContributorService(Container $container) : ContributorModel
+	{
+		return new ContributorModel($container->get(DatabaseInterface::class));
 	}
 
 	/**
@@ -684,6 +762,25 @@ class ApplicationProvider implements ServiceProviderInterface
 			$container->get(Input::class),
 			$container->get(JoomlaApplication\AbstractApplication::class)
 		);
+	}
+
+	/**
+	 * Get the `view.contributor.html` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ContributorHtmlView
+	 */
+	public function getViewContributorHtmlService(Container $container) : ContributorHtmlView
+	{
+		$view = new ContributorHtmlView(
+			$container->get('model.contributor'),
+			$container->get('renderer')
+		);
+
+		$view->setLayout('contributors.twig');
+
+		return $view;
 	}
 
 	/**
