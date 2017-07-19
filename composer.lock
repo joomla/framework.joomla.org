@@ -306,12 +306,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/application.git",
-                "reference": "61c9b006576630c133c72f4e7ddd0166f5602baf"
+                "reference": "99a7cac6c11b55d12e20c7e8669bd85a24671d71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/application/zipball/61c9b006576630c133c72f4e7ddd0166f5602baf",
-                "reference": "61c9b006576630c133c72f4e7ddd0166f5602baf",
+                "url": "https://api.github.com/repos/joomla-framework/application/zipball/99a7cac6c11b55d12e20c7e8669bd85a24671d71",
+                "reference": "99a7cac6c11b55d12e20c7e8669bd85a24671d71",
                 "shasum": ""
             },
             "require": {
@@ -356,7 +356,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2017-06-20 02:25:07"
+            "time": "2017-06-23 02:29:14"
         },
         {
             "name": "joomla/cache",
@@ -1808,7 +1808,7 @@
         },
         {
             "name": "symfony/asset",
-            "version": "v3.3.4",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset.git",
@@ -1864,7 +1864,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.3.4",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -1926,7 +1926,7 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.3.4",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
@@ -1995,7 +1995,7 @@
         },
         {
             "name": "symfony/debug",
-            "version": "v3.3.4",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
@@ -2051,16 +2051,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.3.4",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "311fa718389efbd8b627c272b9324a62437018cc"
+                "reference": "427987eb4eed764c3b6e38d52a0f87989e010676"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/311fa718389efbd8b627c272b9324a62437018cc",
-                "reference": "311fa718389efbd8b627c272b9324a62437018cc",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/427987eb4eed764c3b6e38d52a0f87989e010676",
+                "reference": "427987eb4eed764c3b6e38d52a0f87989e010676",
                 "shasum": ""
             },
             "require": {
@@ -2096,7 +2096,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-24T09:29:48+00:00"
+            "time": "2017-07-11T07:17:58+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2159,7 +2159,7 @@
         },
         {
             "name": "symfony/web-link",
-            "version": "v3.3.4",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/web-link.git",
@@ -2230,7 +2230,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.3.4",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -2450,12 +2450,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla/coding-standards.git",
-                "reference": "8c08db51a45b2e13377fdf601c5748ec37e0f293"
+                "reference": "3eeab4d1d1a4d87130f975cde8b2a7b5a6a36340"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla/coding-standards/zipball/8c08db51a45b2e13377fdf601c5748ec37e0f293",
-                "reference": "8c08db51a45b2e13377fdf601c5748ec37e0f293",
+                "url": "https://api.github.com/repos/joomla/coding-standards/zipball/3eeab4d1d1a4d87130f975cde8b2a7b5a6a36340",
+                "reference": "3eeab4d1d1a4d87130f975cde8b2a7b5a6a36340",
                 "shasum": ""
             },
             "require": {
@@ -2489,7 +2489,7 @@
                 "php codesniffer",
                 "phpcs"
             ],
-            "time": "2017-06-30T14:22:06+00:00"
+            "time": "2017-07-18T23:28:15+00:00"
         },
         {
             "name": "maximebf/debugbar",
@@ -2632,16 +2632,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.3.4",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "9ee920bba1d2ce877496dcafca7cbffff4dbe08a"
+                "reference": "0f32b62d21991700250fed5109b092949007c5b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/9ee920bba1d2ce877496dcafca7cbffff4dbe08a",
-                "reference": "9ee920bba1d2ce877496dcafca7cbffff4dbe08a",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/0f32b62d21991700250fed5109b092949007c5b3",
+                "reference": "0f32b62d21991700250fed5109b092949007c5b3",
                 "shasum": ""
             },
             "require": {
@@ -2696,7 +2696,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2017-07-05T13:02:37+00:00"
+            "time": "2017-07-10T14:18:27+00:00"
         }
     ],
     "aliases": [],
