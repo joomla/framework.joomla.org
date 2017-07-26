@@ -3,7 +3,8 @@ packages:
     archive: ~
     authentication: ~
     cache: ~
-    compat: ~
+    compat:
+        deprecated: true
     controller: ~
     crypt: ~
     data: ~
