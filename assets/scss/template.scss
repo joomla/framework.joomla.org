@@ -297,33 +297,15 @@ hr#about {
   text-align: center;
 }
 
-.involved-chunks {
-  div {
-    width: 96%;
-    margin: 1%;
-    padding: 1% 1% 60px;
-    float: left;
-    position: relative;
-    @media screen and (min-width: 501px) {
-      width: 46%;
-    }
-    @media screen and (min-width: 501px) and (max-width: $screen-md-max) {
-      &:nth-child(2n+1) {
-        clear: both;
-      }
-    }
-    @media screen and (min-width: $screen-lg-min) {
-      width: 22%;
-      margin: 1.5%;
-      padding: 1.5% 1.5% 60px;
-    }
-    p {
-      font-size: 14px;
-      &:last-child {
-        position: absolute;
-        bottom: 10px
-      }
-    }
+.get-involved {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-column-gap: 20px; // Since the grid items are in a .well, they're inheriting top/bottom margins and we only need to handle the side gaps here
+  @media screen and (min-width: 501px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media screen and (min-width: $screen-lg-min) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
 
