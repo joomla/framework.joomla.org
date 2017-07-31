@@ -359,33 +359,33 @@ footer {
     }
   }
   h3 {
-    &.chop-top {
-      margin-top: 0;
-    }
+    margin-top: 0;
   }
   .homepage-footer {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "a b" "c c" "d d";
     grid-column-gap: 20px;
+    grid-row-gap: 20px;
+  }
+  .footer-area {
+    &.resources {
+      grid-area: a;
+    }
+    &.subscribe {
+      grid-area: b;
+    }
+    &.case-studies {
+      grid-area: c;
+    }
+    &.copyright {
+      grid-area: d;
+    }
   }
   @media screen and (min-width: $screen-sm-min) {
     .homepage-footer {
       grid-template-columns: 1fr 1fr;
       grid-template-areas: "a b" "a c" "d d";
-    }
-    .footer-area {
-      &.resources {
-        grid-area: a;
-      }
-      &.subscribe {
-        grid-area: b;
-      }
-      &.case-studies {
-        grid-area: c;
-      }
-      &.copyright {
-        grid-area: d;
-      }
     }
   }
 }
