@@ -327,8 +327,20 @@ hr#about {
     @media screen and (min-width: $screen-lg-min) {
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     }
+    .contributor {
+      .thumbnail {
+        img {
+          max-width: 130px;
+          @media screen and (min-width: 501px) {
+            max-width: 200px;
+          }
+          @media screen and (min-width: 600px) {
+            max-width: 150px;
+          }
+        }
+      }
+    }
   }
-
   .marketers {
     display: grid;
     grid-template-columns: 1fr 1fr;
