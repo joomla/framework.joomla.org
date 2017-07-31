@@ -309,6 +309,41 @@ hr#about {
   }
 }
 
+.team {
+  .contributors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 20px;
+    @media screen and (min-width: 600px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    @media screen and (min-width: $screen-sm-min) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    @media screen and (min-width: $screen-md-min) {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+    @media screen and (min-width: $screen-lg-min) {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+  }
+
+  .marketers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 20px;
+    @media screen and (min-width: 700px) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    @media screen and (min-width: $screen-md-min) {
+      grid-column-gap: 30px;
+    }
+    @media screen and (min-width: $screen-lg-min) {
+      grid-column-gap: 40px;
+    }
+  }
+}
+
 footer {
   background: $darker-black;
   color: #a4a4a4;

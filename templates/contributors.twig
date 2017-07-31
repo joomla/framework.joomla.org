@@ -11,10 +11,10 @@
     <p class="lead">Development on the Joomla! Framework is steered by the <a href="https://volunteers.joomla.org/teams/framework-working-group">Framework Working Group</a> with contributions from {{ contributors|length }} people.</p>
 
     <h2 class="page-header">Developers</h2>
-    <div class="row">
+    <div class="contributors">
         {% for contributor in contributors %}
             {% set _name = contributor.username %}
-            <div class="col-md-2 col-sm-3 col-xs-4">
+            <div class="contributor">
                 <div class="thumbnail">
                     <img alt="{{ _name }}" src="{{ contributor.avatar }}">
                     <div class="caption" data-display="equal">
@@ -26,26 +26,26 @@
     </div>
 
     <h2 class="page-header">Marketing</h2>
-    <div class="row">
-        <div class="col-md-2 col-sm-3 col-xs-4">
+    <div class="marketers">
+        <div class="marketer">
             <div class="thumbnail">
                 <img alt="Ryan Boog" src="https://lh3.googleusercontent.com/-w7555gudPUY/UpUWCUClgXI/AAAAAAAAR2c/u-hJk-hL2cI/s320-no/DSC_0954.jpg">
                 <div class="caption" data-display="equal"><h4>Ryan Boog</h4></div>
             </div>
         </div>
-        <div class="col-md-2 col-sm-3 col-xs-4">
+        <div class="marketer">
             <div class="thumbnail">
                 <img alt="Parth Lawate" src="https://2.gravatar.com/avatar/fe6fa1b4682e3bfcc6978d0fa466ea90?d=https%3A%2F%2Fidenticons.github.com%2F5818e5286d5a59eedd6b150a1a7a2b9e.png&r=x&s=300">
                 <div class="caption" data-display="equal"><h4>Parth Lawate</h4></div>
             </div>
         </div>
-        <div class="col-md-2 col-sm-3 col-xs-4">
+        <div class="marketer">
             <div class="thumbnail">
                 <img alt="Jessica Dunbar" src="https://1.gravatar.com/avatar/fb04946b9f49e5cc6ff8e544115dd613?d=https%3A%2F%2Fidenticons.github.com%2Ff2f6df325f6369a0bbf99bed4446e8e4.png&r=x&s=300">
                 <div class="caption" data-display="equal"><h4>Jessica Dunbar</h4></div>
             </div>
         </div>
-        <div class="col-md-2 col-sm-3 col-xs-4">
+        <div class="marketer">
             <div class="thumbnail">
                 <img alt="Duke Speer" src="https://2.gravatar.com/avatar/53c58eebf3b28892884f2cded3200d6e?d=https%3A%2F%2Fidenticons.github.com%2Fed7679f15bc90ac2bdd94574599a6be8.png&r=x&s=300">
                 <div class="caption" data-display="equal"><h4>Duke Speer</h4></div>
