@@ -75,7 +75,8 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_scaffolding.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_type.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_code.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_grid.scss";
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_grid.scss";
+@import "_grid.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_tables.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_forms.scss";
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_buttons.scss";
