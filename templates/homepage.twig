@@ -139,47 +139,40 @@
 {% endblock %}
 
 {% block footerContent %}
-<div class="container clearfix">
-    <div class="row">
-        <aside class="resources col-sm-6">
-            <h3><span class="fa fa-book"></span> Resources</h3>
-            <p><a href="https://packagist.org/packages/joomla/">Packagist</a></p>
-            <p><a href="https://getcomposer.org/download/">Download Composer</a></p>
-            <p><a href="https://github.com/joomla-framework">GitHub Organization</a></p>
-            <p><a href="https://developer.joomla.org/framework/documentation.html">Documentation</a></p>
-            <p><a href="https://groups.google.com/group/joomla-dev-framework">Official Group</a></p>
-            <p><a href="https://www.joomla.org/sponsor.html">Support via OSM</a></p>
-            <p><a href="{{ route('contribute') }}">Contributing to the Framework</a></p>
-            <p><a href="https://developer.joomla.org/framework/roadmap.html">Roadmap</a></p>
-            <p><a href="{{ route('api') }}">Website API</a></p>
-        </aside>
-
-        <aside class="case-studies col-sm-6">
-            <h3>Subscribe</h3>
-            <p>Subscribe to the Google Group mailing list.</p>
-            <form action="https://groups.google.com/group/joomla-dev-framework/boxsubscribe" class="form-inline signup" role="form">
-                <div class="form-group">
-                    <label class="sr-only" for="email">Email address</label>
-                    <input type="email" id="email" name="email" placeholder="Email Address" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Subscribe" name="sub">
-                </div>
-            </form>
-
-            <h3>Case Studies</h3>
-            <p>This framework powers Joomla's own issue tracker. See this Framework-based application in operation at <a href="https://issues.joomla.org">issues.joomla.org</a></p>
-            <p>Also, it already has been adopted by the likes of eBay for internal use. Some of the code offered by Joomla! Framework is already included with the Joomla! CMS. Other packages will be included in future Joomla! CMS versions as needed.</p>
-            <p><a href="https://groups.google.com/group/joomla-dev-framework">Join the Google Group</a> and let us know how you have implemented it.</p>
-        </aside>
-
-        <aside class="col-sm-12">
-            {{ footer_copyright() }}
-        </aside>
+<div class="container homepage-footer">
+    <div class="footer-area resources">
+        <h3 class="chop-top"><span class="fa fa-book"></span> Resources</h3>
+        <p><a href="https://packagist.org/packages/joomla/">Packagist</a></p>
+        <p><a href="https://getcomposer.org/download/">Download Composer</a></p>
+        <p><a href="https://github.com/joomla-framework">GitHub Organization</a></p>
+        <p><a href="https://developer.joomla.org/framework/documentation.html">Documentation</a></p>
+        <p><a href="https://groups.google.com/group/joomla-dev-framework">Official Group</a></p>
+        <p><a href="https://www.joomla.org/sponsor.html">Support via OSM</a></p>
+        <p><a href="{{ route('contribute') }}">Contributing to the Framework</a></p>
+        <p><a href="https://developer.joomla.org/framework/roadmap.html">Roadmap</a></p>
+        <p><a href="{{ route('api') }}">Website API</a></p>
+    </div>
+    <div class="footer-area subscribe">
+        <h3 class="chop-top">Subscribe</h3>
+        <p>Subscribe to the Google Group mailing list.</p>
+        <form action="https://groups.google.com/group/joomla-dev-framework/boxsubscribe" class="form-inline signup" role="form">
+            <div class="form-group">
+                <label class="sr-only" for="email">Email address</label>
+                <input type="email" id="email" name="email" placeholder="Email Address" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Subscribe" name="sub">
+            </div>
+        </form>
+    </div>
+    <div class="footer-area case-studies">
+        <h3>Case Studies</h3>
+        <p>This framework powers Joomla's own issue tracker. See this Framework-based application in operation at <a href="https://issues.joomla.org">issues.joomla.org</a></p>
+        <p>Also, it already has been adopted by the likes of eBay for internal use. Some of the code offered by Joomla! Framework is already included with the Joomla! CMS. Other packages will be included in future Joomla! CMS versions as needed.</p>
+        <p><a href="https://groups.google.com/group/joomla-dev-framework">Join the Google Group</a> and let us know how you have implemented it.</p>
+    </div>
+    <div class="footer-area copyright">
+        {{ footer_copyright() }}
     </div>
 </div>
-{% endblock %}
-
-{% block bodyJavaScript %}
-
 {% endblock %}

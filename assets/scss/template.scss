@@ -312,6 +312,7 @@ hr#about {
 footer {
   background: $darker-black;
   color: #a4a4a4;
+  padding-top: 20px;
   @media screen and (max-width: $screen-md-max) {
     padding-left: 10px;
     padding-right: 10px;
@@ -319,6 +320,36 @@ footer {
   p {
     @media screen and (max-width: $screen-sm-max) {
       font-size: 12px;
+    }
+  }
+  h3 {
+    &.chop-top {
+      margin-top: 0;
+    }
+  }
+  .homepage-footer {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-column-gap: 20px;
+  }
+  @media screen and (min-width: $screen-sm-min) {
+    .homepage-footer {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "a b" "a c" "d d";
+    }
+    .footer-area {
+      &.resources {
+        grid-area: a;
+      }
+      &.subscribe {
+        grid-area: b;
+      }
+      &.case-studies {
+        grid-area: c;
+      }
+      &.copyright {
+        grid-area: d;
+      }
     }
   }
 }
