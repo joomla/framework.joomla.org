@@ -1,9 +1,7 @@
 nav.homepage {
   ul {
     li {
-      @include media-breakpoint-up(md) {
-        margin-left: 4%;
-      }
+      margin-left: 5%;
       @include media-breakpoint-up(xl) {
         margin-left: 6%;
       }
@@ -100,19 +98,7 @@ nav.homepage {
     }
   }
   .fa {
-    &.mega {
-      color: $white;
-      font-size: 8rem;
-      @include media-breakpoint-up(sm) {
-        font-size: 9rem;
-      }
-      @include media-breakpoint-up(lg) {
-        font-size: 10rem;
-      }
-      @include media-breakpoint-up(xl) {
-        font-size: 11rem;
-      }
-    }
+    color: $white;
   }
 }
 
