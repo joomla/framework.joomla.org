@@ -19,6 +19,13 @@ use Joomla\Github\Github;
 class GitHubHelper
 {
 	/**
+	 * Array tracking commit counts for each contributor
+	 *
+	 * @var  array
+	 */
+	private $commitCounts = [];
+
+	/**
 	 * The database driver
 	 *
 	 * @var  DatabaseInterface
@@ -51,6 +58,16 @@ class GitHubHelper
 	{
 		$this->database = $database;
 		$this->github   = $github;
+	}
+
+	/**
+	 * Get the contributor commit count
+	 *
+	 * @return  array
+	 */
+	public function getCommitCounts(): array
+	{
+		return $this->commitCounts;
 	}
 
 	/**
@@ -88,6 +105,15 @@ class GitHubHelper
 				$query->bind('profile', $contributor->html_url, \PDO::PARAM_STR);
 
 				$this->database->setQuery($query)->execute();
+
+				if (isset($this->commitCounts[$contributor->login]))
+				{
+					$this->commitCounts[$contributor->login] += $contributor->contributions;
+				}
+				else
+				{
+					$this->commitCounts[$contributor->login] = $contributor->contributions;
+				}
 			}
 
 			$this->database->transactionCommit();
@@ -134,6 +160,43 @@ class GitHubHelper
 
 				$query->bind('name', $name, \PDO::PARAM_STR);
 				$query->bind('username', $username, \PDO::PARAM_STR);
+
+				$this->database->setQuery($query)->execute();
+			}
+
+			$this->database->transactionCommit();
+		}
+		catch (ExecutionFailureException $exception)
+		{
+			$this->database->transactionRollback();
+
+			throw $exception;
+		}
+	}
+
+	/**
+	 * Update the stored commit counts for contributors
+	 *
+	 * @return  void
+	 *
+	 * @throws  ExecutionFailureException
+	 */
+	public function updateCommitCounts()
+	{
+		$this->database->transactionStart();
+
+		try
+		{
+			foreach ($this->getCommitCounts() as $username => $count)
+			{
+				/** @var MysqlQuery $query */
+				$query = $this->database->getQuery(true);
+				$query->update($this->database->quoteName('#__contributors'))
+					->set($this->database->quoteName('commits') . ' = :commits')
+					->where($this->database->quoteName('username') . ' = :username');
+
+				$query->bind('username', $username, \PDO::PARAM_STR);
+				$query->bind('commits', $count, \PDO::PARAM_INT);
 
 				$this->database->setQuery($query)->execute();
 			}
