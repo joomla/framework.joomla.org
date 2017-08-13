@@ -46,7 +46,7 @@ class ContributorHtmlView extends BaseHtmlView
 	{
 		$this->setData(
 			[
-				'contributors' => $this->contributorModel->getContributors(),
+				'contributors' => $this->contributorModel->getContributorsSortedByCommitCount(),
 			]
 		);
 
