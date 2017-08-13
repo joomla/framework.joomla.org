@@ -1,3 +1,25 @@
+nav.homepage {
+  ul {
+    li {
+      @include media-breakpoint-up(md) {
+        margin-left: 4%;
+      }
+      @include media-breakpoint-up(xl) {
+        margin-left: 6%;
+      }
+      span {
+        vertical-align: top;
+        &.title {
+          display: none;
+          @include media-breakpoint-up(md) {
+            display: inline;
+          }
+        }
+      }
+    }
+  }
+}
+
 .go {
   background: url(../images/j-framework-500.png) no-repeat center center;
   -webkit-background-size: cover;
@@ -16,7 +38,7 @@
     font-size: 2rem;
   }
   @include media-breakpoint-down(xl) {
-    margin: 0 -10px;
+    margin: 0 -.625rem;
   }
   @include media-breakpoint-up(xl) {
     background-image: url(../images/j-framework-full.png);
@@ -54,26 +76,6 @@
     }
     @include media-breakpoint-up(xl) {
       font-size: 5.5rem;
-    }
-  }
-  .cta {
-    max-width: 767px;
-    margin: 0 auto;
-    p {
-      margin-bottom: 0;
-    }
-    .btn {
-      width: 100%;
-      margin: 1.25rem 0;
-      @include media-breakpoint-up(sm) {
-        width: 40%;
-      }
-      @include media-breakpoint-up(md) {
-        font-size: 1.25rem;
-      }
-      @include media-breakpoint-up(lg) {
-        font-size: 1.5rem;
-      }
     }
   }
   .fa {
