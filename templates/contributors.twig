@@ -13,7 +13,7 @@
     <h2 class="page-header">Developers</h2>
     <div class="row">
         {% for contributor in contributors %}
-            {% set _name = contributor.username %}
+            {% set _name = contributor.name ?: contributor.username %}
             <div class="col-md-2 col-sm-3 col-xs-4">
                 <div class="thumbnail">
                     <img alt="{{ _name }}" src="{{ contributor.avatar }}">

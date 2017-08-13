@@ -99,4 +99,52 @@ class GitHubHelper
 			throw $exception;
 		}
 	}
+
+	/**
+	 * Sync the contributor user data
+	 *
+	 * @return  void
+	 *
+	 * @throws  ExecutionFailureException
+	 */
+	public function syncUserData()
+	{
+		/** @var MysqlQuery $query */
+		$query = $this->database->getQuery(true);
+		$query->select($this->database->quoteName(['username']))
+			->from($this->database->quoteName('#__contributors'));
+
+		$usernames = $this->database->setQuery($query)->loadColumn();
+
+		$this->database->transactionStart();
+
+		try
+		{
+			foreach ($usernames as $username)
+			{
+				$userData = $this->github->users->get($username);
+
+				/** @var MysqlQuery $query */
+				$query = $this->database->getQuery(true);
+				$query->update($this->database->quoteName('#__contributors'))
+					->set($this->database->quoteName('name') . ' = :name')
+					->where($this->database->quoteName('username') . ' = :username');
+
+				$name = $userData->name ?: '';
+
+				$query->bind('name', $name, \PDO::PARAM_STR);
+				$query->bind('username', $username, \PDO::PARAM_STR);
+
+				$this->database->setQuery($query)->execute();
+			}
+
+			$this->database->transactionCommit();
+		}
+		catch (ExecutionFailureException $exception)
+		{
+			$this->database->transactionRollback();
+
+			throw $exception;
+		}
+	}
 }
