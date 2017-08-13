@@ -78,6 +78,26 @@ nav.homepage {
       font-size: 5.5rem;
     }
   }
+  .cta {
+    max-width: 767px;
+    margin: 0 auto;
+    p {
+      margin-bottom: 0;
+    }
+    .btn {
+      width: 100%;
+      margin: 1.25rem 0;
+      @include media-breakpoint-up(sm) {
+        width: 40%;
+      }
+      @include media-breakpoint-up(md) {
+        font-size: 1.25rem;
+      }
+      @include media-breakpoint-up(lg) {
+        font-size: 1.5rem;
+      }
+    }
+  }
   .fa {
     &.mega {
       color: $white;
