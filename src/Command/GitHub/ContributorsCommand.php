@@ -69,6 +69,14 @@ class ContributorsCommand extends AbstractController implements CommandInterface
 			$this->githubHelper->syncPackageContributors($package->repo);
 		}
 
+		$this->getApplication()->out('<info>Processing user data.</info>');
+
+		$this->githubHelper->syncUserData();
+
+		$this->getApplication()->out('<info>Processing commit counts.</info>');
+
+		$this->githubHelper->updateCommitCounts();
+
 		$this->getApplication()->out('<info>Update completed.</info>');
 
 		return true;

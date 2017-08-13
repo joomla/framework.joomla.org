@@ -47,4 +47,22 @@ class ContributorModel implements DatabaseModelInterface
 
 		return $db->setQuery($query)->loadObjectList('id');
 	}
+
+	/**
+	 * Get the contributor data sorted by commit counts
+	 *
+	 * @return  array
+	 */
+	public function getContributorsSortedByCommitCount() : array
+	{
+		$db = $this->getDb();
+
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__contributors'))
+			->order('commits DESC, name ASC, username ASC');
+
+		return $db->setQuery($query)->loadObjectList('id');
+	}
 }

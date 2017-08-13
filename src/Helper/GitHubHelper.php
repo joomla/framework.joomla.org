@@ -19,6 +19,13 @@ use Joomla\Github\Github;
 class GitHubHelper
 {
 	/**
+	 * Array tracking commit counts for each contributor
+	 *
+	 * @var  array
+	 */
+	private $commitCounts = [];
+
+	/**
 	 * The database driver
 	 *
 	 * @var  DatabaseInterface
@@ -54,6 +61,16 @@ class GitHubHelper
 	}
 
 	/**
+	 * Get the contributor commit count
+	 *
+	 * @return  array
+	 */
+	public function getCommitCounts(): array
+	{
+		return $this->commitCounts;
+	}
+
+	/**
 	 * Sync the contributors for a package
 	 *
 	 * @param   string  $package  The package to synchronize
@@ -86,6 +103,100 @@ class GitHubHelper
 				$query->bind('username', $contributor->login, \PDO::PARAM_STR);
 				$query->bind('avatar', $contributor->avatar_url, \PDO::PARAM_STR);
 				$query->bind('profile', $contributor->html_url, \PDO::PARAM_STR);
+
+				$this->database->setQuery($query)->execute();
+
+				if (isset($this->commitCounts[$contributor->login]))
+				{
+					$this->commitCounts[$contributor->login] += $contributor->contributions;
+				}
+				else
+				{
+					$this->commitCounts[$contributor->login] = $contributor->contributions;
+				}
+			}
+
+			$this->database->transactionCommit();
+		}
+		catch (ExecutionFailureException $exception)
+		{
+			$this->database->transactionRollback();
+
+			throw $exception;
+		}
+	}
+
+	/**
+	 * Sync the contributor user data
+	 *
+	 * @return  void
+	 *
+	 * @throws  ExecutionFailureException
+	 */
+	public function syncUserData()
+	{
+		/** @var MysqlQuery $query */
+		$query = $this->database->getQuery(true);
+		$query->select($this->database->quoteName(['username']))
+			->from($this->database->quoteName('#__contributors'));
+
+		$usernames = $this->database->setQuery($query)->loadColumn();
+
+		$this->database->transactionStart();
+
+		try
+		{
+			foreach ($usernames as $username)
+			{
+				$userData = $this->github->users->get($username);
+
+				/** @var MysqlQuery $query */
+				$query = $this->database->getQuery(true);
+				$query->update($this->database->quoteName('#__contributors'))
+					->set($this->database->quoteName('name') . ' = :name')
+					->where($this->database->quoteName('username') . ' = :username');
+
+				$name = $userData->name ?: '';
+
+				$query->bind('name', $name, \PDO::PARAM_STR);
+				$query->bind('username', $username, \PDO::PARAM_STR);
+
+				$this->database->setQuery($query)->execute();
+			}
+
+			$this->database->transactionCommit();
+		}
+		catch (ExecutionFailureException $exception)
+		{
+			$this->database->transactionRollback();
+
+			throw $exception;
+		}
+	}
+
+	/**
+	 * Update the stored commit counts for contributors
+	 *
+	 * @return  void
+	 *
+	 * @throws  ExecutionFailureException
+	 */
+	public function updateCommitCounts()
+	{
+		$this->database->transactionStart();
+
+		try
+		{
+			foreach ($this->getCommitCounts() as $username => $count)
+			{
+				/** @var MysqlQuery $query */
+				$query = $this->database->getQuery(true);
+				$query->update($this->database->quoteName('#__contributors'))
+					->set($this->database->quoteName('commits') . ' = :commits')
+					->where($this->database->quoteName('username') . ' = :username');
+
+				$query->bind('username', $username, \PDO::PARAM_STR);
+				$query->bind('commits', $count, \PDO::PARAM_INT);
 
 				$this->database->setQuery($query)->execute();
 			}
