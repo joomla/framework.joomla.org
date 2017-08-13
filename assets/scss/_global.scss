@@ -1,0 +1,105 @@
+a {
+  @include transition(all 0.3s ease-out)
+}
+
+.page-header {
+  @extend .centered-title;
+  padding-bottom: .5rem;
+  margin: 2.5rem 0 1.25rem;
+  border-bottom: 1px solid #eee;
+}
+
+.centered-title {
+  text-align: center;
+}
+
+.fa {
+  color: $icon-color;
+}
+
+.rochen {
+  background: url(https://cdn.joomla.org/rochen/rochen_footer_logo_white.png) no-repeat;
+  height: 42px;
+  width: 84px;
+  text-indent: -9999px;
+  display: inline-block;
+  position: relative;
+}
+
+nav {
+  background: $darker-black;
+  color: #ffffff;
+  height: 45px;
+  padding: .5rem 0;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+  @include media-breakpoint-up(lg) {
+    font-size: $font-size-lg;
+  }
+  a {
+    color: #ffffff;
+    &:hover {
+      text-decoration: none;
+      color: theme-color('info');
+    }
+  }
+  .fa {
+    font-size: 1.75rem;
+    padding-right: .5rem;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+    li {
+      display: inline;
+      line-height: 1.5;
+      margin-left: 8%;
+      @include media-breakpoint-up(sm) {
+        margin-left: 10%;
+      }
+      @include media-breakpoint-up(lg) {
+        margin-left: 5.5%;
+      }
+      &:first-child {
+        margin-left: 0;
+      }
+      span {
+        vertical-align: top;
+        &.title {
+          display: none;
+          @include media-breakpoint-up(lg) {
+            display: inline;
+          }
+        }
+      }
+    }
+  }
+}
+
+main {
+  padding: 45px 10px 20px;
+  @include media-breakpoint-up(xl) {
+    padding: 45px 0 20px;
+  }
+}
+
+footer {
+  background: $darker-black;
+  color: #a4a4a4;
+  padding-top: 1.25rem;
+  @include media-breakpoint-down(xl) {
+    padding-left: .75rem;
+    padding-right: .75rem;
+  }
+  p {
+    @include media-breakpoint-down(lg) {
+      font-size: $font-size-sm;
+    }
+  }
+  h3 {
+    margin-top: 0;
+  }
+}

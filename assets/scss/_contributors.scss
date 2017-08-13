@@ -1,0 +1,33 @@
+.team {
+  .contributors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1.25rem;
+    @include media-breakpoint-up(sm) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    @include media-breakpoint-up(md) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+    @include media-breakpoint-up(xl) {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+  }
+  .marketers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1.25rem;
+    @include media-breakpoint-up(md) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    @include media-breakpoint-up(lg) {
+      grid-gap: 1.75rem;
+    }
+    @include media-breakpoint-up(xl) {
+      grid-gap: 2.5rem;
+    }
+  }
+}

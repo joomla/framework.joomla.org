@@ -6,7 +6,7 @@
 
 {% block content %}
 <section class="team container">
-    <h1 class="text-center">Joomla! Framework Contributors</h1>
+    <h1 class="centered-title">Joomla! Framework Contributors</h1>
 
     <p class="lead">Development on the Joomla! Framework is steered by the <a href="https://volunteers.joomla.org/teams/framework-working-group">Framework Working Group</a> with contributions from {{ contributors|length }} people.</p>
 
@@ -14,13 +14,11 @@
     <div class="contributors">
         {% for contributor in contributors %}
             {% set _name = contributor.name ?: contributor.username %}
-            <div class="contributor">
-                <div class="thumbnail">
-                    <img alt="{{ _name }}" src="{{ contributor.avatar }}">
-                    <div class="caption">
-                        <h4><a href="{{ contributor.profile }}" rel="nofollow" target="_blank">{{ _name }}</a></h4>
-                        <p>{{ contributor.commits }} {% if contributor.commits > 1 %}Commits{% else %}Commit{% endif %}</p>
-                    </div>
+            <div class="contributor card">
+                <img alt="{{ _name }}" src="{{ contributor.avatar }}" class="card-img-top">
+                <div class="card-body">
+                    <h4 class="card-title"><a href="{{ contributor.profile }}" rel="nofollow" target="_blank">{{ _name }}</a></h4>
+                    <p class="card-text">{{ contributor.commits }} {% if contributor.commits > 1 %}Commits{% else %}Commit{% endif %}</p>
                 </div>
             </div>
         {% endfor %}
@@ -28,36 +26,28 @@
 
     <h2 class="page-header">Marketing</h2>
     <div class="marketers">
-        <div class="marketer">
-            <div class="thumbnail">
-                <img alt="Ryan Boog" src="https://avatars3.githubusercontent.com/u/1244893?v=4">
-                <div class="caption">
-                    <h4><a href="https://github.com/hdwebpros" rel="nofollow" target="_blank">Ryan Boog</a></h4>
-                </div>
+        <div class="marketer card">
+            <img alt="Ryan Boog" src="https://avatars3.githubusercontent.com/u/1244893?v=4" class="card-img-top">
+            <div class="card-body">
+                <h4 class="card-title"><a href="https://github.com/hdwebpros" rel="nofollow" target="_blank">Ryan Boog</a></h4>
             </div>
         </div>
-        <div class="marketer">
-            <div class="thumbnail">
-                <img alt="Parth Lawate" src="https://avatars2.githubusercontent.com/u/673176?v=4">
-                <div class="caption">
-                    <h4><a href="https://github.com/parthlawate" rel="nofollow" target="_blank">Parth Lawate</a></h4>
-                </div>
+        <div class="marketer card">
+            <img alt="Parth Lawate" src="https://avatars2.githubusercontent.com/u/673176?v=4" class="card-img-top">
+            <div class="card-body">
+                <h4 class="card-title"><a href="https://github.com/parthlawate" rel="nofollow" target="_blank">Parth Lawate</a></h4>
             </div>
         </div>
-        <div class="marketer">
-            <div class="thumbnail">
-                <img alt="Jessica Dunbar" src="https://avatars1.githubusercontent.com/u/1581195?v=4">
-                <div class="caption">
-                    <h4><a href="https://github.com/jessicadunbar" rel="nofollow" target="_blank">Jessica Dunbar</a></h4>
-                </div>
+        <div class="marketer card">
+            <img alt="Jessica Dunbar" src="https://avatars1.githubusercontent.com/u/1581195?v=4" class="card-img-top">
+            <div class="card-body">
+                <h4 class="card-title"><a href="https://github.com/jessicadunbar" rel="nofollow" target="_blank">Jessica Dunbar</a></h4>
             </div>
         </div>
-        <div class="marketer">
-            <div class="thumbnail">
-                <img alt="Duke Speer" src="https://avatars0.githubusercontent.com/u/94404?v=4">
-                <div class="caption">
-                    <h4><a href="https://github.com/Duke3D" rel="nofollow" target="_blank">Duke Speer</a></h4>
-                </div>
+        <div class="marketer card">
+            <img alt="Duke Speer" src="https://avatars0.githubusercontent.com/u/94404?v=4" class="card-img-top">
+            <div class="card-body">
+                <h4 class="card-title"><a href="https://github.com/Duke3D" rel="nofollow" target="_blank">Duke Speer</a></h4>
             </div>
         </div>
     </div>

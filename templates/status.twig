@@ -6,17 +6,17 @@
 
 {% block content %}
 <section class="status container">
-    <h1 class="text-center">Latest Build Status</h1>
-    <table class="table table-striped table-condensed">
+    <h1 class="centered-title">Latest Build Status</h1>
+    <table class="table table-striped table-sm table-responsive">
         <thead>
             <tr>
                 <th>Package</th>
                 <th>Version</th>
                 <th>Downloads</th>
-                <th class="hidden-xs hidden-sm"># of Tests</th>
-                <th class="hidden-xs hidden-sm"># of Assertions</th>
-                <th class="hidden-xs hidden-sm">Tests with Failures</th>
-                <th class="hidden-xs hidden-sm">Tests with Errors</th>
+                <th># of Tests</th>
+                <th># of Assertions</th>
+                <th>Tests with Failures</th>
+                <th>Tests with Errors</th>
                 <th>Lines Covered</th>
                 <th>1.x Build Status</th>
                 <th>2.0 Build Status</th>
@@ -46,8 +46,7 @@
                 {% if release.package.package in ['compat', 'test'] %}
                     <td colspan="7" class="text-center">This package is not unit tested</td>
                 {% elseif release.tests == 0 %}
-                    <td colspan="5" class="hidden-xs hidden-sm text-center">This release does not have a test report</td>
-                    <td class="hidden-md hidden-lg">This release does not have a test report</td>
+                    <td colspan="5" class="text-center">This release does not have a test report</td>
                     <td>
                         {% if release.package.repo in ['datetime', 'renderer'] %}
                             N/A
@@ -71,10 +70,10 @@
                     {% set _totalErrors = _totalErrors + release.errors %}
                     {% set _totalCoveredLines = _totalCoveredLines + release.lines_covered %}
                     {% set _totalLines = _totalLines + release.total_lines %}
-                    <td class="hidden-xs hidden-sm">{{ release.tests }}</td>
-                    <td class="hidden-xs hidden-sm">{{ release.assertions }}</td>
-                    <td class="hidden-xs hidden-sm">{{ release.failures }}</td>
-                    <td class="hidden-xs hidden-sm">{{ release.errors }}</td>
+                    <td>{{ release.tests }}</td>
+                    <td>{{ release.assertions }}</td>
+                    <td>{{ release.failures }}</td>
+                    <td>{{ release.errors }}</td>
                     <td>
                         {{ release.lines_covered }}/{{ release.total_lines }} ({{ release.lines_percentage|number_format(2) }}%)
                         {% if release.id %}
@@ -107,10 +106,10 @@
                 <th>Totals</th>
                 <th></th>
                 <th>{{ _totalDownloads|number_format }}</th>
-                <th class="hidden-xs hidden-sm">{{ _totalTests|number_format }}</th>
-                <th class="hidden-xs hidden-sm">{{ _totalAssertions|number_format }}</th>
-                <th class="hidden-xs hidden-sm">{{ _totalFailures|number_format }}</th>
-                <th class="hidden-xs hidden-sm">{{ _totalErrors|number_format }}</th>
+                <th>{{ _totalTests|number_format }}</th>
+                <th>{{ _totalAssertions|number_format }}</th>
+                <th>{{ _totalFailures|number_format }}</th>
+                <th>{{ _totalErrors|number_format }}</th>
                 <th colspan="3">Lines Covered: {{ _totalCoveredLines|number_format }}<br />Total Lines: {{ _totalLines|number_format }}<br />{{ ((_totalCoveredLines / _totalLines) * 100)|number_format(2) }}% Coverage</th>
             </tr>
         </tfoot>

@@ -1,5 +1,5 @@
 //
-// Minimalistic import of the Bootstrap 3 Grid system
+// Minimalistic import of the Bootstrap 4 Grid system
 // --------------------------------------------------
 
 
@@ -7,26 +7,21 @@
 //
 // Set the container width, and override it for fixed navbars in media queries.
 
-.container {
-  @include container-fixed;
-
-  @media (min-width: $screen-sm-min) {
-    width: $container-sm;
-  }
-  @media (min-width: $screen-md-min) {
-    width: $container-md;
-  }
-  @media (min-width: $screen-lg-min) {
-    width: $container-lg;
+@if $enable-grid-classes {
+  .container {
+    @include make-container();
+    @include make-container-max-widths();
   }
 }
 
-
 // Fluid container
 //
-// Utilizes the mixin meant for fixed width containers, but without any defined
-// width for fluid, full width layouts.
+// Utilizes the mixin meant for fixed width containers, but with 100% width for
+// fluid, full width layouts.
 
-.container-fluid {
-  @include container-fixed;
+@if $enable-grid-classes {
+  .container-fluid {
+    width: 100%;
+    @include make-container();
+  }
 }
