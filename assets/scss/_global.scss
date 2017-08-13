@@ -29,10 +29,8 @@ a {
 nav {
   background: $darker-black;
   color: #ffffff;
-  height: 2.75rem;
   padding: .5rem 0;
   position: fixed;
-  width: 100%;
   z-index: 9999;
   @include media-breakpoint-up(lg) {
     font-size: $font-size-lg;
@@ -84,14 +82,13 @@ footer {
   background: $darker-black;
   color: #a4a4a4;
   padding-top: 1.25rem;
-  @include media-breakpoint-down(xl) {
-    padding-left: .75rem;
-    padding-right: .75rem;
+  font-size: $font-size-sm;
+  @include media-breakpoint-down(lg) {
+    padding-left: .625rem;
+    padding-right: .625rem;
   }
   p {
-    @include media-breakpoint-down(lg) {
-      font-size: $font-size-sm;
-    }
+    margin-bottom: .625rem;
   }
   h3 {
     margin-top: 0;

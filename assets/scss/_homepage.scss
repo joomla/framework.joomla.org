@@ -7,6 +7,9 @@ nav.homepage {
       @include media-breakpoint-up(xl) {
         margin-left: 6%;
       }
+      &:first-child {
+        margin-left: 0;
+      }
       span {
         vertical-align: top;
         &.title {
@@ -22,12 +25,9 @@ nav.homepage {
 
 .go {
   background: url(../images/j-framework-500.png) no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
   text-align: center;
-  padding: .75rem;
+  padding: .625rem;
   font-size: 1.75rem;
   color: #ffffff;
   @include media-breakpoint-up(md) {
@@ -37,17 +37,16 @@ nav.homepage {
     background-image: url(../images/j-framework-1200.png);
     font-size: 2rem;
   }
-  @include media-breakpoint-down(xl) {
+  @include media-breakpoint-down(lg) {
     margin: 0 -.625rem;
   }
   @include media-breakpoint-up(xl) {
     background-image: url(../images/j-framework-full.png);
-    font-size: 2.1rem;
+    font-size: 2.125rem;
   }
   h1 {
     font-size: 2.5rem;
     margin: 0;
-    line-height: 100%;
     @include media-breakpoint-up(sm) {
       font-size: 3.25rem;
     }
@@ -79,19 +78,21 @@ nav.homepage {
     }
   }
   .cta {
-    max-width: 767px;
     margin: 0 auto;
-    p {
-      margin-bottom: 0;
+    @include media-breakpoint-up(md) {
+      max-width: 85%;
+    }
+    @include media-breakpoint-up(lg) {
+      max-width: 80%;
+    }
+    @include media-breakpoint-up(xl) {
+      max-width: 75%;
     }
     .btn {
       width: 100%;
       margin: 1.25rem 0;
       @include media-breakpoint-up(sm) {
         width: 40%;
-      }
-      @include media-breakpoint-up(md) {
-        font-size: 1.25rem;
       }
       @include media-breakpoint-up(lg) {
         font-size: 1.5rem;
