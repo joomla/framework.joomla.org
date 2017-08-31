@@ -40,4 +40,12 @@
     <rule ref="Joomla.Commenting.FileComment.MissingPackageTag">
         <exclude-pattern>*/phinx.php</exclude-pattern>
     </rule>
+
+    <!-- Extend the line length to avoid the need for goofy concatenation or sprintf on a query string -->
+    <rule ref="Generic.Files.LineLength">
+   		<properties>
+   			<property name="lineLimit" value="250" />
+   			<property name="absoluteLineLimit" value="0" />
+   		</properties>
+   	</rule>
 </ruleset>

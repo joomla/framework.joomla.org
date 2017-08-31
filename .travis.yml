@@ -1,0 +1,19 @@
+language: php
+sudo: false
+dist: trusty
+
+env:
+  global:
+    - RUN_PHPCS="no"
+
+matrix:
+  include:
+    - php: 7.0
+      env: RUN_PHPCS="yes"
+
+before_script:
+  # Make sure all dev dependencies are installed
+  - composer install
+
+script:
+  - if [ "$RUN_PHPCS" == "yes" ]; then vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards && vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml bin/ src/ www/; fi;
