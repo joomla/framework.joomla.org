@@ -1,12 +1,8 @@
-import smoothScroll from 'smooth-scroll';
+import SmoothScroll from 'smooth-scroll';
 
-smoothScroll.init({
-    // selector: '[data-scroll]', // Selector for links (must be a class, ID, data attribute, or element tag)
-    // selectorHeader: null, // Selector for fixed headers (must be a valid CSS selector) [optional]
-    speed: 600, // Integer. How fast to complete the scroll in milliseconds
-    easing: 'easeInOutCubic', // Easing pattern to use
-    offset: 40, // Integer. How far to offset the scrolling anchor location in pixels
-    // callback: function ( anchor, toggle ) {} // Function to run after scrolling
+new SmoothScroll('[data-scroll]', {
+    header: '[data-scroll-header]',
+    speed: 600,
 });
 
 function getHeight(elem) {
