@@ -3,17 +3,24 @@ sudo: false
 dist: trusty
 
 env:
-  global:
-    - RUN_PHPCS="no"
+  matrix:
+    secure: Lu7DzHf5KgI7fGn+Y74+a2DfUSLSfEWhyhEBVxZeH67QHQ5+hwGPMTLWsoePkU5XDSkcF7Gzz8LE9FlHhDvnZTuNUYplR1D76U5wctX52giamONTFK5NYALsenxwAiKGjBCPq5S7DVW6cPnbwL7hMEcBKa/tGmH1urQ2PrjaqfI=
 
 matrix:
   include:
     - php: 7.0
-      env: RUN_PHPCS="yes"
+
+before_install:
+  - npm install -g npm@5
+  - npm install -g greenkeeper-lockfile@1
 
 before_script:
   # Make sure all dev dependencies are installed
   - composer install
+  - greenkeeper-lockfile-update
 
 script:
-  - if [ "$RUN_PHPCS" == "yes" ]; then vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards && vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml bin/ src/ www/; fi;
+  - vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards && vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml bin/ src/ www/
+
+after_script:
+  - greenkeeper-lockfile-upload

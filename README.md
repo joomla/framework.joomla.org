@@ -1,5 +1,7 @@
 # Joomla! Framework Site
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/joomla/framework.joomla.org.svg)](https://greenkeeper.io/)
+
 This application is the code powering the [Joomla! Framework](https://framework.joomla.org) website.
 
 ## Requirements

@@ -1,6 +1,6 @@
-import smoothScroll from 'smooth-scroll';
+import SmoothScroll from 'smooth-scroll';
 
-smoothScroll.init({
+new SmoothScroll('[data-scroll]', {
+    header: '[data-scroll-header]',
     speed: 600,
-    offset: 40,
 });
