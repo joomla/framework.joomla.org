@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c47f7c7a7e350e73099c2e4821987c7",
+    "content-hash": "933d167b31ed7da0aaef0069fbc091f0",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -357,6 +357,59 @@
                 "joomla"
             ],
             "time": "2017-08-16T00:10:46+00:00"
+        },
+        {
+            "name": "joomla/console",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joomla-framework/console.git",
+                "reference": "1abcecaceb7c744bcc741d8ca48bd3ffab53f2e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joomla-framework/console/zipball/1abcecaceb7c744bcc741d8ca48bd3ffab53f2e2",
+                "reference": "1abcecaceb7c744bcc741d8ca48bd3ffab53f2e2",
+                "shasum": ""
+            },
+            "require": {
+                "joomla/application": "~2.0",
+                "joomla/event": "~2.0",
+                "joomla/string": "~2.0",
+                "php": "~7.0",
+                "symfony/console": "~3.4|~4.0"
+            },
+            "require-dev": {
+                "joomla/coding-standards": "~2.0@alpha",
+                "phpunit/phpunit": "~6.3",
+                "psr/container": "~1.0"
+            },
+            "suggest": {
+                "psr/container": "To use the ContainerLoader"
+            },
+            "type": "joomla-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Joomla\\Console\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "description": "Joomla Console Package",
+            "homepage": "https://github.com/joomla-framework/console",
+            "keywords": [
+                "console",
+                "framework",
+                "joomla"
+            ],
+            "time": "2017-09-04T22:08:14+00:00"
         },
         {
             "name": "joomla/controller",
@@ -1021,24 +1074,24 @@
         },
         {
             "name": "joomla/string",
-            "version": "1.4.1",
+            "version": "dev-2.0-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/string.git",
-                "reference": "66363d317e6c020f30a70265c129281c77c43ca0"
+                "reference": "fb39e970af6de790a80a3fa6438efe17a1f5c660"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/string/zipball/66363d317e6c020f30a70265c129281c77c43ca0",
-                "reference": "66363d317e6c020f30a70265c129281c77c43ca0",
+                "url": "https://api.github.com/repos/joomla-framework/string/zipball/fb39e970af6de790a80a3fa6438efe17a1f5c660",
+                "reference": "fb39e970af6de790a80a3fa6438efe17a1f5c660",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.10|~7.0"
+                "php": "~7.0"
             },
             "require-dev": {
                 "joomla/test": "~1.0",
-                "phpunit/phpunit": "~4.8|~5.0",
+                "phpunit/phpunit": "~6.3",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "suggest": {
@@ -1047,7 +1100,7 @@
             "type": "joomla-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-2.0-dev": "2.0-dev"
                 }
             },
             "autoload": {
@@ -1083,7 +1136,7 @@
                 "joomla",
                 "string"
             ],
-            "time": "2016-12-10T18:13:42+00:00"
+            "time": "2017-08-16T02:11:54+00:00"
         },
         {
             "name": "joomla/uri",
@@ -1133,30 +1186,30 @@
         },
         {
             "name": "joomla/utilities",
-            "version": "1.4.1",
+            "version": "dev-2.0-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/utilities.git",
-                "reference": "8913ca02aad7b929e0d52d78fd5a6961070bdbc6"
+                "reference": "c56004cac5d84195b14e87873770bf7355d4edce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/utilities/zipball/8913ca02aad7b929e0d52d78fd5a6961070bdbc6",
-                "reference": "8913ca02aad7b929e0d52d78fd5a6961070bdbc6",
+                "url": "https://api.github.com/repos/joomla-framework/utilities/zipball/c56004cac5d84195b14e87873770bf7355d4edce",
+                "reference": "c56004cac5d84195b14e87873770bf7355d4edce",
                 "shasum": ""
             },
             "require": {
-                "joomla/string": "~1.3",
-                "php": "^5.3.10|~7.0"
+                "joomla/string": "~1.3|~2.0",
+                "php": "~7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8|~5.0",
+                "phpunit/phpunit": "~6.3",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "type": "joomla-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-2.0-dev": "2.0-dev"
                 }
             },
             "autoload": {
@@ -1175,7 +1228,7 @@
                 "joomla",
                 "utilities"
             ],
-            "time": "2016-12-10T17:09:33+00:00"
+            "time": "2017-08-16T00:49:29+00:00"
         },
         {
             "name": "joomla/view",
@@ -1632,16 +1685,16 @@
         },
         {
             "name": "robmorgan/phinx",
-            "version": "v0.8.1",
+            "version": "v0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/phinx.git",
-                "reference": "7a19de5bebc59321edd9613bc2a667e7f96224ec"
+                "reference": "6334838dc74fb39baf34db60186dbe905fd06c31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/phinx/zipball/7a19de5bebc59321edd9613bc2a667e7f96224ec",
-                "reference": "7a19de5bebc59321edd9613bc2a667e7f96224ec",
+                "url": "https://api.github.com/repos/cakephp/phinx/zipball/6334838dc74fb39baf34db60186dbe905fd06c31",
+                "reference": "6334838dc74fb39baf34db60186dbe905fd06c31",
                 "shasum": ""
             },
             "require": {
@@ -1683,6 +1736,10 @@
                     "name": "Richard Quadling",
                     "email": "rquadling@gmail.com",
                     "role": "Developer"
+                },
+                {
+                    "name": "CakePHP Community",
+                    "homepage": "https://github.com/cakephp/phinx/graphs/contributors"
                 }
             ],
             "description": "Phinx makes it ridiculously easy to manage the database migrations for your PHP app.",
@@ -1694,7 +1751,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2017-06-05T13:30:19+00:00"
+            "time": "2017-09-03T18:26:04+00:00"
         },
         {
             "name": "symfony/asset",
@@ -1816,44 +1873,45 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.3.8",
+            "version": "3.4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "d6596cb5022b6a0bd940eae54a1de78646a5fda6"
+                "reference": "78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/d6596cb5022b6a0bd940eae54a1de78646a5fda6",
-                "reference": "d6596cb5022b6a0bd940eae54a1de78646a5fda6",
+                "url": "https://api.github.com/repos/symfony/console/zipball/78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e",
+                "reference": "78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.5.9|>=7.0.8",
-                "symfony/debug": "~2.8|~3.0",
+                "symfony/debug": "~2.8|~3.0|~4.0",
                 "symfony/polyfill-mbstring": "~1.0"
             },
             "conflict": {
-                "symfony/dependency-injection": "<3.3"
+                "symfony/dependency-injection": "<3.3",
+                "symfony/process": "<3.3"
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "~3.3",
-                "symfony/dependency-injection": "~3.3",
-                "symfony/event-dispatcher": "~2.8|~3.0",
-                "symfony/filesystem": "~2.8|~3.0",
-                "symfony/process": "~2.8|~3.0"
+                "symfony/config": "~3.3|~4.0",
+                "symfony/dependency-injection": "~3.3|~4.0",
+                "symfony/event-dispatcher": "~2.8|~3.0|~4.0",
+                "symfony/lock": "~3.4|~4.0",
+                "symfony/process": "~3.3|~4.0"
             },
             "suggest": {
                 "psr/log": "For using the console logger",
                 "symfony/event-dispatcher": "",
-                "symfony/filesystem": "",
+                "symfony/lock": "",
                 "symfony/process": ""
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.3-dev"
+                    "dev-master": "3.4-dev"
                 }
             },
             "autoload": {
@@ -1880,7 +1938,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-27T14:52:21+00:00"
+            "time": "2017-09-03T15:31:40+00:00"
         },
         {
             "name": "symfony/debug",
@@ -2592,6 +2650,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "joomla/application": 20,
+        "joomla/console": 20,
         "joomla/controller": 20,
         "joomla/database": 20,
         "joomla/di": 20,
@@ -2603,8 +2662,11 @@
         "joomla/registry": 20,
         "joomla/renderer": 20,
         "joomla/router": 20,
+        "joomla/string": 20,
         "joomla/uri": 20,
+        "joomla/utilities": 20,
         "joomla/view": 20,
+        "symfony/console": 20,
         "joomla/coding-standards": 20
     },
     "prefer-stable": false,
