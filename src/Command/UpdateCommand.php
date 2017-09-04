@@ -8,59 +8,30 @@
 
 namespace Joomla\FrameworkWebsite\Command;
 
-use Joomla\Application\AbstractApplication;
-use Joomla\Controller\AbstractController;
-use Joomla\FrameworkWebsite\{
-	CommandInterface, Console
-};
-use Joomla\Input\Input;
+use Joomla\Console\AbstractCommand;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Update command
- *
- * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
- * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object
  */
-class UpdateCommand extends AbstractController implements CommandInterface
+class UpdateCommand extends AbstractCommand
 {
 	/**
-	 * The application's console object
+	 * Execute the command.
 	 *
-	 * @var  Console
+	 * @return  integer  The exit code for the command.
 	 */
-	private $console;
-
-	/**
-	 * Instantiate the controller.
-	 *
-	 * @param   Console              $console  The application's console object
-	 * @param   Input                $input    The input object.
-	 * @param   AbstractApplication  $app      The application object.
-	 */
-	public function __construct(Console $console, Input $input = null, AbstractApplication $app = null)
+	public function execute(): int
 	{
-		parent::__construct($input, $app);
+		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
 
-		$this->console = $console;
-	}
-
-	/**
-	 * Execute the controller.
-	 *
-	 * @return  boolean
-	 *
-	 * @throws  \RuntimeException
-	 */
-	public function execute()
-	{
-		$this->getApplication()->outputTitle('Update Server');
-
-		$this->getApplication()->out('<info>Updating server to git HEAD</info>');
+		$symfonyStyle->title('Update Server');
+		$symfonyStyle->comment('Updating server to git HEAD');
 
 		// Pull from remote repo
 		$this->runCommand('cd ' . JPATH_ROOT . ' && git pull 2>&1');
 
-		$this->getApplication()->out('<info>Updating Composer resources</info>');
+		$symfonyStyle->comment('Updating Composer resources');
 
 		// Run Composer install
 		$this->runCommand('cd ' . JPATH_ROOT . ' && composer install --no-dev -o 2>&1');
@@ -69,34 +40,31 @@ class UpdateCommand extends AbstractController implements CommandInterface
 		$this->runCommand('cd ' . JPATH_ROOT . ' && vendor/bin/phinx migrate 2>&1');
 
 		// Reset the Twig cache
-		$this->console->getCommand('twig:resetcache')->execute();
+		$this->getApplication()->getCommand('twig:reset-cache')->execute();
 
 		// Reset the router cache
-		$this->console->getCommand('router:cache')->execute();
+		$this->getApplication()->getCommand('router:cache')->execute();
 
-		$this->getApplication()->out('<info>Update complete</info>');
+		$symfonyStyle->success('Update complete');
 
-		return true;
+		return 0;
 	}
 
 	/**
-	 * Get the command's description
+	 * Initialise the command.
 	 *
-	 * @return  string
+	 * @return  void
 	 */
-	public function getDescription() : string
+	protected function initialise()
 	{
-		return 'Update the server to the current git HEAD.';
-	}
+		$this->setName('update:server');
+		$this->setDescription('Update the server to the current git HEAD');
+		$this->setHelp(<<<'EOF'
+The <info>%command.name%</info> command updates the server to the current git HEAD
 
-	/**
-	 * Get the command's title
-	 *
-	 * @return  string
-	 */
-	public function getTitle() : string
-	{
-		return 'Update Server';
+<info>php %command.full_name% %command.name%</info>
+EOF
+		);
 	}
 
 	/**

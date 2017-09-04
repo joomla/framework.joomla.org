@@ -8,19 +8,14 @@
 
 namespace Joomla\FrameworkWebsite\Command\Packagist;
 
-use Joomla\Application\AbstractApplication;
-use Joomla\Controller\AbstractController;
-use Joomla\FrameworkWebsite\CommandInterface;
+use Joomla\Console\AbstractCommand;
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
-use Joomla\Input\Input;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to get download counts from Packagist
- *
- * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
- * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object
  */
-class DownloadsCommand extends AbstractController implements CommandInterface
+class DownloadsCommand extends AbstractCommand
 {
 	/**
 	 * The packagist helper object
@@ -30,52 +25,49 @@ class DownloadsCommand extends AbstractController implements CommandInterface
 	private $packagistHelper;
 
 	/**
-	 * Instantiate the controller.
+	 * Instantiate the command.
 	 *
-	 * @param   PackagistHelper      $packagistHelper  The packagist helper object.
-	 * @param   Input                $input            The input object.
-	 * @param   AbstractApplication  $app              The application object.
+	 * @param   PackagistHelper  $packagistHelper  The packagist helper object.
 	 */
-	public function __construct(PackagistHelper $packagistHelper, Input $input = null, AbstractApplication $app = null)
+	public function __construct(PackagistHelper $packagistHelper)
 	{
-		parent::__construct($input, $app);
-
 		$this->packagistHelper = $packagistHelper;
+
+		parent::__construct();
 	}
 
 	/**
-	 * Execute the controller.
+	 * Execute the command.
 	 *
-	 * @return  boolean
+	 * @return  integer  The exit code for the command.
 	 */
-	public function execute()
+	public function execute(): int
 	{
-		$this->getApplication()->outputTitle('Sync Download Counts from Packagist');
+		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+
+		$symfonyStyle->title('Sync Download Counts from Packagist');
 
 		$this->packagistHelper->syncDownloadCounts();
 
-		$this->getApplication()->out('<info>Update completed.</info>');
+		$symfonyStyle->success('Update completed.');
 
-		return true;
+		return 0;
 	}
 
 	/**
-	 * Get the command's description
+	 * Initialise the command.
 	 *
-	 * @return  string
+	 * @return  void
 	 */
-	public function getDescription() : string
+	protected function initialise()
 	{
-		return 'Synchronizes download count data from Packagist.';
-	}
+		$this->setName('packagist:sync:downloads');
+		$this->setDescription('Synchronizes download counts with Packagist');
+		$this->setHelp(<<<'EOF'
+The <info>%command.name%</info> command synchronizes the package download counts with Packagist
 
-	/**
-	 * Get the command's title
-	 *
-	 * @return  string
-	 */
-	public function getTitle() : string
-	{
-		return 'Get Download Counts';
+<info>php %command.full_name% %command.name%</info>
+EOF
+		);
 	}
 }

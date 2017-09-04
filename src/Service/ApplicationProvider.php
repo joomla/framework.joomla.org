@@ -9,12 +9,16 @@
 namespace Joomla\FrameworkWebsite\Service;
 
 use Joomla\Application as JoomlaApplication;
+use Joomla\Console\Application;
+use Joomla\Console\Loader\{
+	ContainerLoader, LoaderInterface
+};
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
 use Joomla\FrameworkWebsite\{
-	CliApplication, Console, Helper, WebApplication
+	Helper, WebApplication
 };
 use Joomla\FrameworkWebsite\Command as AppCommands;
 use Joomla\FrameworkWebsite\Controller\{
@@ -60,8 +64,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		 * Application Classes
 		 */
 
-		$container->alias(CliApplication::class, JoomlaApplication\AbstractCliApplication::class)
-			->share(JoomlaApplication\AbstractCliApplication::class, [$this, 'getCliApplicationClassService'], true);
+		$container->share(Application::class, [$this, 'getConsoleApplicationClassService'], true);
 
 		$container->alias(WebApplication::class, JoomlaApplication\AbstractWebApplication::class)
 			->share(JoomlaApplication\AbstractWebApplication::class, [$this, 'getWebApplicationClassService'], true);
@@ -72,6 +75,10 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->alias(Analytics::class, 'analytics')
 			->share('analytics', [$this, 'getAnalyticsService'], true);
+
+		$container->alias(LoaderInterface::class, 'application.console.loader')
+			->alias(ContainerLoader::class, 'application.console.loader')
+			->share('application.console.loader', [$this, 'getApplicationConsoleLoaderService'], true);
 
 		$container->alias(Helper::class, 'application.helper')
 			->share('application.helper', [$this, 'getApplicationHelperService'], true);
@@ -90,19 +97,10 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->share(Input::class, [$this, 'getInputClassService'], true);
 		$container->share(Cli::class, [$this, 'getInputCliClassService'], true);
 
-		$container->share(Console::class, [$this, 'getConsoleClassService'], true);
-
-		$container->share(JoomlaApplication\Cli\Output\Processor\ColorProcessor::class, [$this, 'getColorProcessorClassService'], true);
-		$container->share(JoomlaApplication\Cli\CliInput::class, [$this, 'getCliInputClassService'], true);
-
-		$container->alias(JoomlaApplication\Cli\CliOutput::class, JoomlaApplication\Cli\Output\Stdout::class)
-			->share(JoomlaApplication\Cli\Output\Stdout::class, [$this, 'getCliOutputClassService'], true);
-
 		/*
 		 * Console Commands
 		 */
 
-		$container->share(AppCommands\HelpCommand::class, [$this, 'getHelpCommandClassService'], true);
 		$container->share(AppCommands\GitHub\ContributorsCommand::class, [$this, 'getGitHubContributorsCommandClassService'], true);
 		$container->share(AppCommands\Package\SyncCommand::class, [$this, 'getPackageSyncCommandClassService'], true);
 		$container->share(AppCommands\Packagist\DownloadsCommand::class, [$this, 'getPackagistDownloadsCommandClassService'], true);
@@ -177,6 +175,28 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getAnalyticsService(Container $container)
 	{
 		return new Analytics(true);
+	}
+
+	/**
+	 * Get the `application.console.helper` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  LoaderInterface
+	 */
+	public function getApplicationConsoleLoaderService(Container $container) : LoaderInterface
+	{
+		$mapping = [
+			'github:contributors'      => AppCommands\GitHub\ContributorsCommand::class,
+			'package:sync'             => AppCommands\Package\SyncCommand::class,
+			'packagist:sync:downloads' => AppCommands\Packagist\DownloadsCommand::class,
+			'packagist:sync:releases'  => AppCommands\Packagist\SyncCommand::class,
+			'router:cache'             => AppCommands\Router\CacheCommand::class,
+			'twig:reset-cache'         => AppCommands\Twig\ResetCacheCommand::class,
+			'update:server'            => AppCommands\UpdateCommand::class,
+		];
+
+		return new ContainerLoader($container, $mapping);
 	}
 
 	/**
@@ -347,89 +367,23 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the CLI application service
+	 * Get the console application service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  CliApplication
+	 * @return  Application
 	 */
-	public function getCliApplicationClassService(Container $container) : CliApplication
+	public function getConsoleApplicationClassService(Container $container) : Application
 	{
-		$application = new CliApplication(
+		$application = new Application(
 			$container->get(Cli::class),
-			$container->get('config'),
-			$container->get(JoomlaApplication\Cli\CliOutput::class),
-			$container->get(JoomlaApplication\Cli\CliInput::class),
-			$container->get(Console::class)
+			$container->get('config')
 		);
 
+		$application->setCommandLoader($container->get(LoaderInterface::class));
 		$application->setLogger($container->get(LoggerInterface::class));
 
 		return $application;
-	}
-
-	/**
-	 * Get the CliInput class service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  JoomlaApplication\Cli\CliInput
-	 */
-	public function getCliInputClassService(Container $container) : JoomlaApplication\Cli\CliInput
-	{
-		return new JoomlaApplication\Cli\CliInput;
-	}
-
-	/**
-	 * Get the CliOutput class service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  JoomlaApplication\Cli\CliOutput
-	 */
-	public function getCliOutputClassService(Container $container) : JoomlaApplication\Cli\Output\Stdout
-	{
-		return new JoomlaApplication\Cli\Output\Stdout($container->get(JoomlaApplication\Cli\Output\Processor\ColorProcessor::class));
-	}
-
-	/**
-	 * Get the ColorProcessor class service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  JoomlaApplication\Cli\Output\Processor\ColorProcessor
-	 */
-	public function getColorProcessorClassService(Container $container) : JoomlaApplication\Cli\Output\Processor\ColorProcessor
-	{
-		$processor = new JoomlaApplication\Cli\Output\Processor\ColorProcessor;
-
-		/** @var Cli $input */
-		$input = $container->get(Cli::class);
-
-		if ($input->getBool('nocolors', false))
-		{
-			$processor->noColors = true;
-		}
-
-		// Setup app colors (also required in "nocolors" mode - to strip them).
-		$processor->addStyle('title', new JoomlaApplication\Cli\ColorStyle('yellow', '', ['bold']));
-
-		return $processor;
-	}
-
-	/**
-	 * Get the console service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  Console
-	 */
-	public function getConsoleClassService(Container $container) : Console
-	{
-		$console = new Console;
-		$console->setContainer($container);
-
-		return $console;
 	}
 
 	/**
@@ -580,25 +534,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new AppCommands\GitHub\ContributorsCommand(
 			$container->get(PackageModel::class),
-			$container->get(GitHubHelper::class),
-			$container->get(Input::class),
-			$container->get(JoomlaApplication\AbstractApplication::class)
-		);
-	}
-
-	/**
-	 * Get the HelpCommand class service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  AppCommands\HelpCommand
-	 */
-	public function getHelpCommandClassService(Container $container) : AppCommands\HelpCommand
-	{
-		return new AppCommands\HelpCommand(
-			$container->get(Console::class),
-			$container->get(Input::class),
-			$container->get(JoomlaApplication\AbstractApplication::class)
+			$container->get(GitHubHelper::class)
 		);
 	}
 
@@ -673,9 +609,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new AppCommands\Package\SyncCommand(
 			$container->get(Helper::class),
-			$container->get(PackageModel::class),
-			$container->get(Input::class),
-			$container->get(JoomlaApplication\AbstractApplication::class)
+			$container->get(PackageModel::class)
 		);
 	}
 
@@ -689,9 +623,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getPackagistDownloadsCommandClassService(Container $container) : AppCommands\Packagist\DownloadsCommand
 	{
 		return new AppCommands\Packagist\DownloadsCommand(
-			$container->get(PackagistHelper::class),
-			$container->get(Input::class),
-			$container->get(JoomlaApplication\AbstractApplication::class)
+			$container->get(PackagistHelper::class)
 		);
 	}
 
@@ -707,9 +639,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		return new AppCommands\Packagist\SyncCommand(
 			$container->get(Http::class),
 			$container->get(PackageModel::class),
-			$container->get(ReleaseModel::class),
-			$container->get(Input::class),
-			$container->get(JoomlaApplication\AbstractApplication::class)
+			$container->get(ReleaseModel::class)
 		);
 	}
 
@@ -722,11 +652,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getRouterCacheCommandClassService(Container $container) : AppCommands\Router\CacheCommand
 	{
-		$command = new AppCommands\Router\CacheCommand(
-			$container->get(Input::class),
-			$container->get(JoomlaApplication\AbstractApplication::class)
-		);
-
+		$command = new AppCommands\Router\CacheCommand;
 		$command->setContainer($container);
 
 		return $command;
@@ -742,9 +668,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getTwigResetCacheCommandClassService(Container $container) : AppCommands\Twig\ResetCacheCommand
 	{
 		return new AppCommands\Twig\ResetCacheCommand(
-			$container->get(TwigRenderer::class),
-			$container->get(Input::class),
-			$container->get(JoomlaApplication\AbstractApplication::class)
+			$container->get(TwigRenderer::class)
 		);
 	}
 
@@ -757,11 +681,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getUpdateCommandClassService(Container $container) : AppCommands\UpdateCommand
 	{
-		return new AppCommands\UpdateCommand(
-			$container->get(Console::class),
-			$container->get(Input::class),
-			$container->get(JoomlaApplication\AbstractApplication::class)
-		);
+		return new AppCommands\UpdateCommand;
 	}
 
 	/**

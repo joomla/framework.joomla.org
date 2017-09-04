@@ -8,21 +8,15 @@
 
 namespace Joomla\FrameworkWebsite\Command\GitHub;
 
-use Joomla\Application\AbstractApplication;
-use Joomla\Controller\AbstractController;
-use Joomla\FrameworkWebsite\CommandInterface;
+use Joomla\Console\AbstractCommand;
 use Joomla\FrameworkWebsite\Helper\GitHubHelper;
-use Joomla\FrameworkWebsite\Helper\PackagistHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
-use Joomla\Input\Input;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to get contributor information from GitHub
- *
- * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
- * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object
  */
-class ContributorsCommand extends AbstractController implements CommandInterface
+class ContributorsCommand extends AbstractCommand
 {
 	/**
 	 * The GitHub helper
@@ -39,66 +33,63 @@ class ContributorsCommand extends AbstractController implements CommandInterface
 	private $packageModel;
 
 	/**
-	 * Instantiate the controller.
+	 * Instantiate the command.
 	 *
-	 * @param   PackageModel         $packageModel  The package model.
-	 * @param   GitHubHelper         $githubHelper  The GitHub helper.
-	 * @param   Input                $input         The input object.
-	 * @param   AbstractApplication  $app           The application object.
+	 * @param   PackageModel  $packageModel  The package model.
+	 * @param   GitHubHelper  $githubHelper  The GitHub helper.
 	 */
-	public function __construct(PackageModel $packageModel, GitHubHelper $githubHelper, Input $input = null, AbstractApplication $app = null)
+	public function __construct(PackageModel $packageModel, GitHubHelper $githubHelper)
 	{
-		parent::__construct($input, $app);
-
 		$this->githubHelper = $githubHelper;
 		$this->packageModel = $packageModel;
+
+		parent::__construct();
 	}
 
 	/**
-	 * Execute the controller.
+	 * Execute the command.
 	 *
-	 * @return  boolean
+	 * @return  integer  The exit code for the command.
 	 */
-	public function execute()
+	public function execute(): int
 	{
-		$this->getApplication()->outputTitle($this->getTitle());
+		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+
+		$symfonyStyle->title('Sync GitHub Contributors');
 
 		foreach ($this->packageModel->getPackages() as $package)
 		{
-			$this->getApplication()->out("<info>Processing {$package->display} package</info>");
+			$symfonyStyle->comment("Processing {$package->display} package");
 			$this->githubHelper->syncPackageContributors($package->repo);
 		}
 
-		$this->getApplication()->out('<info>Processing user data.</info>');
+		$symfonyStyle->comment('Processing user data.');
 
 		$this->githubHelper->syncUserData();
 
-		$this->getApplication()->out('<info>Processing commit counts.</info>');
+		$symfonyStyle->comment('Processing commit counts.');
 
 		$this->githubHelper->updateCommitCounts();
 
-		$this->getApplication()->out('<info>Update completed.</info>');
+		$symfonyStyle->success('Update completed.');
 
-		return true;
+		return 0;
 	}
 
 	/**
-	 * Get the command's description
+	 * Initialise the command.
 	 *
-	 * @return  string
+	 * @return  void
 	 */
-	public function getDescription() : string
+	protected function initialise()
 	{
-		return 'Fetches contributor information from GitHub.';
-	}
+		$this->setName('github:contributors');
+		$this->setDescription('Fetches contributor information from GitHub');
+		$this->setHelp(<<<'EOF'
+The <info>%command.name%</info> command fetches the contributor information for the Framework packages from GitHub
 
-	/**
-	 * Get the command's title
-	 *
-	 * @return  string
-	 */
-	public function getTitle() : string
-	{
-		return 'Get GitHub Contributors';
+<info>php %command.full_name% %command.name%</info>
+EOF
+		);
 	}
 }

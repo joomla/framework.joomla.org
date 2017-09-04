@@ -8,22 +8,17 @@
 
 namespace Joomla\FrameworkWebsite\Command\Packagist;
 
-use Joomla\Application\AbstractApplication;
-use Joomla\Controller\AbstractController;
-use Joomla\FrameworkWebsite\CommandInterface;
+use Joomla\Console\AbstractCommand;
 use Joomla\FrameworkWebsite\Model\{
 	PackageModel, ReleaseModel
 };
 use Joomla\Http\Http;
-use Joomla\Input\Input;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to synchronize the release listing with Packagist
- *
- * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
- * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object
  */
-class SyncCommand extends AbstractController implements CommandInterface
+class SyncCommand extends AbstractCommand
 {
 	/**
 	 * The HTTP driver
@@ -47,43 +42,35 @@ class SyncCommand extends AbstractController implements CommandInterface
 	private $releaseModel;
 
 	/**
-	 * Instantiate the controller.
+	 * Instantiate the command.
 	 *
-	 * @param   Http                 $http          The HTTP driver.
-	 * @param   PackageModel         $packageModel  The package model.
-	 * @param   ReleaseModel         $releaseModel  The package model.
-	 * @param   Input                $input         The input object.
-	 * @param   AbstractApplication  $app           The application object.
+	 * @param   Http          $http          The HTTP driver.
+	 * @param   PackageModel  $packageModel  The package model.
+	 * @param   ReleaseModel  $releaseModel  The package model.
 	 */
-	public function __construct(
-		Http $http,
-		PackageModel $packageModel,
-		ReleaseModel $releaseModel,
-		Input $input = null,
-		AbstractApplication $app = null
-	)
+	public function __construct(Http $http, PackageModel $packageModel, ReleaseModel $releaseModel)
 	{
-		parent::__construct($input, $app);
-
 		$this->http         = $http;
 		$this->packageModel = $packageModel;
 		$this->releaseModel = $releaseModel;
+
+		parent::__construct();
 	}
 
 	/**
-	 * Execute the controller.
+	 * Execute the command.
 	 *
-	 * @return  boolean
+	 * @return  integer  The exit code for the command.
 	 */
-	public function execute()
+	public function execute(): int
 	{
-		$this->getApplication()->outputTitle('Sync Release Data with Packagist');
+		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+
+		$symfonyStyle->title('Sync Release Data with Packagist');
 
 		foreach ($this->packageModel->getPackages() as $package)
 		{
-			$this->getApplication()->out(
-				sprintf('Processing <info>%s</info> package', $package->display)
-			);
+			$symfonyStyle->comment(sprintf('Processing <info>%s</info> package', $package->display));
 
 			$url = "https://packagist.org/packages/joomla/{$package->package}.json";
 
@@ -109,7 +96,7 @@ class SyncCommand extends AbstractController implements CommandInterface
 					// Add the release
 					$this->releaseModel->addRelease($package, $versionData->version);
 
-					$this->getApplication()->out(
+					$symfonyStyle->comment(
 						sprintf('Added <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version)
 					);
 				}
@@ -123,33 +110,30 @@ class SyncCommand extends AbstractController implements CommandInterface
 					['exception' => $exception]
 				);
 
-				$this->getApplication()->out("<error>$message</error>");
+				$symfonyStyle->error($message);
 			}
 		}
 
-		$this->getApplication()->out('<info>Update completed.</info>');
+		$symfonyStyle->success('Update completed.');
 
-		return true;
+		return 0;
 	}
 
 	/**
-	 * Get the command's description
+	 * Initialise the command.
 	 *
-	 * @return  string
+	 * @return  void
 	 */
-	public function getDescription() : string
+	protected function initialise()
 	{
-		return 'Synchronizes release data with Packagist.';
-	}
+		$this->setName('packagist:sync:releases');
+		$this->setDescription('Synchronizes release data with Packagist');
+		$this->setHelp(<<<'EOF'
+The <info>%command.name%</info> command synchronizes the package release data with Packagist
 
-	/**
-	 * Get the command's title
-	 *
-	 * @return  string
-	 */
-	public function getTitle() : string
-	{
-		return 'Packagist Sync';
+<info>php %command.full_name% %command.name%</info>
+EOF
+		);
 	}
 
 	/**

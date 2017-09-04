@@ -8,21 +8,16 @@
 
 namespace Joomla\FrameworkWebsite\Command\Twig;
 
-use Joomla\Application\AbstractApplication;
-use Joomla\Controller\AbstractController;
+use Joomla\Console\AbstractCommand;
 use Joomla\Filesystem\Folder;
-use Joomla\FrameworkWebsite\CommandInterface;
-use Joomla\Input\Input;
 use Joomla\Renderer\TwigRenderer;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Twig\Error\Error as TwigError;
 
 /**
  * Twig cache reset command
- *
- * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
- * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object
  */
-class ResetCacheCommand extends AbstractController implements CommandInterface
+class ResetCacheCommand extends AbstractCommand
 {
 	/**
 	 * The template renderer
@@ -32,37 +27,37 @@ class ResetCacheCommand extends AbstractController implements CommandInterface
 	private $renderer;
 
 	/**
-	 * Instantiate the controller.
+	 * Instantiate the command.
 	 *
-	 * @param   TwigRenderer         $renderer  The template renderer
-	 * @param   Input                $input     The input object.
-	 * @param   AbstractApplication  $app       The application object.
+	 * @param   TwigRenderer  $renderer  The template renderer
 	 */
-	public function __construct(TwigRenderer $renderer, Input $input = null, AbstractApplication $app = null)
+	public function __construct(TwigRenderer $renderer)
 	{
-		parent::__construct($input, $app);
-
 		$this->renderer = $renderer;
+
+		parent::__construct();
 	}
 
 	/**
-	 * Execute the controller.
+	 * Execute the command.
 	 *
-	 * @return  boolean
+	 * @return  integer  The exit code for the command.
 	 */
-	public function execute()
+	public function execute(): int
 	{
-		$this->getApplication()->outputTitle('Reset Twig Cache');
+		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+
+		$symfonyStyle->title('Reset Twig Cache');
 
 		// Check if caching is enabled
 		if ($this->getApplication()->get('template.cache.enabled', false) === false)
 		{
-			$this->getApplication()->out('<info>Twig caching is disabled.</info>');
+			$symfonyStyle->comment('Twig caching is disabled.');
 
-			return true;
+			return 0;
 		}
 
-		$this->getApplication()->out('<info>Resetting Twig Cache</info>');
+		$symfonyStyle->comment('Resetting Twig cache.');
 
 		$twigCache = $this->getApplication()->get('template.cache.path', '');
 
@@ -98,35 +93,30 @@ class ResetCacheCommand extends AbstractController implements CommandInterface
 
 		if (count($errorFiles))
 		{
-			$msg = '<comment>The following Twig resources failed to cache: ' . implode(', ', $errorFiles) . '</comment>';
+			$symfonyStyle->warning('The following Twig resources failed to cache: ' . implode(', ', $errorFiles));
 		}
 		else
 		{
-			$msg = '<info>The cached Twig resources were successfully created.</info>';
+			$symfonyStyle->success('The cached Twig resources were successfully created.');
 		}
 
-		$this->getApplication()->out($msg);
-
-		return true;
+		return 0;
 	}
 
 	/**
-	 * Get the command's description
+	 * Initialise the command.
 	 *
-	 * @return  string
+	 * @return  void
 	 */
-	public function getDescription() : string
+	protected function initialise()
 	{
-		return 'Resets the Twig template cache.';
-	}
+		$this->setName('twig:reset-cache');
+		$this->setDescription('Resets the Twig template cache');
+		$this->setHelp(<<<'EOF'
+The <info>%command.name%</info> command resets the Twig template cache
 
-	/**
-	 * Get the command's title
-	 *
-	 * @return  string
-	 */
-	public function getTitle() : string
-	{
-		return 'Reset Twig Cache';
+<info>php %command.full_name% %command.name%</info>
+EOF
+		);
 	}
 }
