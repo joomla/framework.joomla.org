@@ -27,7 +27,7 @@
         "monolog/monolog": "^1.22.1",
         "psr/link": "~1.0",
         "ramsey/uuid": "~3.4",
-        "robmorgan/phinx": "~0.8",
+        "robmorgan/phinx": "0.8.1",
         "symfony/asset": "3.3.*",
         "symfony/console": "3.4.*@dev",
         "symfony/web-link": "3.3.*",
