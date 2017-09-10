@@ -5,6 +5,8 @@ packages:
     cache: ~
     compat:
         deprecated: true
+    console:
+        stable: false
     controller: ~
     crypt: ~
     data: ~

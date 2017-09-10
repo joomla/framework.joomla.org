@@ -33,8 +33,8 @@ try
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
 
-	// Alias the web application to Joomla's base application class as this is the primary application for the environment
-	$container->alias(Joomla\Application\AbstractApplication::class, Joomla\Application\AbstractCliApplication::class);
+	// Alias the CLI application to Joomla's base application class as this is the primary application for the environment
+	$container->alias(Joomla\Application\AbstractApplication::class, Joomla\Console\Application::class);
 
     // Alias the Joomla\Input\Input service to the CLI input class (overloads the original definition)
     $container->alias(Joomla\Input\Input::class, Joomla\Input\Cli::class);
@@ -64,28 +64,4 @@ catch (\Throwable $e)
 }
 
 // Execute the application
-try
-{
-    $container->get(Joomla\Application\AbstractApplication::class)->execute();
-}
-catch (\Throwable $e)
-{
-	error_log($e);
-
-	// Log the error for reference
-	$container->get('monolog.logger.application.cli')->error(
-		sprintf('Uncaught Throwable of type %s caught.', get_class($e)),
-		['exception' => $e]
-	);
-
-	fwrite(STDOUT, "\nERROR: " . $e->getMessage() . "\n");
-	fwrite(STDOUT, "\n" . $e->getTraceAsString() . "\n");
-
-	if ($prev = $e->getPrevious())
-	{
-		fwrite(STDOUT, "\n\nPrevious Exception: " . $prev->getMessage() . "\n");
-		fwrite(STDOUT, "\n" . $prev->getTraceAsString() . "\n");
-	}
-
-	exit(1);
-}
+$container->get(Joomla\Application\AbstractApplication::class)->execute();

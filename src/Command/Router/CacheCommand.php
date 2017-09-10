@@ -8,50 +8,49 @@
 
 namespace Joomla\FrameworkWebsite\Command\Router;
 
-use Joomla\Controller\AbstractController;
+use Joomla\Console\AbstractCommand;
 use Joomla\DI\{
 	ContainerAwareInterface, ContainerAwareTrait
 };
-use Joomla\FrameworkWebsite\CommandInterface;
 use Joomla\Router\Router;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Router cache command
- *
- * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
- * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object
  */
-class CacheCommand extends AbstractController implements CommandInterface, ContainerAwareInterface
+class CacheCommand extends AbstractCommand implements ContainerAwareInterface
 {
 	use ContainerAwareTrait;
 
 	/**
-	 * Execute the controller.
+	 * Execute the command.
 	 *
-	 * @return  boolean
+	 * @return  integer  The exit code for the command.
 	 */
-	public function execute()
+	public function execute(): int
 	{
-		$this->getApplication()->outputTitle('Cache Router');
+		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+
+		$symfonyStyle->title('Cache Router');
 
 		// Check if caching is enabled
 		if ($this->getApplication()->get('router.cache', false) === false)
 		{
-			$this->getApplication()->out('<info>Router caching is disabled.</info>');
+			$symfonyStyle->comment('Router caching is disabled.');
 
-			return true;
+			return 0;
 		}
 
-		$this->getApplication()->out('<info>Resetting Router Cache</info>');
+		$symfonyStyle->comment('Resetting router cache.');
 
 		$compiledFile = JPATH_ROOT . '/cache/CompiledRouter.php';
 
 		// First remove the compiled router file
 		if (file_exists($compiledFile) && !@unlink($compiledFile))
 		{
-			$this->getApplication()->out('<error>Error removing compiled router file</error>');
+			$symfonyStyle->error('Error removing compiled router file');
 
-			return false;
+			return 1;
 		}
 
 		// Clear the stat cache just to make sure we're clear
@@ -64,9 +63,26 @@ class CacheCommand extends AbstractController implements CommandInterface, Conta
 		// Now compile it
 		file_put_contents($compiledFile, $this->compileRouter($router));
 
-		$this->getApplication()->out('<info>The router has been cached.</info>');
+		$symfonyStyle->success('The router has been cached.');
 
-		return true;
+		return 0;
+	}
+
+	/**
+	 * Initialise the command.
+	 *
+	 * @return  void
+	 */
+	protected function initialise()
+	{
+		$this->setName('router:cache');
+		$this->setDescription('Caches the compiled router');
+		$this->setHelp(<<<'EOF'
+The <info>%command.name%</info> command caches the router with all routing information compiled
+
+<info>php %command.full_name% %command.name%</info>
+EOF
+		);
 	}
 
 	/**

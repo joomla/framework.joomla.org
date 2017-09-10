@@ -8,21 +8,15 @@
 
 namespace Joomla\FrameworkWebsite\Command\Package;
 
-use Joomla\Application\AbstractApplication;
-use Joomla\Controller\AbstractController;
-use Joomla\FrameworkWebsite\{
-	CommandInterface, Helper
-};
+use Joomla\Console\AbstractCommand;
+use Joomla\FrameworkWebsite\Helper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
-use Joomla\Input\Input;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Command to get download counts from Packagist
- *
- * @method         \Joomla\FrameworkWebsite\CliApplication  getApplication()  Get the application object.
- * @property-read  \Joomla\FrameworkWebsite\CliApplication  $app              Application object
+ * Command to synchronize the package listing data
  */
-class SyncCommand extends AbstractController implements CommandInterface
+class SyncCommand extends AbstractCommand
 {
 	/**
 	 * The helper object
@@ -39,29 +33,29 @@ class SyncCommand extends AbstractController implements CommandInterface
 	private $packageModel;
 
 	/**
-	 * Instantiate the controller.
+	 * Instantiate the command.
 	 *
-	 * @param   Helper               $helper        The helper object.
-	 * @param   PackageModel         $packageModel  The package model.
-	 * @param   Input                $input         The input object.
-	 * @param   AbstractApplication  $app           The application object.
+	 * @param   Helper        $helper        The helper object.
+	 * @param   PackageModel  $packageModel  The package model.
 	 */
-	public function __construct(Helper $helper, PackageModel $packageModel, Input $input = null, AbstractApplication $app = null)
+	public function __construct(Helper $helper, PackageModel $packageModel)
 	{
-		parent::__construct($input, $app);
-
 		$this->helper       = $helper;
 		$this->packageModel = $packageModel;
+
+		parent::__construct();
 	}
 
 	/**
-	 * Execute the controller.
+	 * Execute the command.
 	 *
-	 * @return  boolean
+	 * @return  integer  The exit code for the command.
 	 */
-	public function execute()
+	public function execute(): int
 	{
-		$this->getApplication()->outputTitle($this->getTitle());
+		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+
+		$symfonyStyle->title('Sync Package Data');
 
 		$packageNames   = array_keys($this->helper->getPackages()->extract('packages')->toArray());
 		$loadedPackages = $this->packageModel->getPackageNames();
@@ -83,7 +77,7 @@ class SyncCommand extends AbstractController implements CommandInterface
 					$this->helper->getPackageDeprecated($packageName)
 				);
 
-				$this->getApplication()->out("<info>Updated $displayName package data.</info>");
+				$symfonyStyle->comment("Updated $displayName package data.");
 			}
 			else
 			{
@@ -95,32 +89,29 @@ class SyncCommand extends AbstractController implements CommandInterface
 					$this->helper->getPackageDeprecated($packageName)
 				);
 
-				$this->getApplication()->out("<info>$displayName package added to the database.</info>");
+				$symfonyStyle->comment("$displayName package added to the database.");
 			}
 		}
 
-		$this->getApplication()->out('<info>Package data synchronized.</info>');
+		$symfonyStyle->success('Package data synchronized.');
 
-		return true;
+		return 0;
 	}
 
 	/**
-	 * Get the command's description
+	 * Initialise the command.
 	 *
-	 * @return  string
+	 * @return  void
 	 */
-	public function getDescription() : string
+	protected function initialise()
 	{
-		return 'Synchronizes the Framework package data to the database.';
-	}
+		$this->setName('package:sync');
+		$this->setDescription('Synchronizes Framework package data to the database');
+		$this->setHelp(<<<'EOF'
+The <info>%command.name%</info> command synchronizes the Framework package data to the local database
 
-	/**
-	 * Get the command's title
-	 *
-	 * @return  string
-	 */
-	public function getTitle() : string
-	{
-		return 'Sync Package Data';
+<info>php %command.full_name% %command.name%</info>
+EOF
+		);
 	}
 }
