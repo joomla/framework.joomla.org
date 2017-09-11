@@ -364,12 +364,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/console.git",
-                "reference": "1abcecaceb7c744bcc741d8ca48bd3ffab53f2e2"
+                "reference": "cfd127c3e3f42fc54a887605cb48600a0f968b55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/console/zipball/1abcecaceb7c744bcc741d8ca48bd3ffab53f2e2",
-                "reference": "1abcecaceb7c744bcc741d8ca48bd3ffab53f2e2",
+                "url": "https://api.github.com/repos/joomla-framework/console/zipball/cfd127c3e3f42fc54a887605cb48600a0f968b55",
+                "reference": "cfd127c3e3f42fc54a887605cb48600a0f968b55",
                 "shasum": ""
             },
             "require": {
@@ -409,7 +409,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2017-09-04T22:08:14+00:00"
+            "time": "2017-09-11T02:11:16+00:00"
         },
         {
             "name": "joomla/controller",
@@ -970,12 +970,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/renderer.git",
-                "reference": "3d4c2966aca6a9884b91b19ec5af71b14afb341f"
+                "reference": "86537a4de9030ee6c80179da6d60f8cf4e2e5dfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/renderer/zipball/3d4c2966aca6a9884b91b19ec5af71b14afb341f",
-                "reference": "3d4c2966aca6a9884b91b19ec5af71b14afb341f",
+                "url": "https://api.github.com/repos/joomla-framework/renderer/zipball/86537a4de9030ee6c80179da6d60f8cf4e2e5dfa",
+                "reference": "86537a4de9030ee6c80179da6d60f8cf4e2e5dfa",
                 "shasum": ""
             },
             "require": {
@@ -1021,7 +1021,7 @@
                 "joomla",
                 "renderer"
             ],
-            "time": "2017-08-16T00:46:36+00:00"
+            "time": "2017-09-07T19:29:17+00:00"
         },
         {
             "name": "joomla/router",
@@ -1873,12 +1873,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e"
+                "reference": "a13780e9377e9ad2c11787ed51609b7cdc79999a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e",
-                "reference": "78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e",
+                "url": "https://api.github.com/repos/symfony/console/zipball/a13780e9377e9ad2c11787ed51609b7cdc79999a",
+                "reference": "a13780e9377e9ad2c11787ed51609b7cdc79999a",
                 "shasum": ""
             },
             "require": {
@@ -1934,7 +1934,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-09-03T15:31:40+00:00"
+            "time": "2017-09-08T16:59:15+00:00"
         },
         {
             "name": "symfony/debug",
