@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "composer/ca-bundle",
-            "version": "1.0.7",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "b17e6153cb7f33c7e44eb59578dc12eee5dc8e12"
+                "reference": "9dd73a03951357922d8aee6cc084500de93e2343"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/b17e6153cb7f33c7e44eb59578dc12eee5dc8e12",
-                "reference": "b17e6153cb7f33c7e44eb59578dc12eee5dc8e12",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/9dd73a03951357922d8aee6cc084500de93e2343",
+                "reference": "9dd73a03951357922d8aee6cc084500de93e2343",
                 "shasum": ""
             },
             "require": {
@@ -63,7 +63,7 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2017-03-06T11:59:08+00:00"
+            "time": "2017-09-11T07:24:36+00:00"
         },
         {
             "name": "fig/link-util",
@@ -306,15 +306,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/application.git",
-                "reference": "3cc2e7b8d183fbbe8ba262c109eb66228d06d8a0"
+                "reference": "0ed27568701098663dd12a18b3ccd41863ee0b42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/application/zipball/3cc2e7b8d183fbbe8ba262c109eb66228d06d8a0",
-                "reference": "3cc2e7b8d183fbbe8ba262c109eb66228d06d8a0",
+                "url": "https://api.github.com/repos/joomla-framework/application/zipball/0ed27568701098663dd12a18b3ccd41863ee0b42",
+                "reference": "0ed27568701098663dd12a18b3ccd41863ee0b42",
                 "shasum": ""
             },
             "require": {
+                "joomla/event": "~2.0",
                 "joomla/input": "~1.2|~2.0",
                 "joomla/registry": "^1.4.5|~2.0",
                 "php": "~7.0",
@@ -327,7 +328,7 @@
                 "joomla/session": "~2.0",
                 "joomla/test": "~1.1",
                 "joomla/uri": "~1.1",
-                "phpunit/phpunit": ">=5.0 <5.4",
+                "phpunit/phpunit": "~6.3",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "suggest": {
@@ -356,7 +357,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2017-08-16T00:10:46+00:00"
+            "time": "2017-09-12T23:54:44+00:00"
         },
         {
             "name": "joomla/console",
@@ -364,12 +365,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/console.git",
-                "reference": "1abcecaceb7c744bcc741d8ca48bd3ffab53f2e2"
+                "reference": "9db77b107ecd5b654a1c725492e4ad8936e10cdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/console/zipball/1abcecaceb7c744bcc741d8ca48bd3ffab53f2e2",
-                "reference": "1abcecaceb7c744bcc741d8ca48bd3ffab53f2e2",
+                "url": "https://api.github.com/repos/joomla-framework/console/zipball/9db77b107ecd5b654a1c725492e4ad8936e10cdd",
+                "reference": "9db77b107ecd5b654a1c725492e4ad8936e10cdd",
                 "shasum": ""
             },
             "require": {
@@ -409,7 +410,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2017-09-04T22:08:14+00:00"
+            "time": "2017-09-13T00:12:59+00:00"
         },
         {
             "name": "joomla/controller",
@@ -970,12 +971,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/renderer.git",
-                "reference": "3d4c2966aca6a9884b91b19ec5af71b14afb341f"
+                "reference": "86537a4de9030ee6c80179da6d60f8cf4e2e5dfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/renderer/zipball/3d4c2966aca6a9884b91b19ec5af71b14afb341f",
-                "reference": "3d4c2966aca6a9884b91b19ec5af71b14afb341f",
+                "url": "https://api.github.com/repos/joomla-framework/renderer/zipball/86537a4de9030ee6c80179da6d60f8cf4e2e5dfa",
+                "reference": "86537a4de9030ee6c80179da6d60f8cf4e2e5dfa",
                 "shasum": ""
             },
             "require": {
@@ -1021,7 +1022,7 @@
                 "joomla",
                 "renderer"
             ],
-            "time": "2017-08-16T00:46:36+00:00"
+            "time": "2017-09-07T19:29:17+00:00"
         },
         {
             "name": "joomla/router",
@@ -1751,7 +1752,7 @@
         },
         {
             "name": "symfony/asset",
-            "version": "v3.3.8",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset.git",
@@ -1807,16 +1808,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.3.8",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "6ac0cc1f047c1dbc058fc25b7a4d91b068ed4488"
+                "reference": "f9f19a39ee178f61bb2190f51ff7c517c2159315"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/6ac0cc1f047c1dbc058fc25b7a4d91b068ed4488",
-                "reference": "6ac0cc1f047c1dbc058fc25b7a4d91b068ed4488",
+                "url": "https://api.github.com/repos/symfony/config/zipball/f9f19a39ee178f61bb2190f51ff7c517c2159315",
+                "reference": "f9f19a39ee178f61bb2190f51ff7c517c2159315",
                 "shasum": ""
             },
             "require": {
@@ -1865,7 +1866,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-03T08:59:45+00:00"
+            "time": "2017-09-04T16:28:07+00:00"
         },
         {
             "name": "symfony/console",
@@ -1873,12 +1874,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e"
+                "reference": "ed85f121340bfeb8378cf736a1332a505f8382f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e",
-                "reference": "78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e",
+                "url": "https://api.github.com/repos/symfony/console/zipball/ed85f121340bfeb8378cf736a1332a505f8382f1",
+                "reference": "ed85f121340bfeb8378cf736a1332a505f8382f1",
                 "shasum": ""
             },
             "require": {
@@ -1934,20 +1935,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-09-03T15:31:40+00:00"
+            "time": "2017-09-11T21:23:16+00:00"
         },
         {
             "name": "symfony/debug",
-            "version": "v3.3.8",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "084d804fe35808eb2ef596ec83d85d9768aa6c9d"
+                "reference": "8beb24eec70b345c313640962df933499373a944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/084d804fe35808eb2ef596ec83d85d9768aa6c9d",
-                "reference": "084d804fe35808eb2ef596ec83d85d9768aa6c9d",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/8beb24eec70b345c313640962df933499373a944",
+                "reference": "8beb24eec70b345c313640962df933499373a944",
                 "shasum": ""
             },
             "require": {
@@ -1990,11 +1991,11 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-27T14:52:21+00:00"
+            "time": "2017-09-01T13:23:39+00:00"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.3.8",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -2102,7 +2103,7 @@
         },
         {
             "name": "symfony/web-link",
-            "version": "v3.3.8",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/web-link.git",
@@ -2173,7 +2174,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.3.8",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -2335,16 +2336,16 @@
         },
         {
             "name": "zendframework/zend-diactoros",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "1d23172f9dc1687a97c195a777b0199f14f7b26e"
+                "reference": "2faa791b66bac33ca40031d8bce03b7dc8143490"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/1d23172f9dc1687a97c195a777b0199f14f7b26e",
-                "reference": "1d23172f9dc1687a97c195a777b0199f14f7b26e",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/2faa791b66bac33ca40031d8bce03b7dc8143490",
+                "reference": "2faa791b66bac33ca40031d8bce03b7dc8143490",
                 "shasum": ""
             },
             "require": {
@@ -2363,8 +2364,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev",
-                    "dev-develop": "1.6-dev"
+                    "dev-master": "1.6-dev",
+                    "dev-develop": "1.7-dev"
                 }
             },
             "autoload": {
@@ -2383,7 +2384,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2017-08-22T20:38:56+00:00"
+            "time": "2017-09-13T14:47:08+00:00"
         }
     ],
     "packages-dev": [
@@ -2575,7 +2576,7 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.3.8",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
