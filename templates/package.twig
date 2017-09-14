@@ -6,14 +6,14 @@
 
 {% block content %}
 <section class="status container">
-    <h1 class="text-center">Release Data for {{ package.display }} Package <a href="https://github.com/joomla-framework/{{ package.repo }}"><span class="fa fa-github"></span></a></h1>
+    <h1 class="centered-title">Release Data for {{ package.display }} Package <a href="https://github.com/joomla-framework/{{ package.repo }}"><span class="fa fa-github"></span></a></h1>
     {% if package.deprecated %}
         <div class="alert alert-warning">
             <h4>Deprecated Package</h4>
             <p>This package has been deprecated and will soon no longer be supported.</p>
         </div>
     {% endif %}
-    <table class="table table-striped table-condensed">
+    <table class="table table-striped table-sm table-responsive">
         <thead>
             <tr>
                 <th>Version</th>
@@ -42,13 +42,13 @@
                     <td>
                         {{ release.tests }}
                         {% if release.newTests %}
-                            <span class="pull-right label label-{{ release.newTests > 0 ? 'success' : 'danger' }}">{{ release.newTests }}</span>
+                            <span class="pull-right badge badge-{{ release.newTests > 0 ? 'success' : 'danger' }}">{{ release.newTests }}</span>
                         {% endif %}
                     </td>
                     <td>
                         {{ release.assertions }}
                         {% if release.newAssertions %}
-                            <span class="pull-right label label-{{ release.newAssertions > 0 ? 'success' : 'danger' }}">{{ release.newAssertions }}</span>
+                            <span class="pull-right badge badge-{{ release.newAssertions > 0 ? 'success' : 'danger' }}">{{ release.newAssertions }}</span>
                         {% endif %}
                     </td>
                     <td>{{ release.failures }}</td>
@@ -56,7 +56,7 @@
                     <td>
                         {{ release.lines_covered }}/{{ release.total_lines}} ({{ release.lines_percentage|number_format(2) }}%)
                         {% if release.addedCoverage %}
-                            <span class="pull-right label label-{{ release.addedCoverage > 0 ? 'success' : 'danger' }}">{{ release.addedCoverage|number_format(2) }}%</span>
+                            <span class="pull-right badge badge-{{ release.addedCoverage > 0 ? 'success' : 'danger' }}">{{ release.addedCoverage|number_format(2) }}%</span>
                         {% endif %}
                     </td>
                     <td>

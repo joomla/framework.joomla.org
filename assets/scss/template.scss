@@ -1,349 +1,64 @@
-/* vietnamese */
-@font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/ODelI1aHBYDBqgeIAH2zlCxe5Tewm2_XWfbGchcXw4g.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/ODelI1aHBYDBqgeIAH2zlIa1YDtoarzwSXxTHggEXMw.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/ODelI1aHBYDBqgeIAH2zlJbPFduIYtoLzwST68uhz_Y.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Source Sans Pro Semibold'), local('SourceSansPro-Semibold'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/toadOcfmlt9b38dHJxOBGMZXFz2iDKd7GJNSaxRYiSj3rGVtsTkPsbDajuO5ueQw.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Source Sans Pro Semibold'), local('SourceSansPro-Semibold'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/toadOcfmlt9b38dHJxOBGKyGJhAh-RE0BxGcd_izyev3rGVtsTkPsbDajuO5ueQw.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Source Sans Pro Semibold'), local('SourceSansPro-Semibold'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/toadOcfmlt9b38dHJxOBGMzFoXZ-Kj537nB_-9jJhlA.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
+// External fonts
+@import "_fonts";
 
-
-@import "_variables.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_mixins.scss";
-
-// Reset and dependencies
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_normalize.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_print.scss";
-//@import "glyphicons.scss";
+// Site variables
+@import "_variables";
 
 // Font Awesome
-// @import "../../node_modules/font-awesome/scss/_animated.scss";
-// @import "../../node_modules/font-awesome/scss/_bordered-pulled.scss";
-// @import "../../node_modules/font-awesome/scss/_core.scss";
-// @import "../../node_modules/font-awesome/scss/_fixed-width.scss";
-// @import "../../node_modules/font-awesome/scss/_icons.scss";
-// @import "../../node_modules/font-awesome/scss/_larger.scss";
-// @import "../../node_modules/font-awesome/scss/_list.scss";
-// @import "../../node_modules/font-awesome/scss/_mixins.scss";
-// @import "../../node_modules/font-awesome/scss/_path.scss";
-// @import "../../node_modules/font-awesome/scss/_rotated-flipped.scss";
-// @import "../../node_modules/font-awesome/scss/_stacked.scss";
-// @import "../../node_modules/font-awesome/scss/_variables.scss";
-@import "../../node_modules/font-awesome/scss/font-awesome.scss";
+@import "../../node_modules/font-awesome/scss/variables";
+@import "../../node_modules/font-awesome/scss/mixins";
+@import "../../node_modules/font-awesome/scss/path";
+@import "../../node_modules/font-awesome/scss/core";
+@import "../../node_modules/font-awesome/scss/larger";
+//@import "../../node_modules/font-awesome/scss/fixed-width";
+//@import "../../node_modules/font-awesome/scss/list";
+//@import "../../node_modules/font-awesome/scss/bordered-pulled";
+//@import "../../node_modules/font-awesome/scss/animated";
+//@import "../../node_modules/font-awesome/scss/rotated-flipped";
+//@import "../../node_modules/font-awesome/scss/stacked";
+//@import "../../node_modules/font-awesome/scss/icons";
+@import "_icons";
+//@import "../../node_modules/font-awesome/scss/screen-reader";
+//@import "../../node_modules/font-awesome/scss/font-awesome";
 
-// Core CSS
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_scaffolding.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_type.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_code.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_grid.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_tables.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_forms.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_buttons.scss";
+// Bootstrap
+@import "../../node_modules/bootstrap/scss/_functions";
+@import "../../node_modules/bootstrap/scss/_variables";
+@import "../../node_modules/bootstrap/scss/_mixins";
+@import "../../node_modules/bootstrap/scss/_print";
+@import "../../node_modules/bootstrap/scss/_reboot";
+@import "../../node_modules/bootstrap/scss/_type";
+@import "../../node_modules/bootstrap/scss/_images";
+@import "../../node_modules/bootstrap/scss/_code";
+//@import "../../node_modules/bootstrap/scss/_grid";
+@import "_grid";
+@import "../../node_modules/bootstrap/scss/_tables";
+@import "../../node_modules/bootstrap/scss/_forms";
+@import "../../node_modules/bootstrap/scss/_buttons";
+//@import "../../node_modules/bootstrap/scss/_transitions";
+//@import "../../node_modules/bootstrap/scss/_dropdown";
+//@import "../../node_modules/bootstrap/scss/_button-group";
+//@import "../../node_modules/bootstrap/scss/_input-group";
+//@import "../../node_modules/bootstrap/scss/_custom-forms";
+//@import "../../node_modules/bootstrap/scss/_nav";
+//@import "../../node_modules/bootstrap/scss/_navbar";
+@import "../../node_modules/bootstrap/scss/_card";
+//@import "../../node_modules/bootstrap/scss/_breadcrumb";
+//@import "../../node_modules/bootstrap/scss/_pagination";
+@import "../../node_modules/bootstrap/scss/_badge";
+//@import "../../node_modules/bootstrap/scss/_jumbotron";
+@import "../../node_modules/bootstrap/scss/_alert";
+//@import "../../node_modules/bootstrap/scss/_progress";
+//@import "../../node_modules/bootstrap/scss/_media";
+//@import "../../node_modules/bootstrap/scss/_list-group";
+//@import "../../node_modules/bootstrap/scss/_close";
+//@import "../../node_modules/bootstrap/scss/_modal";
+//@import "../../node_modules/bootstrap/scss/_tooltip";
+//@import "../../node_modules/bootstrap/scss/_popover";
+//@import "../../node_modules/bootstrap/scss/_carousel";
+@import "../../node_modules/bootstrap/scss/_utilities";
 
-// Components
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_component-animations.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_dropdowns.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_button-groups.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_input-groups.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_navs.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_navbar.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_breadcrumbs.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_pagination.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_pager.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_labels.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_badges.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_jumbotron.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_thumbnails.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_alerts.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_progress-bars.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_media.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_list-group.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_panels.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_responsive-embed.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_wells.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_close.scss";
-
-// Components w/ JavaScript
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_modals.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_tooltip.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_popovers.scss";
-//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_carousel.scss";
-
-// Utility classes
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_utilities.scss";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_responsive-utilities.scss";
-
-a {
-  @include transition(all 0.3s ease-out)
-}
-
-h2 {
-  text-align: center;
-}
-
-.fa {
-  color: $icon-color;
-}
-
-.rochen {
-  background: url(https://cdn.joomla.org/rochen/rochen_footer_logo_white.png) no-repeat;
-  height: 42px;
-  width: 84px;
-  text-indent: -9999px;
-  display: inline-block;
-  position: relative;
-}
-
-nav {
-  background: $darker-black;
-  color: #ffffff;
-  height: 45px;
-  padding: 8px 0;
-  font-size: 18px;
-  position: fixed;
-  width: 100%;
-  z-index: 9999;
-  @media screen and (min-width: $screen-md-min) {
-    font-size: 21px;
-  }
-  a {
-    color: #ffffff;
-    &:hover {
-      text-decoration: none;
-      color: $brand-info;
-    }
-  }
-  .fa {
-    font-size: 27px;
-    padding-right: 8px;
-  }
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    text-align: center;
-    li {
-      display: inline;
-      line-height: 1.5;
-      margin-left: 6%;
-      @media screen and (min-width: 501px) {
-        margin-left: 10%;
-      }
-      @media screen and (min-width: $screen-md-min) {
-        margin-left: 5.5%;
-      }
-      &:first-child {
-        margin-left: 0;
-      }
-      span {
-        vertical-align: top;
-        &.title {
-          display: none;
-          @media screen and (min-width: $screen-md-min) {
-            display: inline;
-          }
-        }
-      }
-    }
-  }
-}
-
-main {
-  padding: 45px 10px 20px;
-  @media screen and (min-width: $screen-lg-min) {
-    padding: 45px 0 20px;
-  }
-}
-
-.go {
-  background: url(../images/j-framework-500.png) no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  text-align: center;
-  padding: 10px;
-  font-size: 27px;
-  color: #ffffff;
-  @media screen and (min-width: 501px) {
-    background-image: url(../images/j-framework-767.png);
-  }
-  @media screen and (min-width: $screen-md-min) {
-    background-image: url(../images/j-framework-1200.png);
-    font-size: 31px;
-  }
-  @media screen and (max-width: $screen-md-max) {
-    margin: 0 -10px;
-  }
-  @media screen and (min-width: $screen-lg-min) {
-    background-image: url(../images/j-framework-full.png);
-    font-size: 34px;
-  }
-  h1 {
-    font-size: 35px;
-    margin: 0;
-    line-height: 100%;
-    @media screen and (min-width: 501px) {
-      font-size: 50px;
-    }
-    @media screen and (min-width: $screen-md-min) {
-      font-size: 90px;
-    }
-    @media screen and (min-width: $screen-lg-min) {
-      font-size: 110px;
-    }
-  }
-  h2 {
-    font-size: 30px;
-    color: $go-h2;
-    margin: -10px 0 0;
-    @media screen and (min-width: 501px) {
-      font-size: 40px;
-    }
-    @media screen and (min-width: $screen-md-min) {
-      font-size: 80px;
-    }
-    @media screen and (min-width: $screen-lg-min) {
-      font-size: 85px;
-    }
-  }
-  .cta {
-    max-width: 767px;
-    margin: 0 auto;
-    .btn {
-      width: 100%;
-      font-size: 15px;
-      margin: 20px 0;
-      float: none;
-      @media screen and (min-width: 501px) {
-        margin: inherit;
-        float: inherit;
-        width: 40%;
-        font-size: 17px;
-      }
-      @media screen and (min-width: $screen-md-min) {
-        font-size: 19px;
-      }
-      @media screen and (min-width: $screen-lg-min) {
-        font-size: 24px;
-      }
-    }
-  }
-  .fa {
-    &.mega {
-      color: #ffffff;
-      font-size: 150px;
-      @media screen and (min-width: 501px) {
-        font-size: 160px;
-      }
-      @media screen and (min-width: $screen-md-min) {
-        font-size: 170px;
-      }
-      @media screen and (min-width: $screen-lg-min) {
-        font-size: 180px;
-      }
-    }
-  }
-}
-
-hr#about {
-  border: 0;
-}
-
-.marker {
-  color: $marker-color;
-  font-size: 100px;
-  display: block;
-  text-align: center;
-}
-
-.involved-chunks {
-  div {
-    width: 96%;
-    margin: 1%;
-    padding: 1% 1% 60px;
-    float: left;
-    position: relative;
-    @media screen and (min-width: 501px) {
-      width: 46%;
-    }
-    @media screen and (min-width: 501px) and (max-width: $screen-md-max) {
-      &:nth-child(2n+1) {
-        clear: both;
-      }
-    }
-    @media screen and (min-width: $screen-lg-min) {
-      width: 22%;
-      margin: 1.5%;
-      padding: 1.5% 1.5% 60px;
-    }
-    p {
-      font-size: 14px;
-      &:last-child {
-        position: absolute;
-        bottom: 10px
-      }
-    }
-  }
-}
-
-footer {
-  background: $darker-black;
-  color: #a4a4a4;
-  @media screen and (max-width: $screen-md-max) {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  p {
-    @media screen and (max-width: $screen-sm-max) {
-      font-size: 12px;
-    }
-  }
-}
-
-.structure {
-  display: none;
-  @media screen and (min-width: 501px) {
-    display: block;
-  }
-}
+// Site components
+@import "_global";
+@import "_homepage";
+@import "_contributors";

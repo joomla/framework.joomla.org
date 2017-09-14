@@ -1,7 +1,7 @@
 {% extends "index.twig" %}
 
 {% block bodyNavigation %}
-<nav class="container-fluid" data-scroll-header>
+<nav class="container-fluid homepage" data-scroll-header>
     <ul>
         <li><a data-scroll href="#go"><span class="fa fa-cloud-download"></span><span class="title">Download</span></a></li>
         <li><a data-scroll href="#about"><span class="fa fa-info-circle"></span><span class="title">About</span></a></li>
@@ -18,31 +18,29 @@
     <div class="container">
         <h1>Joomla! Framework</h1>
         <h2>Download &amp; Go</h2>
-        <span class="fa fa-cloud-download mega"></span>
+        <span class="fa fa-5x fa-cloud-download"></span>
         <div class="cta clearfix">
-            <p>Designed by software developers for software developers. Easy to Adapt. Easy to Extend.</p>
-            <p><a href="https://getcomposer.org/download/" class="btn btn-success pull-left">Download Composer</a> <a href="https://github.com/joomla-framework" class="btn btn-info pull-right">GitHub Organization</a></p>
+            <div>Designed by software developers for software developers. Easy to Adapt. Easy to Extend.</div>
+            <div><a href="https://getcomposer.org/download/" class="btn btn-lg btn-success pull-left">Download Composer</a> <a href="https://github.com/joomla-framework" class="btn btn-lg btn-info pull-right">GitHub Organization</a></div>
         </div>
     </div>
 </section>
 
 <hr id="about" />
 
-<span class="fa fa-info-circle marker"></span>
 <section class="about container">
-    <h2>What is the Joomla! Framework?</h2>
+    <span class="fa fa-info-circle marker"></span>
+    <h3 class="centered-title">What is the Joomla! Framework?</h3>
     <p>The Joomla! Framework&#8482 is a new PHP framework (a collection of software libraries/packages) for writing web and command line applications in PHP, without the features and corresponding overhead found in the Joomla! Content Management System (CMS). It provides a structurally sound foundation, which is easy to adapt and easy to extend.</p>
     <p>The Joomla! Framework is free and open source software, distributed under the GNU General Public License version 2 or later; and is comprised of code originally developed for the Joomla! CMS&#8482.</p>
     <p>The Joomla! Framework should not be confused with the hugely popular Joomla! CMS. It is important to remember that you do not need to install the Joomla! Framework to use the CMS, nor do you need to install the Joomla! CMS to use the Framework.</p>
-    <img class="img-responsive center-block structure" src="{{ asset('images/FrameworkDiagram-712x350.png') }}" alt="The versatility and structure of the Joomla! Framework" />
+    <img class="img-fluid mx-auto structure" src="{{ asset('images/FrameworkDiagram-712x350.png') }}" alt="The versatility and structure of the Joomla! Framework" />
 
-    <section class="getting-started container">
-        <h4>Getting Started</h4>
-        <p>The new Joomla! Framework is now available to install via Composer and you can find the list of packages on <a href="https://packagist.org/packages/joomla/">Packagist.org</a>. There are plenty of avenues you can explore to get started on working with the Framework.</p>
-        <p>For the official docs, check out the <code>README.md</code> file found in each package. You can also review the <a href="https://github.com/joomla-framework">Joomla! Framework organization on GitHub</a>.</p>
-    </section>
+    <h4>Getting Started</h4>
+    <p>The new Joomla! Framework is now available to install via Composer and you can find the list of packages on <a href="https://packagist.org/packages/joomla/">Packagist.org</a>. There are plenty of avenues you can explore to get started on working with the Framework.</p>
+    <p>For the official docs, check out the <code>README.md</code> file found in each package. You can also review the <a href="https://github.com/joomla-framework">Joomla! Framework organization on GitHub</a>.</p>
 
-    <h3>Get the Sample Application</h3>
+    <h4>Get the Sample Application</h4>
     <p>One of the easiest ways to get to know the Joomla! Framework is to start with looking at a sample application. This site is powered by the Joomla! Framework and serves as a great example of using the Framework.</p>
     <ol>
         <li>Install Composer.</li>
@@ -51,14 +49,14 @@
         <li>View in your browser.</li>
     </ol>
 
-    <h3>Why build a Joomla! Framework?</h3>
+    <h4>Why build the Joomla! Framework?</h4>
     <p>Separating the framework from the CMS was a big deal, and in retrospect, a smart decision. By separating the two code bases Joomla!&reg; can now offer the stability the CMS requires while still taking advantage of current and modern trends in PHP development.</p>
 
     <a href="{{ asset('images/FrameworkRoadmap-1200x650.png') }}">
-        <img class="img-responsive center-block structure" src="{{ asset('images/FrameworkRoadmap-960x520.png') }}" alt="The current and future roles of the Joomla! Framework" />
+        <img class="img-fluid mx-auto structure" src="{{ asset('images/FrameworkRoadmap-960x520.png') }}" alt="The current and future roles of the Joomla! Framework" />
     </a>
 
-    <h3>What is the Framework good for?</h3>
+    <h4>What is the Framework good for?</h4>
     <ul>
         <li>Building a RESTful web services platform</li>
         <li>Building both simple and complex command line tools</li>
@@ -66,24 +64,24 @@
     </ul>
     <p>A great example is the <a href="https://issues.joomla.org">issue tracker for the Joomla! CMS</a>.</p>
 
-    <h3>Framework Architecture</h3>
+    <h4>Framework Architecture</h4>
     <p>The Joomla! Framework has also been designed for maximum flexibility. Breaking the Framework into isolated modular packages allows each package to evolve more easily than if all packages are tied to a single, large package release.</p>
     <p>Gone are the days when a PHP framework must offer anything and everything a developer needs to complete a project. The current and widely adopted modern practice is to employ lightweight independent feature-specific packages.</p>
     <p>The Framework is distributed with <a href="https://getcomposer.org">Composer</a>, and as such, allows you to include any other PHP code packages that you can install using Composer. And that's a LOT! Take a look at <a href="https://packagist.org/">Packagist.org</a> to see the kind and quality of code which becomes available when using Composer for dependency management.</p>
 
-    <h3>What does the Joomla! Framework mean for you?</h3>
+    <h4>What does the Joomla! Framework mean for you?</h4>
     <p>Whether you are a Joomla! extension developer looking to spread your wings &amp; delve into developing standalone applications or a PHP coder looking for a stable lightweight framework for your next app, the Framework provides benefits for everyone.</p>
 
-    <h3>I am already developing Extensions for the Joomla! CMS. Why should I consider using the Joomla! Framework?</h3>
+    <h4>I am already developing Extensions for the Joomla! CMS. Why should I consider using the Joomla! Framework?</h4>
     <p>You have invested significant time &amp; effort in learning the Joomla! way of doing things &amp; writing extensions. You can now apply this same knowledge within a non-CMS environment because the Joomla! Framework maintains a similar set of function, class, and method names.</p>
     <p>It's important to keep in mind other situations, such as what happens when you land a project that needs a different type of application. Or when something doesn't really fit into the website or CMS box, or the CMS is simply too much overhead. There may be times when you need a simple tool to migrate data from one Business Intelligence system to another or a lightweight RESTful service to talk to a mobile application. These are all cases when a framework-based application will prove much more beneficial.</p>
     <p>These are only a few of the many situations where a framework based solution would work far better than attempting to shoehorn a solution into the Joomla! CMS. The Joomla! Framework allows you to leverage all that Joomla! knowledge to build apps without the overhead of the CMS.</p>
 
-    <h3>I know PHP already. Why should I use this framework?</h3>
+    <h4>I know PHP already. Why should I use this framework?</h4>
     <p>If you are a strong coder looking for a lightweight framework that is easy to adapt and extend, you are in the right place.</p>
     <p>The Joomla! Framework is available using Composer. This allows you to build projects from the many packages included in the Joomla! Framework as well as packages that best fit your needs from any of the other PHP frameworks that use Composer.</p>
 
-    <h3>I am a Joomla! CMS User. How will I be affected?</h3>
+    <h4>I am a Joomla! CMS User. How will I be affected?</h4>
     <p>The Joomla! CMS and the Joomla! Framework are currently developed independently and, thus, the Framework's launch will not have an immediate impact for you. However, there are already parts of the Framework integrated into the CMS (e.g. the Dependency Injection package, added in Joomla! 3.2), and more is coming. Expect to see some great extensions made available to you, built using the Framework!</p>
     <p>The Joomla! Framework aims at getting the latest in PHP developments and features into Joomla! at the framework level. This allows the CMS to better focus its aims on providing the best features for its end users and staying ahead of the game.</p>
     <p>Bottom line, you can rest assured that your favorite CMS will continue to have a strong, up-to-date and robust base that can evolve with the web.</p>
@@ -91,91 +89,100 @@
 
 <hr id="involved" />
 
-<span class="fa fa-globe marker"></span>
 <section class="container">
-    <h2>Get Involved</h2>
+    <span class="fa fa-globe marker"></span>
+    <h3 class="centered-title">Get Involved</h3>
 
-    <h3>Support</h3>
+    <h4>Support</h4>
     <p class="lead">The Joomla! Framework incorporated support in a simple step-by-step process. You can quickly determine the best way to get help by following one of the options below:</p>
 
-    <h4>First Option: Just Fix it</h4>
+    <h5>First Option: Just Fix it</h5>
     <p>Developers are encouraged to take an active approach with the Framework, including future updates and development. If you find a problem or bug and can fix the issue directly, then you can fix the issue and submit a pull request against the repository.</p>
     <p>Not sure how to get started with submitting a pull request? You can view <a href="https://docs.joomla.org/Working_with_git_and_github/My_first_pull_request" target="_blank">pull request tutorials</a> in the Joomla! Documentation wiki.</p>
 
-    <h4>Second Option: Report it</h4>
+    <h5>Second Option: Report it</h5>
     <p>If you find an issue in a Framework package and cannot fix the issue directly, then the next step is to report the problem. Issues can be reported on the <a href="https://github.com/joomla-framework" target="_blank">Joomla! Framework organization</a> under the appropriate package. Submitting an issue here will help everyone track issues in a central location. Please be available to add comments and respond to questions related to your issue as other developers begin assisting in writing code to fix the issue.</p>
     <p>More information regarding <a href="https://developer.joomla.org/framework/report-an-issue.html">reporting issues</a> can be found here.</p>
 
-    <h4>Other Option: Learn it</h4>
+    <h5>Other Option: Learn it</h5>
     <p>Perhaps as you're working with the Framework you find a feature or an issue that you are simply unsure about how to use it. In this case, it would not be appropriate to attempt either of the steps listed above. You can take advantage of the <a href="https://groups.google.com/group/joomla-dev-framework" target="_blank">Joomla! Framework mailing list</a> where you can get help from other developers.</p>
     <p>Be respectful and courteous in the mailing list and you will receive quick helpful feedback to help you better utilize the Framework to its full potential.</p>
 
-    {#<h3>Submit Your Code</h3>
+    {#<h5>Submit Your Code</h5>
     <p>Once you've done your research and asked for other's opinions you're ready to submit a pull request. You should create your code and submit a pull request to the <a href="https://github.com/joomla/joomla-framework" target="_blank">GitHub repository for the Framework</a>.</p>#}
 
-    <aside class="involved-chunks clearfix">
-        <div data-display="equal" class="well">
-            <h4>Official Group</h4>
-            <p>A tried and tested method of communication, it is a quick and easy way for you to ask any questions, offer suggestions, and voice your opinion.</p>
-            <p><a href="https://groups.google.com/group/joomla-dev-framework" class="btn btn-success">Framework Google Group</a></p>
+    <aside class="get-involved">
+        <div class="involved-cta card bg-light">
+            <div class="card-body">
+                <h4 class="card-title">Google Group</h4>
+                <p class="card-text">A tried and tested method of communication, it is a quick and easy way for you to ask any questions, offer suggestions, and voice your opinion.</p>
+            </div>
+            <div class="card-footer bg-transparent text-center border-top-0">
+                <a href="https://groups.google.com/group/joomla-dev-framework" class="btn btn-success">Framework Google Group</a>
+            </div>
         </div>
-        <div data-display="equal" class="well">
-            <h4>GitHub Repository</h4>
-            <p>Are you a GitHub Junkie? Wanna dive into the exact code, or grab it straight from the source? Then GitHub should be perfect for you.</p>
-            <p><a href="https://github.com/joomla-framework" class="btn btn-success">Official GitHub organization</a></p>
+        <div class="involved-cta card bg-light">
+            <div class="card-body">
+                <h4 class="card-title">GitHub</h4>
+                <p class="card-text">Are you a GitHub Junkie? Wanna dive into the exact code, or grab it straight from the source? Then GitHub should be perfect for you.</p>
+            </div>
+            <div class="card-footer bg-transparent text-center border-top-0">
+                <a href="https://github.com/joomla-framework" class="btn btn-success">Official GitHub organization</a>
+            </div>
         </div>
-        <div data-display="equal" class="well">
-            <h4>Support Joomla! through Open Source Matters</h4>
-            <p>Open Source Matters serves the financial and legal interests of the Joomla! project. By supporting them you are directly supporting the Joomla! project itself.</p>
-            <p><a href="https://www.joomla.org/sponsor.html" class="btn btn-success">Sponsor Joomla! today</a></p>
+        <div class="involved-cta card bg-light">
+            <div class="card-body">
+                <h4 class="card-title">Support Joomla! through Open Source Matters</h4>
+                <p class="card-text">Open Source Matters serves the financial and legal interests of the Joomla! project. By supporting them you are directly supporting the Joomla! project itself.</p>
+            </div>
+            <div class="card-footer bg-transparent text-center border-top-0">
+                <a href="https://www.joomla.org/sponsor.html" class="btn btn-success">Sponsor Joomla! today</a>
+            </div>
         </div>
-        <div data-display="equal" class="well">
-            <h4>RSS</h4>
-            <p>Are you an RSS buff? Get the latest developer news at your fingertips.</p>
-            <p><a href="https://developer.joomla.org/news.html" class="btn btn-success">Developer News</a></p>
+        <div class="involved-cta card bg-light">
+            <div class="card-body">
+                <h4 class="card-title">RSS</h4>
+                <p class="card-text">Are you an RSS buff? Get the latest developer news at your fingertips.</p>
+            </div>
+            <div class="card-footer bg-transparent text-center border-top-0">
+                <a href="https://developer.joomla.org/news.html" class="btn btn-success">Developer News</a>
+            </div>
         </div>
     </aside>
 </section>
 {% endblock %}
 
 {% block footerContent %}
-<div class="container clearfix">
-    <div class="row">
-        <aside class="resources col-sm-6">
-            <h3><span class="fa fa-book"></span> Resources</h3>
-            <p><a href="https://packagist.org/packages/joomla/">Packagist</a></p>
-            <p><a href="https://getcomposer.org/download/">Download Composer</a></p>
-            <p><a href="https://github.com/joomla-framework">GitHub Organization</a></p>
-            <p><a href="https://developer.joomla.org/framework/documentation.html">Documentation</a></p>
-            <p><a href="https://groups.google.com/group/joomla-dev-framework">Official Group</a></p>
-            <p><a href="https://www.joomla.org/sponsor.html">Support via OSM</a></p>
-            <p><a href="{{ route('contribute') }}">Contributing to the Framework</a></p>
-            <p><a href="https://developer.joomla.org/framework/roadmap.html">Roadmap</a></p>
-            <p><a href="{{ route('api') }}">Website API</a></p>
-        </aside>
-
-        <aside class="case-studies col-sm-6">
-            <h3>Subscribe</h3>
-            <p>Subscribe to the Google Group mailing list.</p>
-            <form action="https://groups.google.com/group/joomla-dev-framework/boxsubscribe" class="form-inline signup" role="form">
-                <div class="form-group">
-                    <label class="sr-only" for="email">Email address</label>
-                    <input type="email" id="email" name="email" placeholder="Email Address" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Subscribe" name="sub">
-                </div>
-            </form>
-
-            <h3>Case Studies</h3>
-            <p>This framework powers Joomla's own issue tracker. See this Framework-based application in operation at <a href="https://issues.joomla.org">issues.joomla.org</a></p>
-            <p>Also, it already has been adopted by the likes of eBay for internal use. Some of the code offered by Joomla! Framework is already included with the Joomla! CMS. Other packages will be included in future Joomla! CMS versions as needed.</p>
-            <p><a href="https://groups.google.com/group/joomla-dev-framework">Join the Google Group</a> and let us know how you have implemented it.</p>
-        </aside>
+<div class="container homepage-footer">
+    <div class="footer-area resources">
+        <h3><span class="fa fa-book"></span> Resources</h3>
+        <p><a href="https://packagist.org/packages/joomla/">Packagist</a></p>
+        <p><a href="https://getcomposer.org/download/">Download Composer</a></p>
+        <p><a href="https://github.com/joomla-framework">GitHub Organization</a></p>
+        <p><a href="https://developer.joomla.org/framework/documentation.html">Documentation</a></p>
+        <p><a href="https://groups.google.com/group/joomla-dev-framework">Official Group</a></p>
+        <p><a href="https://www.joomla.org/sponsor.html">Support via OSM</a></p>
+        <p><a href="{{ route('contribute') }}">Contributing to the Framework</a></p>
+        <p><a href="https://developer.joomla.org/framework/roadmap.html">Roadmap</a></p>
+        <p><a href="{{ route('api') }}">Website API</a></p>
+    </div>
+    <div class="footer-area subscribe">
+        <h3>Subscribe</h3>
+        <p>Subscribe to the Google Group mailing list.</p>
+        <form action="https://groups.google.com/group/joomla-dev-framework/boxsubscribe" class="form-inline signup" role="form">
+            <label class="sr-only" for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="Email Address" class="form-control mr-sm-2">
+            <button type="submit" class="btn btn-primary" name="sub">Subscribe</button>
+        </form>
+    </div>
+    <div class="footer-area case-studies">
+        <h3>Case Studies</h3>
+        <p>This framework powers Joomla's own issue tracker. See this Framework-based application in operation at <a href="https://issues.joomla.org">issues.joomla.org</a></p>
+        <p>Also, it already has been adopted by the likes of eBay for internal use. Some of the code offered by Joomla! Framework is already included with the Joomla! CMS. Other packages will be included in future Joomla! CMS versions as needed.</p>
+        <p><a href="https://groups.google.com/group/joomla-dev-framework">Join the Google Group</a> and let us know how you have implemented it.</p>
+    </div>
+    <div class="footer-area copyright">
+        {{ footer_copyright() }}
     </div>
 </div>
-{% endblock %}
-
-{% block bodyJavaScript %}
-
 {% endblock %}
