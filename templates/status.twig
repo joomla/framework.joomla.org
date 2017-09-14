@@ -35,7 +35,7 @@
                 <td>
                     <a href="{{ route('status/' ~ release.package.package) }}">{{ release.package.display }}</a> <a href="https://github.com/joomla-framework/{{ release.package.repo }}"><span class="fa fa-github"></span></a>
                     {% if release.package.deprecated %}
-                        <br><span class="label label-warning">Deprecated</span>
+                        <br><span class="badge badge-warning">Deprecated</span>
                     {% endif %}
                 </td>
                 <td>{{ release.version }}</td>
