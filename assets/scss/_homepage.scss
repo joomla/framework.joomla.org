@@ -115,14 +115,32 @@ main {
   }
 
   .get-involved {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1.25rem;
-    @include media-breakpoint-up(sm) {
-      grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .involved-cta {
+      flex-basis: calc(100% - 1vw);
+      margin-bottom: 1.25rem;
+      @include media-breakpoint-up(sm) {
+        flex-basis: calc(50% - 1vw);
+      }
+      @include media-breakpoint-up(xl) {
+        flex-basis: calc(25% - 1vw);
+      }
     }
-    @include media-breakpoint-up(xl) {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
+    @supports (display: grid) {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 1.25rem;
+      @include media-breakpoint-up(sm) {
+        grid-template-columns: 1fr 1fr;
+      }
+      @include media-breakpoint-up(xl) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+      }
+      .involved-cta {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -136,27 +154,48 @@ main {
 
 footer {
   .homepage-footer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "a b" "c c" "d d";
-    grid-gap: 1.25rem;
-    @include media-breakpoint-up(md) {
-      grid-template-columns: 1fr 1fr;
-      grid-template-areas: "a b" "a c" "d d";
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .footer-area {
+      &.resources {
+        flex-basis: calc(50% - 1vw);
+      }
+      &.subscribe {
+        flex-basis: calc(50% - 1vw);
+      }
+      &.case-studies {
+        flex-basis: calc(100% - 1vw);
+      }
+      &.copyright {
+        flex-basis: calc(100% - 1vw);
+      }
     }
   }
-  .footer-area {
-    &.resources {
-      grid-area: a;
+  @supports (display: grid) {
+    .homepage-footer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "a b" "c c" "d d";
+      grid-gap: 1.25rem;
+      @include media-breakpoint-up(md) {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "a b" "a c" "d d";
+      }
     }
-    &.subscribe {
-      grid-area: b;
-    }
-    &.case-studies {
-      grid-area: c;
-    }
-    &.copyright {
-      grid-area: d;
+    .footer-area {
+      &.resources {
+        grid-area: a;
+      }
+      &.subscribe {
+        grid-area: b;
+      }
+      &.case-studies {
+        grid-area: c;
+      }
+      &.copyright {
+        grid-area: d;
+      }
     }
   }
 }
