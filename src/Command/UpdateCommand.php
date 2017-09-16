@@ -10,6 +10,8 @@ namespace Joomla\FrameworkWebsite\Command;
 
 use Joomla\Console\AbstractCommand;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 /**
  * Update command
@@ -29,15 +31,56 @@ class UpdateCommand extends AbstractCommand
 		$symfonyStyle->comment('Updating server to git HEAD');
 
 		// Pull from remote repo
-		$this->runCommand('cd ' . JPATH_ROOT . ' && git pull 2>&1');
+		$process = new Process('git pull', JPATH_ROOT);
+
+		try
+		{
+			$process->mustRun();
+		}
+		catch (ProcessFailedException $e)
+		{
+			$this->getApplication()->getLogger()->error('Could not execute `git pull`', ['exception' => $e]);
+
+			$symfonyStyle->error('Error running `git pull`: ' . $e->getMessage());
+
+			return 1;
+		}
 
 		$symfonyStyle->comment('Updating Composer resources');
 
 		// Run Composer install
-		$this->runCommand('cd ' . JPATH_ROOT . ' && composer install --no-dev -o 2>&1');
+		$process = new Process('composer install --no-dev -o', JPATH_ROOT);
+
+		try
+		{
+			$process->mustRun();
+		}
+		catch (ProcessFailedException $e)
+		{
+			$this->getApplication()->getLogger()->error('Could not update Composer resources', ['exception' => $e]);
+
+			$symfonyStyle->error('Error updating Composer resources: ' . $e->getMessage());
+
+			return 1;
+		}
+
+		$symfonyStyle->comment('Running database migrations');
 
 		// Run Phinx Migrations
-		$this->runCommand('cd ' . JPATH_ROOT . ' && vendor/bin/phinx migrate 2>&1');
+		$process = new Process('vendor/bin/phinx migrate', JPATH_ROOT);
+
+		try
+		{
+			$process->mustRun();
+		}
+		catch (ProcessFailedException $e)
+		{
+			$this->getApplication()->getLogger()->error('Could not run database migrations', ['exception' => $e]);
+
+			$symfonyStyle->error('Error running database migrations: ' . $e->getMessage());
+
+			return 1;
+		}
 
 		// Reset the Twig cache
 		$this->getApplication()->getCommand('twig:reset-cache')->execute();
@@ -65,32 +108,5 @@ The <info>%command.name%</info> command updates the server to the current git HE
 <info>php %command.full_name% %command.name%</info>
 EOF
 		);
-	}
-
-	/**
-	 * Execute a command on the server.
-	 *
-	 * @param   string  $command  The command to execute.
-	 *
-	 * @return  string  Return data from the command
-	 *
-	 * @throws  \RuntimeException
-	 */
-	private function runCommand(string $command) : string
-	{
-		$lastLine = system($command, $status);
-
-		if ($status)
-		{
-			// Command exited with a status != 0
-			if ($lastLine)
-			{
-				throw new \RuntimeException($lastLine);
-			}
-
-			throw new \RuntimeException('An unknown error occurred');
-		}
-
-		return $lastLine;
 	}
 }

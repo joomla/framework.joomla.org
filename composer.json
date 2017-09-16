@@ -30,6 +30,7 @@
         "robmorgan/phinx": "0.8.1",
         "symfony/asset": "3.3.*",
         "symfony/console": "3.4.*@dev",
+        "symfony/process": "3.3.*",
         "symfony/web-link": "3.3.*",
         "symfony/yaml": "3.3.*",
         "theiconic/php-ga-measurement-protocol": "^2.0",
