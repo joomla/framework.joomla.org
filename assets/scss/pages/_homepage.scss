@@ -29,17 +29,17 @@ nav.homepage {
   font-size: 1.75rem;
   color: #ffffff;
   @include media-breakpoint-up(md) {
-    background-image: url(../images/j-framework-767.png);
+    background-image: url(../../images/j-framework-767.png);
   }
   @include media-breakpoint-up(lg) {
-    background-image: url(../images/j-framework-1200.png);
+    background-image: url(../../images/j-framework-1200.png);
     font-size: 2rem;
   }
   @include media-breakpoint-down(lg) {
     margin: 0 -.625rem;
   }
   @include media-breakpoint-up(xl) {
-    background-image: url(../images/j-framework-full.png);
+    background-image: url(../../images/j-framework-full.png);
     font-size: 2.125rem;
   }
   h1 {
