@@ -15,6 +15,9 @@ use Joomla\DI\{
 	ContainerAwareInterface, ContainerAwareTrait
 };
 use Joomla\Renderer\RendererInterface;
+use Joomla\Router\Exception\{
+	MethodNotAllowedException, RouteNotFoundException
+};
 use Joomla\Router\Router;
 use Psr\Link\EvolvableLinkProviderInterface;
 use Symfony\Component\WebLink\HttpHeaderSerializer;
@@ -64,6 +67,28 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 			$controller = $this->getContainer()->get($route['controller']);
 			$controller->execute();
 		}
+		catch (MethodNotAllowedException $exception)
+		{
+			// Log the error for reference
+			$this->getLogger()->error(
+				sprintf('Route `%s` not supported by method `%s`', $this->get('uri.route'), $this->input->getMethod()),
+				['exception' => $exception]
+			);
+
+			$this->handleThrowable($exception);
+
+			$this->setHeader('Allow', implode(', ', $exception->getAllowedMethods()));
+		}
+		catch (RouteNotFoundException $exception)
+		{
+			// Log the error for reference
+			$this->getLogger()->error(
+				sprintf('Route `%s` not found', $this->get('uri.route')),
+				['exception' => $exception]
+			);
+
+			$this->handleThrowable($exception);
+		}
 		catch (\Throwable $throwable)
 		{
 			// Log the error for reference
@@ -72,50 +97,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 				['exception' => $throwable]
 			);
 
-			if ($this->debugBar)
-			{
-				$this->debugBar['exceptions']->addThrowable($throwable);
-			}
-
-			$this->allowCache(false);
-
-			switch ($this->mimeType)
-			{
-				case 'application/json' :
-				case ($this->getResponse() instanceof JsonResponse) :
-					$data = [
-						'code'    => $throwable->getCode(),
-						'message' => $throwable->getMessage(),
-						'error'   => true
-					];
-
-					$response = new JsonResponse($data);
-
-					break;
-
-				default :
-					$response = new HtmlResponse(
-						$this->getContainer()->get(RendererInterface::class)->render('exception.twig', ['exception' => $throwable])
-					);
-
-					break;
-			}
-
-			switch ($throwable->getCode())
-			{
-				case 404 :
-					$response = $response->withStatus(404);
-
-					break;
-
-				case 500 :
-				default  :
-					$response = $response->withStatus(500);
-
-					break;
-			}
-
-			$this->setResponse($response);
+			$this->handleThrowable($throwable);
 		}
 	}
 
@@ -129,6 +111,66 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	public function getFormToken($forceNew = false)
 	{
 		return '';
+	}
+
+	/**
+	 * Handle a Throwable
+	 *
+	 * @param   \Throwable  $throwable  The Throwable to handle
+	 *
+	 * @return  void
+	 */
+	private function handleThrowable(\Throwable $throwable)
+	{
+		if ($this->debugBar)
+		{
+			$this->debugBar['exceptions']->addThrowable($throwable);
+		}
+
+		$this->allowCache(false);
+
+		switch ($this->mimeType)
+		{
+			case 'application/json' :
+			case ($this->getResponse() instanceof JsonResponse) :
+				$data = [
+					'code'    => $throwable->getCode(),
+					'message' => $throwable->getMessage(),
+					'error'   => true
+				];
+
+				$response = new JsonResponse($data);
+
+				break;
+
+			default :
+				$response = new HtmlResponse(
+					$this->getContainer()->get(RendererInterface::class)->render('exception.twig', ['exception' => $throwable])
+				);
+
+				break;
+		}
+
+		switch ($throwable->getCode())
+		{
+			case 404 :
+				$response = $response->withStatus(404);
+
+				break;
+
+			case 405 :
+				$response = $response->withStatus(405);
+
+				break;
+
+			case 500 :
+			default  :
+				$response = $response->withStatus(500);
+
+				break;
+		}
+
+		$this->setResponse($response);
 	}
 
 	/**

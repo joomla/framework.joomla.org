@@ -4,7 +4,7 @@
 
 {% block content %}
     <section class="error-page container">
-        {% if exception.code == 404 %}
+        {% if exception.code in [404, 405] %}
             <h2>We Couldn't Find It</h2>
             <p class="lead">Sorry, we couldn't find the page matching your request. Try using the navigation to find what you were looking for?</p>
         {% else %}

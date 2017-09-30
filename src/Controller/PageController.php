@@ -27,7 +27,7 @@ class PageController extends AbstractController
 	 *
 	 * @var  array
 	 */
-	private $excludedLayouts = ['exception', 'homepage', 'index', 'package'];
+	private $excludedLayouts = ['contributors', 'exception', 'homepage', 'index', 'package', 'status'];
 
 	/**
 	 * The template renderer.
