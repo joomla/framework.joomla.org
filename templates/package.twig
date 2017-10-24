@@ -17,54 +17,18 @@
         <thead>
             <tr>
                 <th>Version</th>
-                <th># of Tests</th>
-                <th># of Assertions</th>
-                <th>Tests with Failures</th>
-                <th>Tests with Errors</th>
-                <th>Lines Covered</th>
-                <th>Miscellaneous</th>
+                <th>Build Status</th>
             </tr>
         </thead>
         <tbody>
             {% for release in releases %}
             <tr>
                 <td>{{ release.version }}</td>
-                {% if package.repo in ['compat', 'test'] %}
-                    <td colspan="6" class="text-center">This package is not unit tested</td>
-                {% elseif release.tests == 0 %}
-                    <td colspan="5" class="text-center">This release does not have a test report</td>
-                    <td>
-                        <a href="https://travis-ci.org/joomla-framework/{{ package.repo }}">
-                            <img src="https://travis-ci.org/joomla-framework/{{ package.repo }}.png?branch={{ release.version }}" alt="Build Status">
-                        </a>
-                    </td>
-                {% else %}
-                    <td>
-                        {{ release.tests }}
-                        {% if release.newTests %}
-                            <span class="pull-right badge badge-{{ release.newTests > 0 ? 'success' : 'danger' }}">{{ release.newTests }}</span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {{ release.assertions }}
-                        {% if release.newAssertions %}
-                            <span class="pull-right badge badge-{{ release.newAssertions > 0 ? 'success' : 'danger' }}">{{ release.newAssertions }}</span>
-                        {% endif %}
-                    </td>
-                    <td>{{ release.failures }}</td>
-                    <td>{{ release.errors }}</td>
-                    <td>
-                        {{ release.lines_covered }}/{{ release.total_lines}} ({{ release.lines_percentage|number_format(2) }}%)
-                        {% if release.addedCoverage %}
-                            <span class="pull-right badge badge-{{ release.addedCoverage > 0 ? 'success' : 'danger' }}">{{ release.addedCoverage|number_format(2) }}%</span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="https://travis-ci.org/joomla-framework/{{ package.repo }}">
-                            <img src="https://travis-ci.org/joomla-framework/{{ package.repo }}.png?branch={{ release.version }}" alt="Build Status">
-                        </a>
-                    </td>
-                {% endif %}
+                <td>
+                    <a href="https://travis-ci.org/joomla-framework/{{ package.repo }}">
+                        <img src="https://travis-ci.org/joomla-framework/{{ package.repo }}.png?branch={{ release.version }}" alt="Build Status">
+                    </a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

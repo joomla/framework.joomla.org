@@ -86,15 +86,6 @@ class ReleaseModel implements DatabaseModelInterface
 				continue;
 			}
 
-			if ($release->total_lines > 0)
-			{
-				$release->lines_percentage = round($release->lines_covered / $release->total_lines * 100, 2);
-			}
-			else
-			{
-				$release->lines_percentage = 0;
-			}
-
 			$release->package = $packages[$release->package_id];
 			unset($release->package_id);
 
@@ -135,50 +126,7 @@ class ReleaseModel implements DatabaseModelInterface
 			throw new \RuntimeException(sprintf('Unable to find release data for the `%s` package', $package->display), 404);
 		}
 
-		// Loop through the packs and get the reports
-		$i = 0;
-
-		$reports = [];
-
-		foreach ($releases as $release)
-		{
-			$release->lines_percentage = 0;
-
-			if ($release->total_lines > 0)
-			{
-				$release->lines_percentage = $release->lines_covered / $release->total_lines * 100;
-			}
-
-			// Compute the delta to the previous build
-			if ($i !== 0)
-			{
-				$previous = $reports[$i - 1];
-
-				$release->newTests      = 0;
-				$release->newAssertions = 0;
-				$release->addedCoverage = 0;
-
-				if (isset($release->tests) && isset($previous->tests))
-				{
-					$release->newTests = $release->tests - $previous->tests;
-				}
-
-				if (isset($release->assertions) && isset($previous->assertions))
-				{
-					$release->newAssertions = $release->assertions - $previous->assertions;
-				}
-
-				if (isset($release->lines_percentage) && isset($previous->lines_percentage))
-				{
-					$release->addedCoverage = $release->lines_percentage - $previous->lines_percentage;
-				}
-			}
-
-			$reports[$i] = $release;
-			$i++;
-		}
-
-		return $reports;
+		return $releases;
 	}
 
 	/**

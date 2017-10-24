@@ -13,73 +13,24 @@
                 <th>Package</th>
                 <th>Version</th>
                 <th>Downloads</th>
-                <th># of Tests</th>
-                <th># of Assertions</th>
-                <th>Tests with Failures</th>
-                <th>Tests with Errors</th>
-                <th>Lines Covered</th>
                 <th>1.x Build Status</th>
                 <th>2.0 Build Status</th>
             </tr>
         </thead>
         <tbody>
             {% set _totalDownloads = 0 %}
-            {% set _totalTests = 0 %}
-            {% set _totalAssertions = 0 %}
-            {% set _totalFailures = 0 %}
-            {% set _totalErrors = 0 %}
-            {% set _totalCoveredLines = 0 %}
-            {% set _totalLines = 0 %}
             {% for release in releases %}
-            <tr>
-                <td>
-                    <a href="{{ route('status/' ~ release.package.package) }}">{{ release.package.display }}</a> <a href="https://github.com/joomla-framework/{{ release.package.repo }}"><span class="fa fa-github"></span></a>
-                    {% if release.package.deprecated %}
-                        <br><span class="badge badge-warning">Deprecated</span>
-                    {% endif %}
-                </td>
-                <td>{{ release.version }}</td>
-                <td>
-                    {% set _totalDownloads = _totalDownloads + release.package.downloads %}
-                    {{ release.package.downloads|number_format }}
-                </td>
-                {% if release.package.package in ['compat', 'test'] %}
-                    <td colspan="7" class="text-center">This package is not unit tested</td>
-                {% elseif release.tests == 0 %}
-                    <td colspan="5" class="text-center">This release does not have a test report</td>
+                <tr>
                     <td>
-                        {% if release.package.repo in ['datetime', 'renderer'] %}
-                            N/A
-                        {% else %}
-                            {% set _1xbranch = (release.package.repo in ['crypt', 'form']) ? '1.x-dev' : 'master'  %}
-                            <a href="https://travis-ci.org/joomla-framework/{{ release.package.repo }}"><img src="https://travis-ci.org/joomla-framework/{{ release.package.repo }}.png?branch={{ _1xbranch }}" alt="Build Status" /></a>
+                        <a href="{{ route('status/' ~ release.package.package) }}">{{ release.package.display }}</a> <a href="https://github.com/joomla-framework/{{ release.package.repo }}"><span class="fa fa-github"></span></a>
+                        {% if release.package.deprecated %}
+                            <br><span class="badge badge-warning">Deprecated</span>
                         {% endif %}
                     </td>
+                    <td>{{ release.version }}</td>
                     <td>
-                        {% if release.package.repo == 'log' %}
-                            N/A
-                        {% else %}
-                            {% set _2xbranch = (release.package.repo in ['crypt', 'form', 'datetime', 'renderer']) ? 'master' : '2.0-dev'  %}
-                            <a href="https://travis-ci.org/joomla-framework/{{ release.package.repo }}"><img src="https://travis-ci.org/joomla-framework/{{ release.package.repo }}.png?branch={{ _2xbranch }}" alt="Build Status" /></a>
-                        {% endif %}
-                    </td>
-                {% else %}
-                    {% set _totalTests = _totalTests + release.tests %}
-                    {% set _totalAssertions = _totalAssertions + release.assertions %}
-                    {% set _totalFailures = _totalFailures + release.failures %}
-                    {% set _totalErrors = _totalErrors + release.errors %}
-                    {% set _totalCoveredLines = _totalCoveredLines + release.lines_covered %}
-                    {% set _totalLines = _totalLines + release.total_lines %}
-                    <td>{{ release.tests }}</td>
-                    <td>{{ release.assertions }}</td>
-                    <td>{{ release.failures }}</td>
-                    <td>{{ release.errors }}</td>
-                    <td>
-                        {{ release.lines_covered }}/{{ release.total_lines }} ({{ release.lines_percentage|number_format(2) }}%)
-                        {% if release.id %}
-                            <br />
-                            <a href="{{ route('coverage/' ~ release.package.package ~ '/') }}" class="btn btn-primary btn-sm" role="button">Coverage Report</a>
-                        {% endif %}
+                        {% set _totalDownloads = _totalDownloads + release.package.downloads %}
+                        {{ release.package.downloads|number_format }}
                     </td>
                     <td>
                         {% if release.package.repo in ['datetime', 'renderer'] %}
@@ -97,8 +48,7 @@
                             <a href="https://travis-ci.org/joomla-framework/{{ release.package.repo }}"><img src="https://travis-ci.org/joomla-framework/{{ release.package.repo }}.png?branch={{ _2xbranch }}" alt="Build Status" /></a>
                         {% endif %}
                     </td>
-                {% endif %}
-            </tr>
+                </tr>
             {% endfor %}
         </tbody>
         <tfoot>
@@ -106,11 +56,6 @@
                 <th>Totals</th>
                 <th></th>
                 <th>{{ _totalDownloads|number_format }}</th>
-                <th>{{ _totalTests|number_format }}</th>
-                <th>{{ _totalAssertions|number_format }}</th>
-                <th>{{ _totalFailures|number_format }}</th>
-                <th>{{ _totalErrors|number_format }}</th>
-                <th colspan="3">Lines Covered: {{ _totalCoveredLines|number_format }}<br />Total Lines: {{ _totalLines|number_format }}<br />{{ ((_totalCoveredLines / _totalLines) * 100)|number_format(2) }}% Coverage</th>
             </tr>
         </tfoot>
     </table>
