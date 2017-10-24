@@ -34,18 +34,20 @@ class ReleaseModel implements DatabaseModelInterface
 	/**
 	 * Add a release for a package
 	 *
-	 * @param   \stdClass  $package  The package to add the release for
-	 * @param   string     $version  The package's release version
+	 * @param   \stdClass  $package      The package to add the release for
+	 * @param   string     $version      The package's release version
+	 * @param   \DateTime  $releaseDate  The date this release was created
 	 *
 	 * @return  void
 	 */
-	public function addRelease(\stdClass $package, string $version)
+	public function addRelease(\stdClass $package, string $version, \DateTime $releaseDate)
 	{
 		$db = $this->getDb();
 
 		$data = (object) [
-			'package_id' => $package->id,
-			'version'    => $version,
+			'package_id'   => $package->id,
+			'version'      => $version,
+			'release_date' => $releaseDate->format('Y-m-d'),
 		];
 
 		$db->insertObject('#__releases', $data);
@@ -182,20 +184,22 @@ class ReleaseModel implements DatabaseModelInterface
 	/**
 	 * Update a release for a package
 	 *
-	 * @param   integer    $releaseId  The release ID to be updated
-	 * @param   \stdClass  $package    The package to update the release for
-	 * @param   string     $version    The package's release version
+	 * @param   integer    $releaseId    The release ID to be updated
+	 * @param   \stdClass  $package      The package to update the release for
+	 * @param   string     $version      The package's release version
+	 * @param   \DateTime  $releaseDate  The date this release was created
 	 *
 	 * @return  void
 	 */
-	public function updateRelease(int $releaseId, \stdClass $package, string $version)
+	public function updateRelease(int $releaseId, \stdClass $package, string $version, \DateTime $releaseDate)
 	{
 		$db = $this->getDb();
 
 		$data = (object) [
-			'id'         => $releaseId,
-			'package_id' => $package->id,
-			'version'    => $version,
+			'id'           => $releaseId,
+			'package_id'   => $package->id,
+			'version'      => $version,
+			'release_date' => $releaseDate->format('Y-m-d'),
 		];
 
 		$db->updateObject('#__releases', $data, ['id']);

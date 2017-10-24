@@ -12,6 +12,7 @@
             <tr>
                 <th>Package</th>
                 <th>Version</th>
+                <th>Latest Release Date</th>
                 <th>Downloads</th>
                 <th>1.x Build Status</th>
                 <th>2.0 Build Status</th>
@@ -28,6 +29,7 @@
                         {% endif %}
                     </td>
                     <td>{{ release.version }}</td>
+                    <td>{{ release.release_date }}</td>
                     <td>
                         {% set _totalDownloads = _totalDownloads + release.package.downloads %}
                         {{ release.package.downloads|number_format }}
@@ -54,7 +56,7 @@
         <tfoot>
             <tr>
                 <th>Totals</th>
-                <th></th>
+                <th colspan="2"></th>
                 <th>{{ _totalDownloads|number_format }}</th>
             </tr>
         </tfoot>

@@ -157,8 +157,8 @@ RewriteRule ^(.*)$ /contributors [R=301,L,QSA]
 ###########################################
 # ======== SEF URL Routing ========
 
-# If the request is not for a static asset or the PHPUnit coverage reports
-RewriteCond %{REQUEST_URI} !^/(coverage|media)/
+# If the request is not for a static asset
+RewriteCond %{REQUEST_URI} !^/media/
 
 # Or for a file that exists in the web directory
 RewriteCond %{REQUEST_FILENAME} !-f

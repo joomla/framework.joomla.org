@@ -103,7 +103,7 @@ class SyncCommand extends AbstractCommand
 
 						$record = $this->releaseModel->getRelease($package, $versionData->version);
 
-						$this->releaseModel->updateRelease($record->id, $package, $versionData->version);
+						$this->releaseModel->updateRelease($record->id, $package, $versionData->version, new \DateTime($versionData->time));
 
 						$updatedReleases++;
 
@@ -114,7 +114,7 @@ class SyncCommand extends AbstractCommand
 					else
 					{
 						// Add the release
-						$this->releaseModel->addRelease($package, $versionData->version);
+						$this->releaseModel->addRelease($package, $versionData->version, new \DateTime($versionData->time));
 
 						$addedReleases++;
 
