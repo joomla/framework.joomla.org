@@ -145,7 +145,7 @@ class ReleaseModel implements DatabaseModelInterface
 
 		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
-			->select($db->quoteName('*'))
+			->select('*')
 			->from($db->quoteName('#__releases'))
 			->where($db->quoteName('package_id') . ' = :packageId')
 			->where($db->quoteName('version') . ' = :version')
