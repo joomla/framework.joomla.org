@@ -182,6 +182,30 @@ class ReleaseModel implements DatabaseModelInterface
 	}
 
 	/**
+	 * Get the release for the package at the given version
+	 *
+	 * @param   \stdClass  $package  The package to check for the release on
+	 * @param   string     $version  The version to check for
+	 *
+	 * @return  \stdClass
+	 */
+	public function getRelease(\stdClass $package, string $version) : \stdClass
+	{
+		$db = $this->getDb();
+
+		/** @var MysqlQuery $query */
+		$query = $db->getQuery(true)
+			->select($db->quoteName('*'))
+			->from($db->quoteName('#__releases'))
+			->where($db->quoteName('package_id') . ' = :packageId')
+			->where($db->quoteName('version') . ' = :version')
+			->bind('packageId', $package->id, \PDO::PARAM_INT)
+			->bind('version', $version, \PDO::PARAM_STR);
+
+		return $db->setQuery($query)->loadObject();
+	}
+
+	/**
 	 * Check if the package has a release at the given version
 	 *
 	 * @param   \stdClass  $package  The package to check for the release on
@@ -205,5 +229,27 @@ class ReleaseModel implements DatabaseModelInterface
 		$id = $db->setQuery($query)->loadResult();
 
 		return $id !== null;
+	}
+
+	/**
+	 * Update a release for a package
+	 *
+	 * @param   integer    $releaseId  The release ID to be updated
+	 * @param   \stdClass  $package    The package to update the release for
+	 * @param   string     $version    The package's release version
+	 *
+	 * @return  void
+	 */
+	public function updateRelease(int $releaseId, \stdClass $package, string $version)
+	{
+		$db = $this->getDb();
+
+		$data = (object) [
+			'id'         => $releaseId,
+			'package_id' => $package->id,
+			'version'    => $version,
+		];
+
+		$db->updateObject('#__releases', $data, ['id']);
 	}
 }

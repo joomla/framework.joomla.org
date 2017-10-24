@@ -13,6 +13,7 @@ use Joomla\FrameworkWebsite\Model\{
 	PackageModel, ReleaseModel
 };
 use Joomla\Http\Http;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
@@ -68,6 +69,11 @@ class SyncCommand extends AbstractCommand
 
 		$symfonyStyle->title('Sync Release Data with Packagist');
 
+		$updateReleases = $this->getApplication()->getConsoleInput()->getOption('update');
+
+		$addedReleases   = 0;
+		$updatedReleases = 0;
+
 		foreach ($this->packageModel->getPackages() as $package)
 		{
 			$symfonyStyle->comment(sprintf('Processing <info>%s</info> package', $package->display));
@@ -87,18 +93,35 @@ class SyncCommand extends AbstractCommand
 						continue;
 					}
 
-					// Make sure this release is logged
+					// Make sure this release is logged, or update if specified
 					if ($this->releaseModel->hasRelease($package, $versionData->version))
 					{
-						continue;
+						if (!$updateReleases)
+						{
+							continue;
+						}
+
+						$record = $this->releaseModel->getRelease($package, $versionData->version);
+
+						$this->releaseModel->updateRelease($record->id, $package, $versionData->version);
+
+						$updatedReleases++;
+
+						$symfonyStyle->comment(
+							sprintf('Updated <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version)
+						);
 					}
+					else
+					{
+						// Add the release
+						$this->releaseModel->addRelease($package, $versionData->version);
 
-					// Add the release
-					$this->releaseModel->addRelease($package, $versionData->version);
+						$addedReleases++;
 
-					$symfonyStyle->comment(
-						sprintf('Added <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version)
-					);
+						$symfonyStyle->comment(
+							sprintf('Added <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version)
+						);
+					}
 				}
 			}
 			catch (\RuntimeException $exception)
@@ -114,7 +137,13 @@ class SyncCommand extends AbstractCommand
 			}
 		}
 
-		$symfonyStyle->success('Update completed.');
+		$symfonyStyle->success(
+			sprintf(
+				'Update completed; %1$d releases added and %2$d releases updated.',
+				$addedReleases,
+				$updatedReleases
+			)
+		);
 
 		return 0;
 	}
@@ -128,10 +157,23 @@ class SyncCommand extends AbstractCommand
 	{
 		$this->setName('packagist:sync:releases');
 		$this->setDescription('Synchronizes release data with Packagist');
+
+		$this->addOption(
+			'update',
+			null,
+			InputOption::VALUE_NONE,
+			'Flag indicating existing releases should be updated'
+		);
+
 		$this->setHelp(<<<'EOF'
 The <info>%command.name%</info> command synchronizes the package release data with Packagist
 
 <info>php %command.full_name% %command.name%</info>
+
+By default this command will only add new releases to the database. To update existing release
+data, you can pass the <info>--update</info> option.
+
+<info>php %command.full_name% %command.name% --update</info>
 EOF
 		);
 	}
