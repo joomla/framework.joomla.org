@@ -98,7 +98,7 @@ Options -Indexes
 	mod_gzip_handle_methods GET
 	mod_gzip_item_include file \.(html?|txt|css|js|php|pl|xml|rb|py)$
 	mod_gzip_item_include mime ^text/plain$
-	mod_gzip_item_include mime ^text/html
+	mod_gzip_item_include mime ^text/html$
 	mod_gzip_item_include mime ^text/xml$
 	mod_gzip_item_include mime ^text/css$
 	mod_gzip_item_include mime ^application/xml$
