@@ -1,21 +1,9 @@
 // Override Bootstrap variables
 
-// Color imports are necessary pending https://github.com/twbs/bootstrap/pull/23260
-$gray-100: #f8f9fa;
-$gray-600: #868e96;
-$gray-800: #343a40;
-$red:      #dc3545;
-$yellow:   #ffc107;
-
 $theme-colors: (
   primary: #428bca,
-  secondary: $gray-600,
   success: #599e1f,
-  info: #306598,
-  warning: $yellow,
-  danger: $red,
-  light: $gray-100,
-  dark: $gray-800
+  info: #306598
 );
 
 $font-family-sans-serif: 'Source Sans Pro', sans-serif;
