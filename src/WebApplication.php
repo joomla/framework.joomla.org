@@ -47,6 +47,19 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	private $router;
 
 	/**
+	 * Checks the accept encoding of the browser and compresses the data before sending it to the client if possible.
+	 *
+	 * @return  void
+	 */
+	protected function compress()
+	{
+		if (!$this->get('debug', false))
+		{
+			parent::compress();
+		}
+	}
+
+	/**
 	 * Method to run the application routines
 	 *
 	 * @return  void
