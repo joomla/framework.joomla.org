@@ -43,7 +43,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if release.package.repo == 'log' %}
+                        {% if release.package.repo in ['compat', 'log'] %}
                             N/A
                         {% else %}
                             {% set _2xbranch = (release.package.repo in ['crypt', 'form', 'datetime', 'renderer']) ? 'master' : '2.0-dev'  %}
