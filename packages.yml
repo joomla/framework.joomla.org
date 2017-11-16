@@ -21,7 +21,8 @@ packages:
         repo: facebook-api
     filesystem: ~
     filter: ~
-    form: ~
+    form:
+        deprecated: true
     github:
         display: GitHub
         repo: github-api

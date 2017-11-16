@@ -35,7 +35,7 @@
                         {{ release.package.downloads|number_format }}
                     </td>
                     <td>
-                        {% if release.package.repo in ['datetime', 'renderer'] %}
+                        {% if release.package.repo in ['console', 'datetime', 'renderer'] %}
                             N/A
                         {% else %}
                             {% set _1xbranch = (release.package.repo in ['crypt', 'form']) ? '1.x-dev' : 'master'  %}
@@ -43,10 +43,10 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if release.package.repo in ['compat', 'log'] %}
+                        {% if release.package.repo in ['compat', 'form', 'log'] %}
                             N/A
                         {% else %}
-                            {% set _2xbranch = (release.package.repo in ['crypt', 'form', 'datetime', 'renderer']) ? 'master' : '2.0-dev'  %}
+                            {% set _2xbranch = (release.package.repo in ['crypt', 'datetime', 'renderer']) ? 'master' : '2.0-dev'  %}
                             <a href="https://travis-ci.org/joomla-framework/{{ release.package.repo }}"><img src="https://travis-ci.org/joomla-framework/{{ release.package.repo }}.png?branch={{ _2xbranch }}" alt="Build Status" /></a>
                         {% endif %}
                     </td>
