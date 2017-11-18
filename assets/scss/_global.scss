@@ -26,7 +26,7 @@ a {
   position: relative;
 }
 
-nav {
+nav.main-nav {
   background: $darker-black;
   color: #ffffff;
   padding: .5rem 0;
@@ -92,5 +92,52 @@ footer {
   }
   h3 {
     margin-top: 0;
+  }
+}
+
+.sidenav-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  .sidebar {
+    flex-basis: 100%;
+    @include media-breakpoint-up(md) {
+      flex-basis: calc(25% - 1vw);
+    }
+    @include media-breakpoint-up(lg) {
+      flex-basis: calc(20% - 1vw);
+    }
+  }
+  .content {
+    flex-basis: 100%;
+    @include media-breakpoint-up(md) {
+      flex-basis: calc(75% - 1vw);
+    }
+    @include media-breakpoint-up(lg) {
+      flex-basis: calc(80% - 1vw);
+    }
+  }
+  @supports (display: grid) {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1.25rem;
+    @include media-breakpoint-up(md) {
+      grid-template-columns: 25% 75%;
+    }
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: 20% 80%;
+    }
+    .sidebar {
+      order: 2;
+      @include media-breakpoint-up(md) {
+        order: 1;
+      }
+    }
+    .content {
+      order: 1;
+      @include media-breakpoint-up(md) {
+        order: 2;
+      }
+    }
   }
 }

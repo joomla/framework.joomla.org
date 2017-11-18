@@ -1,0 +1,27 @@
+{% extends 'index.twig' %}
+
+{% block title %}Joomla! Framework Documentation{% endblock %}
+
+{% block content %}
+    <section class="docs container">
+        <h1 class="centered-title">Framework Documentation</h1>
+
+        <div class="sidenav-body">
+            <aside class="sidebar">
+                <h3>Package List</h3>
+                <nav>
+                    <ul>
+                        {% for package in packages if package.stable %}
+                            <li>
+                                <a href="{{ route('docs/' ~ package.repo) }}">{{ package.display }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </aside>
+            <section class="content">
+                From this index you can browse the documentation for each of the Framework's packages.
+            </section>
+        </div>
+    </section>
+{% endblock %}

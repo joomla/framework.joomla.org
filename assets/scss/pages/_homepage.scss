@@ -2,8 +2,14 @@ nav.homepage {
   ul {
     li {
       margin-left: 5%;
+      @include media-breakpoint-up(md) {
+        margin-left: 1%;
+      }
+      @include media-breakpoint-up(lg) {
+        margin-left: 3%;
+      }
       @include media-breakpoint-up(xl) {
-        margin-left: 6%;
+        margin-left: 4%;
       }
       &:first-child {
         margin-left: 0;

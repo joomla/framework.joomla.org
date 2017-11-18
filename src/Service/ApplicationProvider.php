@@ -22,7 +22,7 @@ use Joomla\FrameworkWebsite\{
 };
 use Joomla\FrameworkWebsite\Command as AppCommands;
 use Joomla\FrameworkWebsite\Controller\{
-	Api\PackageControllerGet, Api\StatusControllerGet, ContributorsController, HomepageController, PackageController, PageController, StatusController, WrongCmsController
+	Api\PackageControllerGet, Api\StatusControllerGet, ContributorsController, Documentation\IndexController, HomepageController, PackageController, PageController, StatusController, WrongCmsController
 };
 use Joomla\FrameworkWebsite\Helper\{
 	GitHubHelper, PackagistHelper
@@ -31,7 +31,7 @@ use Joomla\FrameworkWebsite\Model\{
 	ContributorModel, PackageModel, ReleaseModel
 };
 use Joomla\FrameworkWebsite\View\{
-	Contributor\ContributorHtmlView, Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
+	Contributor\ContributorHtmlView, Documentation\IndexHtmlView, Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
 };
 use Joomla\Github\Github;
 use Joomla\Http\Http;
@@ -123,6 +123,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(ContributorsController::class, 'controller.contributors')
 			->share('controller.contributors', [$this, 'getControllerContributorsService'], true);
 
+		$container->alias(IndexController::class, 'controller.documentation.index')
+			->share('controller.documentation.index', [$this, 'getControllerDocumentationIndexService'], true);
+
 		$container->alias(HomepageController::class, 'controller.homepage')
 			->share('controller.homepage', [$this, 'getControllerHomepageService'], true);
 
@@ -151,6 +154,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		// Views
 		$container->alias(ContributorHtmlView::class, 'view.contributor.html')
 			->share('view.contributor.html', [$this, 'getViewContributorHtmlService'], true);
+
+		$container->alias(IndexHtmlView::class, 'view.documentation.index.html')
+			->share('view.documentation.index.html', [$this, 'getViewDocumentationIndexHtmlService'], true);
 
 		$container->alias(PackageHtmlView::class, 'view.package.html')
 			->share('view.package.html', [$this, 'getViewPackageHtmlService'], true);
@@ -336,6 +342,11 @@ class ApplicationProvider implements ServiceProviderInterface
 		);
 
 		$router->get(
+			'/docs',
+			IndexController::class
+		);
+
+		$router->get(
 			'/status',
 			StatusController::class
 		);
@@ -430,7 +441,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the `controller.homepage` service
+	 * Get the `controller.contributors` service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
@@ -440,6 +451,22 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new ContributorsController(
 			$container->get(ContributorHtmlView::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the `controller.documentation.index` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  IndexController
+	 */
+	public function getControllerDocumentationIndexService(Container $container) : IndexController
+	{
+		return new IndexController(
+			$container->get(IndexHtmlView::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
@@ -700,6 +727,25 @@ class ApplicationProvider implements ServiceProviderInterface
 		);
 
 		$view->setLayout('contributors.twig');
+
+		return $view;
+	}
+
+	/**
+	 * Get the `view.documentation.index.html` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  IndexHtmlView
+	 */
+	public function getViewDocumentationIndexHtmlService(Container $container) : IndexHtmlView
+	{
+		$view = new IndexHtmlView(
+			$container->get('model.package'),
+			$container->get('renderer')
+		);
+
+		$view->setLayout('docs/index.twig');
 
 		return $view;
 	}

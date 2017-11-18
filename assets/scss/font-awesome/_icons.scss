@@ -362,7 +362,7 @@
 //.#{$fa-css-prefix}-bitcoin:before,
 //.#{$fa-css-prefix}-btc:before { content: $fa-var-btc; }
 //.#{$fa-css-prefix}-file:before { content: $fa-var-file; }
-//.#{$fa-css-prefix}-file-text:before { content: $fa-var-file-text; }
+.#{$fa-css-prefix}-file-text:before { content: $fa-var-file-text; }
 //.#{$fa-css-prefix}-sort-alpha-asc:before { content: $fa-var-sort-alpha-asc; }
 //.#{$fa-css-prefix}-sort-alpha-desc:before { content: $fa-var-sort-alpha-desc; }
 //.#{$fa-css-prefix}-sort-amount-asc:before { content: $fa-var-sort-amount-asc; }
