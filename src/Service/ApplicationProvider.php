@@ -22,7 +22,7 @@ use Joomla\FrameworkWebsite\{
 };
 use Joomla\FrameworkWebsite\Command as AppCommands;
 use Joomla\FrameworkWebsite\Controller\{
-	Api\PackageControllerGet, Api\StatusControllerGet, ContributorsController, Documentation\IndexController, HomepageController, PackageController, PageController, StatusController, WrongCmsController
+	Api\PackageControllerGet, Api\StatusControllerGet, ContributorsController, Documentation\IndexController, Documentation\PageController as DocPageController, Documentation\RedirectController, HomepageController, PackageController, PageController, StatusController, WrongCmsController
 };
 use Joomla\FrameworkWebsite\Helper\{
 	GitHubHelper, PackagistHelper
@@ -125,6 +125,12 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->alias(IndexController::class, 'controller.documentation.index')
 			->share('controller.documentation.index', [$this, 'getControllerDocumentationIndexService'], true);
+
+		$container->alias(DocPageController::class, 'controller.documentation.page')
+			->share('controller.documentation.page', [$this, 'getControllerDocumentationPageService'], true);
+
+		$container->alias(RedirectController::class, 'controller.documentation.redirect')
+			->share('controller.documentation.redirect', [$this, 'getControllerDocumentationRedirectService'], true);
 
 		$container->alias(HomepageController::class, 'controller.homepage')
 			->share('controller.homepage', [$this, 'getControllerHomepageService'], true);
@@ -347,6 +353,16 @@ class ApplicationProvider implements ServiceProviderInterface
 		);
 
 		$router->get(
+			'/docs/:version/:package',
+			RedirectController::class
+		);
+
+		$router->get(
+			'/docs/:version/:package/:filename',
+			DocPageController::class
+		);
+
+		$router->get(
 			'/status',
 			StatusController::class
 		);
@@ -467,6 +483,38 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new IndexController(
 			$container->get(IndexHtmlView::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the `controller.documentation.page` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  DocPageController
+	 */
+	public function getControllerDocumentationPageService(Container $container) : DocPageController
+	{
+		return new DocPageController(
+			$container->get(PackageModel::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the `controller.documentation.redirect` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  RedirectController
+	 */
+	public function getControllerDocumentationRedirectService(Container $container) : RedirectController
+	{
+		return new RedirectController(
+			$container->get(PackageModel::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);

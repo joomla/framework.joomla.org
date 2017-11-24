@@ -15,7 +15,7 @@ use Joomla\Input\Input;
 use Zend\Diactoros\Response\HtmlResponse;
 
 /**
- * Controller handling the site's package status listing
+ * Controller handling the site's documentation index
  *
  * @method         \Joomla\FrameworkWebsite\WebApplication  getApplication()  Get the application object.
  * @property-read  \Joomla\FrameworkWebsite\WebApplication  $app              Application object
