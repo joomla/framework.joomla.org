@@ -296,7 +296,10 @@ class ApplicationProvider implements ServiceProviderInterface
 		{
 			require_once JPATH_ROOT . '/cache/CompiledRouter.php';
 
-			return new \CompiledRouter;
+			if (class_exists(\CompiledRouter::class))
+			{
+				return new \CompiledRouter;
+			}
 		}
 
 		$router = new Router;
@@ -382,12 +385,20 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 		$router->get(
 			'/api/v1/packages',
-			StatusControllerGet::class
+			StatusControllerGet::class,
+			[],
+			[
+				'_format' => 'json',
+			]
 		);
 
 		$router->get(
 			'/api/v1/packages/:package',
-			PackageControllerGet::class
+			PackageControllerGet::class,
+			[],
+			[
+				'_format' => 'json',
+			]
 		);
 
 		return $router;

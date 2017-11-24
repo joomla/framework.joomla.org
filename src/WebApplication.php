@@ -142,10 +142,9 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 
 		$this->allowCache(false);
 
-		switch ($this->mimeType)
+		switch ($this->input->getString('_format', 'html'))
 		{
-			case 'application/json' :
-			case ($this->getResponse() instanceof JsonResponse) :
+			case 'json' :
 				$data = [
 					'code'    => $throwable->getCode(),
 					'message' => $throwable->getMessage(),
