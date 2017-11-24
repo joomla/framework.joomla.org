@@ -35,7 +35,7 @@
                         {{ release.package.downloads|number_format }}
                     </td>
                     <td>
-                        {% if release.package.repo in ['console', 'datetime', 'renderer'] %}
+                        {% if not release.package.has_v1 %}
                             N/A
                         {% else %}
                             {% set _1xbranch = (release.package.repo in ['crypt', 'form']) ? '1.x-dev' : 'master'  %}
@@ -43,7 +43,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if release.package.repo in ['compat', 'form', 'log'] %}
+                        {% if not release.package.has_v2 %}
                             N/A
                         {% else %}
                             {% set _2xbranch = (release.package.repo in ['crypt', 'datetime', 'renderer']) ? 'master' : '2.0-dev'  %}

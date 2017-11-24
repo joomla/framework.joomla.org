@@ -39,10 +39,20 @@ class PackageModel implements DatabaseModelInterface
 	 * @param   string   $repoName      The package's repo name
 	 * @param   boolean  $isStable      Flag indicating the package is stable
 	 * @param   boolean  $isDeprecated  Flag indicating the package is deprecated
+	 * @param   boolean  $hasV1         Flag indicating the package has a 1.x branch
+	 * @param   boolean  $hasV2         Flag indicating the package has a 2.x branch
 	 *
 	 * @return  void
 	 */
-	public function addPackage(string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated)
+	public function addPackage(
+		string $packageName,
+		string $displayName,
+		string $repoName,
+		bool $isStable,
+		bool $isDeprecated,
+		bool $hasV1,
+		bool $hasV2
+	)
 	{
 		$db = $this->getDb();
 
@@ -52,6 +62,8 @@ class PackageModel implements DatabaseModelInterface
 			'repo'       => $repoName,
 			'stable'     => (int) $isStable,
 			'deprecated' => (int) $isDeprecated,
+			'has_v1'     => (int) $hasV1,
+			'has_v2'     => (int) $hasV2,
 		];
 
 		$db->insertObject('#__packages', $data);
@@ -131,10 +143,21 @@ class PackageModel implements DatabaseModelInterface
 	 * @param   string   $repoName      The package's repo name
 	 * @param   boolean  $isStable      Flag indicating the package is stable
 	 * @param   boolean  $isDeprecated  Flag indicating the package is deprecated
+	 * @param   boolean  $hasV1         Flag indicating the package has a 1.x branch
+	 * @param   boolean  $hasV2         Flag indicating the package has a 2.x branch
 	 *
 	 * @return  void
 	 */
-	public function updatePackage(int $packageId, string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated)
+	public function updatePackage(
+		int $packageId,
+		string $packageName,
+		string $displayName,
+		string $repoName,
+		bool $isStable,
+		bool $isDeprecated,
+		bool $hasV1,
+		bool $hasV2
+	)
 	{
 		$db = $this->getDb();
 
@@ -145,6 +168,8 @@ class PackageModel implements DatabaseModelInterface
 			'repo'       => $repoName,
 			'stable'     => (int) $isStable,
 			'deprecated' => (int) $isDeprecated,
+			'has_v1'     => (int) $hasV1,
+			'has_v2'     => (int) $hasV2,
 		];
 
 		$db->updateObject('#__packages', $data, 'id');
