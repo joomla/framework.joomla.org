@@ -11,9 +11,9 @@
     "smooth-scroll": "^12.1.5"
   },
   "devDependencies": {
-    "autoprefixer": "^7.1.6",
+    "autoprefixer": "^7.2.3",
     "cross-env": "^5.1.1",
-    "laravel-mix": "^1.6.1"
+    "laravel-mix": "^1.7.2"
   },
   "license": "GPL-2.0+"
 }
