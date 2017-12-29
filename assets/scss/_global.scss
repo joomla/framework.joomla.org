@@ -27,7 +27,7 @@ a {
 }
 
 nav {
-  background: $darker-black;
+  background-color: $darker-black;
   color: #ffffff;
   padding: .5rem 0;
   position: fixed;
@@ -72,6 +72,7 @@ nav {
 }
 
 main {
+  background-color: $white;
   padding: 2.75rem .625rem 1.25rem;
   @include media-breakpoint-up(xl) {
     padding: 2.75rem 0 1.25rem;
@@ -79,7 +80,6 @@ main {
 }
 
 footer {
-  background: $darker-black;
   color: #a4a4a4;
   padding-top: 1.25rem;
   font-size: $font-size-sm;
