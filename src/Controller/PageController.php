@@ -12,6 +12,7 @@ use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\Input\Input;
 use Joomla\Renderer\RendererInterface;
+use Joomla\Router\Exception\RouteNotFoundException;
 use Zend\Diactoros\Response\HtmlResponse;
 
 /**
@@ -66,7 +67,7 @@ class PageController extends AbstractController
 		// Since this is a catch-all route, if the layout doesn't exist, or is an excluded layout, treat this as a 404
 		if (!$this->renderer->pathExists($layout) || in_array($view, $this->excludedLayouts))
 		{
-			throw new \RuntimeException(sprintf('Unable to handle request for route `%s`.', $this->getApplication()->get('uri.route')), 404);
+			throw new RouteNotFoundException(sprintf('Unable to handle request for route `%s`.', $this->getApplication()->get('uri.route')), 404);
 		}
 
 		$this->getApplication()->setResponse(new HtmlResponse($this->renderer->render($layout)));
