@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f79ce09ec65c05d2594984c0f5c8808d",
+    "content-hash": "e3493fb8001dc37b89ab13c71bc7869c",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -362,12 +362,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/console.git",
-                "reference": "15ecf5a734a04836f00bcca115bd472a0aa421c0"
+                "reference": "db209242e6363bab31b686e8aca6896040295dbf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/console/zipball/15ecf5a734a04836f00bcca115bd472a0aa421c0",
-                "reference": "15ecf5a734a04836f00bcca115bd472a0aa421c0",
+                "url": "https://api.github.com/repos/joomla-framework/console/zipball/db209242e6363bab31b686e8aca6896040295dbf",
+                "reference": "db209242e6363bab31b686e8aca6896040295dbf",
                 "shasum": ""
             },
             "require": {
@@ -407,7 +407,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2017-11-18T10:10:40+00:00"
+            "time": "2017-12-16T19:10:10+00:00"
         },
         {
             "name": "joomla/controller",
@@ -2443,12 +2443,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla/coding-standards.git",
-                "reference": "8048f7d09e9abdfba0c5dd0beb94f5c0b57a5619"
+                "reference": "7aee4b92c7fac5f1099483d57b0d291618755d85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla/coding-standards/zipball/8048f7d09e9abdfba0c5dd0beb94f5c0b57a5619",
-                "reference": "8048f7d09e9abdfba0c5dd0beb94f5c0b57a5619",
+                "url": "https://api.github.com/repos/joomla/coding-standards/zipball/7aee4b92c7fac5f1099483d57b0d291618755d85",
+                "reference": "7aee4b92c7fac5f1099483d57b0d291618755d85",
                 "shasum": ""
             },
             "require": {
@@ -2482,7 +2482,7 @@
                 "php codesniffer",
                 "phpcs"
             ],
-            "time": "2017-12-15T18:07:27+00:00"
+            "time": "2017-12-26T15:40:51+00:00"
         },
         {
             "name": "maximebf/debugbar",
@@ -2723,6 +2723,6 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.0.14"
+        "php": "7.0.24"
     }
 }
