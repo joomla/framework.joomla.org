@@ -23,7 +23,7 @@
             {% for release in releases %}
                 <tr>
                     <td>
-                        <a href="{{ route('status/' ~ release.package.package) }}">{{ release.package.display }}</a> <a href="https://github.com/joomla-framework/{{ release.package.repo }}"><span class="fa fa-github"></span></a>
+                        <a href="https://github.com/joomla-framework/{{ release.package.repo }}"><span class="fa fa-github"></span></a> <a href="{{ route('status/' ~ release.package.package) }}">{{ release.package.display }}</a>
                         {% if release.package.deprecated %}
                             <br><span class="badge badge-warning">Deprecated</span>
                         {% endif %}
