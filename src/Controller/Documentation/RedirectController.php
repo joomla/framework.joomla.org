@@ -76,15 +76,23 @@ class RedirectController extends AbstractController
 					throw new \RuntimeException(sprintf('The `%s` package does not have a 2.x branch to document.', $package->display), 404);
 				}
 
+				$this->getApplication()->setResponse(
+					new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/$version/{$package->package}/overview")
+				);
+
+				break;
+
+			case 'latest':
+				$this->getApplication()->setResponse(
+					new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/2.x/{$package->package}/overview")
+				);
+
 				break;
 
 			default:
 				throw new \RuntimeException(sprintf('Unsupported version `%s` for documentation.', $version), 404);
 		}
 
-		$this->getApplication()->setResponse(
-			new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/$version/{$package->package}/overview")
-		);
 
 		return true;
 	}

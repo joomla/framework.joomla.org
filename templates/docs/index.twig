@@ -13,7 +13,7 @@
                     <ul>
                         {% for package in packages if package.stable %}
                             <li>
-                                <a href="{{ route('docs/' ~ package.repo) }}">{{ package.display }}</a>
+                                <a href="{{ route('docs/latest/' ~ package.repo) }}">{{ package.display }}</a>
                             </li>
                         {% endfor %}
                     </ul>
