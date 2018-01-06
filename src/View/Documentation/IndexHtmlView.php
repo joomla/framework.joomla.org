@@ -44,19 +44,9 @@ class IndexHtmlView extends BaseHtmlView
 	 */
 	public function render()
 	{
-		$packages = $this->packageModel->getPackages();
-
-		usort(
-			$packages,
-			function ($a, $b)
-			{
-				return strcmp($a->display, $b->display);
-			}
-		);
-
 		$this->setData(
 			[
-				'packages' => $packages,
+				'packages' => $this->packageModel->getSortedPackages(),
 			]
 		);
 

@@ -135,6 +135,26 @@ class PackageModel implements DatabaseModelInterface
 	}
 
 	/**
+	 * Get the packages as a sorted array
+	 *
+	 * @return  array
+	 */
+	public function getSortedPackages() : array
+	{
+		$packages = $this->getPackages();
+
+		usort(
+			$packages,
+			function ($a, $b)
+			{
+				return strcmp($a->display, $b->display);
+			}
+		);
+
+		return $packages;
+	}
+
+	/**
 	 * Update a package
 	 *
 	 * @param   integer  $packageId     The local package ID
