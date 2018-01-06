@@ -27,9 +27,13 @@
                     <td>{{ release.version }}</td>
                     <td>{{ release.release_date }}</td>
                     <td>
-                        <a href="https://travis-ci.org/joomla-framework/{{ package.repo }}">
-                            <img src="https://travis-ci.org/joomla-framework/{{ package.repo }}.png?branch={{ release.version }}" alt="Build Status">
-                        </a>
+                        {% if package.repo in ['test'] %}
+                            N/A
+                        {% else %}
+                            <a href="https://travis-ci.org/joomla-framework/{{ package.repo }}">
+                                <img src="https://travis-ci.org/joomla-framework/{{ package.repo }}.png?branch={{ release.version }}" alt="Build Status">
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

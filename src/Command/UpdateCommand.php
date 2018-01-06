@@ -31,11 +31,9 @@ class UpdateCommand extends AbstractCommand
 		$symfonyStyle->comment('Updating server to git HEAD');
 
 		// Pull from remote repo
-		$process = new Process('git pull', JPATH_ROOT);
-
 		try
 		{
-			$process->mustRun();
+			(new Process('git pull', JPATH_ROOT))->mustRun();
 		}
 		catch (ProcessFailedException $e)
 		{
@@ -49,11 +47,9 @@ class UpdateCommand extends AbstractCommand
 		$symfonyStyle->comment('Updating Composer resources');
 
 		// Run Composer install
-		$process = new Process('composer install --no-dev -o', JPATH_ROOT);
-
 		try
 		{
-			$process->mustRun();
+			(new Process('composer install --no-dev -o', JPATH_ROOT))->mustRun();
 		}
 		catch (ProcessFailedException $e)
 		{
@@ -67,11 +63,9 @@ class UpdateCommand extends AbstractCommand
 		$symfonyStyle->comment('Running database migrations');
 
 		// Run Phinx Migrations
-		$process = new Process('vendor/bin/phinx migrate', JPATH_ROOT);
-
 		try
 		{
-			$process->mustRun();
+			(new Process('vendor/bin/phinx migrate', JPATH_ROOT))->mustRun();
 		}
 		catch (ProcessFailedException $e)
 		{
