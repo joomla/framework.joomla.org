@@ -52,6 +52,7 @@ class PageController extends AbstractController
 	{
 		$packageName = $this->getInput()->getString('package');
 		$version     = $this->getInput()->getString('version');
+		$filename    = $this->getInput()->getString('filename');
 
 		if (!$packageName || !$version)
 		{
@@ -75,7 +76,7 @@ class PageController extends AbstractController
 
 			case 'latest':
 				$this->getApplication()->setResponse(
-					new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/2.x/{$package->package}/overview")
+					new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/2.x/{$package->package}/{$filename}")
 				);
 
 				break;
