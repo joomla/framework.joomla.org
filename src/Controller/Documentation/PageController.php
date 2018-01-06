@@ -12,6 +12,7 @@ use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\Input\Input;
+use Zend\Diactoros\Response\RedirectResponse;
 
 /**
  * Controller handling a package's documentation page
@@ -69,6 +70,13 @@ class PageController extends AbstractController
 				{
 					throw new \RuntimeException(sprintf('The `%s` package does not have a 2.x branch to document.', $package->display), 404);
 				}
+
+				break;
+
+			case 'latest':
+				$this->getApplication()->setResponse(
+					new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/2.x/{$package->package}/overview")
+				);
 
 				break;
 
