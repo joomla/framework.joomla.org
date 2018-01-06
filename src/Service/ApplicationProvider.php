@@ -31,7 +31,7 @@ use Joomla\FrameworkWebsite\Model\{
 	ContributorModel, PackageModel, ReleaseModel
 };
 use Joomla\FrameworkWebsite\View\{
-	Contributor\ContributorHtmlView, Documentation\IndexHtmlView, Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
+	Contributor\ContributorHtmlView, Documentation\ErrorHtmlView, Documentation\IndexHtmlView, Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
 };
 use Joomla\Github\Github;
 use Joomla\Http\Http;
@@ -160,6 +160,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		// Views
 		$container->alias(ContributorHtmlView::class, 'view.contributor.html')
 			->share('view.contributor.html', [$this, 'getViewContributorHtmlService'], true);
+
+		$container->alias(ErrorHtmlView::class, 'view.documentation.error.html')
+			->share('view.documentation.error.html', [$this, 'getViewDocumentationErrorHtmlService'], true);
 
 		$container->alias(IndexHtmlView::class, 'view.documentation.index.html')
 			->share('view.documentation.index.html', [$this, 'getViewDocumentationIndexHtmlService'], true);
@@ -526,6 +529,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new RedirectController(
 			$container->get(PackageModel::class),
+			$container->get(ErrorHtmlView::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
@@ -786,6 +790,25 @@ class ApplicationProvider implements ServiceProviderInterface
 		);
 
 		$view->setLayout('contributors.twig');
+
+		return $view;
+	}
+
+	/**
+	 * Get the `view.documentation.error.html` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ErrorHtmlView
+	 */
+	public function getViewDocumentationErrorHtmlService(Container $container) : ErrorHtmlView
+	{
+		$view = new ErrorHtmlView(
+			$container->get('model.package'),
+			$container->get('renderer')
+		);
+
+		$view->setLayout('docs/error.twig');
 
 		return $view;
 	}
