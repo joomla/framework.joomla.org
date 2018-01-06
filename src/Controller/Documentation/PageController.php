@@ -11,8 +11,11 @@ namespace Joomla\FrameworkWebsite\Controller\Documentation;
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\View\Documentation\ErrorHtmlView;
 use Joomla\Input\Input;
-use Zend\Diactoros\Response\RedirectResponse;
+use Zend\Diactoros\Response\{
+	HtmlResponse, RedirectResponse
+};
 
 /**
  * Controller handling a package's documentation page
@@ -23,6 +26,13 @@ use Zend\Diactoros\Response\RedirectResponse;
 class PageController extends AbstractController
 {
 	/**
+	 * The error view object.
+	 *
+	 * @var  ErrorHtmlView
+	 */
+	private $errorView;
+
+	/**
 	 * The model object.
 	 *
 	 * @var  PackageModel
@@ -32,15 +42,17 @@ class PageController extends AbstractController
 	/**
 	 * Constructor.
 	 *
-	 * @param   PackageModel         $model  The model object.
-	 * @param   Input                $input  The input object.
-	 * @param   AbstractApplication  $app    The application object.
+	 * @param   PackageModel         $model      The model object.
+	 * @param   ErrorHtmlView        $errorView  The error view object.
+	 * @param   Input                $input      The input object.
+	 * @param   AbstractApplication  $app        The application object.
 	 */
-	public function __construct(PackageModel $model, Input $input = null, AbstractApplication $app = null)
+	public function __construct(PackageModel $model, ErrorHtmlView $errorView, Input $input = null, AbstractApplication $app = null)
 	{
 		parent::__construct($input, $app);
 
-		$this->model = $model;
+		$this->errorView = $errorView;
+		$this->model     = $model;
 	}
 
 	/**
@@ -64,12 +76,18 @@ class PageController extends AbstractController
 		switch ($version)
 		{
 			case '1.x':
-				throw new \RuntimeException('The Framework 1.x releases are not documented.', 404);
+				$this->errorView->setError('The Framework 1.x releases are not documented.');
+
+				$this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
+
+				break;
 
 			case '2.x':
 				if (!$package->has_v2)
 				{
-					throw new \RuntimeException(sprintf('The `%s` package does not have a 2.x branch to document.', $package->display), 404);
+					$this->errorView->setError(sprintf('The %s package does not have a 2.x branch to document.', $package->display));
+
+					$this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
 				}
 
 				break;

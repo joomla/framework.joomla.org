@@ -513,6 +513,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new DocPageController(
 			$container->get(PackageModel::class),
+			$container->get(ErrorHtmlView::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
