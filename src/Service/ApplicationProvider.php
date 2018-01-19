@@ -788,6 +788,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		$config = $container->get('config');
 
 		$application = new WebApplication($container->get(Input::class), $config);
+		$application->httpVersion = '2';
 
 		// Inject extra services
 		$application->setContainer($container);
