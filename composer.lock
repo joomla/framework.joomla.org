@@ -303,12 +303,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/application.git",
-                "reference": "28cc7c8766df84f3aa090ed8076740c1c1d1a58a"
+                "reference": "13e829e24dd1f510044fd2bfd2c5f3a40e0f5d27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/application/zipball/28cc7c8766df84f3aa090ed8076740c1c1d1a58a",
-                "reference": "28cc7c8766df84f3aa090ed8076740c1c1d1a58a",
+                "url": "https://api.github.com/repos/joomla-framework/application/zipball/13e829e24dd1f510044fd2bfd2c5f3a40e0f5d27",
+                "reference": "13e829e24dd1f510044fd2bfd2c5f3a40e0f5d27",
                 "shasum": ""
             },
             "require": {
@@ -345,7 +345,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0+"
+                "GPL-2.0-or-later"
             ],
             "description": "Joomla Application Package",
             "homepage": "https://github.com/joomla-framework/application",
@@ -354,7 +354,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2017-12-16T18:33:17+00:00"
+            "time": "2018-01-19T22:07:50+00:00"
         },
         {
             "name": "joomla/console",
