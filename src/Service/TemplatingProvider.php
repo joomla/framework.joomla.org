@@ -29,10 +29,13 @@ use Twig\Cache\{
 	CacheInterface, FilesystemCache, NullCache
 };
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
+use Twig\Extension\{
+	DebugExtension, ProfilerExtension
+};
 use Twig\Loader\{
 	FilesystemLoader, LoaderInterface
 };
+use Twig\Profiler\Profile;
 use Twig\RuntimeLoader\ContainerRuntimeLoader;
 
 /**
@@ -72,9 +75,18 @@ class TemplatingProvider implements ServiceProviderInterface
 		$container->alias(FrameworkExtension::class, 'twig.extension.framework')
 			->share('twig.extension.framework', [$this, 'getTwigExtensionFrameworkService'], true);
 
+		// This service cannot be protected as it is decorated when the debug bar is available
+		$container->alias(ProfilerExtension::class, 'twig.extension.profiler')
+			->alias(\Twig_Extension_Profiler::class, 'twig.extension.profiler')
+			->share('twig.extension.profiler', [$this, 'getTwigExtensionProfilerService']);
+
 		$container->alias(LoaderInterface::class, 'twig.loader')
 			->alias(\Twig_LoaderInterface::class, 'twig.loader')
 			->share('twig.loader', [$this, 'getTwigLoaderService'], true);
+
+		$container->alias(Profile::class, 'twig.profiler.profile')
+			->alias(\Twig_Profiler_Profile::class, 'twig.profiler.profile')
+			->share('twig.profiler.profile', [$this, 'getTwigProfilerProfileService'], true);
 
 		$container->alias(FrameworkTwigRuntime::class, 'twig.runtime.framework')
 			->share('twig.runtime.framework', [$this, 'getTwigRuntimeFrameworkService'], true);
@@ -219,6 +231,18 @@ class TemplatingProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the `twig.extension.profiler` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ProfilerExtension
+	 */
+	public function getTwigExtensionProfilerService(Container $container) : ProfilerExtension
+	{
+		return new ProfilerExtension($container->get('twig.profiler.profile'));
+	}
+
+	/**
 	 * Get the `twig.loader` service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -228,6 +252,18 @@ class TemplatingProvider implements ServiceProviderInterface
 	public function getTwigLoaderService(Container $container) : \Twig_LoaderInterface
 	{
 		return new FilesystemLoader([JPATH_TEMPLATES]);
+	}
+
+	/**
+	 * Get the `twig.profiler.profile` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Profile
+	 */
+	public function getTwigProfilerProfileService(Container $container) : Profile
+	{
+		return new Profile;
 	}
 
 	/**

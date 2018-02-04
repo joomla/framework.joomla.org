@@ -12,7 +12,10 @@ use DebugBar\
 {
 	DebugBar, StandardDebugBar
 };
-use DebugBar\Bridge\MonologCollector;
+use DebugBar\Bridge\{
+	MonologCollector, TwigProfileCollector
+};
+use DebugBar\Bridge\Twig\TimeableTwigExtensionProfiler;
 use DebugBar\DataCollector\PDO\{
 	PDOCollector, TraceablePDO
 };
@@ -20,9 +23,6 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\DI\
 {
 	Container, Exception\DependencyResolutionException, ServiceProviderInterface
-};
-use Joomla\FrameworkWebsite\DebugBar\Twig\{
-	TraceableTwigEnvironment, TwigCollector
 };
 
 /**
@@ -49,16 +49,12 @@ class DebugBarProvider implements ServiceProviderInterface
 		$container->alias(PDOCollector::class, 'debug.collector.pdo')
 			->share('debug.collector.pdo', [$this, 'getDebugCollectorPdoService'], true);
 
-		$container->alias(TwigCollector::class, 'debug.collector.twig')
+		$container->alias(TwigProfileCollector::class, 'debug.collector.twig')
 			->share('debug.collector.twig', [$this, 'getDebugCollectorTwigService'], true);
 
-		$container->extend(
-			'twig.environment',
-			function (\Twig_Environment $twig, Container $container) : TraceableTwigEnvironment
-			{
-				return new TraceableTwigEnvironment($twig);
-			}
-		);
+		$container->extend('twig.environment', [$this, 'getDecoratedTwigEnvironmentService']);
+
+		$container->extend('twig.extension.profiler', [$this, 'getDecoratedTwigExtensionProfilerService']);
 	}
 
 	/**
@@ -122,14 +118,42 @@ class DebugBarProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the `debug.collector.pdo` service
+	 * Get the `debug.collector.twig` service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  TwigCollector
+	 * @return  TwigProfileCollector
 	 */
-	public function getDebugCollectorTwigService(Container $container) : TwigCollector
+	public function getDebugCollectorTwigService(Container $container) : TwigProfileCollector
 	{
-		return new TwigCollector($container->get('twig.environment'));
+		return new TwigProfileCollector($container->get('twig.profiler.profile'), $container->get('twig.loader'));
+	}
+
+	/**
+	 * Get the decorated `twig.environment` service
+	 *
+	 * @param   \Twig_Environment  $twig       The original \Twig_Environment service.
+	 * @param   Container          $container  The DI container.
+	 *
+	 * @return  \Twig_Environment
+	 */
+	public function getDecoratedTwigEnvironmentService(\Twig_Environment $twig, Container $container) : \Twig_Environment
+	{
+		$twig->addExtension($container->get('twig.extension.profiler'));
+
+		return $twig;
+	}
+
+	/**
+	 * Get the decorated `twig.extension.profiler` service
+	 *
+	 * @param   \Twig_Extension_Profiler  $profiler   The original \Twig_Extension_Profiler service.
+	 * @param   Container                 $container  The DI container.
+	 *
+	 * @return  TimeableTwigExtensionProfiler
+	 */
+	public function getDecoratedTwigExtensionProfilerService(\Twig_Extension_Profiler $profiler, Container $container): TimeableTwigExtensionProfiler
+	{
+		return new TimeableTwigExtensionProfiler($container->get('twig.profiler.profile'), $container->get('debug.bar')['time']);
 	}
 }
