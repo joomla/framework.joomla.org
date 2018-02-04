@@ -19,11 +19,13 @@ use DebugBar\Bridge\Twig\TimeableTwigExtensionProfiler;
 use DebugBar\DataCollector\PDO\{
 	PDOCollector, TraceablePDO
 };
+use Joomla\Application\AbstractWebApplication;
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\
 {
 	Container, Exception\DependencyResolutionException, ServiceProviderInterface
 };
+use Joomla\FrameworkWebsite\DebugBar\JoomlaHttpDriver;
 
 /**
  * Debug bar service provider
@@ -51,6 +53,9 @@ class DebugBarProvider implements ServiceProviderInterface
 
 		$container->alias(TwigProfileCollector::class, 'debug.collector.twig')
 			->share('debug.collector.twig', [$this, 'getDebugCollectorTwigService'], true);
+
+		$container->alias(JoomlaHttpDriver::class, 'debug.http.driver')
+			->share('debug.http.driver', [$this, 'getDebugHttpDriverService'], true);
 
 		$container->extend('twig.environment', [$this, 'getDecoratedTwigEnvironmentService']);
 
@@ -127,6 +132,18 @@ class DebugBarProvider implements ServiceProviderInterface
 	public function getDebugCollectorTwigService(Container $container) : TwigProfileCollector
 	{
 		return new TwigProfileCollector($container->get('twig.profiler.profile'), $container->get('twig.loader'));
+	}
+
+	/**
+	 * Get the `debug.http.driver` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  JoomlaHttpDriver
+	 */
+	public function getDebugHttpDriverService(Container $container): JoomlaHttpDriver
+	{
+		return new JoomlaHttpDriver($container->get(AbstractWebApplication::class));
 	}
 
 	/**

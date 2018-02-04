@@ -49,6 +49,14 @@ try
 	// Set error reporting based on config
 	$errorReporting = (int) $container->get('config')->get('errorReporting', 0);
 	error_reporting($errorReporting);
+
+	// There is a circular dependency in building the HTTP driver while the application is being resolved, so it'll need to be set here for now
+	if ($container->has('debug.bar'))
+	{
+		/** @var \DebugBar\DebugBar $debugBar */
+		$debugBar = $container->get('debug.bar');
+		$debugBar->setHttpDriver($container->get('debug.http.driver'));
+	}
 }
 catch (\Throwable $e)
 {
