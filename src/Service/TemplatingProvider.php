@@ -63,10 +63,9 @@ class TemplatingProvider implements ServiceProviderInterface
 			->alias(\Twig_CacheInterface::class, 'twig.cache')
 			->share('twig.cache', [$this, 'getTwigCacheService'], true);
 
-		// This service cannot be protected as it is decorated when the debug bar is available
 		$container->alias(Environment::class, 'twig.environment')
 			->alias(\Twig_Environment::class, 'twig.environment')
-			->share('twig.environment', [$this, 'getTwigEnvironmentService']);
+			->share('twig.environment', [$this, 'getTwigEnvironmentService'], true);
 
 		$container->alias(DebugExtension::class, 'twig.extension.debug')
 			->alias(\Twig_Extension_Debug::class, 'twig.extension.debug')
@@ -94,6 +93,8 @@ class TemplatingProvider implements ServiceProviderInterface
 		$container->alias(ContainerRuntimeLoader::class, 'twig.runtime.loader')
 			->alias(\Twig_ContainerRuntimeLoader::class, 'twig.runtime.loader')
 			->share('twig.runtime.loader', [$this, 'getTwigRuntimeLoaderService'], true);
+
+		$this->tagTwigExtensions($container);
 	}
 
 	/**
@@ -192,12 +193,7 @@ class TemplatingProvider implements ServiceProviderInterface
 		$environment->setCache($container->get('twig.cache'));
 
 		// Add the Twig extensions
-		$environment->addExtension($container->get('twig.extension.framework'));
-
-		if ($debug)
-		{
-			$environment->addExtension($container->get('twig.extension.debug'));
-		}
+		$environment->setExtensions($container->getTagged('twig.extension'));
 
 		// Add a global tracking the debug states
 		$environment->addGlobal('appDebug', $config->get('debug', false));
@@ -288,5 +284,29 @@ class TemplatingProvider implements ServiceProviderInterface
 	public function getTwigRuntimeLoaderService(Container $container) : ContainerRuntimeLoader
 	{
 		return new ContainerRuntimeLoader($container);
+	}
+
+	/**
+	 * Tag services which are Twig extensions
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  void
+	 */
+	private function tagTwigExtensions(Container $container)
+	{
+		/** @var \Joomla\Registry\Registry $config */
+		$config = $container->get('config');
+
+		$debug = $config->get('template.debug', false);
+
+		$twigExtensions = ['twig.extension.framework'];
+
+		if ($debug)
+		{
+			$twigExtensions[] = 'twig.extension.debug';
+		}
+
+		$container->tag('twig.extension', $twigExtensions);
 	}
 }

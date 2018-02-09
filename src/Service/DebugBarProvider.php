@@ -57,9 +57,9 @@ class DebugBarProvider implements ServiceProviderInterface
 		$container->alias(JoomlaHttpDriver::class, 'debug.http.driver')
 			->share('debug.http.driver', [$this, 'getDebugHttpDriverService'], true);
 
-		$container->extend('twig.environment', [$this, 'getDecoratedTwigEnvironmentService']);
-
 		$container->extend('twig.extension.profiler', [$this, 'getDecoratedTwigExtensionProfilerService']);
+
+		$this->tagTwigExtensions($container);
 	}
 
 	/**
@@ -147,21 +147,6 @@ class DebugBarProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the decorated `twig.environment` service
-	 *
-	 * @param   \Twig_Environment  $twig       The original \Twig_Environment service.
-	 * @param   Container          $container  The DI container.
-	 *
-	 * @return  \Twig_Environment
-	 */
-	public function getDecoratedTwigEnvironmentService(\Twig_Environment $twig, Container $container) : \Twig_Environment
-	{
-		$twig->addExtension($container->get('twig.extension.profiler'));
-
-		return $twig;
-	}
-
-	/**
 	 * Get the decorated `twig.extension.profiler` service
 	 *
 	 * @param   \Twig_Extension_Profiler  $profiler   The original \Twig_Extension_Profiler service.
@@ -172,5 +157,17 @@ class DebugBarProvider implements ServiceProviderInterface
 	public function getDecoratedTwigExtensionProfilerService(\Twig_Extension_Profiler $profiler, Container $container): TimeableTwigExtensionProfiler
 	{
 		return new TimeableTwigExtensionProfiler($container->get('twig.profiler.profile'), $container->get('debug.bar')['time']);
+	}
+
+	/**
+	 * Tag services which are Twig extensions
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  void
+	 */
+	private function tagTwigExtensions(Container $container)
+	{
+		$container->tag('twig.extension', ['twig.extension.profiler']);
 	}
 }
