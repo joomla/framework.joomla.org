@@ -9,7 +9,6 @@
 namespace Joomla\FrameworkWebsite\Command;
 
 use Joomla\Console\AbstractCommand;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -25,7 +24,7 @@ class UpdateCommand extends AbstractCommand
 	 */
 	public function execute(): int
 	{
-		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+		$symfonyStyle = $this->createSymfonyStyle();
 
 		$symfonyStyle->title('Update Server');
 		$symfonyStyle->comment('Updating server to git HEAD');

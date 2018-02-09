@@ -10,7 +10,6 @@ namespace Joomla\FrameworkWebsite\Command\Packagist;
 
 use Joomla\Console\AbstractCommand;
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to get download counts from Packagist
@@ -43,7 +42,7 @@ class DownloadsCommand extends AbstractCommand
 	 */
 	public function execute(): int
 	{
-		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+		$symfonyStyle = $this->createSymfonyStyle();
 
 		$symfonyStyle->title('Sync Download Counts from Packagist');
 

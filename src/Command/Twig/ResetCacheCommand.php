@@ -11,7 +11,6 @@ namespace Joomla\FrameworkWebsite\Command\Twig;
 use Joomla\Console\AbstractCommand;
 use Joomla\Filesystem\Folder;
 use Joomla\Renderer\TwigRenderer;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Twig\Error\Error as TwigError;
 
 /**
@@ -45,7 +44,7 @@ class ResetCacheCommand extends AbstractCommand
 	 */
 	public function execute(): int
 	{
-		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+		$symfonyStyle = $this->createSymfonyStyle();
 
 		$symfonyStyle->title('Reset Twig Cache');
 
