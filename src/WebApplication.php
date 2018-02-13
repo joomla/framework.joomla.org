@@ -19,8 +19,6 @@ use Joomla\Router\Exception\{
 	MethodNotAllowedException, RouteNotFoundException
 };
 use Joomla\Router\Router;
-use Psr\Link\EvolvableLinkProviderInterface;
-use Symfony\Component\WebLink\HttpHeaderSerializer;
 use Zend\Diactoros\Response\{
 	HtmlResponse, JsonResponse
 };
@@ -193,14 +191,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 */
 	protected function respond()
 	{
-		/** @var EvolvableLinkProviderInterface|null $linkProvider */
-		$linkProvider = $this->input->getRaw('_links');
-
-		if ($linkProvider && $linkProvider instanceof EvolvableLinkProviderInterface && $links = $linkProvider->getLinks())
-		{
-			$this->setHeader('Link', (new HttpHeaderSerializer)->serialize($links));
-		}
-
 		// Render the debug bar output if able
 		if ($this->debugBar && !($this->mimeType === 'application/json' || $this->getResponse() instanceof JsonResponse))
 		{
