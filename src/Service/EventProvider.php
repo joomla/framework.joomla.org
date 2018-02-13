@@ -33,9 +33,10 @@ class EventProvider implements ServiceProviderInterface
 	 */
 	public function register(Container $container)
 	{
+		// This service cannot be protected as it is decorated when the debug bar is available
 		$container->alias(DispatcherInterface::class, 'dispatcher')
 			->alias(Dispatcher::class, 'dispatcher')
-			->share('dispatcher', [$this, 'getDispatcherService'], true);
+			->share('dispatcher', [$this, 'getDispatcherService']);
 
 		$container->alias(PreloadSubscriber::class, 'event.subscriber.preload')
 			->share('event.subscriber.preload', [$this, 'getEventSubscriberPreloadService'], true);

@@ -25,7 +25,10 @@ use Joomla\DI\
 {
 	Container, Exception\DependencyResolutionException, ServiceProviderInterface
 };
+use Joomla\Event\DispatcherInterface;
 use Joomla\FrameworkWebsite\DebugBar\JoomlaHttpDriver;
+use Joomla\FrameworkWebsite\Event\DebugDispatcher;
+use Joomla\FrameworkWebsite\EventListener\DebugSubscriber;
 
 /**
  * Debug bar service provider
@@ -56,6 +59,11 @@ class DebugBarProvider implements ServiceProviderInterface
 
 		$container->alias(JoomlaHttpDriver::class, 'debug.http.driver')
 			->share('debug.http.driver', [$this, 'getDebugHttpDriverService'], true);
+
+		$container->alias(DebugSubscriber::class, 'event.subscriber.debug')
+			->share('event.subscriber.debug', [$this, 'getEventSubscriberDebugService'], true);
+
+		$container->extend('dispatcher', [$this, 'getDecoratedDispatcherService']);
 
 		$container->extend('twig.extension.profiler', [$this, 'getDecoratedTwigExtensionProfilerService']);
 
@@ -147,6 +155,22 @@ class DebugBarProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the decorated `dispatcher` service
+	 *
+	 * @param   DispatcherInterface  $dispatcher  The original DispatcherInterface service.
+	 * @param   Container            $container   The DI container.
+	 *
+	 * @return  DispatcherInterface
+	 */
+	public function getDecoratedDispatcherService(DispatcherInterface $dispatcher, Container $container): DispatcherInterface
+	{
+		$dispatcher = new DebugDispatcher($dispatcher, $container->get('debug.bar'));
+		$dispatcher->addSubscriber($container->get('event.subscriber.debug'));
+
+		return $dispatcher;
+	}
+
+	/**
 	 * Get the decorated `twig.extension.profiler` service
 	 *
 	 * @param   \Twig_Extension_Profiler  $profiler   The original \Twig_Extension_Profiler service.
@@ -157,6 +181,18 @@ class DebugBarProvider implements ServiceProviderInterface
 	public function getDecoratedTwigExtensionProfilerService(\Twig_Extension_Profiler $profiler, Container $container): TimeableTwigExtensionProfiler
 	{
 		return new TimeableTwigExtensionProfiler($container->get('twig.profiler.profile'), $container->get('debug.bar')['time']);
+	}
+
+	/**
+	 * Get the `event.subscriber.debug` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  DebugSubscriber
+	 */
+	public function getEventSubscriberDebugService(Container $container): DebugSubscriber
+	{
+		return new DebugSubscriber($container->get('debug.bar'));
 	}
 
 	/**

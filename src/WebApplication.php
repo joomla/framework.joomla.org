@@ -66,6 +66,14 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	{
 		try
 		{
+			if ($this->debugBar)
+			{
+				/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+				$collector = $this->debugBar['time'];
+
+				$collector->startMeasure('routing');
+			}
+
 			$route = $this->router->parseRoute($this->get('uri.route'), $this->input->getMethod());
 
 			// Add variables to the input if not already set
@@ -74,9 +82,33 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 				$this->input->def($key, $value);
 			}
 
+			if ($this->debugBar)
+			{
+				/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+				$collector = $this->debugBar['time'];
+
+				$collector->stopMeasure('routing');
+			}
+
+			if ($this->debugBar)
+			{
+				/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+				$collector = $this->debugBar['time'];
+
+				$collector->startMeasure('controller');
+			}
+
 			/** @var ControllerInterface $controller */
 			$controller = $this->getContainer()->get($route['controller']);
 			$controller->execute();
+
+			if ($this->debugBar)
+			{
+				/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+				$collector = $this->debugBar['time'];
+
+				$collector->stopMeasure('controller');
+			}
 		}
 		catch (MethodNotAllowedException $exception)
 		{
@@ -135,7 +167,23 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	{
 		if ($this->debugBar)
 		{
-			$this->debugBar['exceptions']->addThrowable($throwable);
+			/** @var \DebugBar\DataCollector\ExceptionsCollector $collector */
+			$collector = $this->debugBar['exceptions'];
+
+			$collector->addThrowable($throwable);
+
+			/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+			$collector = $this->debugBar['time'];
+
+			if ($collector->hasStartedMeasure('routing'))
+			{
+				$collector->stopMeasure('routing');
+			}
+
+			if ($collector->hasStartedMeasure('controller'))
+			{
+				$collector->stopMeasure('controller');
+			}
 		}
 
 		$this->allowCache(false);
@@ -182,44 +230,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 		}
 
 		$this->setResponse($response);
-	}
-
-	/**
-	 * Method to send the application response to the client.  All headers will be sent prior to the main application output data.
-	 *
-	 * @return  void
-	 */
-	protected function respond()
-	{
-		// Render the debug bar output if able
-		if ($this->debugBar && !($this->mimeType === 'application/json' || $this->getResponse() instanceof JsonResponse))
-		{
-			$debugBarOutput = $this->debugBar->getJavascriptRenderer()->render();
-
-			// Fetch the body
-			$body = $this->getBody();
-
-			// If for whatever reason we're missing the closing body tag, just append the scripts
-			if (!stristr($body, '</body>'))
-			{
-				$body .= $debugBarOutput;
-			}
-			else
-			{
-				// Find the closing tag and put the scripts in
-				$pos = strripos($body, '</body>');
-
-				if ($pos !== false)
-				{
-					$body = substr_replace($body, $debugBarOutput . '</body>', $pos, strlen('</body>'));
-				}
-			}
-
-			// Reset the body
-			$this->setBody($body);
-		}
-
-		parent::respond();
 	}
 
 	/**

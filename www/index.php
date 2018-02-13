@@ -7,6 +7,7 @@
  */
 
 // Application constants
+define('APP_START',       microtime(true));
 define('JPATH_ROOT',      dirname(__DIR__));
 define('JPATH_TEMPLATES', JPATH_ROOT . '/templates');
 
@@ -67,6 +68,17 @@ catch (\Throwable $e)
 	echo '<html><head><title>Container Initialization Error</title></head><body><h1>Container Initialization Error</h1><p>An error occurred while creating the DI container: ' . $e->getMessage() . '</p></body></html>';
 
 	exit(1);
+}
+
+if ($container->has('debug.bar'))
+{
+	/** @var \DebugBar\DebugBar $debugBar */
+	$debugBar = $container->get('debug.bar');
+	$debugBar->setHttpDriver($container->get('debug.http.driver'));
+
+	/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+	$collector = $debugBar['time'];
+	$collector->addMeasure('initialisation', APP_START, microtime(true));
 }
 
 // Execute the application
