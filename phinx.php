@@ -31,7 +31,7 @@ $config = $container->get('config');
 
 // Get the DBO so we can share the raw connection
 /** @var Joomla\Database\Mysql\MysqlDriver $db */
-$db = $container->get('db');
+$db = $container->get(Joomla\Database\DatabaseInterface::class);
 $db->connect();
 
 return [
