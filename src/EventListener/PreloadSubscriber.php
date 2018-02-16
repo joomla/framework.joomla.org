@@ -64,14 +64,9 @@ class PreloadSubscriber implements SubscriberInterface
 		/** @var AbstractWebApplication $application */
 		$application = $event->getApplication();
 
-		if (!($application instanceof AbstractWebApplication))
-		{
-			return;
-		}
-
 		$linkProvider = $this->preloadManager->getLinkProvider();
 
-		if ($linkProvider && $linkProvider instanceof EvolvableLinkProviderInterface && $links = $linkProvider->getLinks())
+		if ($linkProvider instanceof EvolvableLinkProviderInterface && $links = $linkProvider->getLinks())
 		{
 			$application->setHeader('Link', (new HttpHeaderSerializer)->serialize($links));
 		}
