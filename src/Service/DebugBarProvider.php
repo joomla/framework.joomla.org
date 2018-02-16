@@ -67,6 +67,7 @@ class DebugBarProvider implements ServiceProviderInterface
 
 		$container->extend('twig.extension.profiler', [$this, 'getDecoratedTwigExtensionProfilerService']);
 
+		$this->tagDebugCollectors($container);
 		$this->tagTwigExtensions($container);
 	}
 
@@ -87,9 +88,10 @@ class DebugBarProvider implements ServiceProviderInterface
 		$debugBar = new StandardDebugBar;
 
 		// Add collectors
-		$debugBar->addCollector($container->get('debug.collector.monolog'));
-		$debugBar->addCollector($container->get('debug.collector.pdo'));
-		$debugBar->addCollector($container->get('debug.collector.twig'));
+		foreach ($container->getTagged('debug.collector') as $collector)
+		{
+			$debugBar->addCollector($collector);
+		}
 
 		// Ensure the assets are dumped
 		$renderer = $debugBar->getJavascriptRenderer();
@@ -193,6 +195,18 @@ class DebugBarProvider implements ServiceProviderInterface
 	public function getEventSubscriberDebugService(Container $container): DebugSubscriber
 	{
 		return new DebugSubscriber($container->get('debug.bar'));
+	}
+
+	/**
+	 * Tag services which are collectors for the debug bar
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  void
+	 */
+	private function tagDebugCollectors(Container $container)
+	{
+		$container->tag('debug.collector', ['debug.collector.monolog', 'debug.collector.pdo', 'debug.collector.twig']);
 	}
 
 	/**
