@@ -13,7 +13,7 @@ define('JPATH_TEMPLATES', JPATH_ROOT . '/templates');
 $container = (new Joomla\DI\Container)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
-	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\DatabaseProvider)
+	->registerServiceProvider(new Joomla\Database\Service\DatabaseProvider)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
@@ -41,7 +41,7 @@ return [
 	'environments' => [
 		'default_database' => 'application',
 		'application'      => [
-			'name'         => $config->get('database.name'),
+			'name'         => $config->get('database.database'),
 			'connection'   => $db->getConnection(),
 			'table_prefix' => $config->get('database.prefix'),
 		],

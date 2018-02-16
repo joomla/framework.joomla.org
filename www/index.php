@@ -28,7 +28,7 @@ try
 	$container = (new Joomla\DI\Container)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\DatabaseProvider)
+		->registerServiceProvider(new Joomla\Database\Service\DatabaseProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\EventProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider)

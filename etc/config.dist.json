@@ -4,7 +4,7 @@
         "host": "",
         "user": "",
         "password": "",
-        "name": "",
+        "database": "",
         "prefix": ""
     },
     "template": {
