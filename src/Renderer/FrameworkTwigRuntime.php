@@ -9,7 +9,7 @@
 namespace Joomla\FrameworkWebsite\Renderer;
 
 use Joomla\Application\AbstractApplication;
-use Joomla\FrameworkWebsite\Manager\PreloadManager;
+use Joomla\Preload\PreloadManager;
 use Symfony\Component\Asset\Packages;
 
 /**

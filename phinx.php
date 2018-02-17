@@ -17,6 +17,7 @@ $container = (new Joomla\DI\Container)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
+	->registerServiceProvider(new Joomla\Preload\Service\PreloadProvider)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
 
 // Alias the CLI application to Joomla's base application class as this is the primary application for the environment

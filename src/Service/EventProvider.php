@@ -16,8 +16,6 @@ use Joomla\Event\{
 	Dispatcher,
 	DispatcherInterface
 };
-use Joomla\FrameworkWebsite\EventListener\PreloadSubscriber;
-use Joomla\FrameworkWebsite\Manager\PreloadManager;
 
 /**
  * Event service provider
@@ -37,9 +35,6 @@ class EventProvider implements ServiceProviderInterface
 		$container->alias(DispatcherInterface::class, 'dispatcher')
 			->alias(Dispatcher::class, 'dispatcher')
 			->share('dispatcher', [$this, 'getDispatcherService']);
-
-		$container->alias(PreloadSubscriber::class, 'event.subscriber.preload')
-			->share('event.subscriber.preload', [$this, 'getEventSubscriberPreloadService'], true);
 	}
 
 	/**
@@ -53,22 +48,11 @@ class EventProvider implements ServiceProviderInterface
 	{
 		$dispatcher = new Dispatcher;
 
-		$dispatcher->addSubscriber($container->get('event.subscriber.preload'));
+		foreach ($container->getTagged('event.subscriber') as $subscriber)
+		{
+			$dispatcher->addSubscriber($subscriber);
+		}
 
 		return $dispatcher;
-	}
-
-	/**
-	 * Get the `event.subscriber.preload` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  PreloadSubscriber
-	 */
-	public function getEventSubscriberPreloadService(Container $container): PreloadSubscriber
-	{
-		return new PreloadSubscriber(
-			$container->get(PreloadManager::class)
-		);
 	}
 }

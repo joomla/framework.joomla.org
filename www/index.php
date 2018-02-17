@@ -33,6 +33,7 @@ try
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
+		->registerServiceProvider(new Joomla\Preload\Service\PreloadProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
 
 	// Conditionally include the DebugBar service provider based on the app being in debug mode

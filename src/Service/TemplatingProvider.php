@@ -13,10 +13,10 @@ use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
 use Joomla\FrameworkWebsite\Asset\MixPathPackage;
-use Joomla\FrameworkWebsite\Manager\PreloadManager;
 use Joomla\FrameworkWebsite\Renderer\{
 	ApplicationContext, FrameworkExtension, FrameworkTwigRuntime
 };
+use Joomla\Preload\PreloadManager;
 use Joomla\Renderer\{
 	RendererInterface, TwigRenderer
 };
@@ -55,9 +55,6 @@ class TemplatingProvider implements ServiceProviderInterface
 	{
 		$container->alias(Packages::class, 'asset.packages')
 			->share('asset.packages', [$this, 'getAssetPackagesService'], true);
-
-		$container->alias(PreloadManager::class, 'manager.preload')
-			->share('manager.preload', [$this, 'getManagerPreloadService'], true);
 
 		$container->alias(RendererInterface::class, 'renderer')
 			->alias(TwigRenderer::class, 'renderer')
@@ -132,18 +129,6 @@ class TemplatingProvider implements ServiceProviderInterface
 				'mix' => $mixStrategy,
 			]
 		);
-	}
-
-	/**
-	 * Get the `manager.preload` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  PreloadManager
-	 */
-	public function getManagerPreloadService(Container $container): PreloadManager
-	{
-		return new PreloadManager;
 	}
 
 	/**
