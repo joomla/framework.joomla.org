@@ -35,7 +35,7 @@
                         {{ release.package.downloads|number_format }}
                     </td>
                     <td>
-                        {% if release.package.repo in ['console', 'datetime', 'renderer', 'test'] %}
+                        {% if release.package.repo in ['console', 'datetime', 'preload', 'renderer', 'test'] %}
                             N/A
                         {% else %}
                             {% set _1xbranch = (release.package.repo in ['crypt', 'form']) ? '1.x-dev' : 'master'  %}

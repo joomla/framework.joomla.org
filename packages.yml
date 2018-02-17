@@ -53,6 +53,8 @@ packages:
     openstreetmap:
         display: OpenStreetMap
         repo: openstreetmap-api
+    preload:
+        stable: false
     profiler: ~
     registry: ~
     renderer:
