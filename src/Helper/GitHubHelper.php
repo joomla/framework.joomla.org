@@ -136,6 +136,9 @@ class GitHubHelper
 			{
 				$rendered = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
 
+				// Fix links - TODO: This should only change relative links for the docs files
+				$rendered = preg_replace('/href=\"(.*)\.md\"/', 'href="$1"', $rendered);
+
 				// Cache the result for 7 days
 				$sevenDaysInSeconds = 60 * 60 * 24 * 7;
 
@@ -148,6 +151,9 @@ class GitHubHelper
 		else
 		{
 			$rendered = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
+
+			// Fix links - TODO: This should only change relative links for the docs files
+			$rendered = preg_replace('/href=\"(.*)\.md\"/', 'href="$1"', $rendered);
 
 			// Cache the result for 7 days
 			$sevenDaysInSeconds = 60 * 60 * 24 * 7;
