@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="stylesheet" href="{{ preload(asset('css/template.css', 'mix'), 'preload', {'as': 'style'}) }}" type="text/css">
+        {% block stylesheets %}{% endblock %}
         {% if appDebug %}
             <link rel="stylesheet" href="{{ asset('css/debugbar.css') }}" type="text/css">
         {% endif %}
@@ -32,9 +33,6 @@
         <link href="favicon.ico" rel="shortcut icon" />
         <link href="https://plus.google.com/b/109167715749846214365/" rel="publisher" />
         <!-- End for misc -->
-
-        {% block headJavaScript %}
-        {% endblock %}
 
         <script>
        	var _prum = [['id', '59300ad15992c776ad970068'],

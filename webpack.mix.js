@@ -18,5 +18,14 @@ mix
         ]
     });
 
+// Code syntax highlighting
+mix
+    .sass('assets/scss/code.scss', 'css')
+    .options({
+        postCss: [
+            require('autoprefixer')({ browsers: 'last 2 versions' })
+        ]
+    });
+
 // Version assets
 mix.version();

@@ -2,6 +2,10 @@
 
 {% block title %}Joomla! Framework Documentation{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ preload(asset('css/code.css', 'mix'), 'preload', {'as': 'style'}) }}" type="text/css">
+{% endblock %}
+
 {% block content %}
     <section class="docs container">
         <h1 class="centered-title">Framework Documentation</h1>

@@ -8,6 +8,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0",
     "font-awesome": "4.7.0",
+    "github-syntax-light": "^0.5.0",
     "smooth-scroll": "^12.1.5"
   },
   "devDependencies": {
