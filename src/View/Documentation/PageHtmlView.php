@@ -18,11 +18,18 @@ use Joomla\View\BaseHtmlView;
 class PageHtmlView extends BaseHtmlView
 {
 	/**
-	 * The error message for display.
+	 * The page contents for display.
 	 *
 	 * @var  string
 	 */
 	private $contents = '';
+
+	/**
+	 * The active package.
+	 *
+	 * @var  \stdClass
+	 */
+	private $package;
 
 	/**
 	 * The package model object.
@@ -30,6 +37,13 @@ class PageHtmlView extends BaseHtmlView
 	 * @var  PackageModel
 	 */
 	private $packageModel;
+
+	/**
+	 * The sidebar contents for display.
+	 *
+	 * @var  string
+	 */
+	private $sidebarContents = '';
 
 	/**
 	 * Instantiate the view.
@@ -53,12 +67,26 @@ class PageHtmlView extends BaseHtmlView
 	{
 		$this->setData(
 			[
-				'contents' => $this->contents,
-				'packages' => $this->packageModel->getSortedPackages(),
+				'activePackage'   => $this->package,
+				'contents'        => $this->contents,
+				'packages'        => $this->packageModel->getSortedPackages(),
+				'sidebarContents' => $this->sidebarContents,
 			]
 		);
 
 		return parent::render();
+	}
+
+	/**
+	 * Set the active package
+	 *
+	 * @param   \stdClass  $package  The active package for the page
+	 *
+	 * @return  void
+	 */
+	public function setActivePackage(\stdClass $package)
+	{
+		$this->package = $package;
 	}
 
 	/**
@@ -71,5 +99,17 @@ class PageHtmlView extends BaseHtmlView
 	public function setPageContent(string $contents)
 	{
 		$this->contents = $contents;
+	}
+
+	/**
+	 * Set the sidebar content for display
+	 *
+	 * @param   string  $contents  The content to display
+	 *
+	 * @return  void
+	 */
+	public function setSidebarContent(string $contents)
+	{
+		$this->sidebarContents = $contents;
 	}
 }

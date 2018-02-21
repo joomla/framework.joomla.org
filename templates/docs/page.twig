@@ -1,6 +1,6 @@
 {% extends 'index.twig' %}
 
-{% block title %}Joomla! Framework Documentation{% endblock %}
+{% block title %}Joomla! Framework Documentation - {{ activePackage.display }} Package{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ preload(asset('css/code.css', 'mix'), 'preload', {'as': 'style'}) }}" type="text/css">
@@ -8,10 +8,14 @@
 
 {% block content %}
     <section class="docs container">
-        <h1 class="centered-title">Framework Documentation</h1>
+        <h1 class="centered-title">Framework Documentation - {{ activePackage.display }} Package</h1>
 
         <div class="sidenav-body">
             <aside class="sidebar">
+                <h3>Package Index</h3>
+                <nav>
+                    {{ sidebarContents|raw }}
+                </nav>
                 <h3>Package List</h3>
                 <nav>
                     <ul>

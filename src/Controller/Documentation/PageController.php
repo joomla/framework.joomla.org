@@ -117,7 +117,9 @@ class PageController extends AbstractController
 					$this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
 				}
 
+				$this->pageView->setActivePackage($package);
 				$this->pageView->setPageContent($this->githubHelper->renderDocsFile($version, $package, $filename));
+				$this->pageView->setSidebarContent($this->githubHelper->renderDocsFile($version, $package, 'index'));
 
 				$this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));
 
