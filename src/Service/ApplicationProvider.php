@@ -103,6 +103,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		$container->share(AppCommands\GitHub\ContributorsCommand::class, [$this, 'getGitHubContributorsCommandClassService'], true);
+		$container->share(AppCommands\GitHub\FetchDocsCommand::class, [$this, 'getGitHubFetchDocsCommandClassService'], true);
 		$container->share(AppCommands\Package\SyncCommand::class, [$this, 'getPackageSyncCommandClassService'], true);
 		$container->share(AppCommands\Packagist\DownloadsCommand::class, [$this, 'getPackagistDownloadsCommandClassService'], true);
 		$container->share(AppCommands\Packagist\SyncCommand::class, [$this, 'getPackagistSyncCommandClassService'], true);
@@ -204,6 +205,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		$mapping = [
 			'github:contributors'      => AppCommands\GitHub\ContributorsCommand::class,
+			'github:fetch-docs'        => AppCommands\GitHub\FetchDocsCommand::class,
 			'package:sync'             => AppCommands\Package\SyncCommand::class,
 			'packagist:sync:downloads' => AppCommands\Packagist\DownloadsCommand::class,
 			'packagist:sync:releases'  => AppCommands\Packagist\SyncCommand::class,
@@ -628,6 +630,21 @@ class ApplicationProvider implements ServiceProviderInterface
 		return new AppCommands\GitHub\ContributorsCommand(
 			$container->get(PackageModel::class),
 			$container->get(GitHubHelper::class)
+		);
+	}
+
+	/**
+	 * Get the GitHub\FetchDocsCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\GitHub\FetchDocsCommand
+	 */
+	public function getGitHubFetchDocsCommandClassService(Container $container) : AppCommands\GitHub\FetchDocsCommand
+	{
+		return new AppCommands\GitHub\FetchDocsCommand(
+			$container->get(PackageModel::class),
+			$container->get(Github::class)
 		);
 	}
 

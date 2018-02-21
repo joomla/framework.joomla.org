@@ -10,6 +10,7 @@ namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\Mysql\MysqlQuery;
+use Joomla\FrameworkWebsite\Model\Exception\PackageNotFoundException;
 use Joomla\Model\{
 	DatabaseModelInterface, DatabaseModelTrait
 };
@@ -76,7 +77,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @return  \stdClass
 	 *
-	 * @throws  \RuntimeException
+	 * @throws  PackageNotFoundException
 	 */
 	public function getPackage(string $packageName) : \stdClass
 	{
@@ -94,7 +95,7 @@ class PackageModel implements DatabaseModelInterface
 
 		if (!$package)
 		{
-			throw new \RuntimeException(sprintf('Unable to find release data for the `%s` package', $package->display), 404);
+			throw new PackageNotFoundException(sprintf('Unable to find release data for the `%s` package', $package->display), 404);
 		}
 
 		return $package;
