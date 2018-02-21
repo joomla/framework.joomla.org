@@ -60,6 +60,7 @@ packages:
         repo: openstreetmap-api
     preload:
         stable: false
+        has_v1: false
     profiler: ~
     registry: ~
     renderer:
