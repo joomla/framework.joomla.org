@@ -10,8 +10,11 @@ namespace Joomla\FrameworkWebsite\Controller\Documentation;
 
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
+use Joomla\FrameworkWebsite\Helper\GitHubHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
-use Joomla\FrameworkWebsite\View\Documentation\ErrorHtmlView;
+use Joomla\FrameworkWebsite\View\Documentation\{
+	ErrorHtmlView, PageHtmlView
+};
 use Joomla\Input\Input;
 use Zend\Diactoros\Response\{
 	HtmlResponse, RedirectResponse
@@ -33,6 +36,13 @@ class PageController extends AbstractController
 	private $errorView;
 
 	/**
+	 * The GitHub helper
+	 *
+	 * @var  GitHubHelper
+	 */
+	private $githubHelper;
+
+	/**
 	 * The model object.
 	 *
 	 * @var  PackageModel
@@ -40,19 +50,36 @@ class PageController extends AbstractController
 	private $model;
 
 	/**
+	 * The page view object.
+	 *
+	 * @var  PageHtmlView
+	 */
+	private $pageView;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param   PackageModel         $model      The model object.
-	 * @param   ErrorHtmlView        $errorView  The error view object.
-	 * @param   Input                $input      The input object.
-	 * @param   AbstractApplication  $app        The application object.
+	 * @param   PackageModel         $model         The model object.
+	 * @param   ErrorHtmlView        $errorView     The error view object.
+	 * @param   PageHtmlView         $pageView      The page view object.
+	 * @param   GitHubHelper         $githubHelper  The GitHub helper.
+	 * @param   Input                $input         The input object.
+	 * @param   AbstractApplication  $app           The application object.
 	 */
-	public function __construct(PackageModel $model, ErrorHtmlView $errorView, Input $input = null, AbstractApplication $app = null)
+	public function __construct(
+		PackageModel $model,
+		ErrorHtmlView $errorView,
+		PageHtmlView $pageView,
+		GitHubHelper $githubHelper,
+		Input $input = null,
+		AbstractApplication $app = null
+	)
 	{
 		parent::__construct($input, $app);
 
-		$this->errorView = $errorView;
-		$this->model     = $model;
+		$this->pageView     = $pageView;
+		$this->githubHelper = $githubHelper;
+		$this->model        = $model;
 	}
 
 	/**
@@ -89,6 +116,10 @@ class PageController extends AbstractController
 
 					$this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
 				}
+
+				$this->pageView->setPageContent($this->githubHelper->renderDocsFile($version, $package, $filename));
+
+				$this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));
 
 				break;
 

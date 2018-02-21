@@ -32,7 +32,7 @@ use Joomla\FrameworkWebsite\Model\{
 	ContributorModel, PackageModel, ReleaseModel
 };
 use Joomla\FrameworkWebsite\View\{
-	Contributor\ContributorHtmlView, Documentation\ErrorHtmlView, Documentation\IndexHtmlView, Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
+	Contributor\ContributorHtmlView, Documentation\ErrorHtmlView, Documentation\IndexHtmlView, Documentation\PageHtmlView, Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
 };
 use Joomla\Github\Github;
 use Joomla\Http\Http;
@@ -168,6 +168,9 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->alias(IndexHtmlView::class, 'view.documentation.index.html')
 			->share('view.documentation.index.html', [$this, 'getViewDocumentationIndexHtmlService'], true);
+
+		$container->alias(PageHtmlView::class, 'view.documentation.page.html')
+			->share('view.documentation.page.html', [$this, 'getViewDocumentationPageHtmlService'], true);
 
 		$container->alias(PackageHtmlView::class, 'view.package.html')
 			->share('view.package.html', [$this, 'getViewPackageHtmlService'], true);
@@ -368,7 +371,10 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$router->get(
 			'/docs/:version/:package/:filename',
-			DocPageController::class
+			DocPageController::class,
+			[
+				'filename' => '.*'
+			]
 		);
 
 		$router->get(
@@ -517,6 +523,8 @@ class ApplicationProvider implements ServiceProviderInterface
 		return new DocPageController(
 			$container->get(PackageModel::class),
 			$container->get(ErrorHtmlView::class),
+			$container->get(PageHtmlView::class),
+			$container->get(GitHubHelper::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
@@ -847,6 +855,25 @@ class ApplicationProvider implements ServiceProviderInterface
 		);
 
 		$view->setLayout('docs/index.twig');
+
+		return $view;
+	}
+
+	/**
+	 * Get the `view.documentation.page.html` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  PageHtmlView
+	 */
+	public function getViewDocumentationPageHtmlService(Container $container) : PageHtmlView
+	{
+		$view = new PageHtmlView(
+			$container->get('model.package'),
+			$container->get('renderer')
+		);
+
+		$view->setLayout('docs/page.twig');
 
 		return $view;
 	}

@@ -71,6 +71,35 @@ class GitHubHelper
 	}
 
 	/**
+	 * Render a documentation file
+	 *
+	 * @param   string     $version  The Framework version to fetch documentation for.
+	 * @param   \stdClass  $package  The Framework package the documentation belongs to.
+	 * @param   string     $path     The path to the documentation file.
+	 *
+	 * @return  string
+	 */
+	public function renderDocsFile(string $version, \stdClass $package, string $path): string
+	{
+		$docsPath = JPATH_ROOT . '/docs/' . $version . '/' . $package->package . '/' . $path . '.md';
+
+		if (!file_exists($docsPath))
+		{
+			throw new \InvalidArgumentException(
+				sprintf(
+					'No documentation found for `%s` in the `%2$s` package for version `%3$s`.',
+					$path,
+					$package->display,
+					$version
+				),
+				404
+			);
+		}
+
+		return file_get_contents($docsPath);
+	}
+
+	/**
 	 * Sync the contributors for a package
 	 *
 	 * @param   string  $package  The package to synchronize
