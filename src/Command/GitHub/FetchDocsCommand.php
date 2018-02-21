@@ -80,6 +80,7 @@ class FetchDocsCommand extends AbstractCommand
 		{
 			foreach ($this->packageModel->getPackages() as $package)
 			{
+				$symfonyStyle->comment("Processing {$package->display} package");
 				$this->processPackage($package, $symfonyStyle);
 			}
 		}
