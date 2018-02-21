@@ -13,7 +13,6 @@ use Joomla\DI\{
 	ContainerAwareInterface, ContainerAwareTrait
 };
 use Joomla\Router\Router;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Router cache command
@@ -29,7 +28,7 @@ class CacheCommand extends AbstractCommand implements ContainerAwareInterface
 	 */
 	public function execute(): int
 	{
-		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+		$symfonyStyle = $this->createSymfonyStyle();
 
 		$symfonyStyle->title('Cache Router');
 

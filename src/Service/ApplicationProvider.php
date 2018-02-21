@@ -17,6 +17,7 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
+use Joomla\Event\DispatcherInterface;
 use Joomla\FrameworkWebsite\{
 	Helper, WebApplication
 };
@@ -917,9 +918,11 @@ class ApplicationProvider implements ServiceProviderInterface
 		$config = $container->get('config');
 
 		$application = new WebApplication($container->get(Input::class), $config);
+		$application->httpVersion = '2';
 
 		// Inject extra services
 		$application->setContainer($container);
+		$application->setDispatcher($container->get(DispatcherInterface::class));
 		$application->setLogger($container->get(LoggerInterface::class));
 		$application->setRouter($container->get(Router::class));
 

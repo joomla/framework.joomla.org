@@ -11,7 +11,6 @@ namespace Joomla\FrameworkWebsite\Command\GitHub;
 use Joomla\Console\AbstractCommand;
 use Joomla\FrameworkWebsite\Helper\GitHubHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to get contributor information from GitHub
@@ -53,7 +52,7 @@ class ContributorsCommand extends AbstractCommand
 	 */
 	public function execute(): int
 	{
-		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+		$symfonyStyle = $this->createSymfonyStyle();
 
 		$symfonyStyle->title('Sync GitHub Contributors');
 

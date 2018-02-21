@@ -12,18 +12,23 @@ use DebugBar\
 {
 	DebugBar, StandardDebugBar
 };
-use DebugBar\Bridge\MonologCollector;
+use DebugBar\Bridge\{
+	MonologCollector, TwigProfileCollector
+};
+use DebugBar\Bridge\Twig\TimeableTwigExtensionProfiler;
 use DebugBar\DataCollector\PDO\{
 	PDOCollector, TraceablePDO
 };
+use Joomla\Application\AbstractWebApplication;
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\
 {
 	Container, Exception\DependencyResolutionException, ServiceProviderInterface
 };
-use Joomla\FrameworkWebsite\DebugBar\Twig\{
-	TraceableTwigEnvironment, TwigCollector
-};
+use Joomla\Event\DispatcherInterface;
+use Joomla\FrameworkWebsite\DebugBar\JoomlaHttpDriver;
+use Joomla\FrameworkWebsite\Event\DebugDispatcher;
+use Joomla\FrameworkWebsite\EventListener\DebugSubscriber;
 
 /**
  * Debug bar service provider
@@ -49,16 +54,21 @@ class DebugBarProvider implements ServiceProviderInterface
 		$container->alias(PDOCollector::class, 'debug.collector.pdo')
 			->share('debug.collector.pdo', [$this, 'getDebugCollectorPdoService'], true);
 
-		$container->alias(TwigCollector::class, 'debug.collector.twig')
+		$container->alias(TwigProfileCollector::class, 'debug.collector.twig')
 			->share('debug.collector.twig', [$this, 'getDebugCollectorTwigService'], true);
 
-		$container->extend(
-			'twig.environment',
-			function (\Twig_Environment $twig, Container $container) : TraceableTwigEnvironment
-			{
-				return new TraceableTwigEnvironment($twig);
-			}
-		);
+		$container->alias(JoomlaHttpDriver::class, 'debug.http.driver')
+			->share('debug.http.driver', [$this, 'getDebugHttpDriverService'], true);
+
+		$container->alias(DebugSubscriber::class, 'event.subscriber.debug')
+			->share('event.subscriber.debug', [$this, 'getEventSubscriberDebugService'], true);
+
+		$container->extend('dispatcher', [$this, 'getDecoratedDispatcherService']);
+
+		$container->extend('twig.extension.profiler', [$this, 'getDecoratedTwigExtensionProfilerService']);
+
+		$this->tagDebugCollectors($container);
+		$this->tagTwigExtensions($container);
 	}
 
 	/**
@@ -78,9 +88,10 @@ class DebugBarProvider implements ServiceProviderInterface
 		$debugBar = new StandardDebugBar;
 
 		// Add collectors
-		$debugBar->addCollector($container->get('debug.collector.monolog'));
-		$debugBar->addCollector($container->get('debug.collector.pdo'));
-		$debugBar->addCollector($container->get('debug.collector.twig'));
+		foreach ($container->getTagged('debug.collector') as $collector)
+		{
+			$debugBar->addCollector($collector);
+		}
 
 		// Ensure the assets are dumped
 		$renderer = $debugBar->getJavascriptRenderer();
@@ -115,21 +126,98 @@ class DebugBarProvider implements ServiceProviderInterface
 	public function getDebugCollectorPdoService(Container $container) : PDOCollector
 	{
 		/** @var DatabaseInterface $db */
-		$db = $container->get('db');
+		$db = $container->get(DatabaseInterface::class);
 		$db->connect();
 
 		return new PDOCollector(new TraceablePDO($db->getConnection()));
 	}
 
 	/**
-	 * Get the `debug.collector.pdo` service
+	 * Get the `debug.collector.twig` service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  TwigCollector
+	 * @return  TwigProfileCollector
 	 */
-	public function getDebugCollectorTwigService(Container $container) : TwigCollector
+	public function getDebugCollectorTwigService(Container $container) : TwigProfileCollector
 	{
-		return new TwigCollector($container->get('twig.environment'));
+		return new TwigProfileCollector($container->get('twig.profiler.profile'), $container->get('twig.loader'));
+	}
+
+	/**
+	 * Get the `debug.http.driver` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  JoomlaHttpDriver
+	 */
+	public function getDebugHttpDriverService(Container $container): JoomlaHttpDriver
+	{
+		return new JoomlaHttpDriver($container->get(AbstractWebApplication::class));
+	}
+
+	/**
+	 * Get the decorated `dispatcher` service
+	 *
+	 * @param   DispatcherInterface  $dispatcher  The original DispatcherInterface service.
+	 * @param   Container            $container   The DI container.
+	 *
+	 * @return  DispatcherInterface
+	 */
+	public function getDecoratedDispatcherService(DispatcherInterface $dispatcher, Container $container): DispatcherInterface
+	{
+		$dispatcher = new DebugDispatcher($dispatcher, $container->get('debug.bar'));
+		$dispatcher->addSubscriber($container->get('event.subscriber.debug'));
+
+		return $dispatcher;
+	}
+
+	/**
+	 * Get the decorated `twig.extension.profiler` service
+	 *
+	 * @param   \Twig_Extension_Profiler  $profiler   The original \Twig_Extension_Profiler service.
+	 * @param   Container                 $container  The DI container.
+	 *
+	 * @return  TimeableTwigExtensionProfiler
+	 */
+	public function getDecoratedTwigExtensionProfilerService(\Twig_Extension_Profiler $profiler, Container $container): TimeableTwigExtensionProfiler
+	{
+		return new TimeableTwigExtensionProfiler($container->get('twig.profiler.profile'), $container->get('debug.bar')['time']);
+	}
+
+	/**
+	 * Get the `event.subscriber.debug` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  DebugSubscriber
+	 */
+	public function getEventSubscriberDebugService(Container $container): DebugSubscriber
+	{
+		return new DebugSubscriber($container->get('debug.bar'));
+	}
+
+	/**
+	 * Tag services which are collectors for the debug bar
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  void
+	 */
+	private function tagDebugCollectors(Container $container)
+	{
+		$container->tag('debug.collector', ['debug.collector.monolog', 'debug.collector.pdo', 'debug.collector.twig']);
+	}
+
+	/**
+	 * Tag services which are Twig extensions
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  void
+	 */
+	private function tagTwigExtensions(Container $container)
+	{
+		$container->tag('twig.extension', ['twig.extension.profiler']);
 	}
 }

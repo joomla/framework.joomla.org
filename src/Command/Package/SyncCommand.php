@@ -11,7 +11,6 @@ namespace Joomla\FrameworkWebsite\Command\Package;
 use Joomla\Console\AbstractCommand;
 use Joomla\FrameworkWebsite\Helper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to synchronize the package listing data
@@ -53,7 +52,7 @@ class SyncCommand extends AbstractCommand
 	 */
 	public function execute(): int
 	{
-		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+		$symfonyStyle = $this->createSymfonyStyle();
 
 		$symfonyStyle->title('Sync Package Data');
 

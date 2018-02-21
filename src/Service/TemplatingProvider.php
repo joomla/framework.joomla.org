@@ -16,6 +16,7 @@ use Joomla\FrameworkWebsite\Asset\MixPathPackage;
 use Joomla\FrameworkWebsite\Renderer\{
 	ApplicationContext, FrameworkExtension, FrameworkTwigRuntime
 };
+use Joomla\Preload\PreloadManager;
 use Joomla\Renderer\{
 	RendererInterface, TwigRenderer
 };
@@ -29,10 +30,13 @@ use Twig\Cache\{
 	CacheInterface, FilesystemCache, NullCache
 };
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
+use Twig\Extension\{
+	DebugExtension, ProfilerExtension
+};
 use Twig\Loader\{
 	FilesystemLoader, LoaderInterface
 };
+use Twig\Profiler\Profile;
 use Twig\RuntimeLoader\ContainerRuntimeLoader;
 
 /**
@@ -60,10 +64,9 @@ class TemplatingProvider implements ServiceProviderInterface
 			->alias(\Twig_CacheInterface::class, 'twig.cache')
 			->share('twig.cache', [$this, 'getTwigCacheService'], true);
 
-		// This service cannot be protected as it is decorated when the debug bar is available
 		$container->alias(Environment::class, 'twig.environment')
 			->alias(\Twig_Environment::class, 'twig.environment')
-			->share('twig.environment', [$this, 'getTwigEnvironmentService']);
+			->share('twig.environment', [$this, 'getTwigEnvironmentService'], true);
 
 		$container->alias(DebugExtension::class, 'twig.extension.debug')
 			->alias(\Twig_Extension_Debug::class, 'twig.extension.debug')
@@ -72,9 +75,18 @@ class TemplatingProvider implements ServiceProviderInterface
 		$container->alias(FrameworkExtension::class, 'twig.extension.framework')
 			->share('twig.extension.framework', [$this, 'getTwigExtensionFrameworkService'], true);
 
+		// This service cannot be protected as it is decorated when the debug bar is available
+		$container->alias(ProfilerExtension::class, 'twig.extension.profiler')
+			->alias(\Twig_Extension_Profiler::class, 'twig.extension.profiler')
+			->share('twig.extension.profiler', [$this, 'getTwigExtensionProfilerService']);
+
 		$container->alias(LoaderInterface::class, 'twig.loader')
 			->alias(\Twig_LoaderInterface::class, 'twig.loader')
 			->share('twig.loader', [$this, 'getTwigLoaderService'], true);
+
+		$container->alias(Profile::class, 'twig.profiler.profile')
+			->alias(\Twig_Profiler_Profile::class, 'twig.profiler.profile')
+			->share('twig.profiler.profile', [$this, 'getTwigProfilerProfileService'], true);
 
 		$container->alias(FrameworkTwigRuntime::class, 'twig.runtime.framework')
 			->share('twig.runtime.framework', [$this, 'getTwigRuntimeFrameworkService'], true);
@@ -82,6 +94,8 @@ class TemplatingProvider implements ServiceProviderInterface
 		$container->alias(ContainerRuntimeLoader::class, 'twig.runtime.loader')
 			->alias(\Twig_ContainerRuntimeLoader::class, 'twig.runtime.loader')
 			->share('twig.runtime.loader', [$this, 'getTwigRuntimeLoaderService'], true);
+
+		$this->tagTwigExtensions($container);
 	}
 
 	/**
@@ -180,12 +194,7 @@ class TemplatingProvider implements ServiceProviderInterface
 		$environment->setCache($container->get('twig.cache'));
 
 		// Add the Twig extensions
-		$environment->addExtension($container->get('twig.extension.framework'));
-
-		if ($debug)
-		{
-			$environment->addExtension($container->get('twig.extension.debug'));
-		}
+		$environment->setExtensions($container->getTagged('twig.extension'));
 
 		// Add a global tracking the debug states
 		$environment->addGlobal('appDebug', $config->get('debug', false));
@@ -219,6 +228,18 @@ class TemplatingProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the `twig.extension.profiler` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ProfilerExtension
+	 */
+	public function getTwigExtensionProfilerService(Container $container) : ProfilerExtension
+	{
+		return new ProfilerExtension($container->get('twig.profiler.profile'));
+	}
+
+	/**
 	 * Get the `twig.loader` service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -231,6 +252,18 @@ class TemplatingProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the `twig.profiler.profile` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  Profile
+	 */
+	public function getTwigProfilerProfileService(Container $container) : Profile
+	{
+		return new Profile;
+	}
+
+	/**
 	 * Get the `twig.runtime.framework` service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -239,7 +272,11 @@ class TemplatingProvider implements ServiceProviderInterface
 	 */
 	public function getTwigRuntimeFrameworkService(Container $container) : FrameworkTwigRuntime
 	{
-		return new FrameworkTwigRuntime($container->get(AbstractApplication::class), $container->get(Packages::class));
+		return new FrameworkTwigRuntime(
+			$container->get(AbstractApplication::class),
+			$container->get(Packages::class),
+			$container->get(PreloadManager::class)
+		);
 	}
 
 	/**
@@ -252,5 +289,29 @@ class TemplatingProvider implements ServiceProviderInterface
 	public function getTwigRuntimeLoaderService(Container $container) : ContainerRuntimeLoader
 	{
 		return new ContainerRuntimeLoader($container);
+	}
+
+	/**
+	 * Tag services which are Twig extensions
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  void
+	 */
+	private function tagTwigExtensions(Container $container)
+	{
+		/** @var \Joomla\Registry\Registry $config */
+		$config = $container->get('config');
+
+		$debug = $config->get('template.debug', false);
+
+		$twigExtensions = ['twig.extension.framework'];
+
+		if ($debug)
+		{
+			$twigExtensions[] = 'twig.extension.debug';
+		}
+
+		$container->tag('twig.extension', $twigExtensions);
 	}
 }

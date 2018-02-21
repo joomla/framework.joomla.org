@@ -14,7 +14,6 @@ use Joomla\FrameworkWebsite\Model\{
 };
 use Joomla\Http\Http;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to synchronize the release listing with Packagist
@@ -65,7 +64,7 @@ class SyncCommand extends AbstractCommand
 	 */
 	public function execute(): int
 	{
-		$symfonyStyle = new SymfonyStyle($this->getApplication()->getConsoleInput(), $this->getApplication()->getConsoleOutput());
+		$symfonyStyle = $this->createSymfonyStyle();
 
 		$symfonyStyle->title('Sync Release Data with Packagist');
 

@@ -8,11 +8,8 @@
 
 namespace Joomla\FrameworkWebsite\Renderer;
 
-use Fig\Link\{
-	GenericLinkProvider, Link
-};
 use Joomla\Application\AbstractApplication;
-use Psr\Link\EvolvableLinkProviderInterface;
+use Joomla\Preload\PreloadManager;
 use Symfony\Component\Asset\Packages;
 
 /**
@@ -35,15 +32,24 @@ class FrameworkTwigRuntime
 	private $packages;
 
 	/**
+	 * The HTTP/2 preload manager
+	 *
+	 * @var  PreloadManager
+	 */
+	private $preloadManager;
+
+	/**
 	 * Constructor
 	 *
-	 * @param   AbstractApplication  $app       The application object
-	 * @param   Packages             $packages  Packages object to look up asset paths
+	 * @param   AbstractApplication  $app             The application object
+	 * @param   Packages             $packages        Packages object to look up asset paths
+	 * @param   PreloadManager       $preloadManager  The HTTP/2 preload manager
 	 */
-	public function __construct(AbstractApplication $app, Packages $packages)
+	public function __construct(AbstractApplication $app, Packages $packages, PreloadManager $preloadManager)
 	{
-		$this->app      = $app;
-		$this->packages = $packages;
+		$this->app            = $app;
+		$this->packages       = $packages;
+		$this->preloadManager = $preloadManager;
 	}
 
 	/**
@@ -98,15 +104,17 @@ class FrameworkTwigRuntime
 	/**
 	 * Preload a resource
 	 *
-	 * @param   string  $uri  The URI for the resource to preload
+	 * @param   string  $uri         The URI for the resource to preload
+	 * @param   string  $linkType    The preload method to apply
+	 * @param   array   $attributes  The attributes of this link (e.g. "array('as' => true)", "array('pr' => 0.5)")
 	 *
 	 * @return  string
+	 *
+	 * @throws  \InvalidArgumentException
 	 */
-	public function preloadAsset(string $uri) : string
+	public function preloadAsset(string $uri, string $linkType = 'preload', array $attributes = []): string
 	{
-		/** @var EvolvableLinkProviderInterface $linkProvider */
-		$linkProvider = $this->app->input->getRaw('_links', new GenericLinkProvider);
-		$this->app->input->set('_links', $linkProvider->withLink(new Link('preload', $uri)));
+		$this->preloadManager->link($uri, $linkType, $attributes);
 
 		return $uri;
 	}

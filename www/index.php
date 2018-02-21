@@ -7,6 +7,7 @@
  */
 
 // Application constants
+define('APP_START',       microtime(true));
 define('JPATH_ROOT',      dirname(__DIR__));
 define('JPATH_TEMPLATES', JPATH_ROOT . '/templates');
 
@@ -27,10 +28,12 @@ try
 	$container = (new Joomla\DI\Container)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\DatabaseProvider)
+		->registerServiceProvider(new Joomla\Database\Service\DatabaseProvider)
+		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\EventProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
+		->registerServiceProvider(new Joomla\Preload\Service\PreloadProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
 
 	// Conditionally include the DebugBar service provider based on the app being in debug mode
@@ -49,6 +52,14 @@ try
 	// Set error reporting based on config
 	$errorReporting = (int) $container->get('config')->get('errorReporting', 0);
 	error_reporting($errorReporting);
+
+	// There is a circular dependency in building the HTTP driver while the application is being resolved, so it'll need to be set here for now
+	if ($container->has('debug.bar'))
+	{
+		/** @var \DebugBar\DebugBar $debugBar */
+		$debugBar = $container->get('debug.bar');
+		$debugBar->setHttpDriver($container->get('debug.http.driver'));
+	}
 }
 catch (\Throwable $e)
 {
@@ -58,6 +69,17 @@ catch (\Throwable $e)
 	echo '<html><head><title>Container Initialization Error</title></head><body><h1>Container Initialization Error</h1><p>An error occurred while creating the DI container: ' . $e->getMessage() . '</p></body></html>';
 
 	exit(1);
+}
+
+if ($container->has('debug.bar'))
+{
+	/** @var \DebugBar\DebugBar $debugBar */
+	$debugBar = $container->get('debug.bar');
+	$debugBar->setHttpDriver($container->get('debug.http.driver'));
+
+	/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+	$collector = $debugBar['time'];
+	$collector->addMeasure('initialisation', APP_START, microtime(true));
 }
 
 // Execute the application

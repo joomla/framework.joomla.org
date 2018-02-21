@@ -27,10 +27,12 @@ try
 	$container = (new Joomla\DI\Container)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\DatabaseProvider)
+		->registerServiceProvider(new Joomla\Database\Service\DatabaseProvider)
+		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\EventProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
+		->registerServiceProvider(new Joomla\Preload\Service\PreloadProvider)
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
 
 	// Alias the CLI application to Joomla's base application class as this is the primary application for the environment
