@@ -8,16 +8,25 @@
 
 namespace Joomla\FrameworkWebsite\Helper;
 
+use Joomla\Cache\Item\Item;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\Mysql\MysqlQuery;
 use Joomla\Github\Github;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Helper interacting with the GitHub API
  */
 class GitHubHelper
 {
+	/**
+	 * Cache pool
+	 *
+	 * @var  CacheItemPoolInterface
+	 */
+	private $cache;
+
 	/**
 	 * Array tracking commit counts for each contributor
 	 *
@@ -51,13 +60,29 @@ class GitHubHelper
 	/**
 	 * Instantiate the helper.
 	 *
-	 * @param   Github             $github    The GitHub API adapter.
-	 * @param   DatabaseInterface  $database  The database driver.
+	 * @param   Github                  $github    The GitHub API adapter.
+	 * @param   DatabaseInterface       $database  The database driver.
+	 * @param   CacheItemPoolInterface  $cache     Cache pool.
 	 */
-	public function __construct(Github $github, DatabaseInterface $database)
+	public function __construct(Github $github, DatabaseInterface $database, CacheItemPoolInterface $cache)
 	{
+		$this->cache    = $cache;
 		$this->database = $database;
 		$this->github   = $github;
+	}
+
+	/**
+	 * Generate the cache key for a documentation file
+	 *
+	 * @param   string     $version  The Framework version to fetch documentation for.
+	 * @param   \stdClass  $package  The Framework package the documentation belongs to.
+	 * @param   string     $path     The path to the documentation file.
+	 *
+	 * @return  string
+	 */
+	public function generateDocsFileCacheKey(string $version, \stdClass $package, string $path): string
+	{
+		return str_replace('/', '.', $version . '/' . $package->package . '/' . $path);
 	}
 
 	/**
@@ -96,7 +121,44 @@ class GitHubHelper
 			);
 		}
 
-		return file_get_contents($docsPath);
+		$key = $this->generateDocsFileCacheKey($version, $package, $path);
+
+		if ($this->cache->hasItem($key))
+		{
+			$item = $this->cache->getItem($key);
+
+			// Make sure we got a hit on the item, otherwise we'll have to re-cache
+			if ($item->isHit())
+			{
+				$rendered = $item->get();
+			}
+			else
+			{
+				$rendered = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
+
+				// Cache the result for 7 days
+				$sevenDaysInSeconds = 60 * 60 * 24 * 7;
+
+				$item = (new Item($key, $sevenDaysInSeconds))
+					->set($rendered);
+
+				$this->cache->save($item);
+			}
+		}
+		else
+		{
+			$rendered = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
+
+			// Cache the result for 7 days
+			$sevenDaysInSeconds = 60 * 60 * 24 * 7;
+
+			$item = (new Item($key, $sevenDaysInSeconds))
+				->set($rendered);
+
+			$this->cache->save($item);
+		}
+
+		return $rendered;
 	}
 
 	/**

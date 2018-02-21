@@ -44,6 +44,7 @@ use Joomla\Renderer\{
 	RendererInterface, TwigRenderer
 };
 use Joomla\Router\Router;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
@@ -244,7 +245,11 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getApplicationHelperGithubService(Container $container) : GitHubHelper
 	{
-		return new GitHubHelper($container->get(Github::class), $container->get(DatabaseInterface::class));
+		return new GitHubHelper(
+			$container->get(Github::class),
+			$container->get(DatabaseInterface::class),
+			$container->get(CacheItemPoolInterface::class)
+		);
 	}
 
 	/**
