@@ -8,6 +8,7 @@
 
 namespace Joomla\FrameworkWebsite\Helper;
 
+use Joomla\Application\AbstractApplication;
 use Joomla\Cache\Item\Item;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
@@ -20,6 +21,13 @@ use Psr\Cache\CacheItemPoolInterface;
  */
 class GitHubHelper
 {
+	/**
+	 * Application object
+	 *
+	 * @var  AbstractApplication
+	 */
+	private $application;
+
 	/**
 	 * Cache pool
 	 *
@@ -60,15 +68,17 @@ class GitHubHelper
 	/**
 	 * Instantiate the helper.
 	 *
-	 * @param   Github                  $github    The GitHub API adapter.
-	 * @param   DatabaseInterface       $database  The database driver.
-	 * @param   CacheItemPoolInterface  $cache     Cache pool.
+	 * @param   Github                  $github       The GitHub API adapter.
+	 * @param   DatabaseInterface       $database     The database driver.
+	 * @param   CacheItemPoolInterface  $cache        Cache pool.
+	 * @param   AbstractApplication     $application  The application object.
 	 */
-	public function __construct(Github $github, DatabaseInterface $database, CacheItemPoolInterface $cache)
+	public function __construct(Github $github, DatabaseInterface $database, CacheItemPoolInterface $cache, AbstractApplication $application)
 	{
-		$this->cache    = $cache;
-		$this->database = $database;
-		$this->github   = $github;
+		$this->application = $application;
+		$this->cache       = $cache;
+		$this->database    = $database;
+		$this->github      = $github;
 	}
 
 	/**
@@ -136,8 +146,10 @@ class GitHubHelper
 			{
 				$rendered = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
 
+				$routePrefix = $this->application->get('uri.base.path') . 'docs/' . $version . '/' . $package->package . '/';
+
 				// Fix links - TODO: This should only change relative links for the docs files
-				$rendered = preg_replace('/href=\"(.*)\.md\"/', 'href="$1"', $rendered);
+				$rendered = preg_replace('/href=\"(.*)\.md\"/', 'href="' . $routePrefix . '$1"', $rendered);
 
 				// Cache the result for 7 days
 				$sevenDaysInSeconds = 60 * 60 * 24 * 7;
@@ -152,8 +164,10 @@ class GitHubHelper
 		{
 			$rendered = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
 
+			$routePrefix = $this->application->get('uri.base.path') . 'docs/' . $version . '/' . $package->package . '/';
+
 			// Fix links - TODO: This should only change relative links for the docs files
-			$rendered = preg_replace('/href=\"(.*)\.md\"/', 'href="$1"', $rendered);
+			$rendered = preg_replace('/href=\"(.*)\.md\"/', 'href="' . $routePrefix . '$1"', $rendered);
 
 			// Cache the result for 7 days
 			$sevenDaysInSeconds = 60 * 60 * 24 * 7;

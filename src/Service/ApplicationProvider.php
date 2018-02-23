@@ -248,7 +248,8 @@ class ApplicationProvider implements ServiceProviderInterface
 		return new GitHubHelper(
 			$container->get(Github::class),
 			$container->get(DatabaseInterface::class),
-			$container->get(CacheItemPoolInterface::class)
+			$container->get(CacheItemPoolInterface::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
 		);
 	}
 
