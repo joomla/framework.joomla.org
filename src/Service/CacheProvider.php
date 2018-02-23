@@ -63,7 +63,7 @@ class CacheProvider implements ServiceProviderInterface
 		switch ($adapter)
 		{
 			case 'file':
-				$path = $config->get('cache.file.path', JPATH_ROOT . '/cache');
+				$path = $config->get('cache.file.path', JPATH_ROOT . '/cache/pool');
 
 				// If no path is given, fall back to the system's temporary directory
 				if (empty($path))
