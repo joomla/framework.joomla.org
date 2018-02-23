@@ -29,6 +29,8 @@ use Joomla\Event\DispatcherInterface;
 use Joomla\FrameworkWebsite\DebugBar\JoomlaHttpDriver;
 use Joomla\FrameworkWebsite\Event\DebugDispatcher;
 use Joomla\FrameworkWebsite\EventListener\DebugSubscriber;
+use Joomla\FrameworkWebsite\Http\HttpFactory;
+use Joomla\Http\HttpFactory as BaseHttpFactory;
 
 /**
  * Debug bar service provider
@@ -64,6 +66,8 @@ class DebugBarProvider implements ServiceProviderInterface
 			->share('event.subscriber.debug', [$this, 'getEventSubscriberDebugService'], true);
 
 		$container->extend('dispatcher', [$this, 'getDecoratedDispatcherService']);
+
+		$container->extend('http.factory', [$this, 'getDecoratedHttpFactoryService']);
 
 		$container->extend('twig.extension.profiler', [$this, 'getDecoratedTwigExtensionProfilerService']);
 
@@ -170,6 +174,19 @@ class DebugBarProvider implements ServiceProviderInterface
 		$dispatcher->addSubscriber($container->get('event.subscriber.debug'));
 
 		return $dispatcher;
+	}
+
+	/**
+	 * Get the decorated `http.factory` service
+	 *
+	 * @param   BaseHttpFactory  $httpFactory  The original HttpFactory service.
+	 * @param   Container        $container    The DI container.
+	 *
+	 * @return  HttpFactory
+	 */
+	public function getDecoratedHttpFactoryService(BaseHttpFactory $httpFactory, Container $container): HttpFactory
+	{
+		return new HttpFactory($container->get('debug.bar'));
 	}
 
 	/**

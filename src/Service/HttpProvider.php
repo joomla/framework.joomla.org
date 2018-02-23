@@ -32,8 +32,9 @@ class HttpProvider implements ServiceProviderInterface
 		$container->alias(Http::class, 'http')
 			->share('http', [$this, 'getHttpService'], true);
 
+		// This service cannot be protected as it is decorated when the debug bar is available
 		$container->alias(HttpFactory::class, 'http.factory')
-			->share('http.factory', [$this, 'getHttpFactoryService'], true);
+			->share('http.factory', [$this, 'getHttpFactoryService']);
 	}
 
 	/**
