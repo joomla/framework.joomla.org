@@ -102,18 +102,24 @@ footer {
   .sidebar {
     flex-basis: 100%;
     @include media-breakpoint-up(md) {
-      flex-basis: calc(25% - 1vw);
+      flex-basis: calc(30% - 1vw);
     }
     @include media-breakpoint-up(lg) {
+      flex-basis: calc(25% - 1vw);
+    }
+    @include media-breakpoint-up(xl) {
       flex-basis: calc(20% - 1vw);
     }
   }
   .content {
     flex-basis: 100%;
     @include media-breakpoint-up(md) {
-      flex-basis: calc(75% - 1vw);
+      flex-basis: calc(70% - 1vw);
     }
     @include media-breakpoint-up(lg) {
+      flex-basis: calc(75% - 1vw);
+    }
+    @include media-breakpoint-up(xl) {
       flex-basis: calc(80% - 1vw);
     }
   }
@@ -122,9 +128,12 @@ footer {
     grid-template-columns: 1fr;
     grid-gap: 1.25rem;
     @include media-breakpoint-up(md) {
-      grid-template-columns: 25% 75%;
+      grid-template-columns: 30% 70%;
     }
     @include media-breakpoint-up(lg) {
+      grid-template-columns: 25% 75%;
+    }
+    @include media-breakpoint-up(xl) {
       grid-template-columns: 20% 80%;
     }
     .sidebar {
