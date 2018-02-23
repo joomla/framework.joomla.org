@@ -658,7 +658,9 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new AppCommands\GitHub\FetchDocsCommand(
 			$container->get(PackageModel::class),
-			$container->get(Github::class)
+			$container->get(Github::class),
+			$container->get(GitHubHelper::class),
+			$container->get(CacheItemPoolInterface::class)
 		);
 	}
 

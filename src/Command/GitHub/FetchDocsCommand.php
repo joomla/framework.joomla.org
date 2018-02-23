@@ -10,10 +10,12 @@ namespace Joomla\FrameworkWebsite\Command\GitHub;
 
 use Joomla\Console\AbstractCommand;
 use Joomla\Filesystem\Folder;
+use Joomla\FrameworkWebsite\Helper\GitHubHelper;
 use Joomla\FrameworkWebsite\Model\Exception\PackageNotFoundException;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\Github\Github;
 use Joomla\Http\Exception\UnexpectedResponseException;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -23,11 +25,32 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class FetchDocsCommand extends AbstractCommand
 {
 	/**
+	 * Cache pool
+	 *
+	 * @var  CacheItemPoolInterface
+	 */
+	private $cache;
+
+	/**
+	 * Cache keys for rendered files which should be removed
+	 *
+	 * @var  string[]
+	 */
+	private $fileCacheKeys = [];
+
+	/**
 	 * The GitHub API adapter
 	 *
 	 * @var  Github
 	 */
 	private $github;
+
+	/**
+	 * The GitHub helper
+	 *
+	 * @var  GitHubHelper
+	 */
+	private $githubHelper;
 
 	/**
 	 * The package model
@@ -39,12 +62,16 @@ class FetchDocsCommand extends AbstractCommand
 	/**
 	 * Instantiate the command.
 	 *
-	 * @param   PackageModel  $packageModel  The package model.
-	 * @param   Github        $github        The GitHub API adapter.
+	 * @param   PackageModel            $packageModel  The package model.
+	 * @param   Github                  $github        The GitHub API adapter.
+	 * @param   GitHubHelper            $githubHelper  The GitHub helper.
+	 * @param   CacheItemPoolInterface  $cache         Cache pool.
 	 */
-	public function __construct(PackageModel $packageModel, Github $github)
+	public function __construct(PackageModel $packageModel, Github $github, GitHubHelper $githubHelper, CacheItemPoolInterface $cache)
 	{
+		$this->cache        = $cache;
 		$this->github       = $github;
+		$this->githubHelper = $githubHelper;
 		$this->packageModel = $packageModel;
 
 		parent::__construct();
@@ -84,6 +111,10 @@ class FetchDocsCommand extends AbstractCommand
 				$this->processPackage($package, $symfonyStyle);
 			}
 		}
+
+		$symfonyStyle->comment('Cleaning cache');
+
+		$this->cache->deleteItems($this->fileCacheKeys);
 
 		$symfonyStyle->success('Update completed.');
 
@@ -243,6 +274,12 @@ EOF
 
 			return;
 		}
+
+		$this->fileCacheKeys[] = $this->githubHelper->generateDocsFileCacheKey(
+			$version,
+			$package,
+			substr(str_replace('docs/', '', $file->path), 0, -3)
+		);
 	}
 
 	/**
