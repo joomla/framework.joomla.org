@@ -103,7 +103,14 @@ class PageController extends AbstractController
 		switch ($version)
 		{
 			case '1.x':
-				$this->errorView->setError('The Framework 1.x releases are not documented.');
+				if (!$package->has_v1)
+				{
+					$this->errorView->setError(sprintf('The %s package does not have a 1.x branch to document.', $package->display));
+				}
+				else
+				{
+					$this->errorView->setError('The Framework 1.x releases are not documented.');
+				}
 
 				$this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
 
