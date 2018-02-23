@@ -103,6 +103,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		 * Console Commands
 		 */
 
+		$container->share(AppCommands\ClearCacheCommand::class, [$this, 'getClearCacheCommandClassService'], true);
 		$container->share(AppCommands\GitHub\ContributorsCommand::class, [$this, 'getGitHubContributorsCommandClassService'], true);
 		$container->share(AppCommands\GitHub\FetchDocsCommand::class, [$this, 'getGitHubFetchDocsCommandClassService'], true);
 		$container->share(AppCommands\Package\SyncCommand::class, [$this, 'getPackageSyncCommandClassService'], true);
@@ -208,6 +209,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getApplicationConsoleLoaderService(Container $container) : LoaderInterface
 	{
 		$mapping = [
+			'cache:clear'              => AppCommands\ClearCacheCommand::class,
 			'github:contributors'      => AppCommands\GitHub\ContributorsCommand::class,
 			'github:fetch-docs'        => AppCommands\GitHub\FetchDocsCommand::class,
 			'package:sync'             => AppCommands\Package\SyncCommand::class,
@@ -420,6 +422,18 @@ class ApplicationProvider implements ServiceProviderInterface
 		);
 
 		return $router;
+	}
+
+	/**
+	 * Get the ClearCacheCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\ClearCacheCommand
+	 */
+	public function getClearCacheCommandClassService(Container $container) : AppCommands\ClearCacheCommand
+	{
+		return new AppCommands\ClearCacheCommand($container->get(CacheItemPoolInterface::class));
 	}
 
 	/**
