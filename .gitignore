@@ -11,6 +11,10 @@
 /cache/*
 !/cache/.placeholder
 
+# App Docs #
+/docs/*
+!/docs/.placeholder
+
 # App Logs #
 /logs/*
 !/logs/.placeholder
