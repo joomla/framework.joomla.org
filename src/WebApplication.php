@@ -145,18 +145,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	}
 
 	/**
-	 * Method to determine a hash for anti-spoofing variable names
-	 *
-	 * @param   boolean  $forceNew  If true, force a new token to be created
-	 *
-	 * @return  string  Hashed var name
-	 */
-	public function getFormToken($forceNew = false)
-	{
-		return '';
-	}
-
-	/**
 	 * Handle a Throwable
 	 *
 	 * @param   \Throwable  $throwable  The Throwable to handle
