@@ -9,7 +9,7 @@
 namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
-use Joomla\Database\Mysql\MysqlQuery;
+use Joomla\Database\ParameterType;
 use Joomla\Model\{
 	DatabaseModelInterface, DatabaseModelTrait
 };
@@ -64,13 +64,11 @@ class ReleaseModel implements DatabaseModelInterface
 	{
 		$db = $this->getDb();
 
-		/** @var MysqlQuery $subQuery */
 		$subQuery = $db->getQuery(true)
 			->select('*')
 			->from($db->quoteName('#__releases'))
 			->order('package_id ASC, version DESC');
 
-		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select('*')
 			->from('(' . (string) $subQuery . ') AS sub');
@@ -111,14 +109,13 @@ class ReleaseModel implements DatabaseModelInterface
 		// Get the package data for the package specified via the route
 		$db = $this->getDb();
 
-		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select('*')
 			->from($db->quoteName('#__releases'))
 			->where($db->quoteName('package_id') . ' = :packageId')
 			->order('version ASC');
 
-		$query->bind('packageId', $package->id, \PDO::PARAM_INT);
+		$query->bind('packageId', $package->id, ParameterType::INTEGER);
 
 		$releases = $db->setQuery($query)->loadObjectList();
 
@@ -143,14 +140,13 @@ class ReleaseModel implements DatabaseModelInterface
 	{
 		$db = $this->getDb();
 
-		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select('*')
 			->from($db->quoteName('#__releases'))
 			->where($db->quoteName('package_id') . ' = :packageId')
 			->where($db->quoteName('version') . ' = :version')
-			->bind('packageId', $package->id, \PDO::PARAM_INT)
-			->bind('version', $version, \PDO::PARAM_STR);
+			->bind('packageId', $package->id, ParameterType::INTEGER)
+			->bind('version', $version, ParameterType::STRING);
 
 		return $db->setQuery($query)->loadObject();
 	}
@@ -167,14 +163,13 @@ class ReleaseModel implements DatabaseModelInterface
 	{
 		$db = $this->getDb();
 
-		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select($db->quoteName('id'))
 			->from($db->quoteName('#__releases'))
 			->where($db->quoteName('package_id') . ' = :packageId')
 			->where($db->quoteName('version') . ' = :version')
-			->bind('packageId', $package->id, \PDO::PARAM_INT)
-			->bind('version', $version, \PDO::PARAM_STR);
+			->bind('packageId', $package->id, ParameterType::INTEGER)
+			->bind('version', $version, ParameterType::STRING);
 
 		$id = $db->setQuery($query)->loadResult();
 

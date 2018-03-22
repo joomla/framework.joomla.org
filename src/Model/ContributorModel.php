@@ -9,7 +9,6 @@
 namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
-use Joomla\Database\Mysql\MysqlQuery;
 use Joomla\Model\{
 	DatabaseModelInterface, DatabaseModelTrait
 };
@@ -40,7 +39,6 @@ class ContributorModel implements DatabaseModelInterface
 	{
 		$db = $this->getDb();
 
-		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select('*')
 			->from($db->quoteName('#__contributors'));
@@ -57,7 +55,6 @@ class ContributorModel implements DatabaseModelInterface
 	{
 		$db = $this->getDb();
 
-		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select('*')
 			->from($db->quoteName('#__contributors'))
