@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0665f3b0cdc48a10928427190d0b743e",
+    "content-hash": "c21438b475542b94fc3486ec78f7b4d8",
     "packages": [
         {
             "name": "composer/ca-bundle",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "943b2c4fcad1ef178d16a713c2468bf7e579c288"
+                "reference": "d2c0a83b7533d6912e8d516756ebd34f893e9169"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/943b2c4fcad1ef178d16a713c2468bf7e579c288",
-                "reference": "943b2c4fcad1ef178d16a713c2468bf7e579c288",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/d2c0a83b7533d6912e8d516756ebd34f893e9169",
+                "reference": "d2c0a83b7533d6912e8d516756ebd34f893e9169",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,7 @@
                 "php": "^5.3.2 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8.35",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.5",
                 "psr/log": "^1.0",
                 "symfony/process": "^2.5 || ^3.0 || ^4.0"
             },
@@ -60,7 +60,7 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2017-11-29T09:37:33+00:00"
+            "time": "2018-03-29T19:57:20+00:00"
         },
         {
             "name": "fig/link-util",
@@ -118,16 +118,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.3.0",
+            "version": "6.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
+                "reference": "68d0ea14d5a3f42a20e87632a5f84931e2709c90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
-                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/68d0ea14d5a3f42a20e87632a5f84931e2709c90",
+                "reference": "68d0ea14d5a3f42a20e87632a5f84931e2709c90",
                 "shasum": ""
             },
             "require": {
@@ -137,7 +137,7 @@
             },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "^4.0 || ^5.0",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4",
                 "psr/log": "^1.0"
             },
             "suggest": {
@@ -146,7 +146,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.2-dev"
+                    "dev-master": "6.3-dev"
                 }
             },
             "autoload": {
@@ -179,7 +179,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-06-22T18:50:49+00:00"
+            "time": "2018-03-26T16:33:04+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -466,12 +466,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/database.git",
-                "reference": "3dc7b1d858642845f7e76d3fa265eea373977946"
+                "reference": "4726fb557b8f1ac94ad2f96264b914c1da2488ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/database/zipball/3dc7b1d858642845f7e76d3fa265eea373977946",
-                "reference": "3dc7b1d858642845f7e76d3fa265eea373977946",
+                "url": "https://api.github.com/repos/joomla-framework/database/zipball/4726fb557b8f1ac94ad2f96264b914c1da2488ed",
+                "reference": "4726fb557b8f1ac94ad2f96264b914c1da2488ed",
                 "shasum": ""
             },
             "require": {
@@ -517,7 +517,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2018-03-20T13:04:54+00:00"
+            "time": "2018-03-25T17:59:38+00:00"
         },
         {
             "name": "joomla/di",
@@ -717,16 +717,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/github-api.git",
-                "reference": "a12a48b27e2e4439409d1f9d4ea0d29e348bf0b7"
+                "reference": "08774e2bd4dbe3a55c7aa7b1b8da9813e628bcce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/github-api/zipball/a12a48b27e2e4439409d1f9d4ea0d29e348bf0b7",
-                "reference": "a12a48b27e2e4439409d1f9d4ea0d29e348bf0b7",
+                "url": "https://api.github.com/repos/joomla-framework/github-api/zipball/08774e2bd4dbe3a55c7aa7b1b8da9813e628bcce",
+                "reference": "08774e2bd4dbe3a55c7aa7b1b8da9813e628bcce",
                 "shasum": ""
             },
             "require": {
-                "joomla/http": "^1.2.2|~2.0",
+                "joomla/http": "~1.3|~2.0",
                 "joomla/registry": "^1.4.5|~2.0",
                 "joomla/uri": "~1.0|~2.0",
                 "php": "~7.0"
@@ -757,7 +757,7 @@
                 "github",
                 "joomla"
             ],
-            "time": "2018-03-13T01:44:40+00:00"
+            "time": "2018-03-31T20:03:27+00:00"
         },
         {
             "name": "joomla/http",
@@ -2500,12 +2500,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla/coding-standards.git",
-                "reference": "4a9e350d7c55049df69bf7fa1d7b0be929537946"
+                "reference": "1a93124564f2be7ca0a301b755249c65fe111324"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla/coding-standards/zipball/4a9e350d7c55049df69bf7fa1d7b0be929537946",
-                "reference": "4a9e350d7c55049df69bf7fa1d7b0be929537946",
+                "url": "https://api.github.com/repos/joomla/coding-standards/zipball/1a93124564f2be7ca0a301b755249c65fe111324",
+                "reference": "1a93124564f2be7ca0a301b755249c65fe111324",
                 "shasum": ""
             },
             "require": {
@@ -2539,7 +2539,7 @@
                 "php codesniffer",
                 "phpcs"
             ],
-            "time": "2018-02-10T15:26:59+00:00"
+            "time": "2018-03-26T17:38:26+00:00"
         },
         {
             "name": "maximebf/debugbar",
@@ -2781,6 +2781,6 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.0.24"
+        "php": "7.0.28"
     }
 }
