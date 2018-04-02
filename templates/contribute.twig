@@ -15,7 +15,12 @@
     <p>Most repositories have two branches representing the two major Framework versions; 1.x and 2.0.</p>
     <ul>
         <li>Except for the noted exceptions below, the <code>master</code> branch represents the stable 1.x branch and the <code>2.0-dev</code> branch represents the upcoming 2.0 release</li>
-        <li>The Crypt and Form packages use the <code>master</code> for 2.0 and a <code>1.x-dev</code> branch for 1.x</li>
+        <li>
+            The Crypt and Form packages use the <code>master</code> for 2.0 and a <code>1.x-dev</code> branch for 1.x
+            <ul>
+                <li>Work had begun on upgrades for the Form package for a 2.0 release, however it has since been decided to deprecate the package. The <code>master</code> branch should be considered <strong><em>abandoned</em></strong>.</li>
+            </ul>
+        </li>
         <li>The Log package has no 2.0 branch since this package has been deprecated</li>
         <li>The Renderer package is not part of Framework 1.x, therefore its <code>master</code> branch represents the 2.0 release</li>
     </ul>
@@ -24,7 +29,7 @@
     <p>Joomla! Framework packages are <a href="http://www.php-fig.org/psr/psr-4/">PSR-4</a> compliant and follow a common filesystem structure.</p>
     <ul>
         <li><code>.github</code> - GitHub repository metadata (contributing guidelines, issue and pull request templates)</li>
-        <li><code>.travis</code> - Configuration files for the Travis-CI platform, including the directory where the PHP_CodeSniffer git submodule is checked out to</li>
+        <li><code>.travis</code> - Configuration files for the Travis-CI platform</li>
         <li><code>docs</code> - As part of the Framework 2.0 release, documentation is being added to each package; this directory is not present in the 1.x branches</li>
         <li><code>src</code> - The production code for the package</li>
         <li><code>tests</code> - The test suite for the package</li>
@@ -40,7 +45,7 @@
         <li><a href="#unit-testing">Unit Testing</a></li>
         <li><a href="#documentation">Documentation</a></li>
     </ul>
-    <p>Please be patient as not all items will be tested or reviewed immediately by a Framework maintainer. Also be receptive to feedback about your changes to the Framework. The maintainer team and other community members may make suggestions or ask questions about your change. This is part of the review process, and helps everyone to understand what is happening, why it is happening, and potentially optimize your code.</p>
+    <p>Please be patient as not all items will be tested or reviewed immediately by the <a href="https://volunteers.joomla.org/teams/framework-working-group">Framework team</a>. Also be receptive to feedback about your changes to the Framework. The maintainer team and other community members may make suggestions or ask questions about your change. This is part of the review process, and helps everyone to understand what is happening, why it is happening, and potentially optimize your code.</p>
 
     <div class="alert alert-warning">
         <h4 class="alert-heading">Security Issues</h4>
