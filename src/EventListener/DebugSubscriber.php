@@ -13,8 +13,9 @@ use Joomla\Application\{
 	AbstractWebApplication, ApplicationEvents
 };
 use Joomla\Application\Event\ApplicationEvent;
-use Joomla\Event\{
-	Priority, SubscriberInterface
+use Joomla\Event\
+{
+	EventInterface, Priority, SubscriberInterface
 };
 use Zend\Diactoros\Response\{
 	JsonResponse, RedirectResponse
@@ -53,6 +54,7 @@ class DebugSubscriber implements SubscriberInterface
 			ApplicationEvents::BEFORE_EXECUTE => ['markBeforeExecute', Priority::HIGH],
 			ApplicationEvents::AFTER_EXECUTE  => ['markAfterExecute', Priority::LOW],
 			ApplicationEvents::BEFORE_RESPOND => 'handleDebugResponse',
+			ApplicationEvents::ERROR          => 'handleError',
 		];
 	}
 
@@ -101,6 +103,39 @@ class DebugSubscriber implements SubscriberInterface
 		elseif ($application->getResponse() instanceof RedirectResponse)
 		{
 			$this->debugBar->stackData();
+		}
+	}
+
+	/**
+	 * Handle application errors.
+	 *
+	 * @param   EventInterface  $event  Event object
+	 *
+	 * @return  void
+	 */
+	public function handleError(EventInterface $event)
+	{
+		/** @var \DebugBar\DataCollector\ExceptionsCollector $collector */
+		$collector = $this->debugBar['exceptions'];
+
+		$collector->addThrowable($event->getError());
+
+		/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+		$collector = $this->debugBar['time'];
+
+		if ($collector->hasStartedMeasure('routing'))
+		{
+			$collector->stopMeasure('routing');
+		}
+
+		if ($collector->hasStartedMeasure('controller'))
+		{
+			$collector->stopMeasure('controller');
+		}
+
+		if ($collector->hasStartedMeasure('execution'))
+		{
+			$collector->stopMeasure('execution');
 		}
 	}
 

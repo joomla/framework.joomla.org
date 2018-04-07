@@ -11,9 +11,7 @@ namespace Joomla\FrameworkWebsite\Service;
 use Joomla\DI\{
 	Container, ServiceProviderInterface
 };
-use Joomla\Github\{
-	Github, Http
-};
+use Joomla\Github\Github;
 use Joomla\Http\HttpFactory;
 use Joomla\Registry\Registry;
 
@@ -52,8 +50,6 @@ class GitHubProvider implements ServiceProviderInterface
 
 		$options = $config->extract('github');
 
-		$http = new Http($options, $factory->getAvailableDriver());
-
-		return new Github($options, $http);
+		return new Github($options, $factory->getHttp($options));
 	}
 }

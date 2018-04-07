@@ -15,7 +15,12 @@
     <p>Most repositories have two branches representing the two major Framework versions; 1.x and 2.0.</p>
     <ul>
         <li>Except for the noted exceptions below, the <code>master</code> branch represents the stable 1.x branch and the <code>2.0-dev</code> branch represents the upcoming 2.0 release</li>
-        <li>The Crypt and Form packages use the <code>master</code> for 2.0 and a <code>1.x-dev</code> branch for 1.x</li>
+        <li>
+            The Crypt and Form packages use the <code>master</code> for 2.0 and a <code>1.x-dev</code> branch for 1.x
+            <ul>
+                <li>Work had begun on upgrades for the Form package for a 2.0 release, however it has since been decided to deprecate the package. The <code>master</code> branch should be considered <strong><em>abandoned</em></strong>.</li>
+            </ul>
+        </li>
         <li>The Log package has no 2.0 branch since this package has been deprecated</li>
         <li>The Renderer package is not part of Framework 1.x, therefore its <code>master</code> branch represents the 2.0 release</li>
     </ul>
@@ -24,7 +29,7 @@
     <p>Joomla! Framework packages are <a href="http://www.php-fig.org/psr/psr-4/">PSR-4</a> compliant and follow a common filesystem structure.</p>
     <ul>
         <li><code>.github</code> - GitHub repository metadata (contributing guidelines, issue and pull request templates)</li>
-        <li><code>.travis</code> - Configuration files for the Travis-CI platform, including the directory where the PHP_CodeSniffer git submodule is checked out to</li>
+        <li><code>.travis</code> - Configuration files for the Travis-CI platform</li>
         <li><code>docs</code> - As part of the Framework 2.0 release, documentation is being added to each package; this directory is not present in the 1.x branches</li>
         <li><code>src</code> - The production code for the package</li>
         <li><code>tests</code> - The test suite for the package</li>
@@ -35,21 +40,17 @@
     <p>Issue tracking and pull requests are managed via <a href="https://github.com">GitHub</a> in each package's repository. All of the Framework's packages are listed under the Joomla! Framework organization. You can find the documentation about how to fork a repository and start contributing to the Joomla! Framework at <a href="https://help.github.com/articles/fork-a-repo/">https://help.github.com/articles/fork-a-repo</a>.</p>
     <p>All contributions are welcome to be submitted for review for inclusion in the Framework, but before they will be accepted, we ask that you follow these simple guidelines:</p>
     <ul>
-        <li><a href="#joomla-contributor-agreement">Joomla! Contributor Agreement</a></li>
         <li><a href="#versioning">Versioning</a></li>
         <li><a href="#coding-standards">Coding Standards</a></li>
         <li><a href="#unit-testing">Unit Testing</a></li>
         <li><a href="#documentation">Documentation</a></li>
     </ul>
-    <p>Please be patient as not all items will be tested or reviewed immediately by a Framework maintainer. Also be receptive to feedback about your changes to the Framework. The maintainer team and other community members may make suggestions or ask questions about your change. This is part of the review process, and helps everyone to understand what is happening, why it is happening, and potentially optimize your code.</p>
+    <p>Please be patient as not all items will be tested or reviewed immediately by the <a href="https://volunteers.joomla.org/teams/framework-working-group">Framework team</a>. Also be receptive to feedback about your changes to the Framework. The maintainer team and other community members may make suggestions or ask questions about your change. This is part of the review process, and helps everyone to understand what is happening, why it is happening, and potentially optimize your code.</p>
 
     <div class="alert alert-warning">
         <h4 class="alert-heading">Security Issues</h4>
         <p>Security issues should be reported to the <a class="alert-link" href="https://developer.joomla.org/security.html">Joomla! Security Strike Team</a> by either filling out <a class="alert-link" href="https://developer.joomla.org/security/contact-the-team.html">the contact form</a> or emailing <a class="alert-link" href="mailto:security@joomla.org">security@joomla.org</a>.</p>
     </div>
-
-    <h2 id="joomla-contributor-agreement" class="page-header">Joomla! Contributor Agreement</h2>
-    <p>Ideally, everybody who contributes to the Framework, or any other Open Source Matters (OSM) supported project for that matter, should sign the <a href="https://developer.joomla.org/contribute.html">Joomla! Contributor Agreement</a> (JCA). But, we are aware that some contributors will not want to take the extra effort, especially for one-time contributors of modest amounts of code. As a compromise, the Joomla! Project requires a JCA from anybody who makes a significant contribution to Joomla! or any other OSM project. "Significant" is, of course, a judgment call. As a general guideline, if you as an individual have contributed or intend to contribute over 100 lines of code to the Joomla! Framework, we will ask for you to sign the JCA. If you are contributing as an employee of a company (that is, the work you are contributing was done on company time) then we need a JCA with your company's signature no matter how small the contribution is.</p>
 
     <h2 id="versioning" class="page-header">Versioning</h2>
     <p>When you add new classes, properties or methods, please use <code>__DEPLOY_VERSION__</code> in the <code>@since</code> tags in Docblocks. We'll replace that marker with the actual version the changes are deployed in.</p>

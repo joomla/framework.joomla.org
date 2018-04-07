@@ -11,6 +11,7 @@ namespace Joomla\FrameworkWebsite\Helper;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\Mysql\MysqlQuery;
+use Joomla\Database\ParameterType;
 use Joomla\FrameworkWebsite\PackageAware;
 use Joomla\Http\Http;
 
@@ -98,8 +99,8 @@ class PackagistHelper
 					->set($this->database->quoteName('downloads') . ' = :downloads')
 					->where($this->database->quoteName('package') . ' = :package');
 
-				$query->bind('downloads', $count, \PDO::PARAM_INT);
-				$query->bind('package', $package, \PDO::PARAM_STR);
+				$query->bind('downloads', $count, ParameterType::INTEGER);
+				$query->bind('package', $package, ParameterType::STRING);
 
 				$this->database->setQuery($query)->execute();
 			}
