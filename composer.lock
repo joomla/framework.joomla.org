@@ -303,12 +303,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/application.git",
-                "reference": "9fc3da51bedebaece1d32cb5a1923633b1932953"
+                "reference": "cc28fb192badf1129624e4fba43b0d737ef0c8a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/application/zipball/9fc3da51bedebaece1d32cb5a1923633b1932953",
-                "reference": "9fc3da51bedebaece1d32cb5a1923633b1932953",
+                "url": "https://api.github.com/repos/joomla-framework/application/zipball/cc28fb192badf1129624e4fba43b0d737ef0c8a5",
+                "reference": "cc28fb192badf1129624e4fba43b0d737ef0c8a5",
                 "shasum": ""
             },
             "require": {
@@ -354,7 +354,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2018-03-15T01:47:40+00:00"
+            "time": "2018-04-07T17:25:29+00:00"
         },
         {
             "name": "joomla/console",
@@ -362,12 +362,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/console.git",
-                "reference": "b625aebe2dcc572facded26e552130517919b8de"
+                "reference": "ef40e142d93673c3f172e03787253b24722d6e1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/console/zipball/b625aebe2dcc572facded26e552130517919b8de",
-                "reference": "b625aebe2dcc572facded26e552130517919b8de",
+                "url": "https://api.github.com/repos/joomla-framework/console/zipball/ef40e142d93673c3f172e03787253b24722d6e1c",
+                "reference": "ef40e142d93673c3f172e03787253b24722d6e1c",
                 "shasum": ""
             },
             "require": {
@@ -407,7 +407,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2018-03-18T01:08:13+00:00"
+            "time": "2018-04-07T16:58:35+00:00"
         },
         {
             "name": "joomla/controller",
