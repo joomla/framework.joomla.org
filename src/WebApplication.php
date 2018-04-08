@@ -68,7 +68,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 		$route = $this->router->parseRoute($this->get('uri.route'), $this->input->getMethod());
 
 		// Add variables to the input if not already set
-		foreach ($route['vars'] as $key => $value)
+		foreach ($route->getRouteVariables() as $key => $value)
 		{
 			$this->input->def($key, $value);
 		}
@@ -90,7 +90,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 		}
 
 		/** @var ControllerInterface $controller */
-		$controller = $this->getContainer()->get($route['controller']);
+		$controller = $this->getContainer()->get($route->getController());
 		$controller->execute();
 
 		if ($this->debugBar)
