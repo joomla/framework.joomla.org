@@ -13,6 +13,7 @@ use Joomla\Cache\Item\Item;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\Mysql\MysqlQuery;
+use Joomla\Database\ParameterType;
 use Joomla\Github\Github;
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -210,10 +211,10 @@ class GitHubHelper
 				$query = $this->database->getQuery(true);
 				$query->setQuery("INSERT INTO `#__contributors` (github_id, username, avatar, profile) VALUES (:github, :username, :avatar, :profile) ON DUPLICATE KEY UPDATE username = :username, avatar = :avatar, profile = :profile");
 
-				$query->bind('github', $contributor->id, \PDO::PARAM_INT);
-				$query->bind('username', $contributor->login, \PDO::PARAM_STR);
-				$query->bind('avatar', $contributor->avatar_url, \PDO::PARAM_STR);
-				$query->bind('profile', $contributor->html_url, \PDO::PARAM_STR);
+				$query->bind('github', $contributor->id, ParameterType::INTEGER);
+				$query->bind('username', $contributor->login, ParameterType::STRING);
+				$query->bind('avatar', $contributor->avatar_url, ParameterType::STRING);
+				$query->bind('profile', $contributor->html_url, ParameterType::STRING);
 
 				$this->database->setQuery($query)->execute();
 
@@ -269,8 +270,8 @@ class GitHubHelper
 
 				$name = $userData->name ?: '';
 
-				$query->bind('name', $name, \PDO::PARAM_STR);
-				$query->bind('username', $username, \PDO::PARAM_STR);
+				$query->bind('name', $name, ParameterType::STRING);
+				$query->bind('username', $username, ParameterType::STRING);
 
 				$this->database->setQuery($query)->execute();
 			}
@@ -306,8 +307,8 @@ class GitHubHelper
 					->set($this->database->quoteName('commits') . ' = :commits')
 					->where($this->database->quoteName('username') . ' = :username');
 
-				$query->bind('username', $username, \PDO::PARAM_STR);
-				$query->bind('commits', $count, \PDO::PARAM_INT);
+				$query->bind('username', $username, ParameterType::STRING);
+				$query->bind('commits', $count, ParameterType::INTEGER);
 
 				$this->database->setQuery($query)->execute();
 			}

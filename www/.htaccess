@@ -6,16 +6,23 @@
 ###########################################
 # ======= Set basic Security header =======
 
-<IfModule mod_headers.c>
-	# X-XSS-Protection
-	Header always set X-XSS-Protection "1; mode=block"
-	# X-Frame-Options
-	Header always set X-Frame-Options DENY
-	# X-Content-Type nosniff
-	Header always set X-Content-Type-Options nosniff
-	# Referrer Policy
-	Header always set Referrer-Policy "no-referrer-when-downgrade"
-</IfModule>
+# Just enable the rules on the live site and exclude the dev sites
+<If "req('Host') == 'framework.joomla.org'">
+	<IfModule mod_headers.c>
+			# X-XSS-Protection
+			Header always set X-XSS-Protection "1; mode=block"
+			# X-Frame-Options
+			Header always set X-Frame-Options DENY
+			# X-Content-Type nosniff
+			Header always set X-Content-Type-Options nosniff
+			# Referrer Policy
+			Header always set Referrer-Policy "no-referrer-when-downgrade"
+			# Strict-Transport-Security
+			Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+			# Content-Security-Policy-Report-Only
+			Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-IxJ2MRv31XGmZD5ovlgSBrPmMjftYTJ3OM9/kLh6nBo=' 'sha256-QIsD5w9F5MPp3vlmsPHmbv0GZjN9ja3BuhcwpaWZuUw=' https://*.google-analytics.com https://www.googletagmanager.com https://*.pingdom.net; style-src 'self' 'sha256-4Su6mBWzEIFnH4pAGMOuaeBrstwJN4Z3pq/s1Kn4/KQ=' https://*.joomla.org https://fonts.googleapis.com; connect-src 'self' https://*.pingdom.net https://*.doubleclick.net https://*.google-analytics.com; frame-src 'self' https://*.googletagmanager.com; font-src 'self' https://fonts.gstatic.com https://*.joomla.org; img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com https://*.joomla.org https://*.pingdom.net https://*.doubleclick.net https://*.githubusercontent.com https://*.travis-ci.org https://travis-ci.org; report-uri https://community.joomla.org/scripts/csp-reporter.php?source=framework.joomla.org"
+	</IfModule>
+</If>
 
 ###########################################
 

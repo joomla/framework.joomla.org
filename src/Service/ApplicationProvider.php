@@ -452,6 +452,7 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$application->setName('Joomla! Framework Website');
 		$application->setCommandLoader($container->get(LoaderInterface::class));
+		$application->setDispatcher($container->get(DispatcherInterface::class));
 		$application->setLogger($container->get(LoggerInterface::class));
 
 		return $application;

@@ -9,7 +9,7 @@
 namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
-use Joomla\Database\Mysql\MysqlQuery;
+use Joomla\Database\ParameterType;
 use Joomla\FrameworkWebsite\Model\Exception\PackageNotFoundException;
 use Joomla\Model\{
 	DatabaseModelInterface, DatabaseModelTrait
@@ -83,13 +83,12 @@ class PackageModel implements DatabaseModelInterface
 	{
 		$db = $this->getDb();
 
-		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select('*')
 			->from($db->quoteName('#__packages'))
 			->where($db->quoteName('package') . ' = :package');
 
-		$query->bind('package', $packageName, \PDO::PARAM_STR);
+		$query->bind('package', $packageName, ParameterType::STRING);
 
 		$package = $db->setQuery($query)->loadObject();
 
@@ -110,7 +109,6 @@ class PackageModel implements DatabaseModelInterface
 	{
 		$db = $this->getDb();
 
-		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select(['id', 'package'])
 			->from($db->quoteName('#__packages'));
@@ -127,7 +125,6 @@ class PackageModel implements DatabaseModelInterface
 	{
 		$db = $this->getDb();
 
-		/** @var MysqlQuery $query */
 		$query = $db->getQuery(true)
 			->select('*')
 			->from($db->quoteName('#__packages'));

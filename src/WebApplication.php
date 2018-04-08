@@ -14,14 +14,7 @@ use Joomla\Controller\ControllerInterface;
 use Joomla\DI\{
 	ContainerAwareInterface, ContainerAwareTrait
 };
-use Joomla\Renderer\RendererInterface;
-use Joomla\Router\Exception\{
-	MethodNotAllowedException, RouteNotFoundException
-};
 use Joomla\Router\Router;
-use Zend\Diactoros\Response\{
-	HtmlResponse, JsonResponse
-};
 
 /**
  * Web application class
@@ -64,171 +57,49 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 */
 	protected function doExecute()
 	{
-		try
-		{
-			if ($this->debugBar)
-			{
-				/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
-				$collector = $this->debugBar['time'];
-
-				$collector->startMeasure('routing');
-			}
-
-			$route = $this->router->parseRoute($this->get('uri.route'), $this->input->getMethod());
-
-			// Add variables to the input if not already set
-			foreach ($route['vars'] as $key => $value)
-			{
-				$this->input->def($key, $value);
-			}
-
-			if ($this->debugBar)
-			{
-				/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
-				$collector = $this->debugBar['time'];
-
-				$collector->stopMeasure('routing');
-			}
-
-			if ($this->debugBar)
-			{
-				/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
-				$collector = $this->debugBar['time'];
-
-				$collector->startMeasure('controller');
-			}
-
-			/** @var ControllerInterface $controller */
-			$controller = $this->getContainer()->get($route['controller']);
-			$controller->execute();
-
-			if ($this->debugBar)
-			{
-				/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
-				$collector = $this->debugBar['time'];
-
-				$collector->stopMeasure('controller');
-			}
-		}
-		catch (MethodNotAllowedException $exception)
-		{
-			// Log the error for reference
-			$this->getLogger()->error(
-				sprintf('Route `%s` not supported by method `%s`', $this->get('uri.route'), $this->input->getMethod()),
-				['exception' => $exception]
-			);
-
-			$this->handleThrowable($exception);
-
-			$this->setHeader('Allow', implode(', ', $exception->getAllowedMethods()));
-		}
-		catch (RouteNotFoundException $exception)
-		{
-			// Log the error for reference
-			$this->getLogger()->error(
-				sprintf('Route `%s` not found', $this->get('uri.route')),
-				['exception' => $exception]
-			);
-
-			$this->handleThrowable($exception);
-		}
-		catch (\Throwable $throwable)
-		{
-			// Log the error for reference
-			$this->getLogger()->error(
-				sprintf('Uncaught Throwable of type %s caught.', get_class($throwable)),
-				['exception' => $throwable]
-			);
-
-			$this->handleThrowable($throwable);
-		}
-	}
-
-	/**
-	 * Method to determine a hash for anti-spoofing variable names
-	 *
-	 * @param   boolean  $forceNew  If true, force a new token to be created
-	 *
-	 * @return  string  Hashed var name
-	 */
-	public function getFormToken($forceNew = false)
-	{
-		return '';
-	}
-
-	/**
-	 * Handle a Throwable
-	 *
-	 * @param   \Throwable  $throwable  The Throwable to handle
-	 *
-	 * @return  void
-	 */
-	private function handleThrowable(\Throwable $throwable)
-	{
 		if ($this->debugBar)
 		{
-			/** @var \DebugBar\DataCollector\ExceptionsCollector $collector */
-			$collector = $this->debugBar['exceptions'];
-
-			$collector->addThrowable($throwable);
-
 			/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
 			$collector = $this->debugBar['time'];
 
-			if ($collector->hasStartedMeasure('routing'))
-			{
-				$collector->stopMeasure('routing');
-			}
-
-			if ($collector->hasStartedMeasure('controller'))
-			{
-				$collector->stopMeasure('controller');
-			}
+			$collector->startMeasure('routing');
 		}
 
-		$this->allowCache(false);
+		$route = $this->router->parseRoute($this->get('uri.route'), $this->input->getMethod());
 
-		switch ($this->input->getString('_format', 'html'))
+		// Add variables to the input if not already set
+		foreach ($route['vars'] as $key => $value)
 		{
-			case 'json' :
-				$data = [
-					'code'    => $throwable->getCode(),
-					'message' => $throwable->getMessage(),
-					'error'   => true
-				];
-
-				$response = new JsonResponse($data);
-
-				break;
-
-			default :
-				$response = new HtmlResponse(
-					$this->getContainer()->get(RendererInterface::class)->render('exception.twig', ['exception' => $throwable])
-				);
-
-				break;
+			$this->input->def($key, $value);
 		}
 
-		switch ($throwable->getCode())
+		if ($this->debugBar)
 		{
-			case 404 :
-				$response = $response->withStatus(404);
+			/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+			$collector = $this->debugBar['time'];
 
-				break;
-
-			case 405 :
-				$response = $response->withStatus(405);
-
-				break;
-
-			case 500 :
-			default  :
-				$response = $response->withStatus(500);
-
-				break;
+			$collector->stopMeasure('routing');
 		}
 
-		$this->setResponse($response);
+		if ($this->debugBar)
+		{
+			/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+			$collector = $this->debugBar['time'];
+
+			$collector->startMeasure('controller');
+		}
+
+		/** @var ControllerInterface $controller */
+		$controller = $this->getContainer()->get($route['controller']);
+		$controller->execute();
+
+		if ($this->debugBar)
+		{
+			/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+			$collector = $this->debugBar['time'];
+
+			$collector->stopMeasure('controller');
+		}
 	}
 
 	/**
