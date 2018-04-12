@@ -106,7 +106,6 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->share(AppCommands\Package\SyncCommand::class, [$this, 'getPackageSyncCommandClassService'], true);
 		$container->share(AppCommands\Packagist\DownloadsCommand::class, [$this, 'getPackagistDownloadsCommandClassService'], true);
 		$container->share(AppCommands\Packagist\SyncCommand::class, [$this, 'getPackagistSyncCommandClassService'], true);
-		$container->share(AppCommands\Router\CacheCommand::class, [$this, 'getRouterCacheCommandClassService'], true);
 		$container->share(AppCommands\Twig\ResetCacheCommand::class, [$this, 'getTwigResetCacheCommandClassService'], true);
 		$container->share(AppCommands\UpdateCommand::class, [$this, 'getUpdateCommandClassService'], true);
 
@@ -192,7 +191,6 @@ class ApplicationProvider implements ServiceProviderInterface
 			'package:sync'             => AppCommands\Package\SyncCommand::class,
 			'packagist:sync:downloads' => AppCommands\Packagist\DownloadsCommand::class,
 			'packagist:sync:releases'  => AppCommands\Packagist\SyncCommand::class,
-			'router:cache'             => AppCommands\Router\CacheCommand::class,
 			'twig:reset-cache'         => AppCommands\Twig\ResetCacheCommand::class,
 			'update:server'            => AppCommands\UpdateCommand::class,
 		];
@@ -255,23 +253,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the `application.router.chained` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  ChainedRouter
-	 */
-	public function getApplicationRouterChainedService(Container $container) : ChainedRouter
-	{
-		return new ChainedRouter(
-			[
-				$container->get('application.router'),
-				$container->get('application.router.rest'),
-			]
-		);
-	}
-
-	/**
 	 * Get the `application.router` service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -280,14 +261,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getApplicationRouterService(Container $container) : Router
 	{
-		// Check for a cached router and use it
-		if (file_exists(JPATH_ROOT . '/cache/CompiledRouter.php'))
-		{
-			require_once JPATH_ROOT . '/cache/CompiledRouter.php';
-
-			return new \CompiledRouter;
-		}
-
 		$router = new Router;
 
 		/*
@@ -644,21 +617,6 @@ class ApplicationProvider implements ServiceProviderInterface
 			$container->get(PackageModel::class),
 			$container->get(ReleaseModel::class)
 		);
-	}
-
-	/**
-	 * Get the Router\CacheCommand class service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  AppCommands\Router\CacheCommand
-	 */
-	public function getRouterCacheCommandClassService(Container $container) : AppCommands\Router\CacheCommand
-	{
-		$command = new AppCommands\Router\CacheCommand;
-		$command->setContainer($container);
-
-		return $command;
 	}
 
 	/**
