@@ -78,9 +78,6 @@ class UpdateCommand extends AbstractCommand
 		// Reset the Twig cache
 		$this->getApplication()->getCommand('twig:reset-cache')->execute();
 
-		// Reset the router cache
-		$this->getApplication()->getCommand('router:cache')->execute();
-
 		$symfonyStyle->success('Update complete');
 
 		return 0;
