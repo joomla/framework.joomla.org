@@ -10,13 +10,13 @@ namespace Joomla\FrameworkWebsite\Event;
 
 use DebugBar\DebugBar;
 use Joomla\Event\{
-	DispatcherInterface, EventInterface, SubscriberInterface, SubscriberManagerInterface
+	DispatcherInterface, EventInterface, SubscriberInterface
 };
 
 /**
  * Debug event dispatcher
  */
-class DebugDispatcher implements DispatcherInterface, SubscriberManagerInterface
+class DebugDispatcher implements DispatcherInterface
 {
 	/**
 	 * Application debug bar
@@ -67,16 +67,6 @@ class DebugDispatcher implements DispatcherInterface, SubscriberManagerInterface
 	 */
 	public function addSubscriber(SubscriberInterface $subscriber)
 	{
-		if (!($this->dispatcher instanceof SubscriberManagerInterface))
-		{
-			throw new \RuntimeException(
-				sprintf(
-					'The decorated dispatcher does not implement `%s`.',
-					SubscriberManagerInterface::class
-				)
-			);
-		}
-
 		$this->dispatcher->addSubscriber($subscriber);
 	}
 
@@ -108,6 +98,33 @@ class DebugDispatcher implements DispatcherInterface, SubscriberManagerInterface
 	}
 
 	/**
+	 * Get the listeners registered to the given event.
+	 *
+	 * @param   string  $event  The event to fetch listeners for
+	 *
+	 * @return  callable[]  An array of registered listeners sorted according to their priorities.
+	 */
+	public function getListeners($event)
+	{
+		return $this->dispatcher->getListeners($event);
+	}
+
+	/**
+	 * Tell if the given listener has been added.
+	 *
+	 * If an event is specified, it will tell if the listener is registered for that event.
+	 *
+	 * @param   callable  $callback   The callable to check is listening to the event.
+	 * @param   string    $eventName  The event to check a listener is subscribed to.
+	 *
+	 * @return  boolean  True if the listener is registered, false otherwise.
+	 */
+	public function hasListener(callable $callback, $eventName = null)
+	{
+		return $this->dispatcher->hasListener($callback, $eventName);
+	}
+
+	/**
 	 * Removes an event listener from the specified event.
 	 *
 	 * @param   string    $eventName  The event to remove a listener from.
@@ -129,16 +146,6 @@ class DebugDispatcher implements DispatcherInterface, SubscriberManagerInterface
 	 */
 	public function removeSubscriber(SubscriberInterface $subscriber)
 	{
-		if (!($this->dispatcher instanceof SubscriberManagerInterface))
-		{
-			throw new \RuntimeException(
-				sprintf(
-					'The decorated dispatcher does not implement `%s`.',
-					SubscriberManagerInterface::class
-				)
-			);
-		}
-
 		$this->dispatcher->removeSubscriber($subscriber);
 	}
 
