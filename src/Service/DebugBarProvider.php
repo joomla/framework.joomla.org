@@ -206,7 +206,7 @@ class DebugBarProvider implements ServiceProviderInterface
 	 */
 	private function tagDebugCollectors(Container $container)
 	{
-		$container->tag('debug.collector', ['debug.collector.monolog', 'debug.collector.pdo', 'debug.collector.twig']);
+		$container->tag('debug.collector', ['debug.collector.monolog', 'debug.collector.twig']);
 	}
 
 	/**
