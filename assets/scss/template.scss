@@ -9,7 +9,7 @@
 @import "~font-awesome/scss/mixins";
 @import "~font-awesome/scss/path";
 @import "~font-awesome/scss/core";
-@import "~font-awesome/scss/larger";
+@import "font-awesome/_larger";
 //@import "~font-awesome/scss/fixed-width";
 //@import "~font-awesome/scss/list";
 //@import "~font-awesome/scss/bordered-pulled";
@@ -28,13 +28,12 @@
 @import "~bootstrap/scss/_root";
 @import "~bootstrap/scss/_reboot";
 @import "~bootstrap/scss/_type";
-@import "~bootstrap/scss/_images";
-@import "~bootstrap/scss/_code";
-//@import "~bootstrap/scss/_grid";
+@import "bootstrap/_images";
+@import "bootstrap/_code";
 @import "bootstrap/_grid";
-@import "~bootstrap/scss/_tables";
-@import "~bootstrap/scss/_forms";
-@import "~bootstrap/scss/_buttons";
+@import "bootstrap/_tables";
+@import "bootstrap/_forms";
+@import "bootstrap/_buttons";
 //@import "~bootstrap/scss/_transitions";
 //@import "~bootstrap/scss/_dropdown";
 //@import "~bootstrap/scss/_button-group";
@@ -42,7 +41,7 @@
 //@import "~bootstrap/scss/_custom-forms";
 //@import "~bootstrap/scss/_nav";
 //@import "~bootstrap/scss/_navbar";
-@import "~bootstrap/scss/_card";
+@import "bootstrap/_card";
 //@import "~bootstrap/scss/_breadcrumb";
 //@import "~bootstrap/scss/_pagination";
 @import "~bootstrap/scss/_badge";
@@ -56,7 +55,7 @@
 //@import "~bootstrap/scss/_tooltip";
 //@import "~bootstrap/scss/_popover";
 //@import "~bootstrap/scss/_carousel";
-@import "~bootstrap/scss/_utilities";
+@import "bootstrap/_utilities";
 @import "~bootstrap/scss/_print";
 
 // Site components
