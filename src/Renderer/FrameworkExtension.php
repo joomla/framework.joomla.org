@@ -8,6 +8,7 @@
 
 namespace Joomla\FrameworkWebsite\Renderer;
 
+use Symfony\Component\Asset\Packages;
 use Twig\Extension\AbstractExtension;
 use Twig\{
 	TwigFilter, TwigFunction
@@ -39,11 +40,12 @@ class FrameworkExtension extends AbstractExtension
 	public function getFunctions()
 	{
 		return [
-			new TwigFunction('asset', [FrameworkTwigRuntime::class, 'getAssetUri']),
+			new TwigFunction('asset', [Packages::class, 'getUrl']),
 			new TwigFunction('footer_copyright', [$this, 'getFooterCopyright'], ['is_safe' => ['html']]),
 			new TwigFunction('preload', [FrameworkTwigRuntime::class, 'preloadAsset']),
 			new TwigFunction('request_uri', [FrameworkTwigRuntime::class, 'getRequestUri']),
 			new TwigFunction('route', [FrameworkTwigRuntime::class, 'getRouteUri']),
+			new TwigFunction('sri', [FrameworkTwigRuntime::class, 'getSriAttributes'], ['is_safe' => ['html']]),
 			new TwigFunction('url', [FrameworkTwigRuntime::class, 'getRouteUrl']),
 		];
 	}

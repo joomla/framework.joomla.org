@@ -10,14 +10,14 @@ namespace Joomla\FrameworkWebsite\Asset;
 
 use Symfony\Component\Asset\Context\ContextInterface;
 use Symfony\Component\Asset\{
-	Package, PathPackage as BasePathPackage
+	Package, PathPackage
 };
 use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
 
 /**
  * Extended path package for resolving assets from a Laravel Mix manifest
  */
-class MixPathPackage extends BasePathPackage
+class MixPathPackage extends PathPackage
 {
 	/**
 	 * Decorated Package instance
@@ -60,9 +60,7 @@ class MixPathPackage extends BasePathPackage
 			return $path;
 		}
 
-		$editedPath = ltrim($path, '/');
-
-		$versionedPath = $this->getVersionStrategy()->applyVersion("/$editedPath");
+		$versionedPath = $this->getVersionStrategy()->applyVersion("/$path");
 
 		if ($versionedPath === $path)
 		{

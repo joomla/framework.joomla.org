@@ -102,6 +102,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		 * Console Commands
 		 */
 
+		$container->share(AppCommands\GenerateSriCommand::class, [$this, 'getGenerateSriCommandClassService'], true);
 		$container->share(AppCommands\GitHub\ContributorsCommand::class, [$this, 'getGitHubContributorsCommandClassService'], true);
 		$container->share(AppCommands\Package\SyncCommand::class, [$this, 'getPackageSyncCommandClassService'], true);
 		$container->share(AppCommands\Packagist\DownloadsCommand::class, [$this, 'getPackagistDownloadsCommandClassService'], true);
@@ -191,6 +192,7 @@ class ApplicationProvider implements ServiceProviderInterface
 			'package:sync'             => AppCommands\Package\SyncCommand::class,
 			'packagist:sync:downloads' => AppCommands\Packagist\DownloadsCommand::class,
 			'packagist:sync:releases'  => AppCommands\Packagist\SyncCommand::class,
+			'template:generate-sri'    => AppCommands\GenerateSriCommand::class,
 			'twig:reset-cache'         => AppCommands\Twig\ResetCacheCommand::class,
 			'update:server'            => AppCommands\UpdateCommand::class,
 		];
@@ -497,6 +499,18 @@ class ApplicationProvider implements ServiceProviderInterface
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
+	}
+
+	/**
+	 * Get the GenerateSriCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\GenerateSriCommand
+	 */
+	public function getGenerateSriCommandClassService(Container $container) : AppCommands\GenerateSriCommand
+	{
+		return new AppCommands\GenerateSriCommand;
 	}
 
 	/**
