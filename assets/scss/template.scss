@@ -26,8 +26,8 @@
 @import "~bootstrap/scss/_variables";
 @import "~bootstrap/scss/_mixins";
 @import "~bootstrap/scss/_root";
-@import "~bootstrap/scss/_reboot";
-@import "~bootstrap/scss/_type";
+@import "bootstrap/_reboot";
+@import "bootstrap/_type";
 @import "bootstrap/_images";
 @import "bootstrap/_code";
 @import "bootstrap/_grid";
@@ -56,7 +56,7 @@
 //@import "~bootstrap/scss/_popover";
 //@import "~bootstrap/scss/_carousel";
 @import "bootstrap/_utilities";
-@import "~bootstrap/scss/_print";
+@import "bootstrap/_print";
 
 // Site components
 @import "_global";

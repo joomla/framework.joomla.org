@@ -1,3 +1,6 @@
+// This file is based on the similarly named file from Bootstrap (https://github.com/twbs/bootstrap)
+// and is primarily modified to remove unused CSS rules
+
 // stylelint-disable selector-no-qualifying-type
 
 //
@@ -56,16 +59,6 @@
   }
 }
 
-
-// Form validation
-//
-// Provide feedback to users when form field values are valid or invalid. Works
-// primarily for client-side validation via scoped `:invalid` and `:valid`
-// pseudo-classes but also includes `.is-invalid` and `.is-valid` classes for
-// server side validation.
-
-@include form-validation-state("valid", $form-feedback-valid-color);
-@include form-validation-state("invalid", $form-feedback-invalid-color);
 
 // Inline forms
 //
