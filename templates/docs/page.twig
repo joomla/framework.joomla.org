@@ -3,7 +3,7 @@
 {% block title %}Joomla! Framework Documentation - {{ activePackage.display }} Package{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ preload(asset('css/code.css', 'mix'), 'preload', {'as': 'style'}) }}" type="text/css">
+    <link rel="stylesheet" href="{{ preload(asset('css/code.css', 'mix'), 'preload', {'as': 'style'}) }}" type="text/css"{{ sri('css/code.css') }}>
 {% endblock %}
 
 {% block content %}

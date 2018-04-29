@@ -1,0 +1,14 @@
+{
+    "/js/template.js": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-XyMyQDTOwEOsJmhv983Lrv6ptJr6Q0+LIB2oP46raRCqyIYXGsdYm7yfmLLN1FbR"
+    },
+    "/css/template.css": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-Oa/tQ2m4YRer3eL9uBfHyiVB9lJl46sUGHCGLE983EGmpfd2Z22Dcrb7UxHOh4pu"
+    },
+    "/css/code.css": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-QIE0BlY3zrn2B9RlcaQhlGT+T23vW6Dy7brPHtH/NUWyzY3/4vRJ5pR134yJ5T5a"
+    }
+}

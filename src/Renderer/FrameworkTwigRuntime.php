@@ -10,7 +10,6 @@ namespace Joomla\FrameworkWebsite\Renderer;
 
 use Joomla\Application\AbstractApplication;
 use Joomla\Preload\PreloadManager;
-use Symfony\Component\Asset\Packages;
 
 /**
  * Twig runtime class
@@ -25,13 +24,6 @@ class FrameworkTwigRuntime
 	private $app;
 
 	/**
-	 * Packages object to look up asset paths
-	 *
-	 * @var  Packages
-	 */
-	private $packages;
-
-	/**
 	 * The HTTP/2 preload manager
 	 *
 	 * @var  PreloadManager
@@ -39,32 +31,31 @@ class FrameworkTwigRuntime
 	private $preloadManager;
 
 	/**
-	 * Constructor
+	 * The SRI manifest data
 	 *
-	 * @param   AbstractApplication  $app             The application object
-	 * @param   Packages             $packages        Packages object to look up asset paths
-	 * @param   PreloadManager       $preloadManager  The HTTP/2 preload manager
+	 * @var  array|null
 	 */
-	public function __construct(AbstractApplication $app, Packages $packages, PreloadManager $preloadManager)
-	{
-		$this->app            = $app;
-		$this->packages       = $packages;
-		$this->preloadManager = $preloadManager;
-	}
+	private $sriManifestData;
 
 	/**
-	 * Get the URI for an asset
+	 * The path to the SRI manifest data
 	 *
-	 * @param   string  $path         A public path
-	 * @param   string  $packageName  The name of the asset package to use
-	 *
-	 * @return  string
-	 *
-	 * @note    Do not typehint $packageName until PHP 7.1 is the minimum because the underlying implementation depends on a null value
+	 * @var  string
 	 */
-	public function getAssetUri(string $path, $packageName = null) : string
+	private $sriManifestPath;
+
+	/**
+	 * Constructor
+	 *
+	 * @param   AbstractApplication  $app              The application object
+	 * @param   PreloadManager       $preloadManager   The HTTP/2 preload manager
+	 * @param   string               $sriManifestPath  The path to the SRI manifest data
+	 */
+	public function __construct(AbstractApplication $app, PreloadManager $preloadManager, string $sriManifestPath)
 	{
-		return $this->packages->getUrl($path, $packageName);
+		$this->app             = $app;
+		$this->preloadManager  = $preloadManager;
+		$this->sriManifestPath = $sriManifestPath;
 	}
 
 	/**
@@ -99,6 +90,47 @@ class FrameworkTwigRuntime
 	public function getRouteUrl(string $route = '') : string
 	{
 		return $this->app->get('uri.base.host') . $this->getRouteUri($route);
+	}
+
+	/**
+	 * Get the SRI attributes for an asset
+	 *
+	 * @param   string  $path  A public path
+	 *
+	 * @return  string
+	 */
+	public function getSriAttributes(string $path) : string
+	{
+		if ($this->sriManifestData === null)
+		{
+			if (!file_exists($this->sriManifestPath))
+			{
+				throw new \RuntimeException(sprintf('SRI manifest file "%s" does not exist.', $this->sriManifestPath));
+			}
+
+			$this->sriManifestData = json_decode(file_get_contents($this->sriManifestPath), true);
+
+			if (0 < json_last_error())
+			{
+				throw new \RuntimeException(sprintf('Error parsing JSON from SRI manifest file "%s" - %s', $this->sriManifestPath, json_last_error_msg()));
+			}
+		}
+
+		$assetKey = "/$path";
+
+		if (!isset($this->sriManifestData[$assetKey]))
+		{
+			return '';
+		}
+
+		$attributes = '';
+
+		foreach ($this->sriManifestData[$assetKey] as $key => $value)
+		{
+			$attributes .= ' ' . $key . '="' . $value . '"';
+		}
+
+		return $attributes;
 	}
 
 	/**

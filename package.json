@@ -6,13 +6,13 @@
     "prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "dependencies": {
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.1.0",
     "font-awesome": "4.7.0",
     "github-syntax-light": "^0.5.0",
     "smooth-scroll": "^12.1.5"
   },
   "devDependencies": {
-    "autoprefixer": "^8.2.0",
+    "autoprefixer": "^8.4.1",
     "cross-env": "^5.1.4",
     "laravel-mix": "^2.1.11"
   },

@@ -4,7 +4,7 @@
         <!-- For Responsive -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" href="{{ preload(asset('css/template.css', 'mix'), 'preload', {'as': 'style'}) }}" type="text/css">
+        <link rel="stylesheet" href="{{ preload(asset('css/template.css', 'mix'), 'preload', {'as': 'style'}) }}" type="text/css"{{ sri('css/template.css') }}>
         {% block stylesheets %}{% endblock %}
         {% if appDebug %}
             <link rel="stylesheet" href="{{ asset('css/debugbar.css') }}" type="text/css">
@@ -72,7 +72,7 @@
             {% endblock %}
         </footer>
 
-        <script src="{{ preload(asset('js/template.js', 'mix'), 'preload', {'as': 'script'}) }}"></script>
+        <script src="{{ preload(asset('js/template.js', 'mix'), 'preload', {'as': 'script'}) }}"{{ sri('js/template.js') }}></script>
         {% block bodyJavaScript %}{% endblock %}
         {% if appDebug %}
             <script src="{{ asset('js/debugbar.js') }}"></script>

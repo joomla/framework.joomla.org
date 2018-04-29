@@ -104,12 +104,12 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 
 		$container->share(AppCommands\ClearCacheCommand::class, [$this, 'getClearCacheCommandClassService'], true);
+		$container->share(AppCommands\GenerateSriCommand::class, [$this, 'getGenerateSriCommandClassService'], true);
 		$container->share(AppCommands\GitHub\ContributorsCommand::class, [$this, 'getGitHubContributorsCommandClassService'], true);
 		$container->share(AppCommands\GitHub\FetchDocsCommand::class, [$this, 'getGitHubFetchDocsCommandClassService'], true);
 		$container->share(AppCommands\Package\SyncCommand::class, [$this, 'getPackageSyncCommandClassService'], true);
 		$container->share(AppCommands\Packagist\DownloadsCommand::class, [$this, 'getPackagistDownloadsCommandClassService'], true);
 		$container->share(AppCommands\Packagist\SyncCommand::class, [$this, 'getPackagistSyncCommandClassService'], true);
-		$container->share(AppCommands\Router\CacheCommand::class, [$this, 'getRouterCacheCommandClassService'], true);
 		$container->share(AppCommands\Twig\ResetCacheCommand::class, [$this, 'getTwigResetCacheCommandClassService'], true);
 		$container->share(AppCommands\UpdateCommand::class, [$this, 'getUpdateCommandClassService'], true);
 
@@ -215,7 +215,7 @@ class ApplicationProvider implements ServiceProviderInterface
 			'package:sync'             => AppCommands\Package\SyncCommand::class,
 			'packagist:sync:downloads' => AppCommands\Packagist\DownloadsCommand::class,
 			'packagist:sync:releases'  => AppCommands\Packagist\SyncCommand::class,
-			'router:cache'             => AppCommands\Router\CacheCommand::class,
+			'template:generate-sri'    => AppCommands\GenerateSriCommand::class,
 			'twig:reset-cache'         => AppCommands\Twig\ResetCacheCommand::class,
 			'update:server'            => AppCommands\UpdateCommand::class,
 		];
@@ -283,23 +283,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the `application.router.chained` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  ChainedRouter
-	 */
-	public function getApplicationRouterChainedService(Container $container) : ChainedRouter
-	{
-		return new ChainedRouter(
-			[
-				$container->get('application.router'),
-				$container->get('application.router.rest'),
-			]
-		);
-	}
-
-	/**
 	 * Get the `application.router` service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -308,17 +291,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getApplicationRouterService(Container $container) : Router
 	{
-		// Check for a cached router and use it
-		if (file_exists(JPATH_ROOT . '/cache/CompiledRouter.php'))
-		{
-			require_once JPATH_ROOT . '/cache/CompiledRouter.php';
-
-			if (class_exists(\CompiledRouter::class))
-			{
-				return new \CompiledRouter;
-			}
-		}
-
 		$router = new Router;
 
 		/*
@@ -648,6 +620,18 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the GenerateSriCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  AppCommands\GenerateSriCommand
+	 */
+	public function getGenerateSriCommandClassService(Container $container) : AppCommands\GenerateSriCommand
+	{
+		return new AppCommands\GenerateSriCommand;
+	}
+
+	/**
 	 * Get the GitHub\ContributorsCommand class service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -782,21 +766,6 @@ class ApplicationProvider implements ServiceProviderInterface
 			$container->get(PackageModel::class),
 			$container->get(ReleaseModel::class)
 		);
-	}
-
-	/**
-	 * Get the Router\CacheCommand class service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  AppCommands\Router\CacheCommand
-	 */
-	public function getRouterCacheCommandClassService(Container $container) : AppCommands\Router\CacheCommand
-	{
-		$command = new AppCommands\Router\CacheCommand;
-		$command->setContainer($container);
-
-		return $command;
 	}
 
 	/**

@@ -274,8 +274,8 @@ class TemplatingProvider implements ServiceProviderInterface
 	{
 		return new FrameworkTwigRuntime(
 			$container->get(AbstractApplication::class),
-			$container->get(Packages::class),
-			$container->get(PreloadManager::class)
+			$container->get(PreloadManager::class),
+			JPATH_ROOT . '/www/media/sri-manifest.json'
 		);
 	}
 
