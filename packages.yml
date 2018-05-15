@@ -2,7 +2,8 @@ packages:
     application: ~
     archive: ~
     authentication: ~
-    cache: ~
+    cache:
+        deprecated: true
     compat:
         deprecated: true
     console:
@@ -14,11 +15,13 @@ packages:
     date: ~
     datetime:
         display: DateTime
+        deprecated: true
     di:
         display: DI
     event: ~
     facebook:
         repo: facebook-api
+        deprecated: true
     filesystem: ~
     filter: ~
     form:
@@ -28,17 +31,21 @@ packages:
         repo: github-api
     google:
         repo: google-api
+        deprecated: true
     http:
         display: HTTP
-    image: ~
+    image:
+        deprecated: true
     input: ~
     keychain: ~
     language: ~
     ldap:
         display: LDAP
+        deprecated: true
     linkedin:
         display: LinkedIn
         repo: linkedin-api
+        deprecated: true
     log:
         deprecated: true
     mediawiki:
@@ -53,6 +60,7 @@ packages:
     openstreetmap:
         display: OpenStreetMap
         repo: openstreetmap-api
+        deprecated: true
     preload:
         stable: false
     profiler: ~
@@ -65,6 +73,7 @@ packages:
     test: ~
     twitter:
         repo: twitter-api
+        deprecated: true
     uri:
         display: URI
     utilities: ~
