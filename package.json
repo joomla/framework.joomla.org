@@ -8,7 +8,7 @@
   "dependencies": {
     "bootstrap": "^4.1.0",
     "font-awesome": "4.7.0",
-    "smooth-scroll": "^12.1.5"
+    "smooth-scroll": "^14.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^8.4.1",
