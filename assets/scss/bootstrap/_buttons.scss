@@ -57,14 +57,14 @@
 // Alternate buttons
 //
 
-@each $value in ("success", "primary") {
+@each $value in ("success", "primary", "info") {
   $color: theme-color($value);
   .btn-#{$value} {
     @include button-variant($color, $color);
   }
 }
 
-@each $value in ("success", "primary") {
+@each $value in ("success", "primary", "info") {
   $color: theme-color($value);
   .btn-outline-#{$value} {
     @include button-outline-variant($color);
