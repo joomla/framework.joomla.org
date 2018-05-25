@@ -13,9 +13,6 @@ packages:
     data: ~
     database: ~
     date: ~
-    datetime:
-        display: DateTime
-        deprecated: true
     di:
         display: DI
     event: ~
