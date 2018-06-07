@@ -1,0 +1,52 @@
+.nice-responsive-table {
+  @include media-breakpoint-down(sm) {
+    border: 0;
+
+    thead,
+    tfoot {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    tr {
+      border: 1px solid $table-border-color;
+      border-bottom: 3px solid $table-border-color;
+      display: block;
+      margin-bottom: .625rem;
+    }
+
+    td {
+      border-top: 0;
+      border-bottom: 1px solid $table-border-color;
+      display: block;
+      text-align: right;
+
+      &::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    // Undo striped rows
+    &.table-striped {
+      > tbody {
+        > tr {
+          &:nth-of-type(2n+1) {
+            background-color: initial;
+          }
+        }
+      }
+    }
+  }
+}

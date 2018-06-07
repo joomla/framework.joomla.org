@@ -13,7 +13,7 @@
             <p>This package has been deprecated and will soon no longer be supported.</p>
         </div>
     {% endif %}
-    <table class="table table-striped table-sm">
+    <table class="table table-striped table-sm nice-responsive-table">
         <thead>
             <tr>
                 <th>Version</th>
@@ -24,9 +24,9 @@
         <tbody>
             {% for release in releases %}
                 <tr>
-                    <td>{{ release.version }}</td>
-                    <td>{{ release.release_date }}</td>
-                    <td>
+                    <td data-label="Version">{{ release.version }}</td>
+                    <td data-label="Release Date">{{ release.release_date }}</td>
+                    <td data-label="Build Status">
                         {% if package.repo in ['test'] %}
                             N/A
                         {% else %}

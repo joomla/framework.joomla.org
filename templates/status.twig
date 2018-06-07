@@ -7,7 +7,7 @@
 {% block content %}
 <section class="status container">
     <h1 class="centered-title">Latest Build Status</h1>
-    <table class="table table-striped table-sm table-responsive-sm">
+    <table class="table table-striped table-sm nice-responsive-table">
         <thead>
             <tr>
                 <th>Package</th>
@@ -22,19 +22,19 @@
             {% set _totalDownloads = 0 %}
             {% for release in releases %}
                 <tr>
-                    <td>
+                    <td data-label="Package">
                         <a href="https://github.com/joomla-framework/{{ release.package.repo }}"><span class="fa fa-github"></span></a> <a href="{{ route('status/' ~ release.package.package) }}">{{ release.package.display }}</a>
                         {% if release.package.deprecated %}
                             <br><span class="badge badge-warning">Deprecated</span>
                         {% endif %}
                     </td>
-                    <td>{{ release.version }}</td>
-                    <td>{{ release.release_date }}</td>
-                    <td>
+                    <td data-label="Version">{{ release.version }}</td>
+                    <td data-label="Latest Release Date">{{ release.release_date }}</td>
+                    <td data-label="Downloads">
                         {% set _totalDownloads = _totalDownloads + release.package.downloads %}
                         {{ release.package.downloads|number_format }}
                     </td>
-                    <td>
+                    <td data-label="1.x Build Status">
                         {% if release.package.repo in ['console', 'preload', 'renderer', 'test'] %}
                             N/A
                         {% else %}
@@ -42,7 +42,7 @@
                             <a href="https://travis-ci.org/joomla-framework/{{ release.package.repo }}"><img src="https://travis-ci.org/joomla-framework/{{ release.package.repo }}.png?branch={{ _1xbranch }}" alt="Build Status" /></a>
                         {% endif %}
                     </td>
-                    <td>
+                    <td data-label="2.0 Build Status">
                         {% if release.package.repo in ['cache', 'compat', 'date', 'facebook-api', 'form', 'google-api', 'image', 'ldap', 'linkedin-api', 'log', 'openstreetmap-api', 'test', 'twitter-api'] %}
                             N/A
                         {% else %}
