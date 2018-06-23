@@ -21,8 +21,6 @@ packages:
         deprecated: true
     filesystem: ~
     filter: ~
-    form:
-        deprecated: true
     github:
         display: GitHub
         repo: github-api

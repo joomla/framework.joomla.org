@@ -101,11 +101,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://framework.joomla.org/status/form</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://framework.joomla.org/status/github</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
