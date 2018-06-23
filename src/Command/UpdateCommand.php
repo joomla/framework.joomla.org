@@ -48,7 +48,7 @@ class UpdateCommand extends AbstractCommand
 		// Run Composer install
 		try
 		{
-			(new Process('composer install --no-dev -o', JPATH_ROOT))->mustRun();
+			(new Process('composer install --no-dev -o -a', JPATH_ROOT))->mustRun();
 		}
 		catch (ProcessFailedException $e)
 		{
