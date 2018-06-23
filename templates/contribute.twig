@@ -15,18 +15,34 @@
     <p>Most repositories have two branches representing the two major Framework versions; 1.x and 2.0.</p>
     <ul>
         <li>Except for the noted exceptions below, the <code>master</code> branch represents the stable 1.x branch and the <code>2.0-dev</code> branch represents the upcoming 2.0 release</li>
-        <li>
-            The Crypt and Form packages use the <code>master</code> for 2.0 and a <code>1.x-dev</code> branch for 1.x
-            <ul>
-                <li>Work had begun on upgrades for the Form package for a 2.0 release, however it has since been decided to deprecate the package. The <code>master</code> branch should be considered <strong><em>abandoned</em></strong>.</li>
-            </ul>
-        </li>
+        <li>The Crypt and Form packages use the <code>master</code> for 2.0 and a <code>1.x-dev</code> branch for 1.x</li>
         <li>The Log package has no 2.0 branch since this package has been deprecated</li>
-        <li>The Renderer package is not part of Framework 1.x, therefore its <code>master</code> branch represents the 2.0 release</li>
+        <li>The Console, Preload, and Renderer packages are not part of Framework 1.x, therefore their <code>master</code> branches represent the 2.0 release</li>
+    </ul>
+
+    <h3>Deprecated Packages</h3>
+    <p>Several packages have been deprecated and will not be supported in the Framework 2.0 release. Unless noted, work had been in progress to update all packages for the Framework 2.0 release, including internal refactoring, however as these packages are now deprecated their <code>2.0-dev</code> branches should be considered <strong><em>abandoned</em></strong>.</p>
+    <ul>
+        <li>Cache - Use any <a href="https://www.php-fig.org/psr/psr-6/">PSR-6</a> or <a href="https://www.php-fig.org/psr/psr-16/">PSR-16</a> compliant package instead</li>
+        <li>Date - Use the <a href="https://carbon.nesbot.com/">Carbon</a> library instead</li>
+        <li>DateTime - Use the <a href="https://carbon.nesbot.com/">Carbon</a> library instead</li>
+        <li>Facebook</li>
+        <li>Google</li>
+        <li>Image</li>
+        <li>LDAP - Use the <a href="https://symfony.com/doc/current/components/ldap.html">Symfony LDAP Component</a> instead</li>
+        <li>Log - Use any <a href="https://www.php-fig.org/psr/psr-3/">PSR-3</a> compliant package instead</li>
+        <li>OpenStreetMap</li>
+        <li>Twitter</li>
+    </ul>
+
+    <h3>Abandoned Packages</h3>
+    <p>Below are packages which are deprecated and no longer supported by the Framework Working Group and Joomla! project. Their repositories are in a read-only state and all maintenance is discontinued.</p>
+    <ul>
+        <li>Form</li>
     </ul>
 
     <h3>File Structure</h3>
-    <p>Joomla! Framework packages are <a href="http://www.php-fig.org/psr/psr-4/">PSR-4</a> compliant and follow a common filesystem structure.</p>
+    <p>Joomla! Framework packages are <a href="https://www.php-fig.org/psr/psr-4/">PSR-4</a> compliant and follow a common filesystem structure.</p>
     <ul>
         <li><code>.github</code> - GitHub repository metadata (contributing guidelines, issue and pull request templates)</li>
         <li><code>.travis</code> - Configuration files for the Travis-CI platform</li>

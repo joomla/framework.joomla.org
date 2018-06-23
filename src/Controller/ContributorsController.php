@@ -53,7 +53,7 @@ class ContributorsController extends AbstractController
 		// Enable browser caching
 		$this->getApplication()->allowCache(true);
 
-		$this->getApplication()->setResponse(new HtmlResponse($this->view->render()));
+		$this->getApplication()->setResponse(new HtmlResponse($this->view->render(), 451));
 
 		return true;
 	}
