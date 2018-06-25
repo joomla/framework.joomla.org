@@ -12,7 +12,8 @@ packages:
     crypt: ~
     data: ~
     database: ~
-    date: ~
+    date:
+        deprecated: true
     di:
         display: DI
     event: ~
