@@ -12,11 +12,10 @@
     <p>As of June 2017, the individual repositories in the <a href="https://github.com/joomla-framework">Joomla! Framework GitHub organization</a> are generally structured the same.</p>
 
     <h3>Branches</h3>
-    <p>Most repositories have two branches representing the two major Framework versions; 1.x and 2.0.</p>
+    <p>Most repositories have two branches representing the two major Framework versions; 1.x and 2.0. Except for the noted exceptions below, the <code>master</code> branch represents the stable 1.x branch and the <code>2.0-dev</code> branch represents the upcoming 2.0 release.</p>
     <ul>
-        <li>Except for the noted exceptions below, the <code>master</code> branch represents the stable 1.x branch and the <code>2.0-dev</code> branch represents the upcoming 2.0 release</li>
-        <li>The Crypt and Form packages use the <code>master</code> for 2.0 and a <code>1.x-dev</code> branch for 1.x</li>
-        <li>The Log package has no 2.0 branch since this package has been deprecated</li>
+        <li>The Crypt package uses the <code>master</code> for 2.0 and a <code>1.x-dev</code> branch for 1.x</li>
+        <li>The Log package has no 2.0 branch since this package was deprecated before work on the Framework 2.0 release began</li>
         <li>The Console, Preload, and Renderer packages are not part of Framework 1.x, therefore their <code>master</code> branches represent the 2.0 release</li>
     </ul>
 
@@ -50,7 +49,7 @@
         <li><code>src</code> - The production code for the package</li>
         <li><code>tests</code> - The test suite for the package</li>
     </ul>
-    <p><span class="badge badge-info">NOTE</span> The Crypt and Form 1.x branches are still structured for <a href="http://www.php-fig.org/psr/psr-0/">PSR-0</a> support due to backward compatibility implications with migrating to PSR-4 and as such those branches have a slightly different repository structure. Additionally, the Session package's 1.x branch was not migrated to PSR-4 and still follows the PSR-0 structure.</p>
+    <p><span class="badge badge-info">NOTE</span> The Crypt 1.x branch is still structured for <a href="http://www.php-fig.org/psr/psr-0/">PSR-0</a> support due to backward compatibility implications with migrating to PSR-4 and as such the branch has a slightly different repository structure. Additionally, the Session package's 1.x branch was not migrated to PSR-4 and still follows the PSR-0 structure.</p>
 
     <h2 class="page-header">Issues/Pull Requests</h2>
     <p>Issue tracking and pull requests are managed via <a href="https://github.com">GitHub</a> in each package's repository. All of the Framework's packages are listed under the Joomla! Framework organization. You can find the documentation about how to fork a repository and start contributing to the Joomla! Framework at <a href="https://help.github.com/articles/fork-a-repo/">https://help.github.com/articles/fork-a-repo</a>.</p>
