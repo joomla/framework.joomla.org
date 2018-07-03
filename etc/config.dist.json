@@ -1,6 +1,5 @@
 {
     "database": {
-        "driver": "mysql",
         "host": "",
         "user": "",
         "password": "",
@@ -22,9 +21,6 @@
         "level": "error",
         "application": "error",
         "database": "error"
-    },
-    "router": {
-        "cache": false
     },
     "github": {
         "gh": {

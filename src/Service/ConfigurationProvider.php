@@ -41,6 +41,9 @@ class ConfigurationProvider implements ServiceProviderInterface
 		}
 
 		$this->config = (new Registry)->loadFile($file);
+
+		// Hardcode database driver option
+		$this->config->set('database.driver', 'mysql');
 	}
 
 	/**
