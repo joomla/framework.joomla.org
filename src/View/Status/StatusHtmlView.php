@@ -57,7 +57,7 @@ class StatusHtmlView extends BaseHtmlView
 	{
 		$this->setData(
 			[
-				'releases'  => $this->releaseModel->getLatestReleases($this->packageModel->getPackages()),
+				'releases'  => $this->releaseModel->getLatestReleases($this->packageModel->getActivePackages()),
 			]
 		);
 

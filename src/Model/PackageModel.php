@@ -58,6 +58,26 @@ class PackageModel implements DatabaseModelInterface
 	}
 
 	/**
+	 * Get the active package data
+	 *
+	 * @return  array
+	 */
+	public function getActivePackages() : array
+	{
+		$abandoned = false;
+
+		$db = $this->getDb();
+
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__packages'))
+			->where($db->quoteName('abandoned') . ' = :abandoned')
+			->bind('abandoned', $abandoned, ParameterType::INTEGER);
+
+		return $db->setQuery($query)->loadObjectList('id');
+	}
+
+	/**
 	 * Get a package's data
 	 *
 	 * @param   string  $packageName  The package to lookup
