@@ -86,6 +86,12 @@ class ReleaseModel implements DatabaseModelInterface
 				continue;
 			}
 
+			// Skip if package is not included in list
+			if (!isset($packages[$release->package_id]))
+			{
+				continue;
+			}
+
 			$release->package = $packages[$release->package_id];
 			unset($release->package_id);
 
