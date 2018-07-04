@@ -52,7 +52,7 @@ The application's configuration is defined as follows:
     * `database.host` - The address of the database server
     * `database.user` - The user to connect to the database as
     * `database.password` - The password for the database user
-    * `database.name` - The name of the database to use
+    * `database.database` - The name of the database to use
     * `database.prefix` - The prefix to use for the database's tables
 * Template - The `twig/twig` package is used for the application's templates
     * `template.debug` - Flag to enable Twig's debug functionality, when enabled the caching functionality is not available
