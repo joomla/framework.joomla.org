@@ -16,6 +16,18 @@ class Helper
 	use PackageAware;
 
 	/**
+	 * Utility method to retrieve a package's abandoned state
+	 *
+	 * @param   string  $package  Package name
+	 *
+	 * @return  boolean
+	 */
+	public function getPackageAbandoned(string $package) : bool
+	{
+		return $this->getPackages()->get("packages.$package.abandoned", false);
+	}
+
+	/**
 	 * Utility method to retrieve a package's deprecation status
 	 *
 	 * @param   string  $package  Package name

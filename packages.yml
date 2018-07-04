@@ -14,6 +14,9 @@ packages:
     database: ~
     date:
         deprecated: true
+    datetime:
+        abandoned: true
+        display: DateTime
     di:
         display: DI
     event: ~
@@ -22,6 +25,8 @@ packages:
         deprecated: true
     filesystem: ~
     filter: ~
+    form:
+        abandoned: true
     github:
         display: GitHub
         repo: github-api
