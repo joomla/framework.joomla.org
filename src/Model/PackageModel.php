@@ -39,10 +39,11 @@ class PackageModel implements DatabaseModelInterface
 	 * @param   string   $repoName      The package's repo name
 	 * @param   boolean  $isStable      Flag indicating the package is stable
 	 * @param   boolean  $isDeprecated  Flag indicating the package is deprecated
+	 * @param   boolean  $isAbandoned   Flag indicating the package is abandoned
 	 *
 	 * @return  void
 	 */
-	public function addPackage(string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated)
+	public function addPackage(string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated, bool $isAbandoned)
 	{
 		$db = $this->getDb();
 
@@ -52,6 +53,7 @@ class PackageModel implements DatabaseModelInterface
 			'repo'       => $repoName,
 			'stable'     => (int) $isStable,
 			'deprecated' => (int) $isDeprecated,
+			'abandoned'  => (int) $isAbandoned,
 		];
 
 		$db->insertObject('#__packages', $data);
@@ -148,10 +150,11 @@ class PackageModel implements DatabaseModelInterface
 	 * @param   string   $repoName      The package's repo name
 	 * @param   boolean  $isStable      Flag indicating the package is stable
 	 * @param   boolean  $isDeprecated  Flag indicating the package is deprecated
+	 * @param   boolean  $isAbandoned   Flag indicating the package is abandoned
 	 *
 	 * @return  void
 	 */
-	public function updatePackage(int $packageId, string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated)
+	public function updatePackage(int $packageId, string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated, bool $isAbandoned)
 	{
 		$db = $this->getDb();
 
@@ -162,6 +165,7 @@ class PackageModel implements DatabaseModelInterface
 			'repo'       => $repoName,
 			'stable'     => (int) $isStable,
 			'deprecated' => (int) $isDeprecated,
+			'abandoned'  => (int) $isAbandoned,
 		];
 
 		$db->updateObject('#__packages', $data, 'id');
