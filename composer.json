@@ -42,6 +42,9 @@
         "joomla/coding-standards": "dev-master",
         "maximebf/debugbar": "^1.13"
     },
+    "replace": {
+        "paragonie/random_compat": "*"
+    },
     "autoload": {
         "psr-4": {
             "Joomla\\FrameworkWebsite\\": "src/"
