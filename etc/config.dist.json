@@ -19,7 +19,7 @@
     },
     "log": {
         "level": "error",
-        "application": "error",
+        "application": "error"
     },
     "github": {
         "gh": {
