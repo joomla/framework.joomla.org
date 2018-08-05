@@ -9,7 +9,6 @@
 namespace Joomla\FrameworkWebsite\Controller\Api;
 
 use Joomla\Application\AbstractApplication;
-use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\Controller\AnalyticsController;
 use Joomla\FrameworkWebsite\View\Package\PackageJsonView;
 use Joomla\Input\Input;
