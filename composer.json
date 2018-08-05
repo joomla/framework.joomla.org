@@ -15,6 +15,7 @@
         "joomla/filesystem": "~2.0@dev",
         "joomla/github": "~2.0@dev",
         "joomla/http": "~2.0@dev",
+        "joomla/input": "~2.0@dev",
         "joomla/model": "~2.0@dev",
         "joomla/preload": "~2.0@dev",
         "joomla/registry": "~2.0@dev",
@@ -52,7 +53,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.0.28"
+            "php": "7.0.31"
         }
     }
 }

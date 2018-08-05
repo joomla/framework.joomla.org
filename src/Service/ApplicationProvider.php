@@ -36,9 +36,7 @@ use Joomla\FrameworkWebsite\View\{
 };
 use Joomla\Github\Github;
 use Joomla\Http\Http;
-use Joomla\Input\{
-	Cli, Input
-};
+use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Joomla\Renderer\{
 	RendererInterface, TwigRenderer
@@ -96,7 +94,6 @@ class ApplicationProvider implements ServiceProviderInterface
 			->share('application.router', [$this, 'getApplicationRouterService'], true);
 
 		$container->share(Input::class, [$this, 'getInputClassService'], true);
-		$container->share(Cli::class, [$this, 'getInputCliClassService'], true);
 
 		/*
 		 * Console Commands
@@ -352,7 +349,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getConsoleApplicationClassService(Container $container) : Application
 	{
 		$application = new Application(
-			$container->get(Cli::class),
 			$container->get('config')
 		);
 
@@ -538,18 +534,6 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getInputClassService(Container $container) : Input
 	{
 		return new Input($_REQUEST);
-	}
-
-	/**
-	 * Get the Input\Cli class service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  Cli
-	 */
-	public function getInputCliClassService(Container $container) : Cli
-	{
-		return new Cli;
 	}
 
 	/**
