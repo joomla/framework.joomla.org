@@ -162,10 +162,9 @@ RewriteRule ^(.*)/$ /$1 [R=301,L]
 ###########################################
 # ======== Redirect HTTP to HTTPS =========
 
-<If "req('Host') == 'framework.joomla.org'">
-	RewriteCond %{HTTPS} off
-	RewriteRule ^(.*)$ https://framework.joomla.org/$1 [R=301,L,QSA]
-</If>
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} ^framework.joomla.org
+RewriteRule ^(.*)$ https://framework.joomla.org/$1 [R=301,L,QSA]
 
 ###########################################
 
