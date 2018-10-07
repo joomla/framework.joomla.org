@@ -35,10 +35,10 @@
                         {{ release.package.downloads|number_format }}
                     </td>
                     <td data-label="1.x Build Status">
-                        {% if release.package.repo in ['console', 'preload', 'renderer', 'test'] %}
+                        {% if release.package.repo in ['console', 'preload', 'renderer', 'symfony-event-dispatcher-bridge', 'test'] %}
                             N/A
                         {% else %}
-                            {% set _1xbranch = (release.package.repo in ['crypt']) ? '1.x-dev' : 'master'  %}
+                            {% set _1xbranch = release.package.repo in ['crypt'] ? '1.x-dev' : 'master'  %}
                             <a href="https://travis-ci.org/joomla-framework/{{ release.package.repo }}"><img src="https://travis-ci.org/joomla-framework/{{ release.package.repo }}.png?branch={{ _1xbranch }}" alt="Build Status" /></a>
                         {% endif %}
                     </td>
@@ -46,7 +46,7 @@
                         {% if release.package.repo in ['cache', 'compat', 'date', 'facebook-api', 'google-api', 'image', 'ldap', 'linkedin-api', 'log', 'openstreetmap-api', 'test', 'twitter-api'] %}
                             N/A
                         {% else %}
-                            {% set _2xbranch = (release.package.repo in ['crypt', 'renderer']) ? 'master' : '2.0-dev'  %}
+                            {% set _2xbranch = release.package.repo in ['crypt', 'renderer', 'symfony-event-dispatcher-bridge'] ? 'master' : '2.0-dev'  %}
                             <a href="https://travis-ci.org/joomla-framework/{{ release.package.repo }}"><img src="https://travis-ci.org/joomla-framework/{{ release.package.repo }}.png?branch={{ _2xbranch }}" alt="Build Status" /></a>
                         {% endif %}
                     </td>
