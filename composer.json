@@ -4,7 +4,7 @@
     "homepage": "http://github.com/joomla/framework.joomla.org",
     "license": "GPL-2.0+",
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.2",
         "ext-pdo": "*",
         "joomla/application": "~2.0@dev",
         "joomla/console": "~2.0@dev",
@@ -29,12 +29,12 @@
         "monolog/monolog": "^1.22.1",
         "psr/link": "~1.0",
         "ramsey/uuid": "~3.4",
-        "robmorgan/phinx": "0.8.1",
-        "symfony/asset": "3.4.*",
-        "symfony/console": "3.4.*",
-        "symfony/process": "3.4.*",
-        "symfony/web-link": "3.4.*",
-        "symfony/yaml": "3.4.*",
+        "robmorgan/phinx": "^0.9.2",
+        "symfony/asset": "4.1.*",
+        "symfony/console": "4.1.*",
+        "symfony/process": "4.1.*",
+        "symfony/web-link": "4.1.*",
+        "symfony/yaml": "4.1.*",
         "theiconic/php-ga-measurement-protocol": "^2.0",
         "twig/twig": "~2.4",
         "zendframework/zend-diactoros": "~1.4"
@@ -44,7 +44,8 @@
         "maximebf/debugbar": "^1.13"
     },
     "replace": {
-        "paragonie/random_compat": "*"
+        "paragonie/random_compat": "*",
+        "symfony/polyfill-php72": "*"
     },
     "autoload": {
         "psr-4": {
@@ -53,7 +54,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.0.31"
+            "php": "7.2.10"
         }
     }
 }
