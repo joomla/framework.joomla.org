@@ -40,7 +40,7 @@ class ReleaseModel implements DatabaseModelInterface
 	 *
 	 * @return  void
 	 */
-	public function addRelease(\stdClass $package, string $version, \DateTime $releaseDate)
+	public function addRelease(\stdClass $package, string $version, \DateTime $releaseDate): void
 	{
 		$db = $this->getDb();
 
@@ -192,7 +192,7 @@ class ReleaseModel implements DatabaseModelInterface
 	 *
 	 * @return  void
 	 */
-	public function updateRelease(int $releaseId, \stdClass $package, string $version, \DateTime $releaseDate)
+	public function updateRelease(int $releaseId, \stdClass $package, string $version, \DateTime $releaseDate): void
 	{
 		$db = $this->getDb();
 

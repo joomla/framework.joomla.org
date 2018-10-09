@@ -53,7 +53,7 @@ abstract class AnalyticsController extends AbstractController implements LoggerA
 	 *
 	 * @return  void
 	 */
-	protected function sendAnalytics()
+	protected function sendAnalytics(): void
 	{
 		// On a GET request, submit analytics data if enabled
 		if ($this->getInput()->getMethod() === 'GET'

@@ -5,6 +5,7 @@
     "license": "GPL-2.0+",
     "require": {
         "php": ">=7.2",
+        "ext-json": "*",
         "ext-pdo": "*",
         "joomla/application": "~2.0@dev",
         "joomla/console": "~2.0@dev",

@@ -204,7 +204,7 @@ class DebugBarProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	private function tagDebugCollectors(Container $container)
+	private function tagDebugCollectors(Container $container): void
 	{
 		$container->tag('debug.collector', ['debug.collector.monolog', 'debug.collector.twig']);
 	}
@@ -216,7 +216,7 @@ class DebugBarProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	private function tagTwigExtensions(Container $container)
+	private function tagTwigExtensions(Container $container): void
 	{
 		$container->tag('twig.extension', ['twig.extension.profiler']);
 	}

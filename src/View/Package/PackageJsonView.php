@@ -90,7 +90,7 @@ class PackageJsonView extends BaseJsonView
 	 *
 	 * @return  void
 	 */
-	public function setPackage(string $package)
+	public function setPackage(string $package): void
 	{
 		$this->package = $package;
 	}

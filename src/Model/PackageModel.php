@@ -43,7 +43,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @return  void
 	 */
-	public function addPackage(string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated, bool $isAbandoned)
+	public function addPackage(string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated, bool $isAbandoned): void
 	{
 		$db = $this->getDb();
 
@@ -154,7 +154,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @return  void
 	 */
-	public function updatePackage(int $packageId, string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated, bool $isAbandoned)
+	public function updatePackage(int $packageId, string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated, bool $isAbandoned): void
 	{
 		$db = $this->getDb();
 

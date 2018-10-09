@@ -65,7 +65,7 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 	 *
 	 * @return  void
 	 */
-	public function handleError(EventInterface $event)
+	public function handleError(EventInterface $event): void
 	{
 		// CLI and Web have different error events because of context
 		if ($event instanceof ApplicationErrorEvent)
@@ -85,7 +85,7 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 	 *
 	 * @return  void
 	 */
-	private function handleConsoleError(ConsoleErrorEvent $event)
+	private function handleConsoleError(ConsoleErrorEvent $event): void
 	{
 		$this->logError($event->getError());
 	}
@@ -97,7 +97,7 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 	 *
 	 * @return  void
 	 */
-	private function handleWebError(ApplicationErrorEvent $event)
+	private function handleWebError(ApplicationErrorEvent $event): void
 	{
 		/** @var WebApplication $app */
 		$app = $event->getApplication();
@@ -144,7 +144,7 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 	 *
 	 * @return  void
 	 */
-	private function logError(\Throwable $throwable)
+	private function logError(\Throwable $throwable): void
 	{
 		$this->logger->error(
 			sprintf('Uncaught Throwable of type %s caught.', get_class($throwable)),
@@ -159,7 +159,7 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 	 *
 	 * @return  void
 	 */
-	private function prepareResponse(ApplicationErrorEvent $event)
+	private function prepareResponse(ApplicationErrorEvent $event): void
 	{
 		/** @var WebApplication $app */
 		$app = $event->getApplication();

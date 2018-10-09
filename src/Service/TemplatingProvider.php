@@ -298,7 +298,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	private function tagTwigExtensions(Container $container)
+	private function tagTwigExtensions(Container $container): void
 	{
 		/** @var \Joomla\Registry\Registry $config */
 		$config = $container->get('config');

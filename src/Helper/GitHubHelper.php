@@ -20,6 +20,15 @@ use Joomla\Github\Github;
 class GitHubHelper
 {
 	/**
+	 * Accounts to exclude from the contributor listing
+	 *
+	 * @const  string[]
+	 */
+	private const IGNORE_ACCOUNTS = [
+		'joomla-jenkins',
+	];
+
+	/**
 	 * Array tracking commit counts for each contributor
 	 *
 	 * @var  array
@@ -39,15 +48,6 @@ class GitHubHelper
 	 * @var  Github
 	 */
 	private $github;
-
-	/**
-	 * Accounts to exclude from the contributor listing
-	 *
-	 * @var  string[]
-	 */
-	private $ignoreAccounts = [
-		'joomla-jenkins',
-	];
 
 	/**
 	 * Instantiate the helper.
@@ -80,7 +80,7 @@ class GitHubHelper
 	 *
 	 * @throws  ExecutionFailureException
 	 */
-	public function syncPackageContributors(string $package)
+	public function syncPackageContributors(string $package): void
 	{
 		$contributors = $this->github->repositories->getListContributors('joomla-framework', $package);
 
@@ -91,7 +91,7 @@ class GitHubHelper
 		{
 			foreach ($contributors as $contributor)
 			{
-				if (in_array($contributor->login, $this->ignoreAccounts))
+				if (in_array($contributor->login, self::IGNORE_ACCOUNTS))
 				{
 					continue;
 				}
@@ -134,7 +134,7 @@ class GitHubHelper
 	 *
 	 * @throws  ExecutionFailureException
 	 */
-	public function syncUserData()
+	public function syncUserData(): void
 	{
 		/** @var MysqlQuery $query */
 		$query = $this->database->getQuery(true);
@@ -182,7 +182,7 @@ class GitHubHelper
 	 *
 	 * @throws  ExecutionFailureException
 	 */
-	public function updateCommitCounts()
+	public function updateCommitCounts(): void
 	{
 		$this->database->transactionStart();
 

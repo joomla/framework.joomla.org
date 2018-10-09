@@ -109,7 +109,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 *
 	 * @return  $this
 	 */
-	public function setDebugBar(DebugBar $debugBar) : WebApplication
+	public function setDebugBar(DebugBar $debugBar) : self
 	{
 		$this->debugBar = $debugBar;
 
@@ -123,7 +123,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 *
 	 * @return  $this
 	 */
-	public function setRouter(Router $router) : WebApplication
+	public function setRouter(Router $router) : self
 	{
 		$this->router = $router;
 

@@ -65,7 +65,7 @@ class DebugSubscriber implements SubscriberInterface
 	 *
 	 * @return  void
 	 */
-	public function handleDebugResponse(ApplicationEvent $event)
+	public function handleDebugResponse(ApplicationEvent $event): void
 	{
 		/** @var AbstractWebApplication $application */
 		$application = $event->getApplication();
@@ -113,7 +113,7 @@ class DebugSubscriber implements SubscriberInterface
 	 *
 	 * @return  void
 	 */
-	public function handleError(EventInterface $event)
+	public function handleError(EventInterface $event): void
 	{
 		/** @var \DebugBar\DataCollector\ExceptionsCollector $collector */
 		$collector = $this->debugBar['exceptions'];
@@ -146,7 +146,7 @@ class DebugSubscriber implements SubscriberInterface
 	 *
 	 * @return  void
 	 */
-	public function markAfterExecute(ApplicationEvent $event)
+	public function markAfterExecute(ApplicationEvent $event): void
 	{
 		/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
 		$collector = $this->debugBar['time'];
@@ -161,7 +161,7 @@ class DebugSubscriber implements SubscriberInterface
 	 *
 	 * @return  void
 	 */
-	public function markBeforeExecute(ApplicationEvent $event)
+	public function markBeforeExecute(ApplicationEvent $event): void
 	{
 		/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
 		$collector = $this->debugBar['time'];
