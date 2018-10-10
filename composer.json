@@ -23,6 +23,7 @@
         "joomla/renderer": "~2.0@dev",
         "joomla/router": "~2.0@dev",
         "joomla/string": "~2.0@dev",
+        "joomla/symfony-event-dispatcher-bridge": "~2.0@dev",
         "joomla/uri": "~2.0@dev",
         "joomla/utilities": "~2.0@dev",
         "joomla/view": "~2.0@dev",
@@ -41,6 +42,7 @@
         "zendframework/zend-diactoros": "~1.4"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.13",
         "joomla/coding-standards": "dev-master",
         "maximebf/debugbar": "^1.13"
     },

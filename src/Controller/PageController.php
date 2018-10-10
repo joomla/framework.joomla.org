@@ -56,7 +56,7 @@ class PageController extends AbstractController
 	 *
 	 * @return  boolean
 	 */
-	public function execute() : bool
+	public function execute(): bool
 	{
 		// Enable browser caching
 		$this->getApplication()->allowCache(true);
@@ -65,7 +65,7 @@ class PageController extends AbstractController
 		$layout = "$view.twig";
 
 		// Since this is a catch-all route, if the layout doesn't exist, or is an excluded layout, treat this as a 404
-		if (!$this->renderer->pathExists($layout) || in_array($view, self::EXCLUDED_LAYOUTS, true))
+		if (!$this->renderer->pathExists($layout) || \in_array($view, self::EXCLUDED_LAYOUTS, true))
 		{
 			throw new RouteNotFoundException(sprintf('Unable to handle request for route `%s`.', $this->getApplication()->get('uri.route')), 404);
 		}

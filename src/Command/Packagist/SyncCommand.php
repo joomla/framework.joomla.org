@@ -8,18 +8,27 @@
 
 namespace Joomla\FrameworkWebsite\Command\Packagist;
 
-use Joomla\Console\AbstractCommand;
-use Joomla\FrameworkWebsite\Model\{
-	PackageModel, ReleaseModel
-};
+use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\ReleaseModel;
 use Joomla\Http\Http;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to synchronize the release listing with Packagist
  */
-class SyncCommand extends AbstractCommand
+class SyncCommand extends Command
 {
+	/**
+	 * The default command name
+	 *
+	 * @var  string|null
+	 */
+	protected static $defaultName = 'packagist:sync:releases';
+
 	/**
 	 * The HTTP driver
 	 *
@@ -58,17 +67,20 @@ class SyncCommand extends AbstractCommand
 	}
 
 	/**
-	 * Execute the command.
+	 * Executes the current command.
 	 *
-	 * @return  integer  The exit code for the command.
+	 * @param   InputInterface   $input   The command input.
+	 * @param   OutputInterface  $output  The command output.
+	 *
+	 * @return  integer|null  null or 0 if everything went fine, or an error code
 	 */
-	public function execute(): int
+	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$symfonyStyle = $this->createSymfonyStyle();
+		$symfonyStyle = new SymfonyStyle($input, $output);
 
 		$symfonyStyle->title('Sync Release Data with Packagist');
 
-		$updateReleases = $this->getApplication()->getConsoleInput()->getOption('update');
+		$updateReleases = $input->getOption('update');
 
 		$addedReleases   = 0;
 		$updatedReleases = 0;
@@ -148,13 +160,12 @@ class SyncCommand extends AbstractCommand
 	}
 
 	/**
-	 * Initialise the command.
+	 * Configures the current command.
 	 *
 	 * @return  void
 	 */
-	protected function initialise()
+	protected function configure(): void
 	{
-		$this->setName('packagist:sync:releases');
 		$this->setDescription('Synchronizes release data with Packagist');
 
 		$this->addOption(
@@ -167,12 +178,12 @@ class SyncCommand extends AbstractCommand
 		$this->setHelp(<<<'EOF'
 The <info>%command.name%</info> command synchronizes the package release data with Packagist
 
-<info>php %command.full_name% %command.name%</info>
+<info>php %command.full_name%</info>
 
 By default this command will only add new releases to the database. To update existing release
 data, you can pass the <info>--update</info> option.
 
-<info>php %command.full_name% %command.name% --update</info>
+<info>php %command.full_name% --update</info>
 EOF
 		);
 	}
@@ -184,7 +195,7 @@ EOF
 	 *
 	 * @return  boolean
 	 */
-	private function versionIsStable(string $version) : bool
+	private function versionIsStable(string $version): bool
 	{
 		if (strpos($version, 'dev') !== false)
 		{

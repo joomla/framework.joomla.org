@@ -8,23 +8,18 @@
 
 namespace Joomla\FrameworkWebsite\Service;
 
-use DebugBar\
-{
-	DebugBar, StandardDebugBar
-};
-use DebugBar\Bridge\{
-	MonologCollector, TwigProfileCollector
-};
+use DebugBar\Bridge\MonologCollector;
 use DebugBar\Bridge\Twig\TimeableTwigExtensionProfiler;
-use DebugBar\DataCollector\PDO\{
-	PDOCollector, TraceablePDO
-};
+use DebugBar\Bridge\TwigProfileCollector;
+use DebugBar\DataCollector\PDO\PDOCollector;
+use DebugBar\DataCollector\PDO\TraceablePDO;
+use DebugBar\DebugBar;
+use DebugBar\StandardDebugBar;
 use Joomla\Application\AbstractWebApplication;
 use Joomla\Database\DatabaseInterface;
-use Joomla\DI\
-{
-	Container, Exception\DependencyResolutionException, ServiceProviderInterface
-};
+use Joomla\DI\Container;
+use Joomla\DI\Exception\DependencyResolutionException;
+use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 use Joomla\FrameworkWebsite\DebugBar\JoomlaHttpDriver;
 use Joomla\FrameworkWebsite\Event\DebugDispatcher;
@@ -42,7 +37,7 @@ class DebugBarProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	public function register(Container $container)
+	public function register(Container $container): void
 	{
 		$container->alias(DebugBar::class, 'debug.bar')
 			->alias(StandardDebugBar::class, 'debug.bar')
@@ -63,7 +58,7 @@ class DebugBarProvider implements ServiceProviderInterface
 		$container->alias(DebugSubscriber::class, 'event.subscriber.debug')
 			->share('event.subscriber.debug', [$this, 'getEventSubscriberDebugService'], true);
 
-		$container->extend('dispatcher', [$this, 'getDecoratedDispatcherService']);
+		$container->extend(DispatcherInterface::class, [$this, 'getDecoratedDispatcherService']);
 
 		$container->extend('twig.extension.profiler', [$this, 'getDecoratedTwigExtensionProfilerService']);
 
@@ -78,7 +73,7 @@ class DebugBarProvider implements ServiceProviderInterface
 	 *
 	 * @return  DebugBar
 	 */
-	public function getDebugBarService(Container $container) : DebugBar
+	public function getDebugBarService(Container $container): DebugBar
 	{
 		if (!class_exists(StandardDebugBar::class))
 		{
@@ -108,7 +103,7 @@ class DebugBarProvider implements ServiceProviderInterface
 	 *
 	 * @return  MonologCollector
 	 */
-	public function getDebugCollectorMonologService(Container $container) : MonologCollector
+	public function getDebugCollectorMonologService(Container $container): MonologCollector
 	{
 		$collector = new MonologCollector;
 		$collector->addLogger($container->get('monolog.logger.application.web'));
@@ -123,7 +118,7 @@ class DebugBarProvider implements ServiceProviderInterface
 	 *
 	 * @return  PDOCollector
 	 */
-	public function getDebugCollectorPdoService(Container $container) : PDOCollector
+	public function getDebugCollectorPdoService(Container $container): PDOCollector
 	{
 		/** @var DatabaseInterface $db */
 		$db = $container->get(DatabaseInterface::class);
@@ -139,7 +134,7 @@ class DebugBarProvider implements ServiceProviderInterface
 	 *
 	 * @return  TwigProfileCollector
 	 */
-	public function getDebugCollectorTwigService(Container $container) : TwigProfileCollector
+	public function getDebugCollectorTwigService(Container $container): TwigProfileCollector
 	{
 		return new TwigProfileCollector($container->get('twig.profiler.profile'), $container->get('twig.loader'));
 	}

@@ -10,9 +10,8 @@ namespace Joomla\FrameworkWebsite\Renderer;
 
 use Symfony\Component\Asset\Packages;
 use Twig\Extension\AbstractExtension;
-use Twig\{
-	TwigFilter, TwigFunction
-};
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * Framework site's Twig extension class
@@ -28,7 +27,7 @@ class FrameworkExtension extends AbstractExtension
 	{
 		return [
 			new TwigFilter('get_class', 'get_class'),
-			new TwigFilter('strip_root_path', [$this, 'stripRootPath'])
+			new TwigFilter('strip_root_path', [$this, 'stripRootPath']),
 		];
 	}
 
@@ -55,7 +54,7 @@ class FrameworkExtension extends AbstractExtension
 	 *
 	 * @return  string
 	 */
-	public function getFooterCopyright() : string
+	public function getFooterCopyright(): string
 	{
 		$year = date('Y');
 
@@ -73,8 +72,8 @@ The Joomla!&reg; name and symbol, Joomla! Framework&#8482 and symbol, The Joomla
     </div>
 </div>
 HTML;
-
 	}
+
 	/**
 	 * Removes the application root path defined by the constant "JPATH_ROOT"
 	 *
@@ -82,7 +81,7 @@ HTML;
 	 *
 	 * @return  string
 	 */
-	public function stripRootPath(string $string) : string
+	public function stripRootPath(string $string): string
 	{
 		return str_replace(JPATH_ROOT . DIRECTORY_SEPARATOR, '', $string);
 	}

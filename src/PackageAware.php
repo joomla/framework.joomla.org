@@ -29,14 +29,14 @@ trait PackageAware
 	 *
 	 * @throws  \UnexpectedValueException May be thrown if the registry has not been set.
 	 */
-	public function getPackages() : Registry
+	public function getPackages(): Registry
 	{
 		if ($this->packages)
 		{
 			return $this->packages;
 		}
 
-		throw new \UnexpectedValueException('Package registry not set in ' . get_class($this));
+		throw new \UnexpectedValueException('Package registry not set in ' . \get_class($this));
 	}
 
 	/**

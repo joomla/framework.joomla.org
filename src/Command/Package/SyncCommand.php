@@ -8,15 +8,25 @@
 
 namespace Joomla\FrameworkWebsite\Command\Package;
 
-use Joomla\Console\AbstractCommand;
 use Joomla\FrameworkWebsite\Helper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to synchronize the package listing data
  */
-class SyncCommand extends AbstractCommand
+class SyncCommand extends Command
 {
+	/**
+	 * The default command name
+	 *
+	 * @var  string|null
+	 */
+	protected static $defaultName = 'package:sync';
+
 	/**
 	 * The helper object
 	 *
@@ -46,13 +56,16 @@ class SyncCommand extends AbstractCommand
 	}
 
 	/**
-	 * Execute the command.
+	 * Executes the current command.
 	 *
-	 * @return  integer  The exit code for the command.
+	 * @param   InputInterface   $input   The command input.
+	 * @param   OutputInterface  $output  The command output.
+	 *
+	 * @return  integer|null  null or 0 if everything went fine, or an error code
 	 */
-	public function execute(): int
+	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$symfonyStyle = $this->createSymfonyStyle();
+		$symfonyStyle = new SymfonyStyle($input, $output);
 
 		$symfonyStyle->title('Sync Package Data');
 
@@ -63,7 +76,7 @@ class SyncCommand extends AbstractCommand
 		{
 			$displayName = $this->helper->getPackageDisplayName($packageName);
 
-			if (in_array($packageName, $loadedPackages))
+			if (\in_array($packageName, $loadedPackages))
 			{
 				$packageId = array_search($packageName, $loadedPackages);
 
@@ -100,18 +113,17 @@ class SyncCommand extends AbstractCommand
 	}
 
 	/**
-	 * Initialise the command.
+	 * Configures the current command.
 	 *
 	 * @return  void
 	 */
-	protected function initialise()
+	protected function configure(): void
 	{
-		$this->setName('package:sync');
 		$this->setDescription('Synchronizes Framework package data to the database');
 		$this->setHelp(<<<'EOF'
 The <info>%command.name%</info> command synchronizes the Framework package data to the local database
 
-<info>php %command.full_name% %command.name%</info>
+<info>php %command.full_name%</info>
 EOF
 		);
 	}

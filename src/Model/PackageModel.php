@@ -10,9 +10,8 @@ namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\ParameterType;
-use Joomla\Model\{
-	DatabaseModelInterface, DatabaseModelTrait
-};
+use Joomla\Model\DatabaseModelInterface;
+use Joomla\Model\DatabaseModelTrait;
 
 /**
  * Model class for packages
@@ -64,7 +63,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @return  array
 	 */
-	public function getActivePackages() : array
+	public function getActivePackages(): array
 	{
 		$abandoned = false;
 
@@ -88,7 +87,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @throws  \RuntimeException
 	 */
-	public function getPackage(string $packageName) : \stdClass
+	public function getPackage(string $packageName): \stdClass
 	{
 		$db = $this->getDb();
 
@@ -114,7 +113,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @return  array
 	 */
-	public function getPackageNames() : array
+	public function getPackageNames(): array
 	{
 		$db = $this->getDb();
 
@@ -130,7 +129,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @return  array
 	 */
-	public function getPackages() : array
+	public function getPackages(): array
 	{
 		$db = $this->getDb();
 

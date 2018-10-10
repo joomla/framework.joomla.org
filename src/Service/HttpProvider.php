@@ -8,12 +8,10 @@
 
 namespace Joomla\FrameworkWebsite\Service;
 
-use Joomla\DI\{
-	Container, ServiceProviderInterface
-};
-use Joomla\Http\{
-	Http, HttpFactory
-};
+use Joomla\DI\Container;
+use Joomla\DI\ServiceProviderInterface;
+use Joomla\Http\Http;
+use Joomla\Http\HttpFactory;
 
 /**
  * HTTP service provider
@@ -27,7 +25,7 @@ class HttpProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	public function register(Container $container)
+	public function register(Container $container): void
 	{
 		$container->alias(Http::class, 'http')
 			->share('http', [$this, 'getHttpService'], true);
@@ -43,7 +41,7 @@ class HttpProvider implements ServiceProviderInterface
 	 *
 	 * @return  Http
 	 */
-	public function getHttpService(Container $container) : Http
+	public function getHttpService(Container $container): Http
 	{
 		/** @var HttpFactory $factory */
 		$factory = $container->get('http.factory');
@@ -58,7 +56,7 @@ class HttpProvider implements ServiceProviderInterface
 	 *
 	 * @return  HttpFactory
 	 */
-	public function getHttpFactoryService(Container $container) : HttpFactory
+	public function getHttpFactoryService(Container $container): HttpFactory
 	{
 		return new HttpFactory;
 	}

@@ -8,17 +8,15 @@
 
 namespace Joomla\FrameworkWebsite\Service;
 
-use Joomla\DI\{
-	Container,
-	ServiceProviderInterface
-};
-use Joomla\Event\{
-	Dispatcher,
-	DispatcherInterface
-};
+use Joomla\DI\Container;
+use Joomla\DI\ServiceProviderInterface;
+use Joomla\Event\Dispatcher;
+use Joomla\Event\DispatcherInterface;
 use Joomla\FrameworkWebsite\EventListener\ErrorSubscriber;
 use Joomla\Renderer\RendererInterface;
+use Joomla\SymfonyEventDispatcherBridge\Joomla\Dispatcher as SymfonyBridgeDispatcher;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Event service provider
@@ -32,20 +30,22 @@ class EventProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	public function register(Container $container)
+	public function register(Container $container): void
 	{
 		// This service cannot be protected as it is decorated when the debug bar is available
-		$container->alias(DispatcherInterface::class, 'dispatcher')
-			->alias(Dispatcher::class, 'dispatcher')
-			->share('dispatcher', [$this, 'getDispatcherService']);
+		$container->alias(Dispatcher::class, DispatcherInterface::class)
+			->share(DispatcherInterface::class, [$this, 'getDispatcherService']);
 
-		$container->alias(ErrorSubscriber::class, 'event.subscriber.error')
-			->share('event.subscriber.error', [$this, 'getEventSubscriberErrorService'], true)
-			->tag('event.subscriber', ['event.subscriber.error']);
+		// This service cannot be protected as it will eventually be decorated when the debug bar is available
+		$container->alias(SymfonyBridgeDispatcher::class, EventDispatcherInterface::class)
+			->share(EventDispatcherInterface::class, [$this, 'getSymfonyBridgeDispatcherService']);
+
+		$container->share(ErrorSubscriber::class, [$this, 'getErrorSubscriber'], true)
+			->tag('event.subscriber', [ErrorSubscriber::class]);
 	}
 
 	/**
-	 * Get the `dispatcher` service
+	 * Get the DispatcherInterface service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
@@ -64,17 +64,29 @@ class EventProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the `event.subscriber.error` service
+	 * Get the ErrorSubscriber service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  ErrorSubscriber
 	 */
-	public function getEventSubscriberErrorService(Container $container): ErrorSubscriber
+	public function getErrorSubscriber(Container $container): ErrorSubscriber
 	{
 		$subscriber = new ErrorSubscriber($container->get(RendererInterface::class));
 		$subscriber->setLogger($container->get(LoggerInterface::class));
 
 		return $subscriber;
+	}
+
+	/**
+	 * Get the SymfonyBridgeDispatcher service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  EventDispatcherInterface
+	 */
+	public function getSymfonyBridgeDispatcherService(Container $container): EventDispatcherInterface
+	{
+		return new SymfonyBridgeDispatcher($container->get(DispatcherInterface::class));
 	}
 }

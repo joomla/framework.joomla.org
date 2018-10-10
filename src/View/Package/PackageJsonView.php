@@ -8,9 +8,8 @@
 
 namespace Joomla\FrameworkWebsite\View\Package;
 
-use Joomla\FrameworkWebsite\Model\{
-	PackageModel, ReleaseModel
-};
+use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\ReleaseModel;
 use Joomla\View\BaseJsonView;
 
 /**
@@ -60,7 +59,7 @@ class PackageJsonView extends BaseJsonView
 	 */
 	public function render()
 	{
-		$package = $this->packageModel->getPackage($this->package);
+		$package  = $this->packageModel->getPackage($this->package);
 		$releases = $this->releaseModel->getPackageHistory($package);
 
 		// Remove the ID and package ID for each item

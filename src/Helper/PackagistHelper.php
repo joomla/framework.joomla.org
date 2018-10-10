@@ -53,7 +53,7 @@ class PackagistHelper
 	 *
 	 * @return  array
 	 */
-	private function fetchDownloadCounts() : array
+	private function fetchDownloadCounts(): array
 	{
 		$counts = [];
 

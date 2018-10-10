@@ -8,9 +8,8 @@
 
 namespace Joomla\FrameworkWebsite\View\Status;
 
-use Joomla\FrameworkWebsite\Model\{
-	PackageModel, ReleaseModel
-};
+use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\ReleaseModel;
 use Joomla\Renderer\RendererInterface;
 use Joomla\View\BaseHtmlView;
 

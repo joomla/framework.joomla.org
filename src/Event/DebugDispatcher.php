@@ -9,9 +9,9 @@
 namespace Joomla\FrameworkWebsite\Event;
 
 use DebugBar\DebugBar;
-use Joomla\Event\{
-	DispatcherInterface, EventInterface, SubscriberInterface
-};
+use Joomla\Event\DispatcherInterface;
+use Joomla\Event\EventInterface;
+use Joomla\Event\SubscriberInterface;
 
 /**
  * Debug event dispatcher
@@ -65,7 +65,7 @@ class DebugDispatcher implements DispatcherInterface
 	 *
 	 * @return  void
 	 */
-	public function addSubscriber(SubscriberInterface $subscriber)
+	public function addSubscriber(SubscriberInterface $subscriber): void
 	{
 		$this->dispatcher->addSubscriber($subscriber);
 	}
@@ -132,7 +132,7 @@ class DebugDispatcher implements DispatcherInterface
 	 *
 	 * @return  void
 	 */
-	public function removeListener(string $eventName, callable $listener)
+	public function removeListener(string $eventName, callable $listener): void
 	{
 		$this->dispatcher->removeListener($eventName, $listener);
 	}
@@ -144,7 +144,7 @@ class DebugDispatcher implements DispatcherInterface
 	 *
 	 * @return  void
 	 */
-	public function removeSubscriber(SubscriberInterface $subscriber)
+	public function removeSubscriber(SubscriberInterface $subscriber): void
 	{
 		$this->dispatcher->removeSubscriber($subscriber);
 	}

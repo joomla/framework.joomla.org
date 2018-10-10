@@ -10,22 +10,24 @@ namespace Joomla\FrameworkWebsite\EventListener;
 
 use Joomla\Application\ApplicationEvents;
 use Joomla\Application\Event\ApplicationErrorEvent;
-use Joomla\Console\Event\ConsoleErrorEvent;
-use Joomla\Event\EventInterface;
 use Joomla\Event\SubscriberInterface;
 use Joomla\FrameworkWebsite\WebApplication;
 use Joomla\Renderer\RendererInterface;
 use Joomla\Router\Exception\MethodNotAllowedException;
 use Joomla\Router\Exception\RouteNotFoundException;
+use Joomla\SymfonyEventDispatcherBridge\Symfony\Event;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Symfony\Component\Console\ConsoleEvents;
+use Symfony\Component\Console\Event\ConsoleErrorEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\JsonResponse;
 
 /**
  * Error handling event subscriber
  */
-class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
+class ErrorSubscriber implements SubscriberInterface, EventSubscriberInterface, LoggerAwareInterface
 {
 	use LoggerAwareTrait;
 
@@ -54,40 +56,24 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			ApplicationEvents::ERROR => 'handleError',
+			ApplicationEvents::ERROR => 'handleWebError',
+			ConsoleEvents::ERROR     => 'handleConsoleError',
 		];
-	}
-
-	/**
-	 * Handle application errors.
-	 *
-	 * @param   EventInterface  $event  Event object
-	 *
-	 * @return  void
-	 */
-	public function handleError(EventInterface $event): void
-	{
-		// CLI and Web have different error events because of context
-		if ($event instanceof ApplicationErrorEvent)
-		{
-			$this->handleWebError($event);
-		}
-		else
-		{
-			$this->handleConsoleError($event);
-		}
 	}
 
 	/**
 	 * Handle console application errors.
 	 *
-	 * @param   ConsoleErrorEvent  $event  Event object
+	 * @param   Event  $event  Event object
 	 *
 	 * @return  void
 	 */
-	private function handleConsoleError(ConsoleErrorEvent $event): void
+	public function handleConsoleError(Event $event): void
 	{
-		$this->logError($event->getError());
+		/** @var ConsoleErrorEvent $consoleErrorEvent */
+		$consoleErrorEvent = $event->getEvent();
+
+		$this->logError($consoleErrorEvent->getError());
 	}
 
 	/**
@@ -97,14 +83,14 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 	 *
 	 * @return  void
 	 */
-	private function handleWebError(ApplicationErrorEvent $event): void
+	public function handleWebError(ApplicationErrorEvent $event): void
 	{
 		/** @var WebApplication $app */
 		$app = $event->getApplication();
 
 		switch (true)
 		{
-			case ($event->getError() instanceof MethodNotAllowedException) :
+			case $event->getError() instanceof MethodNotAllowedException :
 				// Log the error for reference
 				$this->logger->error(
 					sprintf('Route `%s` not supported by method `%s`', $app->get('uri.route'), $app->input->getMethod()),
@@ -117,7 +103,7 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 
 				break;
 
-			case ($event->getError() instanceof RouteNotFoundException) :
+			case $event->getError() instanceof RouteNotFoundException :
 				// Log the error for reference
 				$this->logger->error(
 					sprintf('Route `%s` not found', $app->get('uri.route')),
@@ -147,7 +133,7 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 	private function logError(\Throwable $throwable): void
 	{
 		$this->logger->error(
-			sprintf('Uncaught Throwable of type %s caught.', get_class($throwable)),
+			sprintf('Uncaught Throwable of type %s caught.', \get_class($throwable)),
 			['exception' => $throwable]
 		);
 	}
@@ -169,11 +155,11 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 		switch (true)
 		{
 			case $app->mimeType === 'application/json' :
-			case ($app->getResponse() instanceof JsonResponse) :
+			case $app->getResponse() instanceof JsonResponse :
 				$data = [
 					'code'    => $event->getError()->getCode(),
 					'message' => $event->getError()->getMessage(),
-					'error'   => true
+					'error'   => true,
 				];
 
 				$response = new JsonResponse($data);

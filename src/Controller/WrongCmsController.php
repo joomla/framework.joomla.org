@@ -24,7 +24,7 @@ class WrongCmsController extends AbstractController
 	 *
 	 * @return  string
 	 */
-	public function execute() : bool
+	public function execute(): bool
 	{
 		// Enable browser caching
 		$this->getApplication()->allowCache(true);

@@ -8,15 +8,25 @@
 
 namespace Joomla\FrameworkWebsite\Command\GitHub;
 
-use Joomla\Console\AbstractCommand;
 use Joomla\FrameworkWebsite\Helper\GitHubHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to get contributor information from GitHub
  */
-class ContributorsCommand extends AbstractCommand
+class ContributorsCommand extends Command
 {
+	/**
+	 * The default command name
+	 *
+	 * @var  string|null
+	 */
+	protected static $defaultName = 'github:contributors';
+
 	/**
 	 * The GitHub helper
 	 *
@@ -46,13 +56,16 @@ class ContributorsCommand extends AbstractCommand
 	}
 
 	/**
-	 * Execute the command.
+	 * Executes the current command.
 	 *
-	 * @return  integer  The exit code for the command.
+	 * @param   InputInterface   $input   The command input.
+	 * @param   OutputInterface  $output  The command output.
+	 *
+	 * @return  integer|null  null or 0 if everything went fine, or an error code
 	 */
-	public function execute(): int
+	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$symfonyStyle = $this->createSymfonyStyle();
+		$symfonyStyle = new SymfonyStyle($input, $output);
 
 		$symfonyStyle->title('Sync GitHub Contributors');
 
@@ -76,18 +89,17 @@ class ContributorsCommand extends AbstractCommand
 	}
 
 	/**
-	 * Initialise the command.
+	 * Configures the current command.
 	 *
 	 * @return  void
 	 */
-	protected function initialise()
+	protected function configure(): void
 	{
-		$this->setName('github:contributors');
 		$this->setDescription('Fetches contributor information from GitHub');
 		$this->setHelp(<<<'EOF'
 The <info>%command.name%</info> command fetches the contributor information for the Framework packages from GitHub
 
-<info>php %command.full_name% %command.name%</info>
+<info>php %command.full_name%</info>
 EOF
 		);
 	}

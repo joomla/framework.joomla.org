@@ -40,7 +40,7 @@ class JoomlaHttpDriver implements HttpDriverInterface
 	 *
 	 * @return  void
 	 */
-	public function setHeaders(array $headers)
+	public function setHeaders(array $headers): void
 	{
 		foreach ($headers as $name => $value)
 		{
@@ -67,7 +67,7 @@ class JoomlaHttpDriver implements HttpDriverInterface
 	 *
 	 * @return  void
 	 */
-	public function setSessionValue($name, $value)
+	public function setSessionValue($name, $value): void
 	{
 		// This application has no session integration
 	}
@@ -95,7 +95,6 @@ class JoomlaHttpDriver implements HttpDriverInterface
 	public function getSessionValue($name)
 	{
 		// This application has no session integration
-		return null;
 	}
 
 	/**
@@ -105,7 +104,7 @@ class JoomlaHttpDriver implements HttpDriverInterface
 	 *
 	 * @return  void
 	 */
-	public function deleteSessionValue($name)
+	public function deleteSessionValue($name): void
 	{
 		// This application has no session integration
 	}

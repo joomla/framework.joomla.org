@@ -91,14 +91,14 @@ class GitHubHelper
 		{
 			foreach ($contributors as $contributor)
 			{
-				if (in_array($contributor->login, self::IGNORE_ACCOUNTS))
+				if (\in_array($contributor->login, self::IGNORE_ACCOUNTS))
 				{
 					continue;
 				}
 
 				/** @var MysqlQuery $query */
 				$query = $this->database->getQuery(true);
-				$query->setQuery("INSERT INTO `#__contributors` (github_id, username, avatar, profile) VALUES (:github, :username, :avatar, :profile) ON DUPLICATE KEY UPDATE username = :username, avatar = :avatar, profile = :profile");
+				$query->setQuery('INSERT INTO `#__contributors` (github_id, username, avatar, profile) VALUES (:github, :username, :avatar, :profile) ON DUPLICATE KEY UPDATE username = :username, avatar = :avatar, profile = :profile');
 
 				$query->bind('github', $contributor->id, ParameterType::INTEGER);
 				$query->bind('username', $contributor->login, ParameterType::STRING);

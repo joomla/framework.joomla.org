@@ -48,7 +48,7 @@ class PackageController extends AbstractController
 	 *
 	 * @return  boolean
 	 */
-	public function execute() : bool
+	public function execute(): bool
 	{
 		// Enable browser caching
 		$this->getApplication()->allowCache(true);

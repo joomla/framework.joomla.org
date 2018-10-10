@@ -9,9 +9,8 @@
 namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
-use Joomla\Model\{
-	DatabaseModelInterface, DatabaseModelTrait
-};
+use Joomla\Model\DatabaseModelInterface;
+use Joomla\Model\DatabaseModelTrait;
 
 /**
  * Model class for contributors
@@ -35,7 +34,7 @@ class ContributorModel implements DatabaseModelInterface
 	 *
 	 * @return  array
 	 */
-	public function getContributors() : array
+	public function getContributors(): array
 	{
 		$db = $this->getDb();
 
@@ -51,7 +50,7 @@ class ContributorModel implements DatabaseModelInterface
 	 *
 	 * @return  array
 	 */
-	public function getContributorsSortedByCommitCount() : array
+	public function getContributorsSortedByCommitCount(): array
 	{
 		$db = $this->getDb();
 

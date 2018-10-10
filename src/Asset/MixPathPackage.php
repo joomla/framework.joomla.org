@@ -9,9 +9,8 @@
 namespace Joomla\FrameworkWebsite\Asset;
 
 use Symfony\Component\Asset\Context\ContextInterface;
-use Symfony\Component\Asset\{
-	Package, PathPackage
-};
+use Symfony\Component\Asset\Package;
+use Symfony\Component\Asset\PathPackage;
 use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
 
 /**
@@ -39,8 +38,7 @@ class MixPathPackage extends PathPackage
 		string $basePath,
 		VersionStrategyInterface $versionStrategy,
 		ContextInterface $context = null
-	)
-	{
+	) {
 		parent::__construct($basePath, $versionStrategy, $context);
 
 		$this->decoratedPackage = $decoratedPackage;

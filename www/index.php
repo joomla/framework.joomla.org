@@ -7,9 +7,9 @@
  */
 
 // Application constants
-define('APP_START',       microtime(true));
-define('JPATH_ROOT',      dirname(__DIR__));
-define('JPATH_TEMPLATES', JPATH_ROOT . '/templates');
+\define('APP_START', microtime(true));
+\define('JPATH_ROOT', \dirname(__DIR__));
+\define('JPATH_TEMPLATES', JPATH_ROOT . '/templates');
 
 // Ensure we've initialized Composer
 if (!file_exists(JPATH_ROOT . '/vendor/autoload.php'))

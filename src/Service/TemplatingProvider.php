@@ -9,33 +9,27 @@
 namespace Joomla\FrameworkWebsite\Service;
 
 use Joomla\Application\AbstractApplication;
-use Joomla\DI\{
-	Container, ServiceProviderInterface
-};
+use Joomla\DI\Container;
+use Joomla\DI\ServiceProviderInterface;
 use Joomla\FrameworkWebsite\Asset\MixPathPackage;
-use Joomla\FrameworkWebsite\Renderer\{
-	ApplicationContext, FrameworkExtension, FrameworkTwigRuntime
-};
+use Joomla\FrameworkWebsite\Renderer\ApplicationContext;
+use Joomla\FrameworkWebsite\Renderer\FrameworkExtension;
+use Joomla\FrameworkWebsite\Renderer\FrameworkTwigRuntime;
 use Joomla\Preload\PreloadManager;
-use Joomla\Renderer\{
-	RendererInterface, TwigRenderer
-};
-use Symfony\Component\Asset\{
-	Packages, PathPackage
-};
-use Symfony\Component\Asset\VersionStrategy\{
-	EmptyVersionStrategy, JsonManifestVersionStrategy
-};
-use Twig\Cache\{
-	CacheInterface, FilesystemCache, NullCache
-};
+use Joomla\Renderer\RendererInterface;
+use Joomla\Renderer\TwigRenderer;
+use Symfony\Component\Asset\Packages;
+use Symfony\Component\Asset\PathPackage;
+use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
+use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
+use Twig\Cache\CacheInterface;
+use Twig\Cache\FilesystemCache;
+use Twig\Cache\NullCache;
 use Twig\Environment;
-use Twig\Extension\{
-	DebugExtension, ProfilerExtension
-};
-use Twig\Loader\{
-	FilesystemLoader, LoaderInterface
-};
+use Twig\Extension\DebugExtension;
+use Twig\Extension\ProfilerExtension;
+use Twig\Loader\FilesystemLoader;
+use Twig\Loader\LoaderInterface;
 use Twig\Profiler\Profile;
 use Twig\RuntimeLoader\ContainerRuntimeLoader;
 
@@ -51,7 +45,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	public function register(Container $container)
+	public function register(Container $container): void
 	{
 		$container->alias(Packages::class, 'asset.packages')
 			->share('asset.packages', [$this, 'getAssetPackagesService'], true);
@@ -105,7 +99,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  Packages
 	 */
-	public function getAssetPackagesService(Container $container) : Packages
+	public function getAssetPackagesService(Container $container): Packages
 	{
 		/** @var AbstractApplication $app */
 		$app = $container->get(AbstractApplication::class);
@@ -138,7 +132,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  RendererInterface
 	 */
-	public function getRendererService(Container $container) : RendererInterface
+	public function getRendererService(Container $container): RendererInterface
 	{
 		return new TwigRenderer($container->get('twig.environment'));
 	}
@@ -150,7 +144,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  \Twig_CacheInterface
 	 */
-	public function getTwigCacheService(Container $container) : \Twig_CacheInterface
+	public function getTwigCacheService(Container $container): \Twig_CacheInterface
 	{
 		/** @var \Joomla\Registry\Registry $config */
 		$config = $container->get('config');
@@ -175,7 +169,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  Environment
 	 */
-	public function getTwigEnvironmentService(Container $container) : Environment
+	public function getTwigEnvironmentService(Container $container): Environment
 	{
 		/** @var \Joomla\Registry\Registry $config */
 		$config = $container->get('config');
@@ -210,7 +204,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  DebugExtension
 	 */
-	public function getTwigExtensionDebugService(Container $container) : DebugExtension
+	public function getTwigExtensionDebugService(Container $container): DebugExtension
 	{
 		return new DebugExtension;
 	}
@@ -222,7 +216,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  FrameworkExtension
 	 */
-	public function getTwigExtensionFrameworkService(Container $container) : FrameworkExtension
+	public function getTwigExtensionFrameworkService(Container $container): FrameworkExtension
 	{
 		return new FrameworkExtension;
 	}
@@ -234,7 +228,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  ProfilerExtension
 	 */
-	public function getTwigExtensionProfilerService(Container $container) : ProfilerExtension
+	public function getTwigExtensionProfilerService(Container $container): ProfilerExtension
 	{
 		return new ProfilerExtension($container->get('twig.profiler.profile'));
 	}
@@ -246,7 +240,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  \Twig_LoaderInterface
 	 */
-	public function getTwigLoaderService(Container $container) : \Twig_LoaderInterface
+	public function getTwigLoaderService(Container $container): \Twig_LoaderInterface
 	{
 		return new FilesystemLoader([JPATH_TEMPLATES]);
 	}
@@ -258,7 +252,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  Profile
 	 */
-	public function getTwigProfilerProfileService(Container $container) : Profile
+	public function getTwigProfilerProfileService(Container $container): Profile
 	{
 		return new Profile;
 	}
@@ -270,7 +264,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  FrameworkTwigRuntime
 	 */
-	public function getTwigRuntimeFrameworkService(Container $container) : FrameworkTwigRuntime
+	public function getTwigRuntimeFrameworkService(Container $container): FrameworkTwigRuntime
 	{
 		return new FrameworkTwigRuntime(
 			$container->get(AbstractApplication::class),
@@ -286,7 +280,7 @@ class TemplatingProvider implements ServiceProviderInterface
 	 *
 	 * @return  ContainerRuntimeLoader
 	 */
-	public function getTwigRuntimeLoaderService(Container $container) : ContainerRuntimeLoader
+	public function getTwigRuntimeLoaderService(Container $container): ContainerRuntimeLoader
 	{
 		return new ContainerRuntimeLoader($container);
 	}

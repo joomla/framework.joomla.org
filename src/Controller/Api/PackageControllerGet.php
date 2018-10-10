@@ -46,7 +46,7 @@ class PackageControllerGet extends AnalyticsController
 	 *
 	 * @return  boolean
 	 */
-	public function execute() : bool
+	public function execute(): bool
 	{
 		$this->sendAnalytics();
 

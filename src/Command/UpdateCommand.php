@@ -8,23 +8,37 @@
 
 namespace Joomla\FrameworkWebsite\Command;
 
-use Joomla\Console\AbstractCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 /**
  * Update command
  */
-class UpdateCommand extends AbstractCommand
+class UpdateCommand extends Command
 {
 	/**
-	 * Execute the command.
+	 * The default command name
 	 *
-	 * @return  integer  The exit code for the command.
+	 * @var  string|null
 	 */
-	public function execute(): int
+	protected static $defaultName = 'update:server';
+
+	/**
+	 * Executes the current command.
+	 *
+	 * @param   InputInterface   $input   The command input.
+	 * @param   OutputInterface  $output  The command output.
+	 *
+	 * @return  integer|null  null or 0 if everything went fine, or an error code
+	 */
+	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$symfonyStyle = $this->createSymfonyStyle();
+		$symfonyStyle = new SymfonyStyle($input, $output);
 
 		$symfonyStyle->title('Update Server');
 		$symfonyStyle->comment('Updating server to git HEAD');
@@ -76,7 +90,14 @@ class UpdateCommand extends AbstractCommand
 		}
 
 		// Reset the Twig cache
-		$this->getApplication()->getCommand('twig:reset-cache')->execute();
+		$this->getApplication()->find('twig:reset-cache')->run(
+			new ArrayInput(
+				[
+					'command' => 'twig:reset-cache',
+				]
+			),
+			$output
+		);
 
 		$symfonyStyle->success('Update complete');
 
@@ -84,18 +105,17 @@ class UpdateCommand extends AbstractCommand
 	}
 
 	/**
-	 * Initialise the command.
+	 * Configures the current command.
 	 *
 	 * @return  void
 	 */
-	protected function initialise()
+	protected function configure(): void
 	{
-		$this->setName('update:server');
 		$this->setDescription('Update the server to the current git HEAD');
 		$this->setHelp(<<<'EOF'
 The <info>%command.name%</info> command updates the server to the current git HEAD
 
-<info>php %command.full_name% %command.name%</info>
+<info>php %command.full_name%</info>
 EOF
 		);
 	}

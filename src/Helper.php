@@ -22,7 +22,7 @@ class Helper
 	 *
 	 * @return  boolean
 	 */
-	public function getPackageAbandoned(string $package) : bool
+	public function getPackageAbandoned(string $package): bool
 	{
 		return $this->getPackages()->get("packages.$package.abandoned", false);
 	}
@@ -34,7 +34,7 @@ class Helper
 	 *
 	 * @return  boolean
 	 */
-	public function getPackageDeprecated(string $package) : bool
+	public function getPackageDeprecated(string $package): bool
 	{
 		return $this->getPackages()->get("packages.$package.deprecated", false);
 	}
@@ -46,7 +46,7 @@ class Helper
 	 *
 	 * @return  string
 	 */
-	public function getPackageDisplayName(string $package) : string
+	public function getPackageDisplayName(string $package): string
 	{
 		return $this->getPackages()->get("packages.$package.display", ucfirst($package));
 	}
@@ -58,7 +58,7 @@ class Helper
 	 *
 	 * @return  string
 	 */
-	public function getPackageRepositoryName(string $package) : string
+	public function getPackageRepositoryName(string $package): string
 	{
 		return $this->getPackages()->get("packages.$package.repo", $package);
 	}
@@ -70,7 +70,7 @@ class Helper
 	 *
 	 * @return  boolean
 	 */
-	public function getPackageStable(string $package) : bool
+	public function getPackageStable(string $package): bool
 	{
 		return $this->getPackages()->get("packages.$package.stable", true);
 	}
