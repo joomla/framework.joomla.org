@@ -17,7 +17,7 @@
   "devDependencies": {
     "autoprefixer": "^9.0.1",
     "cross-env": "^5.2.0",
-    "laravel-mix": "^2.1.11"
+    "laravel-mix": "^3.0.0"
   },
   "license": "GPL-2.0+"
 }
