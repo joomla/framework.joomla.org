@@ -17,7 +17,10 @@
   "devDependencies": {
     "autoprefixer": "^9.0.1",
     "cross-env": "^5.2.0",
-    "laravel-mix": "^3.0.0"
+    "laravel-mix": "^4.0.8",
+    "resolve-url-loader": "^2.3.1",
+    "sass": "^1.15.2",
+    "sass-loader": "^7.1.0"
   },
   "license": "GPL-2.0+"
 }
