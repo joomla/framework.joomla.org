@@ -11,9 +11,8 @@ namespace Joomla\FrameworkWebsite\Controller;
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\Input\Input;
-use Psr\Log\{
-	LoggerAwareInterface, LoggerAwareTrait
-};
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Ramsey\Uuid\Uuid;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
@@ -53,25 +52,24 @@ abstract class AnalyticsController extends AbstractController implements LoggerA
 	 *
 	 * @return  void
 	 */
-	protected function sendAnalytics()
+	protected function sendAnalytics(): void
 	{
 		// On a GET request, submit analytics data if enabled
 		if ($this->getInput()->getMethod() === 'GET'
 			&& $this->getApplication()->get('analytics.enabled', false)
 			&& $this->analytics)
 		{
-			$this->analytics->setAsyncRequest(true)
-				->setProtocolVersion('1')
-				->setTrackingId($this->getApplication()->get('analytics.account', ''))
-				->setClientId(Uuid::uuid4()->toString())
-				->setDocumentPath($this->getApplication()->get('uri.base.path'))
-				->setIpOverride($this->getInput()->server->getString('REMOTE_ADDR', '127.0.0.1'))
-				->setUserAgentOverride($this->getInput()->server->getString('HTTP_USER_AGENT', 'JoomlaFramework/1.0'));
-
 			// Don't allow sending Analytics data to cause a failure
 			try
 			{
-				$this->analytics->sendPageview();
+				$this->analytics->setAsyncRequest(true)
+					->setProtocolVersion('1')
+					->setTrackingId($this->getApplication()->get('analytics.account', ''))
+					->setClientId(Uuid::uuid4()->toString())
+					->setDocumentPath($this->getApplication()->get('uri.base.path'))
+					->setIpOverride($this->getInput()->server->getString('REMOTE_ADDR', '127.0.0.1'))
+					->setUserAgentOverride($this->getInput()->server->getString('HTTP_USER_AGENT', 'JoomlaFramework/1.0'))
+					->sendPageview();
 			}
 			catch (\Exception $e)
 			{

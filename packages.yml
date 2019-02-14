@@ -18,6 +18,9 @@ packages:
     date:
         deprecated: true
         has_v2: false
+    datetime:
+        abandoned: true
+        display: DateTime
     di:
         display: DI
     event: ~
@@ -27,6 +30,8 @@ packages:
         has_v2: false
     filesystem: ~
     filter: ~
+    form:
+        abandoned: true
     github:
         display: GitHub
         repo: github-api
@@ -79,6 +84,10 @@ packages:
     router: ~
     session: ~
     string: ~
+    'symfony-event-dispatcher-bridge':
+        display: 'Symfony Event Dispatcher Bridge'
+        stable: false
+        has_v1: false
     test: ~
     twitter:
         repo: twitter-api

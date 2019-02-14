@@ -11,9 +11,8 @@ namespace Joomla\FrameworkWebsite\Model;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\ParameterType;
 use Joomla\FrameworkWebsite\Model\Exception\PackageNotFoundException;
-use Joomla\Model\{
-	DatabaseModelInterface, DatabaseModelTrait
-};
+use Joomla\Model\DatabaseModelInterface;
+use Joomla\Model\DatabaseModelTrait;
 
 /**
  * Model class for packages
@@ -40,6 +39,7 @@ class PackageModel implements DatabaseModelInterface
 	 * @param   string   $repoName      The package's repo name
 	 * @param   boolean  $isStable      Flag indicating the package is stable
 	 * @param   boolean  $isDeprecated  Flag indicating the package is deprecated
+	 * @param   boolean  $isAbandoned   Flag indicating the package is abandoned
 	 * @param   boolean  $hasV1         Flag indicating the package has a 1.x branch
 	 * @param   boolean  $hasV2         Flag indicating the package has a 2.x branch
 	 *
@@ -51,9 +51,10 @@ class PackageModel implements DatabaseModelInterface
 		string $repoName,
 		bool $isStable,
 		bool $isDeprecated,
+		bool $isAbandoned,
 		bool $hasV1,
 		bool $hasV2
-	)
+	): void
 	{
 		$db = $this->getDb();
 
@@ -63,11 +64,32 @@ class PackageModel implements DatabaseModelInterface
 			'repo'       => $repoName,
 			'stable'     => (int) $isStable,
 			'deprecated' => (int) $isDeprecated,
+			'abandoned'  => (int) $isAbandoned,
 			'has_v1'     => (int) $hasV1,
 			'has_v2'     => (int) $hasV2,
 		];
 
 		$db->insertObject('#__packages', $data);
+	}
+
+	/**
+	 * Get the active package data
+	 *
+	 * @return  array
+	 */
+	public function getActivePackages(): array
+	{
+		$abandoned = false;
+
+		$db = $this->getDb();
+
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('#__packages'))
+			->where($db->quoteName('abandoned') . ' = :abandoned')
+			->bind('abandoned', $abandoned, ParameterType::INTEGER);
+
+		return $db->setQuery($query)->loadObjectList('id');
 	}
 
 	/**
@@ -79,7 +101,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @throws  PackageNotFoundException
 	 */
-	public function getPackage(string $packageName) : \stdClass
+	public function getPackage(string $packageName): \stdClass
 	{
 		$db = $this->getDb();
 
@@ -105,7 +127,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @return  array
 	 */
-	public function getPackageNames() : array
+	public function getPackageNames(): array
 	{
 		$db = $this->getDb();
 
@@ -121,7 +143,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @return  array
 	 */
-	public function getPackages() : array
+	public function getPackages(): array
 	{
 		$db = $this->getDb();
 
@@ -161,6 +183,7 @@ class PackageModel implements DatabaseModelInterface
 	 * @param   string   $repoName      The package's repo name
 	 * @param   boolean  $isStable      Flag indicating the package is stable
 	 * @param   boolean  $isDeprecated  Flag indicating the package is deprecated
+	 * @param   boolean  $isAbandoned   Flag indicating the package is abandoned
 	 * @param   boolean  $hasV1         Flag indicating the package has a 1.x branch
 	 * @param   boolean  $hasV2         Flag indicating the package has a 2.x branch
 	 *
@@ -173,9 +196,10 @@ class PackageModel implements DatabaseModelInterface
 		string $repoName,
 		bool $isStable,
 		bool $isDeprecated,
+		bool $isAbandoned,
 		bool $hasV1,
 		bool $hasV2
-	)
+	): void
 	{
 		$db = $this->getDb();
 
@@ -186,6 +210,7 @@ class PackageModel implements DatabaseModelInterface
 			'repo'       => $repoName,
 			'stable'     => (int) $isStable,
 			'deprecated' => (int) $isDeprecated,
+			'abandoned'  => (int) $isAbandoned,
 			'has_v1'     => (int) $hasV1,
 			'has_v2'     => (int) $hasV2,
 		];

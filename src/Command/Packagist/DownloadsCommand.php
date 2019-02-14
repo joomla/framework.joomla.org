@@ -8,14 +8,24 @@
 
 namespace Joomla\FrameworkWebsite\Command\Packagist;
 
-use Joomla\Console\AbstractCommand;
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to get download counts from Packagist
  */
-class DownloadsCommand extends AbstractCommand
+class DownloadsCommand extends Command
 {
+	/**
+	 * The default command name
+	 *
+	 * @var  string|null
+	 */
+	protected static $defaultName = 'packagist:sync:downloads';
+
 	/**
 	 * The packagist helper object
 	 *
@@ -36,13 +46,16 @@ class DownloadsCommand extends AbstractCommand
 	}
 
 	/**
-	 * Execute the command.
+	 * Executes the current command.
 	 *
-	 * @return  integer  The exit code for the command.
+	 * @param   InputInterface   $input   The command input.
+	 * @param   OutputInterface  $output  The command output.
+	 *
+	 * @return  integer|null  null or 0 if everything went fine, or an error code
 	 */
-	public function execute(): int
+	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$symfonyStyle = $this->createSymfonyStyle();
+		$symfonyStyle = new SymfonyStyle($input, $output);
 
 		$symfonyStyle->title('Sync Download Counts from Packagist');
 
@@ -54,18 +67,17 @@ class DownloadsCommand extends AbstractCommand
 	}
 
 	/**
-	 * Initialise the command.
+	 * Configures the current command.
 	 *
 	 * @return  void
 	 */
-	protected function initialise()
+	protected function configure(): void
 	{
-		$this->setName('packagist:sync:downloads');
 		$this->setDescription('Synchronizes download counts with Packagist');
 		$this->setHelp(<<<'EOF'
 The <info>%command.name%</info> command synchronizes the package download counts with Packagist
 
-<info>php %command.full_name% %command.name%</info>
+<info>php %command.full_name%</info>
 EOF
 		);
 	}

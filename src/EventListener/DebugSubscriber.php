@@ -9,17 +9,14 @@
 namespace Joomla\FrameworkWebsite\EventListener;
 
 use DebugBar\DebugBar;
-use Joomla\Application\{
-	AbstractWebApplication, ApplicationEvents
-};
+use Joomla\Application\AbstractWebApplication;
+use Joomla\Application\ApplicationEvents;
 use Joomla\Application\Event\ApplicationEvent;
-use Joomla\Event\
-{
-	EventInterface, Priority, SubscriberInterface
-};
-use Zend\Diactoros\Response\{
-	JsonResponse, RedirectResponse
-};
+use Joomla\Event\EventInterface;
+use Joomla\Event\Priority;
+use Joomla\Event\SubscriberInterface;
+use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\RedirectResponse;
 
 /**
  * Debug event subscriber
@@ -65,7 +62,7 @@ class DebugSubscriber implements SubscriberInterface
 	 *
 	 * @return  void
 	 */
-	public function handleDebugResponse(ApplicationEvent $event)
+	public function handleDebugResponse(ApplicationEvent $event): void
 	{
 		/** @var AbstractWebApplication $application */
 		$application = $event->getApplication();
@@ -89,7 +86,7 @@ class DebugSubscriber implements SubscriberInterface
 
 				if ($pos !== false)
 				{
-					$body = substr_replace($body, $debugBarOutput . '</body>', $pos, strlen('</body>'));
+					$body = substr_replace($body, $debugBarOutput . '</body>', $pos, \strlen('</body>'));
 				}
 			}
 
@@ -113,7 +110,7 @@ class DebugSubscriber implements SubscriberInterface
 	 *
 	 * @return  void
 	 */
-	public function handleError(EventInterface $event)
+	public function handleError(EventInterface $event): void
 	{
 		/** @var \DebugBar\DataCollector\ExceptionsCollector $collector */
 		$collector = $this->debugBar['exceptions'];
@@ -146,7 +143,7 @@ class DebugSubscriber implements SubscriberInterface
 	 *
 	 * @return  void
 	 */
-	public function markAfterExecute(ApplicationEvent $event)
+	public function markAfterExecute(ApplicationEvent $event): void
 	{
 		/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
 		$collector = $this->debugBar['time'];
@@ -161,7 +158,7 @@ class DebugSubscriber implements SubscriberInterface
 	 *
 	 * @return  void
 	 */
-	public function markBeforeExecute(ApplicationEvent $event)
+	public function markBeforeExecute(ApplicationEvent $event): void
 	{
 		/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
 		$collector = $this->debugBar['time'];

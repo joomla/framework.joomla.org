@@ -63,7 +63,7 @@ class FrameworkTwigRuntime
 	 *
 	 * @return  string
 	 */
-	public function getRequestUri() : string
+	public function getRequestUri(): string
 	{
 		return $this->app->get('uri.request');
 	}
@@ -75,7 +75,7 @@ class FrameworkTwigRuntime
 	 *
 	 * @return  string
 	 */
-	public function getRouteUri(string $route = '') : string
+	public function getRouteUri(string $route = ''): string
 	{
 		return $this->app->get('uri.base.path') . $route;
 	}
@@ -87,7 +87,7 @@ class FrameworkTwigRuntime
 	 *
 	 * @return  string
 	 */
-	public function getRouteUrl(string $route = '') : string
+	public function getRouteUrl(string $route = ''): string
 	{
 		return $this->app->get('uri.base.host') . $this->getRouteUri($route);
 	}
@@ -99,7 +99,7 @@ class FrameworkTwigRuntime
 	 *
 	 * @return  string
 	 */
-	public function getSriAttributes(string $path) : string
+	public function getSriAttributes(string $path): string
 	{
 		if ($this->sriManifestData === null)
 		{

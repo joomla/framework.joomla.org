@@ -53,7 +53,7 @@ class PackagistHelper
 	 *
 	 * @return  array
 	 */
-	private function fetchDownloadCounts() : array
+	private function fetchDownloadCounts(): array
 	{
 		$counts = [];
 
@@ -84,7 +84,7 @@ class PackagistHelper
 	 *
 	 * @throws  ExecutionFailureException
 	 */
-	public function syncDownloadCounts()
+	public function syncDownloadCounts(): void
 	{
 		// Begin a transaction in case of error
 		$this->database->transactionStart();

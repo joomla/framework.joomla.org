@@ -8,9 +8,8 @@
 
 namespace Joomla\FrameworkWebsite\Service;
 
-use Joomla\DI\{
-	Container, ServiceProviderInterface
-};
+use Joomla\DI\Container;
+use Joomla\DI\ServiceProviderInterface;
 use Joomla\Github\Github;
 use Joomla\Http\HttpFactory;
 use Joomla\Registry\Registry;
@@ -27,7 +26,7 @@ class GitHubProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	public function register(Container $container)
+	public function register(Container $container): void
 	{
 		$container->alias(Github::class, 'github')
 			->share('github', [$this, 'getGithubService'], true);
@@ -40,7 +39,7 @@ class GitHubProvider implements ServiceProviderInterface
 	 *
 	 * @return  Github
 	 */
-	public function getGithubService(Container $container) : Github
+	public function getGithubService(Container $container): Github
 	{
 		/** @var Registry $config */
 		$config = $container->get('config');

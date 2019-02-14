@@ -9,9 +9,8 @@
 namespace Joomla\FrameworkWebsite\View\Package;
 
 use Joomla\FrameworkWebsite\Helper;
-use Joomla\FrameworkWebsite\Model\{
-	PackageModel, ReleaseModel
-};
+use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\ReleaseModel;
 use Joomla\Renderer\RendererInterface;
 use Joomla\View\BaseHtmlView;
 
@@ -91,7 +90,7 @@ class PackageHtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 */
-	public function setPackage(string $package)
+	public function setPackage(string $package): void
 	{
 		$this->package = $package;
 	}

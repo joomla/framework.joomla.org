@@ -23,6 +23,15 @@ use Psr\Cache\CacheItemPoolInterface;
 class GitHubHelper
 {
 	/**
+	 * Accounts to exclude from the contributor listing
+	 *
+	 * @const  string[]
+	 */
+	private const IGNORE_ACCOUNTS = [
+		'joomla-jenkins',
+	];
+
+	/**
 	 * Application object
 	 *
 	 * @var  AbstractApplication
@@ -56,15 +65,6 @@ class GitHubHelper
 	 * @var  Github
 	 */
 	private $github;
-
-	/**
-	 * Accounts to exclude from the contributor listing
-	 *
-	 * @var  string[]
-	 */
-	private $ignoreAccounts = [
-		'joomla-jenkins',
-	];
 
 	/**
 	 * Instantiate the helper.
@@ -191,7 +191,7 @@ class GitHubHelper
 	 *
 	 * @throws  ExecutionFailureException
 	 */
-	public function syncPackageContributors(string $package)
+	public function syncPackageContributors(string $package): void
 	{
 		$contributors = $this->github->repositories->getListContributors('joomla-framework', $package);
 
@@ -202,14 +202,14 @@ class GitHubHelper
 		{
 			foreach ($contributors as $contributor)
 			{
-				if (in_array($contributor->login, $this->ignoreAccounts))
+				if (\in_array($contributor->login, self::IGNORE_ACCOUNTS))
 				{
 					continue;
 				}
 
 				/** @var MysqlQuery $query */
 				$query = $this->database->getQuery(true);
-				$query->setQuery("INSERT INTO `#__contributors` (github_id, username, avatar, profile) VALUES (:github, :username, :avatar, :profile) ON DUPLICATE KEY UPDATE username = :username, avatar = :avatar, profile = :profile");
+				$query->setQuery('INSERT INTO `#__contributors` (github_id, username, avatar, profile) VALUES (:github, :username, :avatar, :profile) ON DUPLICATE KEY UPDATE username = :username, avatar = :avatar, profile = :profile');
 
 				$query->bind('github', $contributor->id, ParameterType::INTEGER);
 				$query->bind('username', $contributor->login, ParameterType::STRING);
@@ -245,7 +245,7 @@ class GitHubHelper
 	 *
 	 * @throws  ExecutionFailureException
 	 */
-	public function syncUserData()
+	public function syncUserData(): void
 	{
 		/** @var MysqlQuery $query */
 		$query = $this->database->getQuery(true);
@@ -293,7 +293,7 @@ class GitHubHelper
 	 *
 	 * @throws  ExecutionFailureException
 	 */
-	public function updateCommitCounts()
+	public function updateCommitCounts(): void
 	{
 		$this->database->transactionStart();
 

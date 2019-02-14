@@ -9,7 +9,6 @@
 namespace Joomla\FrameworkWebsite\Controller\Api;
 
 use Joomla\Application\AbstractApplication;
-use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\Controller\AnalyticsController;
 use Joomla\FrameworkWebsite\View\Package\PackageJsonView;
 use Joomla\Input\Input;
@@ -47,7 +46,7 @@ class PackageControllerGet extends AnalyticsController
 	 *
 	 * @return  boolean
 	 */
-	public function execute() : bool
+	public function execute(): bool
 	{
 		$this->sendAnalytics();
 

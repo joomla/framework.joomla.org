@@ -4,7 +4,8 @@
     "homepage": "http://github.com/joomla/framework.joomla.org",
     "license": "GPL-2.0+",
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.2",
+        "ext-json": "*",
         "ext-pdo": "*",
         "joomla/application": "~2.0@dev",
         "joomla/cache": "~2.0@dev",
@@ -16,12 +17,14 @@
         "joomla/filesystem": "~2.0@dev",
         "joomla/github": "~2.0@dev",
         "joomla/http": "~2.0@dev",
+        "joomla/input": "~2.0@dev",
         "joomla/model": "~2.0@dev",
         "joomla/preload": "~2.0@dev",
         "joomla/registry": "~2.0@dev",
         "joomla/renderer": "~2.0@dev",
         "joomla/router": "~2.0@dev",
         "joomla/string": "~2.0@dev",
+        "joomla/symfony-event-dispatcher-bridge": "~2.0@dev",
         "joomla/uri": "~2.0@dev",
         "joomla/utilities": "~2.0@dev",
         "joomla/view": "~2.0@dev",
@@ -29,19 +32,25 @@
         "monolog/monolog": "^1.22.1",
         "psr/link": "~1.0",
         "ramsey/uuid": "~3.4",
-        "robmorgan/phinx": "0.8.1",
-        "symfony/asset": "3.4.*",
-        "symfony/console": "3.4.*",
-        "symfony/process": "3.4.*",
-        "symfony/web-link": "3.4.*",
-        "symfony/yaml": "3.4.*",
+        "robmorgan/phinx": "^0.10.6",
+        "symfony/asset": "4.2.*",
+        "symfony/console": "4.2.*",
+        "symfony/process": "4.2.*",
+        "symfony/web-link": "4.2.*",
+        "symfony/yaml": "4.2.*",
         "theiconic/php-ga-measurement-protocol": "^2.0",
         "twig/twig": "~2.4",
-        "zendframework/zend-diactoros": "~1.4"
+        "zendframework/zend-diactoros": "~2.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.13",
         "joomla/coding-standards": "dev-master",
         "maximebf/debugbar": "^1.13"
+    },
+    "replace": {
+        "paragonie/random_compat": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php72": "*"
     },
     "autoload": {
         "psr-4": {
@@ -50,7 +59,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.0.28"
+            "php": "7.2.10"
         }
     }
 }

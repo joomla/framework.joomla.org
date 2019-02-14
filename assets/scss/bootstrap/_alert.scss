@@ -29,7 +29,7 @@
 //
 // Generate contextual modifier classes for colorizing the alert.
 
-@each $value in ("warning") {
+@each $value in ("warning", "danger") {
   $color: theme-color($value);
   .alert-#{$value} {
     @include alert-variant(theme-color-level($value, $alert-bg-level), theme-color-level($value, $alert-border-level), theme-color-level($value, $alert-color-level));

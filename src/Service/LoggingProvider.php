@@ -8,14 +8,12 @@
 
 namespace Joomla\FrameworkWebsite\Service;
 
-use Joomla\DI\{
-	Container, ServiceProviderInterface
-};
+use Joomla\DI\Container;
+use Joomla\DI\ServiceProviderInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Monolog\Processor\{
-	PsrLogMessageProcessor, WebProcessor
-};
+use Monolog\Processor\PsrLogMessageProcessor;
+use Monolog\Processor\WebProcessor;
 
 /**
  * Logging service provider
@@ -29,7 +27,7 @@ class LoggingProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	public function register(Container $container)
+	public function register(Container $container): void
 	{
 		/*
 		 * Monolog Handlers
@@ -56,14 +54,14 @@ class LoggingProvider implements ServiceProviderInterface
 	 *
 	 * @return  StreamHandler
 	 */
-	public function getMonologHandlerApplicationService(Container $container) : StreamHandler
+	public function getMonologHandlerApplicationService(Container $container): StreamHandler
 	{
 		/** @var \Joomla\Registry\Registry $config */
 		$config = $container->get('config');
 
 		$level = strtoupper($config->get('log.application', $config->get('log.level', 'error')));
 
-		return new StreamHandler(JPATH_ROOT . '/logs/framework.log', constant('\\Monolog\\Logger::' . $level));
+		return new StreamHandler(JPATH_ROOT . '/logs/framework.log', \constant('\\Monolog\\Logger::' . $level));
 	}
 
 	/**
@@ -73,7 +71,7 @@ class LoggingProvider implements ServiceProviderInterface
 	 *
 	 * @return  Logger
 	 */
-	public function getMonologLoggerApplicationCliService(Container $container) : Logger
+	public function getMonologLoggerApplicationCliService(Container $container): Logger
 	{
 		return new Logger(
 			'Framework',
@@ -93,7 +91,7 @@ class LoggingProvider implements ServiceProviderInterface
 	 *
 	 * @return  Logger
 	 */
-	public function getMonologLoggerApplicationWebService(Container $container) : Logger
+	public function getMonologLoggerApplicationWebService(Container $container): Logger
 	{
 		return new Logger(
 			'Framework',
@@ -114,7 +112,7 @@ class LoggingProvider implements ServiceProviderInterface
 	 *
 	 * @return  PsrLogMessageProcessor
 	 */
-	public function getMonologProcessorPsr3Service(Container $container) : PsrLogMessageProcessor
+	public function getMonologProcessorPsr3Service(Container $container): PsrLogMessageProcessor
 	{
 		return new PsrLogMessageProcessor;
 	}
@@ -126,7 +124,7 @@ class LoggingProvider implements ServiceProviderInterface
 	 *
 	 * @return  WebProcessor
 	 */
-	public function getMonologProcessorWebService(Container $container) : WebProcessor
+	public function getMonologProcessorWebService(Container $container): WebProcessor
 	{
 		return new WebProcessor;
 	}

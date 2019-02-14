@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Joomla">
+<ruleset name="Joomla-Framework-Website">
 
     <arg name="report" value="full"/>
     <arg name="tab-width" value="4"/>
@@ -22,6 +22,10 @@
 
     <!-- Exclude non-PHP files -->
     <exclude-pattern>*/Gruntfile.js</exclude-pattern>
+
+    <file>./bin</file>
+    <file>./src</file>
+    <file>./www</file>
 
     <rule ref="Joomla">
         <exclude name="Joomla.Commenting.ClassComment.MissingSinceTag"/>

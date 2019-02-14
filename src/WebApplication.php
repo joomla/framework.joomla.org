@@ -11,9 +11,8 @@ namespace Joomla\FrameworkWebsite;
 use DebugBar\DebugBar;
 use Joomla\Application\AbstractWebApplication;
 use Joomla\Controller\ControllerInterface;
-use Joomla\DI\{
-	ContainerAwareInterface, ContainerAwareTrait
-};
+use Joomla\DI\ContainerAwareInterface;
+use Joomla\DI\ContainerAwareTrait;
 use Joomla\Router\Router;
 
 /**
@@ -42,7 +41,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 *
 	 * @return  void
 	 */
-	protected function compress()
+	protected function compress(): void
 	{
 		if (!$this->get('debug', false))
 		{
@@ -55,7 +54,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 *
 	 * @return  void
 	 */
-	protected function doExecute()
+	protected function doExecute(): void
 	{
 		if ($this->debugBar)
 		{
@@ -109,7 +108,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 *
 	 * @return  $this
 	 */
-	public function setDebugBar(DebugBar $debugBar) : WebApplication
+	public function setDebugBar(DebugBar $debugBar): self
 	{
 		$this->debugBar = $debugBar;
 
@@ -123,7 +122,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 *
 	 * @return  $this
 	 */
-	public function setRouter(Router $router) : WebApplication
+	public function setRouter(Router $router): self
 	{
 		$this->router = $router;
 

@@ -6,8 +6,13 @@
 
 {% block content %}
 <section class="status container">
-    <h1 class="centered-title">Release Data for {{ package.display }} Package <a href="https://github.com/joomla-framework/{{ package.repo }}"><span class="fa fa-github"></span></a></h1>
-    {% if package.deprecated %}
+    <h1 class="centered-title">Release Data for {{ package.display }} Package <a href="https://github.com/joomla-framework/{{ package.repo }}"><span class="fa fa-github" aria-hidden="true"></span><span class="sr-only">Open {{ package.display }} on GitHub</span></a></h1>
+    {% if package.abandoned %}
+        <div class="alert alert-danger">
+            <h4>Abandoned Package</h4>
+            <p>This package has been abandoned and is no longer supported.</p>
+        </div>
+    {% elseif package.deprecated %}
         <div class="alert alert-warning">
             <h4>Deprecated Package</h4>
             <p>This package has been deprecated and will soon no longer be supported.</p>
@@ -16,9 +21,9 @@
     <table class="table table-striped table-sm nice-responsive-table">
         <thead>
             <tr>
-                <th>Version</th>
-                <th>Release Date</th>
-                <th>Build Status</th>
+                <th scope="col">Version</th>
+                <th scope="col">Release Date</th>
+                <th scope="col">Build Status</th>
             </tr>
         </thead>
         <tbody>

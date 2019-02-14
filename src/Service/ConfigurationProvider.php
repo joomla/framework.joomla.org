@@ -8,9 +8,8 @@
 
 namespace Joomla\FrameworkWebsite\Service;
 
-use Joomla\DI\{
-	Container, ServiceProviderInterface
-};
+use Joomla\DI\Container;
+use Joomla\DI\ServiceProviderInterface;
 use Joomla\Registry\Registry;
 
 /**
@@ -41,6 +40,9 @@ class ConfigurationProvider implements ServiceProviderInterface
 		}
 
 		$this->config = (new Registry)->loadFile($file);
+
+		// Hardcode database driver option
+		$this->config->set('database.driver', 'mysql');
 	}
 
 	/**
@@ -50,11 +52,11 @@ class ConfigurationProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	public function register(Container $container)
+	public function register(Container $container): void
 	{
 		$container->share(
 			'config',
-			function () : Registry
+			function (): Registry
 			{
 				return $this->config;
 			},

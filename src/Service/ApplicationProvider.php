@@ -9,43 +9,60 @@
 namespace Joomla\FrameworkWebsite\Service;
 
 use Joomla\Application as JoomlaApplication;
-use Joomla\Console\Application;
-use Joomla\Console\Loader\{
-	ContainerLoader, LoaderInterface
-};
+use Joomla\Console\Application as JoomlaConsoleApplication;
 use Joomla\Database\DatabaseInterface;
-use Joomla\DI\{
-	Container, ServiceProviderInterface
-};
+use Joomla\DI\Container;
+use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use Joomla\FrameworkWebsite\{
-	Helper, WebApplication
-};
-use Joomla\FrameworkWebsite\Command as AppCommands;
-use Joomla\FrameworkWebsite\Controller\{
-	Api\PackageControllerGet, Api\StatusControllerGet, ContributorsController, Documentation\IndexController, Documentation\PageController as DocPageController, Documentation\RedirectController, HomepageController, PackageController, PageController, StatusController, WrongCmsController
-};
-use Joomla\FrameworkWebsite\Helper\{
-	GitHubHelper, PackagistHelper
-};
-use Joomla\FrameworkWebsite\Model\{
-	ContributorModel, PackageModel, ReleaseModel
-};
-use Joomla\FrameworkWebsite\View\{
-	Contributor\ContributorHtmlView, Documentation\ErrorHtmlView, Documentation\IndexHtmlView, Documentation\PageHtmlView, Package\PackageHtmlView, Package\PackageJsonView, Status\StatusHtmlView, Status\StatusJsonView
-};
+use Joomla\FrameworkWebsite\Command\ClearCacheCommand;
+use Joomla\FrameworkWebsite\Command\GenerateSriCommand;
+use Joomla\FrameworkWebsite\Command\GitHub\ContributorsCommand;
+use Joomla\FrameworkWebsite\Command\GitHub\FetchDocsCommand;
+use Joomla\FrameworkWebsite\Command\Package\SyncCommand as PackageSyncCommand;
+use Joomla\FrameworkWebsite\Command\Packagist\DownloadsCommand;
+use Joomla\FrameworkWebsite\Command\Packagist\SyncCommand as PackagistSyncCommand;
+use Joomla\FrameworkWebsite\Command\Twig\ResetCacheCommand;
+use Joomla\FrameworkWebsite\Command\UpdateCommand;
+use Joomla\FrameworkWebsite\ConsoleApplication;
+use Joomla\FrameworkWebsite\Controller\Api\PackageControllerGet;
+use Joomla\FrameworkWebsite\Controller\Api\StatusControllerGet;
+use Joomla\FrameworkWebsite\Controller\ContributorsController;
+use Joomla\FrameworkWebsite\Controller\Documentation\IndexController;
+use Joomla\FrameworkWebsite\Controller\Documentation\PageController as DocumentationPageController;
+use Joomla\FrameworkWebsite\Controller\Documentation\RedirectController;
+use Joomla\FrameworkWebsite\Controller\HomepageController;
+use Joomla\FrameworkWebsite\Controller\PackageController;
+use Joomla\FrameworkWebsite\Controller\PageController;
+use Joomla\FrameworkWebsite\Controller\StatusController;
+use Joomla\FrameworkWebsite\Controller\WrongCmsController;
+use Joomla\FrameworkWebsite\Helper;
+use Joomla\FrameworkWebsite\Helper\GitHubHelper;
+use Joomla\FrameworkWebsite\Helper\PackagistHelper;
+use Joomla\FrameworkWebsite\Model\ContributorModel;
+use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\ReleaseModel;
+use Joomla\FrameworkWebsite\View\Contributor\ContributorHtmlView;
+use Joomla\FrameworkWebsite\View\Documentation\ErrorHtmlView;
+use Joomla\FrameworkWebsite\View\Documentation\IndexHtmlView;
+use Joomla\FrameworkWebsite\View\Documentation\PageHtmlView;
+use Joomla\FrameworkWebsite\View\Package\PackageHtmlView;
+use Joomla\FrameworkWebsite\View\Package\PackageJsonView;
+use Joomla\FrameworkWebsite\View\Status\StatusHtmlView;
+use Joomla\FrameworkWebsite\View\Status\StatusJsonView;
+use Joomla\FrameworkWebsite\WebApplication;
 use Joomla\Github\Github;
 use Joomla\Http\Http;
-use Joomla\Input\{
-	Cli, Input
-};
+use Joomla\Input\Input;
 use Joomla\Registry\Registry;
-use Joomla\Renderer\{
-	RendererInterface, TwigRenderer
-};
+use Joomla\Renderer\RendererInterface;
+use Joomla\Renderer\TwigRenderer;
 use Joomla\Router\Router;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Application as SymfonyConsoleApplication;
+use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
+use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
@@ -60,13 +77,15 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	public function register(Container $container)
+	public function register(Container $container): void
 	{
 		/*
 		 * Application Classes
 		 */
 
-		$container->share(Application::class, [$this, 'getConsoleApplicationClassService'], true);
+		$container->alias(ConsoleApplication::class, SymfonyConsoleApplication::class)
+			->alias(JoomlaConsoleApplication::class, SymfonyConsoleApplication::class)
+			->share(SymfonyConsoleApplication::class, [$this, 'getConsoleApplicationService'], true);
 
 		$container->alias(WebApplication::class, JoomlaApplication\AbstractWebApplication::class)
 			->share(JoomlaApplication\AbstractWebApplication::class, [$this, 'getWebApplicationClassService'], true);
@@ -78,9 +97,8 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(Analytics::class, 'analytics')
 			->share('analytics', [$this, 'getAnalyticsService'], true);
 
-		$container->alias(LoaderInterface::class, 'application.console.loader')
-			->alias(ContainerLoader::class, 'application.console.loader')
-			->share('application.console.loader', [$this, 'getApplicationConsoleLoaderService'], true);
+		$container->alias(ContainerCommandLoader::class, CommandLoaderInterface::class)
+			->share(CommandLoaderInterface::class, [$this, 'getCommandLoaderService'], true);
 
 		$container->alias(Helper::class, 'application.helper')
 			->share('application.helper', [$this, 'getApplicationHelperService'], true);
@@ -97,21 +115,20 @@ class ApplicationProvider implements ServiceProviderInterface
 			->share('application.router', [$this, 'getApplicationRouterService'], true);
 
 		$container->share(Input::class, [$this, 'getInputClassService'], true);
-		$container->share(Cli::class, [$this, 'getInputCliClassService'], true);
 
 		/*
 		 * Console Commands
 		 */
 
-		$container->share(AppCommands\ClearCacheCommand::class, [$this, 'getClearCacheCommandClassService'], true);
-		$container->share(AppCommands\GenerateSriCommand::class, [$this, 'getGenerateSriCommandClassService'], true);
-		$container->share(AppCommands\GitHub\ContributorsCommand::class, [$this, 'getGitHubContributorsCommandClassService'], true);
-		$container->share(AppCommands\GitHub\FetchDocsCommand::class, [$this, 'getGitHubFetchDocsCommandClassService'], true);
-		$container->share(AppCommands\Package\SyncCommand::class, [$this, 'getPackageSyncCommandClassService'], true);
-		$container->share(AppCommands\Packagist\DownloadsCommand::class, [$this, 'getPackagistDownloadsCommandClassService'], true);
-		$container->share(AppCommands\Packagist\SyncCommand::class, [$this, 'getPackagistSyncCommandClassService'], true);
-		$container->share(AppCommands\Twig\ResetCacheCommand::class, [$this, 'getTwigResetCacheCommandClassService'], true);
-		$container->share(AppCommands\UpdateCommand::class, [$this, 'getUpdateCommandClassService'], true);
+		$container->share(ClearCacheCommand::class, [$this, 'getClearCacheCommandClassService'], true);
+		$container->share(ContributorsCommand::class, [$this, 'getContributorsCommandService'], true);
+		$container->share(FetchDocsCommand::class, [$this, 'getGitHubFetchDocsCommandClassService'], true);
+		$container->share(DownloadsCommand::class, [$this, 'getDownloadsCommandService'], true);
+		$container->share(GenerateSriCommand::class, [$this, 'getGenerateSriCommandService'], true);
+		$container->share(PackageSyncCommand::class, [$this, 'getPackageSyncCommandService'], true);
+		$container->share(PackagistSyncCommand::class, [$this, 'getPackagistSyncCommandService'], true);
+		$container->share(ResetCacheCommand::class, [$this, 'getResetCacheCommandService'], true);
+		$container->share(UpdateCommand::class, [$this, 'getUpdateCommandService'], true);
 
 		/*
 		 * MVC Layer
@@ -130,7 +147,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(IndexController::class, 'controller.documentation.index')
 			->share('controller.documentation.index', [$this, 'getControllerDocumentationIndexService'], true);
 
-		$container->alias(DocPageController::class, 'controller.documentation.page')
+		$container->alias(DocumentationPageController::class, 'controller.documentation.page')
 			->share('controller.documentation.page', [$this, 'getControllerDocumentationPageService'], true);
 
 		$container->alias(RedirectController::class, 'controller.documentation.redirect')
@@ -200,37 +217,13 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the `application.console.helper` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  LoaderInterface
-	 */
-	public function getApplicationConsoleLoaderService(Container $container) : LoaderInterface
-	{
-		$mapping = [
-			'cache:clear'              => AppCommands\ClearCacheCommand::class,
-			'github:contributors'      => AppCommands\GitHub\ContributorsCommand::class,
-			'github:fetch-docs'        => AppCommands\GitHub\FetchDocsCommand::class,
-			'package:sync'             => AppCommands\Package\SyncCommand::class,
-			'packagist:sync:downloads' => AppCommands\Packagist\DownloadsCommand::class,
-			'packagist:sync:releases'  => AppCommands\Packagist\SyncCommand::class,
-			'template:generate-sri'    => AppCommands\GenerateSriCommand::class,
-			'twig:reset-cache'         => AppCommands\Twig\ResetCacheCommand::class,
-			'update:server'            => AppCommands\UpdateCommand::class,
-		];
-
-		return new ContainerLoader($container, $mapping);
-	}
-
-	/**
 	 * Get the `application.helper` service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
 	 * @return  Helper
 	 */
-	public function getApplicationHelperService(Container $container) : Helper
+	public function getApplicationHelperService(Container $container): Helper
 	{
 		$helper = new Helper;
 		$helper->setPackages($container->get('application.packages'));
@@ -245,7 +238,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  GitHubHelper
 	 */
-	public function getApplicationHelperGithubService(Container $container) : GitHubHelper
+	public function getApplicationHelperGithubService(Container $container): GitHubHelper
 	{
 		return new GitHubHelper(
 			$container->get(Github::class),
@@ -262,7 +255,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  PackagistHelper
 	 */
-	public function getApplicationHelperPackagistService(Container $container) : PackagistHelper
+	public function getApplicationHelperPackagistService(Container $container): PackagistHelper
 	{
 		$helper = new PackagistHelper($container->get(Http::class), $container->get(DatabaseInterface::class));
 		$helper->setPackages($container->get('application.packages'));
@@ -277,7 +270,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  Registry
 	 */
-	public function getApplicationPackagesService(Container $container) : Registry
+	public function getApplicationPackagesService(Container $container): Registry
 	{
 		return (new Registry)->loadFile(JPATH_ROOT . '/packages.yml', 'YAML');
 	}
@@ -289,7 +282,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  Router
 	 */
-	public function getApplicationRouterService(Container $container) : Router
+	public function getApplicationRouterService(Container $container): Router
 	{
 		$router = new Router;
 
@@ -409,25 +402,58 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the console application service
+	 * Get the CommandLoaderInterface service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  Application
+	 * @return  CommandLoaderInterface
 	 */
-	public function getConsoleApplicationClassService(Container $container) : Application
+	public function getCommandLoaderService(Container $container): CommandLoaderInterface
 	{
-		$application = new Application(
-			$container->get(Cli::class),
-			$container->get('config')
-		);
+		$mapping = [
+			ContributorsCommand::getDefaultName()  => ContributorsCommand::class,
+			PackageSyncCommand::getDefaultName()   => PackageSyncCommand::class,
+			DownloadsCommand::getDefaultName()     => DownloadsCommand::class,
+			PackagistSyncCommand::getDefaultName() => PackagistSyncCommand::class,
+			GenerateSriCommand::getDefaultName()   => GenerateSriCommand::class,
+			ResetCacheCommand::getDefaultName()    => ResetCacheCommand::class,
+			UpdateCommand::getDefaultName()        => UpdateCommand::class,
+		];
 
-		$application->setName('Joomla! Framework Website');
-		$application->setCommandLoader($container->get(LoaderInterface::class));
-		$application->setDispatcher($container->get(DispatcherInterface::class));
+		return new ContainerCommandLoader($container, $mapping);
+	}
+
+	/**
+	 * Get the ConsoleApplication service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ConsoleApplication
+	 */
+	public function getConsoleApplicationService(Container $container): ConsoleApplication
+	{
+		$application = new ConsoleApplication('Joomla! Framework Website');
+
+		$application->setCommandLoader($container->get(CommandLoaderInterface::class));
+		$application->setDispatcher($container->get(EventDispatcherInterface::class));
 		$application->setLogger($container->get(LoggerInterface::class));
 
 		return $application;
+	}
+
+	/**
+	 * Get the ContributorsCommand class service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ContributorsCommand
+	 */
+	public function getContributorsCommandService(Container $container): ContributorsCommand
+	{
+		return new ContributorsCommand(
+			$container->get(PackageModel::class),
+			$container->get(GitHubHelper::class)
+		);
 	}
 
 	/**
@@ -437,7 +463,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  PackageControllerGet
 	 */
-	public function getControllerApiPackageService(Container $container) : PackageControllerGet
+	public function getControllerApiPackageService(Container $container): PackageControllerGet
 	{
 		$controller = new PackageControllerGet(
 			$container->get(PackageJsonView::class),
@@ -458,7 +484,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  StatusControllerGet
 	 */
-	public function getControllerApiStatusService(Container $container) : StatusControllerGet
+	public function getControllerApiStatusService(Container $container): StatusControllerGet
 	{
 		$controller = new StatusControllerGet(
 			$container->get(StatusJsonView::class),
@@ -479,7 +505,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  ContributorsController
 	 */
-	public function getControllerContributorsService(Container $container) : ContributorsController
+	public function getControllerContributorsService(Container $container): ContributorsController
 	{
 		return new ContributorsController(
 			$container->get(ContributorHtmlView::class),
@@ -547,7 +573,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  HomepageController
 	 */
-	public function getControllerHomepageService(Container $container) : HomepageController
+	public function getControllerHomepageService(Container $container): HomepageController
 	{
 		return new HomepageController(
 			$container->get(RendererInterface::class),
@@ -563,7 +589,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  PackageController
 	 */
-	public function getControllerPackageService(Container $container) : PackageController
+	public function getControllerPackageService(Container $container): PackageController
 	{
 		return new PackageController(
 			$container->get(PackageHtmlView::class),
@@ -579,7 +605,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  PageController
 	 */
-	public function getControllerPageService(Container $container) : PageController
+	public function getControllerPageService(Container $container): PageController
 	{
 		return new PageController(
 			$container->get(RendererInterface::class),
@@ -595,7 +621,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  StatusController
 	 */
-	public function getControllerStatusService(Container $container) : StatusController
+	public function getControllerStatusService(Container $container): StatusController
 	{
 		return new StatusController(
 			$container->get(StatusHtmlView::class),
@@ -611,7 +637,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  WrongCmsController
 	 */
-	public function getControllerWrongCmsService(Container $container) : WrongCmsController
+	public function getControllerWrongCmsService(Container $container): WrongCmsController
 	{
 		return new WrongCmsController(
 			$container->get(Input::class),
@@ -620,30 +646,29 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the GenerateSriCommand class service
+	 * Get the DownloadsCommand service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  AppCommands\GenerateSriCommand
+	 * @return  DownloadsCommand
 	 */
-	public function getGenerateSriCommandClassService(Container $container) : AppCommands\GenerateSriCommand
+	public function getDownloadsCommandService(Container $container): DownloadsCommand
 	{
-		return new AppCommands\GenerateSriCommand;
+		return new DownloadsCommand(
+			$container->get(PackagistHelper::class)
+		);
 	}
 
 	/**
-	 * Get the GitHub\ContributorsCommand class service
+	 * Get the GenerateSriCommand service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  AppCommands\GitHub\ContributorsCommand
+	 * @return  GenerateSriCommand
 	 */
-	public function getGitHubContributorsCommandClassService(Container $container) : AppCommands\GitHub\ContributorsCommand
+	public function getGenerateSriCommandService(Container $container): GenerateSriCommand
 	{
-		return new AppCommands\GitHub\ContributorsCommand(
-			$container->get(PackageModel::class),
-			$container->get(GitHubHelper::class)
-		);
+		return new GenerateSriCommand;
 	}
 
 	/**
@@ -670,21 +695,9 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  Input
 	 */
-	public function getInputClassService(Container $container) : Input
+	public function getInputClassService(Container $container): Input
 	{
 		return new Input($_REQUEST);
-	}
-
-	/**
-	 * Get the Input\Cli class service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  Cli
-	 */
-	public function getInputCliClassService(Container $container) : Cli
-	{
-		return new Cli;
 	}
 
 	/**
@@ -694,7 +707,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  ContributorModel
 	 */
-	public function getModelContributorService(Container $container) : ContributorModel
+	public function getModelContributorService(Container $container): ContributorModel
 	{
 		return new ContributorModel($container->get(DatabaseInterface::class));
 	}
@@ -706,7 +719,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  PackageModel
 	 */
-	public function getModelPackageService(Container $container) : PackageModel
+	public function getModelPackageService(Container $container): PackageModel
 	{
 		return new PackageModel($container->get(DatabaseInterface::class));
 	}
@@ -718,50 +731,36 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  ReleaseModel
 	 */
-	public function getModelReleaseService(Container $container) : ReleaseModel
+	public function getModelReleaseService(Container $container): ReleaseModel
 	{
 		return new ReleaseModel($container->get(DatabaseInterface::class));
 	}
 
 	/**
-	 * Get the Package\SyncCommand class service
+	 * Get the PackageSyncCommand service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  AppCommands\Package\SyncCommand
+	 * @return  PackageSyncCommand
 	 */
-	public function getPackageSyncCommandClassService(Container $container) : AppCommands\Package\SyncCommand
+	public function getPackageSyncCommandService(Container $container): PackageSyncCommand
 	{
-		return new AppCommands\Package\SyncCommand(
+		return new PackageSyncCommand(
 			$container->get(Helper::class),
 			$container->get(PackageModel::class)
 		);
 	}
 
 	/**
-	 * Get the Packagist\DownloadsCommand class service
+	 * Get the PackagistSyncCommand service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  AppCommands\Packagist\DownloadsCommand
+	 * @return  PackagistSyncCommand
 	 */
-	public function getPackagistDownloadsCommandClassService(Container $container) : AppCommands\Packagist\DownloadsCommand
+	public function getPackagistSyncCommandService(Container $container): PackagistSyncCommand
 	{
-		return new AppCommands\Packagist\DownloadsCommand(
-			$container->get(PackagistHelper::class)
-		);
-	}
-
-	/**
-	 * Get the Packagist\SyncCommand class service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  AppCommands\Packagist\SyncCommand
-	 */
-	public function getPackagistSyncCommandClassService(Container $container) : AppCommands\Packagist\SyncCommand
-	{
-		return new AppCommands\Packagist\SyncCommand(
+		return new PackagistSyncCommand(
 			$container->get(Http::class),
 			$container->get(PackageModel::class),
 			$container->get(ReleaseModel::class)
@@ -769,29 +768,30 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the Twig\ResetCacheCommand class service
+	 * Get the ResetCacheCommand service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  AppCommands\Twig\ResetCacheCommand
+	 * @return  ResetCacheCommand
 	 */
-	public function getTwigResetCacheCommandClassService(Container $container) : AppCommands\Twig\ResetCacheCommand
+	public function getResetCacheCommandService(Container $container): ResetCacheCommand
 	{
-		return new AppCommands\Twig\ResetCacheCommand(
-			$container->get(TwigRenderer::class)
+		return new ResetCacheCommand(
+			$container->get(TwigRenderer::class),
+			$container->get('config')
 		);
 	}
 
 	/**
-	 * Get the UpdateCommand class service
+	 * Get the UpdateCommand service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  AppCommands\UpdateCommand
+	 * @return  UpdateCommand
 	 */
-	public function getUpdateCommandClassService(Container $container) : AppCommands\UpdateCommand
+	public function getUpdateCommandService(Container $container): UpdateCommand
 	{
-		return new AppCommands\UpdateCommand;
+		return new UpdateCommand;
 	}
 
 	/**
@@ -801,7 +801,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  ContributorHtmlView
 	 */
-	public function getViewContributorHtmlService(Container $container) : ContributorHtmlView
+	public function getViewContributorHtmlService(Container $container): ContributorHtmlView
 	{
 		$view = new ContributorHtmlView(
 			$container->get('model.contributor'),
@@ -877,7 +877,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  PackageHtmlView
 	 */
-	public function getViewPackageHtmlService(Container $container) : PackageHtmlView
+	public function getViewPackageHtmlService(Container $container): PackageHtmlView
 	{
 		$view = new PackageHtmlView(
 			$container->get('model.package'),
@@ -898,7 +898,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  PackageJsonView
 	 */
-	public function getViewPackageJsonService(Container $container) : PackageJsonView
+	public function getViewPackageJsonService(Container $container): PackageJsonView
 	{
 		return new PackageJsonView(
 			$container->get('model.package'),
@@ -913,7 +913,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  StatusHtmlView
 	 */
-	public function getViewStatusHtmlService(Container $container) : StatusHtmlView
+	public function getViewStatusHtmlService(Container $container): StatusHtmlView
 	{
 		$view = new StatusHtmlView(
 			$container->get('model.package'),
@@ -933,7 +933,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  StatusJsonView
 	 */
-	public function getViewStatusJsonService(Container $container) : StatusJsonView
+	public function getViewStatusJsonService(Container $container): StatusJsonView
 	{
 		return new StatusJsonView(
 			$container->get('model.package'),
@@ -948,12 +948,12 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  WebApplication
 	 */
-	public function getWebApplicationClassService(Container $container) : WebApplication
+	public function getWebApplicationClassService(Container $container): WebApplication
 	{
 		/** @var Registry $config */
 		$config = $container->get('config');
 
-		$application = new WebApplication($container->get(Input::class), $config);
+		$application              = new WebApplication($container->get(Input::class), $config);
 		$application->httpVersion = '2';
 
 		// Inject extra services

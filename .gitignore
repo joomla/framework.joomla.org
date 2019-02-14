@@ -33,3 +33,6 @@ node_modules/
 # DebugBar assets
 /www/media/css/debugbar.css
 /www/media/js/debugbar.js
+
+# PHP-CS-Fixer
+/.php_cs.cache

@@ -10,9 +10,8 @@ namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\ParameterType;
-use Joomla\Model\{
-	DatabaseModelInterface, DatabaseModelTrait
-};
+use Joomla\Model\DatabaseModelInterface;
+use Joomla\Model\DatabaseModelTrait;
 
 /**
  * Model class for releases
@@ -40,7 +39,7 @@ class ReleaseModel implements DatabaseModelInterface
 	 *
 	 * @return  void
 	 */
-	public function addRelease(\stdClass $package, string $version, \DateTime $releaseDate)
+	public function addRelease(\stdClass $package, string $version, \DateTime $releaseDate): void
 	{
 		$db = $this->getDb();
 
@@ -60,7 +59,7 @@ class ReleaseModel implements DatabaseModelInterface
 	 *
 	 * @return  \stdClass[]
 	 */
-	public function getLatestReleases(array $packages) : array
+	public function getLatestReleases(array $packages): array
 	{
 		$db = $this->getDb();
 
@@ -86,6 +85,12 @@ class ReleaseModel implements DatabaseModelInterface
 				continue;
 			}
 
+			// Skip if package is not included in list
+			if (!isset($packages[$release->package_id]))
+			{
+				continue;
+			}
+
 			$release->package = $packages[$release->package_id];
 			unset($release->package_id);
 
@@ -104,7 +109,7 @@ class ReleaseModel implements DatabaseModelInterface
 	 *
 	 * @throws  \RuntimeException
 	 */
-	public function getPackageHistory(\stdClass $package) : array
+	public function getPackageHistory(\stdClass $package): array
 	{
 		// Get the package data for the package specified via the route
 		$db = $this->getDb();
@@ -120,7 +125,7 @@ class ReleaseModel implements DatabaseModelInterface
 		$releases = $db->setQuery($query)->loadObjectList();
 
 		// Bail if we don't have any data for the given package
-		if (!count($releases))
+		if (!\count($releases))
 		{
 			throw new \RuntimeException(sprintf('Unable to find release data for the `%s` package', $package->display), 404);
 		}
@@ -136,7 +141,7 @@ class ReleaseModel implements DatabaseModelInterface
 	 *
 	 * @return  \stdClass
 	 */
-	public function getRelease(\stdClass $package, string $version) : \stdClass
+	public function getRelease(\stdClass $package, string $version): \stdClass
 	{
 		$db = $this->getDb();
 
@@ -159,7 +164,7 @@ class ReleaseModel implements DatabaseModelInterface
 	 *
 	 * @return  boolean
 	 */
-	public function hasRelease(\stdClass $package, string $version) : bool
+	public function hasRelease(\stdClass $package, string $version): bool
 	{
 		$db = $this->getDb();
 
@@ -186,7 +191,7 @@ class ReleaseModel implements DatabaseModelInterface
 	 *
 	 * @return  void
 	 */
-	public function updateRelease(int $releaseId, \stdClass $package, string $version, \DateTime $releaseDate)
+	public function updateRelease(int $releaseId, \stdClass $package, string $version, \DateTime $releaseDate): void
 	{
 		$db = $this->getDb();
 
