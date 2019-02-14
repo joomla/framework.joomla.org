@@ -36,7 +36,7 @@ try
 		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
 
 	// Alias the CLI application to Joomla's base application class as this is the primary application for the environment
-	$container->alias(Joomla\Application\AbstractApplication::class, Symfony\Component\Console\Application::class);
+	$container->alias(Joomla\Application\AbstractApplication::class, Joomla\Console\Application::class);
 
     // Alias the CLI logger to the PSR-3 interface as this is the primary logger for the environment
 	$container->alias(Monolog\Logger::class, 'monolog.logger.application.cli')

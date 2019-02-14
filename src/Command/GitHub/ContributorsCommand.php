@@ -8,9 +8,9 @@
 
 namespace Joomla\FrameworkWebsite\Command\GitHub;
 
+use Joomla\Console\Command\AbstractCommand;
 use Joomla\FrameworkWebsite\Helper\GitHubHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -18,7 +18,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Command to get contributor information from GitHub
  */
-class ContributorsCommand extends Command
+class ContributorsCommand extends AbstractCommand
 {
 	/**
 	 * The default command name
@@ -56,14 +56,14 @@ class ContributorsCommand extends Command
 	}
 
 	/**
-	 * Executes the current command.
+	 * Internal function to execute the command.
 	 *
-	 * @param   InputInterface   $input   The command input.
-	 * @param   OutputInterface  $output  The command output.
+	 * @param   InputInterface   $input   The input to inject into the command.
+	 * @param   OutputInterface  $output  The output to inject into the command.
 	 *
-	 * @return  integer|null  null or 0 if everything went fine, or an error code
+	 * @return  integer  The command exit code
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function doExecute(InputInterface $input, OutputInterface $output): int
 	{
 		$symfonyStyle = new SymfonyStyle($input, $output);
 
@@ -96,11 +96,5 @@ class ContributorsCommand extends Command
 	protected function configure(): void
 	{
 		$this->setDescription('Fetches contributor information from GitHub');
-		$this->setHelp(<<<'EOF'
-The <info>%command.name%</info> command fetches the contributor information for the Framework packages from GitHub
-
-<info>php %command.full_name%</info>
-EOF
-		);
 	}
 }

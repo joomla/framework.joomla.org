@@ -10,24 +10,22 @@ namespace Joomla\FrameworkWebsite\EventListener;
 
 use Joomla\Application\ApplicationEvents;
 use Joomla\Application\Event\ApplicationErrorEvent;
+use Joomla\Console\ConsoleEvents;
+use Joomla\Console\Event\ApplicationErrorEvent as ConsoleApplicationErrorEvent;
 use Joomla\Event\SubscriberInterface;
 use Joomla\FrameworkWebsite\WebApplication;
 use Joomla\Renderer\RendererInterface;
 use Joomla\Router\Exception\MethodNotAllowedException;
 use Joomla\Router\Exception\RouteNotFoundException;
-use Joomla\SymfonyEventDispatcherBridge\Symfony\Event;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Symfony\Component\Console\ConsoleEvents;
-use Symfony\Component\Console\Event\ConsoleErrorEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\JsonResponse;
 
 /**
  * Error handling event subscriber
  */
-class ErrorSubscriber implements SubscriberInterface, EventSubscriberInterface, LoggerAwareInterface
+class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 {
 	use LoggerAwareTrait;
 
@@ -56,24 +54,21 @@ class ErrorSubscriber implements SubscriberInterface, EventSubscriberInterface, 
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			ApplicationEvents::ERROR => 'handleWebError',
-			ConsoleEvents::ERROR     => 'handleConsoleError',
+			ApplicationEvents::ERROR         => 'handleWebError',
+			ConsoleEvents::APPLICATION_ERROR => 'handleConsoleError',
 		];
 	}
 
 	/**
 	 * Handle console application errors.
 	 *
-	 * @param   Event  $event  Event object
+	 * @param   ConsoleApplicationErrorEvent  $event  Event object
 	 *
 	 * @return  void
 	 */
-	public function handleConsoleError(Event $event): void
+	public function handleConsoleError(ConsoleApplicationErrorEvent $event): void
 	{
-		/** @var ConsoleErrorEvent $consoleErrorEvent */
-		$consoleErrorEvent = $event->getEvent();
-
-		$this->logError($consoleErrorEvent->getError());
+		$this->logError($event->getError());
 	}
 
 	/**

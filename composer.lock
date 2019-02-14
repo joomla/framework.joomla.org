@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0d71b660d4866c34c37b4d6438025b8",
+    "content-hash": "0af663a1695774474091ba83f423e1ba",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -1540,56 +1540,6 @@
             "time": "2018-10-03T01:21:53+00:00"
         },
         {
-            "name": "joomla/symfony-event-dispatcher-bridge",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/joomla-framework/symfony-event-dispatcher-bridge.git",
-                "reference": "ce1f6b3980e1d71008cc90fd68fe41e454477cfb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/symfony-event-dispatcher-bridge/zipball/ce1f6b3980e1d71008cc90fd68fe41e454477cfb",
-                "reference": "ce1f6b3980e1d71008cc90fd68fe41e454477cfb",
-                "shasum": ""
-            },
-            "require": {
-                "joomla/event": "~2.0",
-                "php": "~7.0",
-                "symfony/event-dispatcher": "~3.4|~4.0"
-            },
-            "require-dev": {
-                "joomla/coding-standards": "~2.0@alpha",
-                "phpunit/phpunit": "~6.3"
-            },
-            "type": "joomla-package",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Joomla\\SymfonyEventDispatcherBridge\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "description": "Joomla/Symfony Event Dispatcher Bridge",
-            "homepage": "https://github.com/joomla-framework/preload",
-            "keywords": [
-                "Bridge",
-                "dispatcher",
-                "event",
-                "framework",
-                "joomla",
-                "symfony"
-            ],
-            "time": "2018-10-16T23:35:52+00:00"
-        },
-        {
             "name": "joomla/uri",
             "version": "dev-2.0-dev",
             "source": {
@@ -2559,70 +2509,6 @@
                 "standards"
             ],
             "time": "2018-12-05T08:06:11+00:00"
-        },
-        {
-            "name": "symfony/event-dispatcher",
-            "version": "v4.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "bd09ad265cd50b2b9d09d65ce6aba2d29bc81fe1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/bd09ad265cd50b2b9d09d65ce6aba2d29bc81fe1",
-                "reference": "bd09ad265cd50b2b9d09d65ce6aba2d29bc81fe1",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/contracts": "^1.0"
-            },
-            "conflict": {
-                "symfony/dependency-injection": "<3.4"
-            },
-            "require-dev": {
-                "psr/log": "~1.0",
-                "symfony/config": "~3.4|~4.0",
-                "symfony/dependency-injection": "~3.4|~4.0",
-                "symfony/expression-language": "~3.4|~4.0",
-                "symfony/stopwatch": "~3.4|~4.0"
-            },
-            "suggest": {
-                "symfony/dependency-injection": "",
-                "symfony/http-kernel": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\EventDispatcher\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony EventDispatcher Component",
-            "homepage": "https://symfony.com",
-            "time": "2019-01-16T20:35:37+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -3703,6 +3589,70 @@
             "time": "2018-11-07T22:31:41+00:00"
         },
         {
+            "name": "symfony/event-dispatcher",
+            "version": "v4.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/event-dispatcher.git",
+                "reference": "bd09ad265cd50b2b9d09d65ce6aba2d29bc81fe1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/bd09ad265cd50b2b9d09d65ce6aba2d29bc81fe1",
+                "reference": "bd09ad265cd50b2b9d09d65ce6aba2d29bc81fe1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/contracts": "^1.0"
+            },
+            "conflict": {
+                "symfony/dependency-injection": "<3.4"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/config": "~3.4|~4.0",
+                "symfony/dependency-injection": "~3.4|~4.0",
+                "symfony/expression-language": "~3.4|~4.0",
+                "symfony/stopwatch": "~3.4|~4.0"
+            },
+            "suggest": {
+                "symfony/dependency-injection": "",
+                "symfony/http-kernel": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\EventDispatcher\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony EventDispatcher Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-16T20:35:37+00:00"
+        },
+        {
             "name": "symfony/finder",
             "version": "v4.2.3",
             "source": {
@@ -3951,7 +3901,6 @@
         "joomla/renderer": 20,
         "joomla/router": 20,
         "joomla/string": 20,
-        "joomla/symfony-event-dispatcher-bridge": 20,
         "joomla/uri": 20,
         "joomla/utilities": 20,
         "joomla/view": 20,
