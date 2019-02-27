@@ -5,21 +5,23 @@
 @import "_variables";
 
 // Font Awesome
-@import "~font-awesome/scss/variables";
-@import "~font-awesome/scss/mixins";
-@import "~font-awesome/scss/path";
-@import "~font-awesome/scss/core";
+// From @import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import '~@fortawesome/fontawesome-free/scss/variables';
+@import '~@fortawesome/fontawesome-free/scss/mixins';
+@import '~@fortawesome/fontawesome-free/scss/core';
 @import "font-awesome/_larger";
-//@import "~font-awesome/scss/fixed-width";
-//@import "~font-awesome/scss/list";
-//@import "~font-awesome/scss/bordered-pulled";
-//@import "~font-awesome/scss/animated";
-//@import "~font-awesome/scss/rotated-flipped";
-//@import "~font-awesome/scss/stacked";
-//@import "~font-awesome/scss/icons";
-@import "font-awesome/_icons";
-//@import "~font-awesome/scss/screen-reader";
-//@import "~font-awesome/scss/font-awesome";
+//@import '~@fortawesome/fontawesome-free/scss/fixed-width';
+//@import '~@fortawesome/fontawesome-free/scss/list';
+//@import '~@fortawesome/fontawesome-free/scss/bordered-pulled';
+//@import '~@fortawesome/fontawesome-free/scss/animated';
+//@import '~@fortawesome/fontawesome-free/scss/rotated-flipped';
+//@import '~@fortawesome/fontawesome-free/scss/stacked';
+@import 'font-awesome/_icons';
+//@import '~@fortawesome/fontawesome-free/scss/screen-reader';
+
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
 
 // Bootstrap
 @import "~bootstrap/scss/_functions";
