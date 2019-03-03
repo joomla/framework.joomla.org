@@ -341,7 +341,7 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$router->get(
 			'/docs/:version/:package/:filename',
-			DocPageController::class,
+			DocumentationPageController::class,
 			[
 				'filename' => '.*'
 			]
@@ -535,11 +535,11 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  DocPageController
+	 * @return  DocumentationPageController
 	 */
-	public function getControllerDocumentationPageService(Container $container) : DocPageController
+	public function getControllerDocumentationPageService(Container $container) : DocumentationPageController
 	{
-		return new DocPageController(
+		return new DocumentationPageController(
 			$container->get(PackageModel::class),
 			$container->get(ErrorHtmlView::class),
 			$container->get(PageHtmlView::class),
