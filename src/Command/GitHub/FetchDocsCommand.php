@@ -8,7 +8,7 @@
 
 namespace Joomla\FrameworkWebsite\Command\GitHub;
 
-use Joomla\Console\AbstractCommand;
+use Joomla\Console\Command\AbstractCommand;
 use Joomla\Filesystem\Folder;
 use Joomla\FrameworkWebsite\Helper\GitHubHelper;
 use Joomla\FrameworkWebsite\Model\Exception\PackageNotFoundException;
@@ -16,7 +16,9 @@ use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\Github\Github;
 use Joomla\Http\Exception\UnexpectedResponseException;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
@@ -24,6 +26,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class FetchDocsCommand extends AbstractCommand
 {
+	/**
+	 * The default command name
+	 *
+	 * @var  string|null
+	 */
+	protected static $defaultName = 'github:fetch-docs';
+
 	/**
 	 * Cache pool
 	 *
@@ -78,13 +87,16 @@ class FetchDocsCommand extends AbstractCommand
 	}
 
 	/**
-	 * Execute the command.
+	 * Internal function to execute the command.
 	 *
-	 * @return  integer  The exit code for the command.
+	 * @param   InputInterface   $input   The input to inject into the command.
+	 * @param   OutputInterface  $output  The output to inject into the command.
+	 *
+	 * @return  integer  The command exit code
 	 */
-	public function execute(): int
+	protected function doExecute(InputInterface $input, OutputInterface $output): int
 	{
-		$symfonyStyle = $this->createSymfonyStyle();
+		$symfonyStyle = new SymfonyStyle($input, $output);
 
 		$symfonyStyle->title('Fetch Package Documentation');
 
@@ -122,13 +134,12 @@ class FetchDocsCommand extends AbstractCommand
 	}
 
 	/**
-	 * Initialise the command.
+	 * Configures the current command.
 	 *
 	 * @return  void
 	 */
-	protected function initialise()
+	protected function configure(): void
 	{
-		$this->setName('github:fetch-docs');
 		$this->setDescription('Fetches package documentation from GitHub');
 		$this->addOption('package', 'p', InputOption::VALUE_OPTIONAL, 'Package to limit documentation lookup for');
 		$this->setHelp(<<<'EOF'

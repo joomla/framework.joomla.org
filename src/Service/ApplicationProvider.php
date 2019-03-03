@@ -117,9 +117,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		 * Console Commands
 		 */
 
-		$container->share(ClearCacheCommand::class, [$this, 'getClearCacheCommandClassService'], true);
+		$container->share(ClearCacheCommand::class, [$this, 'getClearCacheCommandService'], true);
 		$container->share(ContributorsCommand::class, [$this, 'getContributorsCommandService'], true);
-		$container->share(FetchDocsCommand::class, [$this, 'getGitHubFetchDocsCommandClassService'], true);
+		$container->share(FetchDocsCommand::class, [$this, 'getGitHubFetchDocsCommandService'], true);
 		$container->share(DownloadsCommand::class, [$this, 'getDownloadsCommandService'], true);
 		$container->share(GenerateSriCommand::class, [$this, 'getGenerateSriCommandService'], true);
 		$container->share(PackageSyncCommand::class, [$this, 'getPackageSyncCommandService'], true);
@@ -387,15 +387,15 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the ClearCacheCommand class service
+	 * Get the ClearCacheCommand service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  AppCommands\ClearCacheCommand
+	 * @return  ClearCacheCommand
 	 */
-	public function getClearCacheCommandClassService(Container $container) : AppCommands\ClearCacheCommand
+	public function getClearCacheCommandService(Container $container) : ClearCacheCommand
 	{
-		return new AppCommands\ClearCacheCommand($container->get(CacheItemPoolInterface::class));
+		return new ClearCacheCommand($container->get(CacheItemPoolInterface::class));
 	}
 
 	/**
@@ -408,7 +408,9 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getCommandLoaderService(Container $container): LoaderInterface
 	{
 		$mapping = [
+			ClearCacheCommand::getDefaultName()    => ClearCacheCommand::class,
 			ContributorsCommand::getDefaultName()  => ContributorsCommand::class,
+			FetchDocsCommand::getDefaultName()     => FetchDocsCommand::class,
 			PackageSyncCommand::getDefaultName()   => PackageSyncCommand::class,
 			DownloadsCommand::getDefaultName()     => DownloadsCommand::class,
 			PackagistSyncCommand::getDefaultName() => PackagistSyncCommand::class,
@@ -670,15 +672,15 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the GitHub\FetchDocsCommand class service
+	 * Get the FetchDocsCommand service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  AppCommands\GitHub\FetchDocsCommand
+	 * @return  FetchDocsCommand
 	 */
-	public function getGitHubFetchDocsCommandClassService(Container $container) : AppCommands\GitHub\FetchDocsCommand
+	public function getGitHubFetchDocsCommandService(Container $container) : FetchDocsCommand
 	{
-		return new AppCommands\GitHub\FetchDocsCommand(
+		return new FetchDocsCommand(
 			$container->get(PackageModel::class),
 			$container->get(Github::class),
 			$container->get(GitHubHelper::class),

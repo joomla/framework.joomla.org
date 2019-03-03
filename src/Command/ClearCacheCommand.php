@@ -8,14 +8,24 @@
 
 namespace Joomla\FrameworkWebsite\Command;
 
-use Joomla\Console\AbstractCommand;
+use Joomla\Console\Command\AbstractCommand;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to clear the cache pool
  */
 class ClearCacheCommand extends AbstractCommand
 {
+	/**
+	 * The default command name
+	 *
+	 * @var  string|null
+	 */
+	protected static $defaultName = 'cache:clear';
+
 	/**
 	 * Cache pool
 	 *
@@ -36,13 +46,16 @@ class ClearCacheCommand extends AbstractCommand
 	}
 
 	/**
-	 * Execute the command.
+	 * Internal function to execute the command.
 	 *
-	 * @return  integer  The exit code for the command.
+	 * @param   InputInterface   $input   The input to inject into the command.
+	 * @param   OutputInterface  $output  The output to inject into the command.
+	 *
+	 * @return  integer  The command exit code
 	 */
-	public function execute(): int
+	protected function doExecute(InputInterface $input, OutputInterface $output): int
 	{
-		$symfonyStyle = $this->createSymfonyStyle();
+		$symfonyStyle = new SymfonyStyle($input, $output);
 
 		$symfonyStyle->title('Clear Cache');
 
@@ -54,19 +67,12 @@ class ClearCacheCommand extends AbstractCommand
 	}
 
 	/**
-	 * Initialise the command.
+	 * Configures the current command.
 	 *
 	 * @return  void
 	 */
-	protected function initialise()
+	protected function configure(): void
 	{
-		$this->setName('cache:clear');
-		$this->setDescription('Clear the local cache pool');
-		$this->setHelp(<<<'EOF'
-The <info>%command.name%</info> command clears the application cache pool
-
-<info>php %command.full_name% %command.name%</info>
-EOF
-		);
+		$this->setDescription('Clear the application cache pool');
 	}
 }
