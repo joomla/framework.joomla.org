@@ -9,7 +9,7 @@ pre {
 
 // Inline code
 code {
-  font-size: $code-font-size;
+  @include font-size($code-font-size);
   color: $code-color;
   word-break: break-word;
 

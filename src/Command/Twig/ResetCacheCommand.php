@@ -8,10 +8,10 @@
 
 namespace Joomla\FrameworkWebsite\Command\Twig;
 
+use Joomla\Console\Command\AbstractCommand;
 use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 use Joomla\Renderer\TwigRenderer;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -20,7 +20,7 @@ use Twig\Error\Error as TwigError;
 /**
  * Twig cache reset command
  */
-class ResetCacheCommand extends Command
+class ResetCacheCommand extends AbstractCommand
 {
 	/**
 	 * The default command name
@@ -58,14 +58,14 @@ class ResetCacheCommand extends Command
 	}
 
 	/**
-	 * Executes the current command.
+	 * Internal function to execute the command.
 	 *
-	 * @param   InputInterface   $input   The command input.
-	 * @param   OutputInterface  $output  The command output.
+	 * @param   InputInterface   $input   The input to inject into the command.
+	 * @param   OutputInterface  $output  The output to inject into the command.
 	 *
-	 * @return  integer|null  null or 0 if everything went fine, or an error code
+	 * @return  integer  The command exit code
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function doExecute(InputInterface $input, OutputInterface $output): int
 	{
 		$symfonyStyle = new SymfonyStyle($input, $output);
 
@@ -133,11 +133,5 @@ class ResetCacheCommand extends Command
 	protected function configure(): void
 	{
 		$this->setDescription('Resets the Twig template cache');
-		$this->setHelp(<<<'EOF'
-The <info>%command.name%</info> command resets the Twig template cache
-
-<info>php %command.full_name%</info>
-EOF
-		);
 	}
 }

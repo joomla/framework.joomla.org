@@ -13,7 +13,8 @@ a {
   text-align: center;
 }
 
-.fa {
+.fab,
+.fas {
   color: $icon-color;
 }
 
@@ -42,7 +43,8 @@ nav.main-nav {
       color: theme-color('info');
     }
   }
-  .fa {
+  .fab,
+  .fas {
     font-size: 1.75rem;
     padding-right: .5rem;
   }

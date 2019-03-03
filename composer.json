@@ -24,7 +24,6 @@
         "joomla/renderer": "~2.0@dev",
         "joomla/router": "~2.0@dev",
         "joomla/string": "~2.0@dev",
-        "joomla/symfony-event-dispatcher-bridge": "~2.0@dev",
         "joomla/uri": "~2.0@dev",
         "joomla/utilities": "~2.0@dev",
         "joomla/view": "~2.0@dev",
@@ -59,7 +58,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.2.10"
+            "php": "7.2.14"
         }
     }
 }

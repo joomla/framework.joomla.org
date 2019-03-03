@@ -8,9 +8,9 @@
 
 namespace Joomla\FrameworkWebsite\Command\Package;
 
+use Joomla\Console\Command\AbstractCommand;
 use Joomla\FrameworkWebsite\Helper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -18,7 +18,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Command to synchronize the package listing data
  */
-class SyncCommand extends Command
+class SyncCommand extends AbstractCommand
 {
 	/**
 	 * The default command name
@@ -56,14 +56,14 @@ class SyncCommand extends Command
 	}
 
 	/**
-	 * Executes the current command.
+	 * Internal function to execute the command.
 	 *
-	 * @param   InputInterface   $input   The command input.
-	 * @param   OutputInterface  $output  The command output.
+	 * @param   InputInterface   $input   The input to inject into the command.
+	 * @param   OutputInterface  $output  The output to inject into the command.
 	 *
-	 * @return  integer|null  null or 0 if everything went fine, or an error code
+	 * @return  integer  The command exit code
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function doExecute(InputInterface $input, OutputInterface $output): int
 	{
 		$symfonyStyle = new SymfonyStyle($input, $output);
 
@@ -124,11 +124,5 @@ class SyncCommand extends Command
 	protected function configure(): void
 	{
 		$this->setDescription('Synchronizes Framework package data to the database');
-		$this->setHelp(<<<'EOF'
-The <info>%command.name%</info> command synchronizes the Framework package data to the local database
-
-<info>php %command.full_name%</info>
-EOF
-		);
 	}
 }

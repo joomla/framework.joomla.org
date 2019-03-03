@@ -9,7 +9,9 @@
 namespace Joomla\FrameworkWebsite\Service;
 
 use Joomla\Application as JoomlaApplication;
-use Joomla\Console\Application as JoomlaConsoleApplication;
+use Joomla\Console\Application as ConsoleApplication;
+use Joomla\Console\Loader\ContainerLoader;
+use Joomla\Console\Loader\LoaderInterface;
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
@@ -23,7 +25,6 @@ use Joomla\FrameworkWebsite\Command\Packagist\DownloadsCommand;
 use Joomla\FrameworkWebsite\Command\Packagist\SyncCommand as PackagistSyncCommand;
 use Joomla\FrameworkWebsite\Command\Twig\ResetCacheCommand;
 use Joomla\FrameworkWebsite\Command\UpdateCommand;
-use Joomla\FrameworkWebsite\ConsoleApplication;
 use Joomla\FrameworkWebsite\Controller\Api\PackageControllerGet;
 use Joomla\FrameworkWebsite\Controller\Api\StatusControllerGet;
 use Joomla\FrameworkWebsite\Controller\ContributorsController;
@@ -59,10 +60,8 @@ use Joomla\Renderer\TwigRenderer;
 use Joomla\Router\Router;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Console\Application as SymfonyConsoleApplication;
-use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
-use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
@@ -83,9 +82,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		 * Application Classes
 		 */
 
-		$container->alias(ConsoleApplication::class, SymfonyConsoleApplication::class)
-			->alias(JoomlaConsoleApplication::class, SymfonyConsoleApplication::class)
-			->share(SymfonyConsoleApplication::class, [$this, 'getConsoleApplicationService'], true);
+		$container->share(ConsoleApplication::class, [$this, 'getConsoleApplicationService'], true);
 
 		$container->alias(WebApplication::class, JoomlaApplication\AbstractWebApplication::class)
 			->share(JoomlaApplication\AbstractWebApplication::class, [$this, 'getWebApplicationClassService'], true);
@@ -97,8 +94,8 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(Analytics::class, 'analytics')
 			->share('analytics', [$this, 'getAnalyticsService'], true);
 
-		$container->alias(ContainerCommandLoader::class, CommandLoaderInterface::class)
-			->share(CommandLoaderInterface::class, [$this, 'getCommandLoaderService'], true);
+		$container->alias(ContainerLoader::class, LoaderInterface::class)
+			->share(LoaderInterface::class, [$this, 'getCommandLoaderService'], true);
 
 		$container->alias(Helper::class, 'application.helper')
 			->share('application.helper', [$this, 'getApplicationHelperService'], true);
@@ -402,13 +399,13 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the CommandLoaderInterface service
+	 * Get the LoaderInterface service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  CommandLoaderInterface
+	 * @return  LoaderInterface
 	 */
-	public function getCommandLoaderService(Container $container): CommandLoaderInterface
+	public function getCommandLoaderService(Container $container): LoaderInterface
 	{
 		$mapping = [
 			ContributorsCommand::getDefaultName()  => ContributorsCommand::class,
@@ -420,7 +417,7 @@ class ApplicationProvider implements ServiceProviderInterface
 			UpdateCommand::getDefaultName()        => UpdateCommand::class,
 		];
 
-		return new ContainerCommandLoader($container, $mapping);
+		return new ContainerLoader($container, $mapping);
 	}
 
 	/**
@@ -432,11 +429,12 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getConsoleApplicationService(Container $container): ConsoleApplication
 	{
-		$application = new ConsoleApplication('Joomla! Framework Website');
+		$application = new ConsoleApplication(new ArgvInput, new ConsoleOutput, $container->get('config'));
 
-		$application->setCommandLoader($container->get(CommandLoaderInterface::class));
-		$application->setDispatcher($container->get(EventDispatcherInterface::class));
+		$application->setCommandLoader($container->get(LoaderInterface::class));
+		$application->setDispatcher($container->get(DispatcherInterface::class));
 		$application->setLogger($container->get(LoggerInterface::class));
+		$application->setName('Joomla! Framework Website');
 
 		return $application;
 	}

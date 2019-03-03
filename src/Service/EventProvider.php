@@ -14,9 +14,7 @@ use Joomla\Event\Dispatcher;
 use Joomla\Event\DispatcherInterface;
 use Joomla\FrameworkWebsite\EventListener\ErrorSubscriber;
 use Joomla\Renderer\RendererInterface;
-use Joomla\SymfonyEventDispatcherBridge\Joomla\Dispatcher as SymfonyBridgeDispatcher;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Event service provider
@@ -35,10 +33,6 @@ class EventProvider implements ServiceProviderInterface
 		// This service cannot be protected as it is decorated when the debug bar is available
 		$container->alias(Dispatcher::class, DispatcherInterface::class)
 			->share(DispatcherInterface::class, [$this, 'getDispatcherService']);
-
-		// This service cannot be protected as it will eventually be decorated when the debug bar is available
-		$container->alias(SymfonyBridgeDispatcher::class, EventDispatcherInterface::class)
-			->share(EventDispatcherInterface::class, [$this, 'getSymfonyBridgeDispatcherService']);
 
 		$container->share(ErrorSubscriber::class, [$this, 'getErrorSubscriber'], true)
 			->tag('event.subscriber', [ErrorSubscriber::class]);
@@ -76,17 +70,5 @@ class EventProvider implements ServiceProviderInterface
 		$subscriber->setLogger($container->get(LoggerInterface::class));
 
 		return $subscriber;
-	}
-
-	/**
-	 * Get the SymfonyBridgeDispatcher service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  EventDispatcherInterface
-	 */
-	public function getSymfonyBridgeDispatcherService(Container $container): EventDispatcherInterface
-	{
-		return new SymfonyBridgeDispatcher($container->get(DispatcherInterface::class));
 	}
 }

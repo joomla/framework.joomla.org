@@ -8,7 +8,7 @@
 
 namespace Joomla\FrameworkWebsite\Command;
 
-use Symfony\Component\Console\Command\Command;
+use Joomla\Console\Command\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -16,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Generate SRI information command
  */
-class GenerateSriCommand extends Command
+class GenerateSriCommand extends AbstractCommand
 {
 	/**
 	 * The default command name
@@ -26,14 +26,14 @@ class GenerateSriCommand extends Command
 	protected static $defaultName = 'template:generate-sri';
 
 	/**
-	 * Executes the current command.
+	 * Internal function to execute the command.
 	 *
-	 * @param   InputInterface   $input   The command input.
-	 * @param   OutputInterface  $output  The command output.
+	 * @param   InputInterface   $input   The input to inject into the command.
+	 * @param   OutputInterface  $output  The output to inject into the command.
 	 *
-	 * @return  integer|null  null or 0 if everything went fine, or an error code
+	 * @return  integer  The command exit code
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function doExecute(InputInterface $input, OutputInterface $output): int
 	{
 		$symfonyStyle = new SymfonyStyle($input, $output);
 
@@ -85,11 +85,5 @@ class GenerateSriCommand extends Command
 	protected function configure(): void
 	{
 		$this->setDescription('Generate SRI information for Mix generated assets');
-		$this->setHelp(<<<'EOF'
-The <info>%command.name%</info> command generates SRI information for Mix generated assets
-
-<info>php %command.full_name%</info>
-EOF
-		);
 	}
 }

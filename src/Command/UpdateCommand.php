@@ -8,7 +8,7 @@
 
 namespace Joomla\FrameworkWebsite\Command;
 
-use Symfony\Component\Console\Command\Command;
+use Joomla\Console\Command\AbstractCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,7 +19,7 @@ use Symfony\Component\Process\Process;
 /**
  * Update command
  */
-class UpdateCommand extends Command
+class UpdateCommand extends AbstractCommand
 {
 	/**
 	 * The default command name
@@ -29,14 +29,14 @@ class UpdateCommand extends Command
 	protected static $defaultName = 'update:server';
 
 	/**
-	 * Executes the current command.
+	 * Internal function to execute the command.
 	 *
-	 * @param   InputInterface   $input   The command input.
-	 * @param   OutputInterface  $output  The command output.
+	 * @param   InputInterface   $input   The input to inject into the command.
+	 * @param   OutputInterface  $output  The output to inject into the command.
 	 *
-	 * @return  integer|null  null or 0 if everything went fine, or an error code
+	 * @return  integer  The command exit code
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function doExecute(InputInterface $input, OutputInterface $output): int
 	{
 		$symfonyStyle = new SymfonyStyle($input, $output);
 
@@ -90,7 +90,7 @@ class UpdateCommand extends Command
 		}
 
 		// Reset the Twig cache
-		$this->getApplication()->find('twig:reset-cache')->run(
+		$this->getApplication()->getCommand('twig:reset-cache')->execute(
 			new ArrayInput(
 				[
 					'command' => 'twig:reset-cache',
@@ -112,11 +112,5 @@ class UpdateCommand extends Command
 	protected function configure(): void
 	{
 		$this->setDescription('Update the server to the current git HEAD');
-		$this->setHelp(<<<'EOF'
-The <info>%command.name%</info> command updates the server to the current git HEAD
-
-<info>php %command.full_name%</info>
-EOF
-		);
 	}
 }
