@@ -8,15 +8,14 @@
 
 namespace Joomla\FrameworkWebsite\Service;
 
-use Joomla\Cache\{
-	AbstractCacheItemPool,
-	Adapter as CacheAdapter,
-	CacheItemPoolInterface
-};
-use Joomla\DI\{
-	Container, ServiceProviderInterface
-};
-use Psr\Cache\CacheItemPoolInterface as PsrCacheItemPoolInterface;
+use Joomla\DI\Container;
+use Joomla\DI\ServiceProviderInterface;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Adapter\NullAdapter;
+use Symfony\Component\Cache\Exception\InvalidArgumentException;
 
 /**
  * Cache service provider
@@ -32,9 +31,8 @@ class CacheProvider implements ServiceProviderInterface
 	 */
 	public function register(Container $container)
 	{
-		$container->alias(PsrCacheItemPoolInterface::class, 'cache')
-			->alias(CacheItemPoolInterface::class, 'cache')
-			->alias(AbstractCacheItemPool::class, 'cache')
+		$container->alias(CacheItemPoolInterface::class, 'cache')
+			->alias(AdapterInterface::class, 'cache')
 			->share('cache', [$this, 'getCacheService'], true);
 	}
 
@@ -43,11 +41,11 @@ class CacheProvider implements ServiceProviderInterface
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  PsrCacheItemPoolInterface
+	 * @return  CacheItemPoolInterface
 	 *
 	 * @throws  \InvalidArgumentException
 	 */
-	public function getCacheService(Container $container): PsrCacheItemPoolInterface
+	public function getCacheService(Container $container): CacheItemPoolInterface
 	{
 		/** @var \Joomla\Registry\Registry $config */
 		$config = $container->get('config');
@@ -55,10 +53,12 @@ class CacheProvider implements ServiceProviderInterface
 		// If caching isn't enabled then just return a void cache
 		if (!$config->get('cache.enabled', false))
 		{
-			return new CacheAdapter\None;
+			return new NullAdapter;
 		}
 
-		$adapter = $config->get('cache.adapter', 'file');
+		$adapter   = $config->get('cache.adapter', 'file');
+		$lifetime  = $config->get('cache.lifetime', 900);
+		$namespace = $config->get('cache.namespace', 'jfw');
 
 		switch ($adapter)
 		{
@@ -71,19 +71,15 @@ class CacheProvider implements ServiceProviderInterface
 					$path = sys_get_temp_dir();
 				}
 
-				$options = [
-					'file.path' => $path,
-				];
-
-				return new CacheAdapter\File($options);
+				return new FilesystemAdapter($namespace, $lifetime, $path);
 
 			case 'none':
-				return new CacheAdapter\None;
+				return new NullAdapter;
 
 			case 'runtime':
-				return new CacheAdapter\Runtime;
+				return new ArrayAdapter($lifetime);
 		}
 
-		throw new \InvalidArgumentException(sprintf('The "%s" cache adapter is not supported.', $adapter));
+		throw new InvalidArgumentException(sprintf('The "%s" cache adapter is not supported.', $adapter));
 	}
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e92cb51e4b6f41242a714cd67e150cbb",
+    "content-hash": "f3bf733b9eb693893937014ea7c8359f",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -699,65 +699,6 @@
             "time": "2018-12-30T19:03:49+00:00"
         },
         {
-            "name": "joomla/cache",
-            "version": "dev-2.0-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/joomla-framework/cache.git",
-                "reference": "0ecf849b45c2adc8f9ab280df7bf4976f2f39e4b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/cache/zipball/0ecf849b45c2adc8f9ab280df7bf4976f2f39e4b",
-                "reference": "0ecf849b45c2adc8f9ab280df7bf4976f2f39e4b",
-                "shasum": ""
-            },
-            "require": {
-                "php": "~7.0",
-                "psr/cache": "~1.0",
-                "psr/simple-cache": "~1.0"
-            },
-            "provide": {
-                "psr/cache-implementation": "~1.0",
-                "psr/simple-cache-implementation": "~1.0"
-            },
-            "require-dev": {
-                "joomla/coding-standards": "~2.0@alpha",
-                "joomla/test": "~1.0",
-                "phpunit/phpunit": "~6.3"
-            },
-            "suggest": {
-                "ext-apcu": "To use APCu caching",
-                "ext-memcached": "To use Memcached caching",
-                "ext-redis": "To use Redis caching",
-                "ext-wincache": "To use WinCache caching",
-                "ext-xcache": "To use XCache caching"
-            },
-            "type": "joomla-package",
-            "extra": {
-                "branch-alias": {
-                    "dev-2.0-dev": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Joomla\\Cache\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "description": "Joomla Cache Package",
-            "homepage": "https://github.com/joomla-framework/cache",
-            "keywords": [
-                "cache",
-                "framework",
-                "joomla"
-            ],
-            "time": "2018-05-25T02:20:02+00:00"
-        },
-        {
             "name": "joomla/console",
             "version": "dev-master",
             "source": {
@@ -1378,12 +1319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/registry.git",
-                "reference": "c8681a169756ab42aa7ba06fc45a3348eac50724"
+                "reference": "4bed0fa87f36ba8387db06cdddd16a1d248b19fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/registry/zipball/c8681a169756ab42aa7ba06fc45a3348eac50724",
-                "reference": "c8681a169756ab42aa7ba06fc45a3348eac50724",
+                "url": "https://api.github.com/repos/joomla-framework/registry/zipball/4bed0fa87f36ba8387db06cdddd16a1d248b19fc",
+                "reference": "4bed0fa87f36ba8387db06cdddd16a1d248b19fc",
                 "shasum": ""
             },
             "require": {
@@ -1420,7 +1361,7 @@
                 "joomla",
                 "registry"
             ],
-            "time": "2019-01-24T04:09:11+00:00"
+            "time": "2019-03-03T17:47:11+00:00"
         },
         {
             "name": "joomla/renderer",
@@ -2461,6 +2402,83 @@
             "time": "2019-01-16T20:35:37+00:00"
         },
         {
+            "name": "symfony/cache",
+            "version": "v4.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/cache.git",
+                "reference": "7c5b85bcc5f87dd7938123be12ce3323be6cde5a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/7c5b85bcc5f87dd7938123be12ce3323be6cde5a",
+                "reference": "7c5b85bcc5f87dd7938123be12ce3323be6cde5a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "psr/cache": "~1.0",
+                "psr/log": "~1.0",
+                "psr/simple-cache": "^1.0",
+                "symfony/contracts": "^1.0",
+                "symfony/var-exporter": "^4.2"
+            },
+            "conflict": {
+                "doctrine/dbal": "<2.5",
+                "symfony/dependency-injection": "<3.4",
+                "symfony/var-dumper": "<3.4"
+            },
+            "provide": {
+                "psr/cache-implementation": "1.0",
+                "psr/simple-cache-implementation": "1.0",
+                "symfony/cache-contracts-implementation": "1.0"
+            },
+            "require-dev": {
+                "cache/integration-tests": "dev-master",
+                "doctrine/cache": "~1.6",
+                "doctrine/dbal": "~2.5",
+                "predis/predis": "~1.1",
+                "symfony/config": "~4.2",
+                "symfony/dependency-injection": "~3.4|~4.1",
+                "symfony/var-dumper": "^4.1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Cache\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Cache component with PSR-6, PSR-16, and tags",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "caching",
+                "psr6"
+            ],
+            "time": "2019-01-31T15:08:08+00:00"
+        },
+        {
             "name": "symfony/config",
             "version": "v4.2.3",
             "source": {
@@ -2878,6 +2896,66 @@
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
             "time": "2019-01-24T22:05:03+00:00"
+        },
+        {
+            "name": "symfony/var-exporter",
+            "version": "v4.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/var-exporter.git",
+                "reference": "d8bf4424c232b55f4c1816037d3077a89258557e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/d8bf4424c232b55f4c1816037d3077a89258557e",
+                "reference": "d8bf4424c232b55f4c1816037d3077a89258557e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3"
+            },
+            "require-dev": {
+                "symfony/var-dumper": "^4.1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\VarExporter\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "A blend of var_export() + serialize() to turn any serializable data structure to plain PHP code",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "clone",
+                "construct",
+                "export",
+                "hydrate",
+                "instantiate",
+                "serialize"
+            ],
+            "time": "2019-01-16T20:35:37+00:00"
         },
         {
             "name": "symfony/web-link",
@@ -4036,7 +4114,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "joomla/application": 20,
-        "joomla/cache": 20,
         "joomla/console": 20,
         "joomla/controller": 20,
         "joomla/database": 20,

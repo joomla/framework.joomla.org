@@ -9,7 +9,6 @@
 namespace Joomla\FrameworkWebsite\Helper;
 
 use Joomla\Application\AbstractApplication;
-use Joomla\Cache\Item\Item;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\Mysql\MysqlQuery;
@@ -134,32 +133,12 @@ class GitHubHelper
 
 		$key = $this->generateDocsFileCacheKey($version, $package, $path);
 
-		if ($this->cache->hasItem($key))
+		$item = $this->cache->getItem($key);
+
+		// Make sure we got a hit on the item, otherwise we'll have to re-cache
+		if ($item->isHit())
 		{
-			$item = $this->cache->getItem($key);
-
-			// Make sure we got a hit on the item, otherwise we'll have to re-cache
-			if ($item->isHit())
-			{
-				$rendered = $item->get();
-			}
-			else
-			{
-				$rendered = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
-
-				$routePrefix = $this->application->get('uri.base.path') . 'docs/' . $version . '/' . $package->package . '/';
-
-				// Fix links - TODO: This should only change relative links for the docs files
-				$rendered = preg_replace('/href=\"(.*)\.md\"/', 'href="' . $routePrefix . '$1"', $rendered);
-
-				// Cache the result for 7 days
-				$sevenDaysInSeconds = 60 * 60 * 24 * 7;
-
-				$item = (new Item($key, $sevenDaysInSeconds))
-					->set($rendered);
-
-				$this->cache->save($item);
-			}
+			$rendered = $item->get();
 		}
 		else
 		{
@@ -173,8 +152,8 @@ class GitHubHelper
 			// Cache the result for 7 days
 			$sevenDaysInSeconds = 60 * 60 * 24 * 7;
 
-			$item = (new Item($key, $sevenDaysInSeconds))
-				->set($rendered);
+			$item->set($rendered);
+			$item->expiresAfter($sevenDaysInSeconds);
 
 			$this->cache->save($item);
 		}
