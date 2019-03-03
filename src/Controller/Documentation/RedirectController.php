@@ -13,9 +13,8 @@ use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\View\Documentation\ErrorHtmlView;
 use Joomla\Input\Input;
-use Zend\Diactoros\Response\{
-	HtmlResponse, RedirectResponse
-};
+use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\RedirectResponse;
 
 /**
  * Controller handling redirecting an empty page request to the overview
@@ -60,7 +59,7 @@ class RedirectController extends AbstractController
 	 *
 	 * @return  boolean
 	 */
-	public function execute() : bool
+	public function execute(): bool
 	{
 		$packageName = $this->getInput()->getString('package');
 		$version     = $this->getInput()->getString('version');
@@ -116,7 +115,6 @@ class RedirectController extends AbstractController
 			default:
 				throw new \RuntimeException(sprintf('Unsupported version `%s` for documentation.', $version), 404);
 		}
-
 
 		return true;
 	}

@@ -343,7 +343,7 @@ class ApplicationProvider implements ServiceProviderInterface
 			'/docs/:version/:package/:filename',
 			DocumentationPageController::class,
 			[
-				'filename' => '.*'
+				'filename' => '.*',
 			]
 		);
 
@@ -393,7 +393,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  ClearCacheCommand
 	 */
-	public function getClearCacheCommandService(Container $container) : ClearCacheCommand
+	public function getClearCacheCommandService(Container $container): ClearCacheCommand
 	{
 		return new ClearCacheCommand($container->get(CacheItemPoolInterface::class));
 	}
@@ -521,7 +521,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  IndexController
 	 */
-	public function getControllerDocumentationIndexService(Container $container) : IndexController
+	public function getControllerDocumentationIndexService(Container $container): IndexController
 	{
 		return new IndexController(
 			$container->get(IndexHtmlView::class),
@@ -537,7 +537,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  DocumentationPageController
 	 */
-	public function getControllerDocumentationPageService(Container $container) : DocumentationPageController
+	public function getControllerDocumentationPageService(Container $container): DocumentationPageController
 	{
 		return new DocumentationPageController(
 			$container->get(PackageModel::class),
@@ -556,7 +556,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  RedirectController
 	 */
-	public function getControllerDocumentationRedirectService(Container $container) : RedirectController
+	public function getControllerDocumentationRedirectService(Container $container): RedirectController
 	{
 		return new RedirectController(
 			$container->get(PackageModel::class),
@@ -678,7 +678,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  FetchDocsCommand
 	 */
-	public function getGitHubFetchDocsCommandService(Container $container) : FetchDocsCommand
+	public function getGitHubFetchDocsCommandService(Container $container): FetchDocsCommand
 	{
 		return new FetchDocsCommand(
 			$container->get(PackageModel::class),
@@ -820,7 +820,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  ErrorHtmlView
 	 */
-	public function getViewDocumentationErrorHtmlService(Container $container) : ErrorHtmlView
+	public function getViewDocumentationErrorHtmlService(Container $container): ErrorHtmlView
 	{
 		$view = new ErrorHtmlView(
 			$container->get('model.package'),
@@ -839,7 +839,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  IndexHtmlView
 	 */
-	public function getViewDocumentationIndexHtmlService(Container $container) : IndexHtmlView
+	public function getViewDocumentationIndexHtmlService(Container $container): IndexHtmlView
 	{
 		$view = new IndexHtmlView(
 			$container->get('model.package'),
@@ -858,7 +858,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @return  PageHtmlView
 	 */
-	public function getViewDocumentationPageHtmlService(Container $container) : PageHtmlView
+	public function getViewDocumentationPageHtmlService(Container $container): PageHtmlView
 	{
 		$view = new PageHtmlView(
 			$container->get('model.package'),

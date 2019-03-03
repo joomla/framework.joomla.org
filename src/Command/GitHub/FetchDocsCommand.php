@@ -161,7 +161,7 @@ EOF
 	 *
 	 * @return  void
 	 */
-	private function processDirectory(string $branch, string $version, string $directory, \stdClass $package, SymfonyStyle $symfonyStyle)
+	private function processDirectory(string $branch, string $version, string $directory, \stdClass $package, SymfonyStyle $symfonyStyle): void
 	{
 		try
 		{
@@ -232,7 +232,7 @@ EOF
 	 *
 	 * @return  void
 	 */
-	private function processFile(string $branch, string $version, string $path, \stdClass $package, SymfonyStyle $symfonyStyle)
+	private function processFile(string $branch, string $version, string $path, \stdClass $package, SymfonyStyle $symfonyStyle): void
 	{
 		try
 		{
@@ -277,7 +277,7 @@ EOF
 		$docsPath = JPATH_ROOT . '/docs/' . $version . '/' . str_replace('docs/', $package->package . '/', $file->path);
 
 		// Ensure folder exists
-		Folder::create(dirname($docsPath));
+		Folder::create(\dirname($docsPath));
 
 		if (!file_put_contents($docsPath, $fileContents))
 		{
@@ -301,7 +301,7 @@ EOF
 	 *
 	 * @return  void
 	 */
-	private function processPackage(\stdClass $package, SymfonyStyle $symfonyStyle)
+	private function processPackage(\stdClass $package, SymfonyStyle $symfonyStyle): void
 	{
 		// Set docs branches
 		switch ($package->package)

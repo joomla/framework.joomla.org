@@ -12,13 +12,11 @@ use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\Helper\GitHubHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
-use Joomla\FrameworkWebsite\View\Documentation\{
-	ErrorHtmlView, PageHtmlView
-};
+use Joomla\FrameworkWebsite\View\Documentation\ErrorHtmlView;
+use Joomla\FrameworkWebsite\View\Documentation\PageHtmlView;
 use Joomla\Input\Input;
-use Zend\Diactoros\Response\{
-	HtmlResponse, RedirectResponse
-};
+use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\RedirectResponse;
 
 /**
  * Controller handling a package's documentation page
@@ -73,8 +71,7 @@ class PageController extends AbstractController
 		GitHubHelper $githubHelper,
 		Input $input = null,
 		AbstractApplication $app = null
-	)
-	{
+	) {
 		parent::__construct($input, $app);
 
 		$this->pageView     = $pageView;
@@ -87,7 +84,7 @@ class PageController extends AbstractController
 	 *
 	 * @return  boolean
 	 */
-	public function execute() : bool
+	public function execute(): bool
 	{
 		$packageName = $this->getInput()->getString('package');
 		$version     = $this->getInput()->getString('version');

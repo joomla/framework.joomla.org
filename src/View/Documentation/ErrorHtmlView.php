@@ -68,7 +68,7 @@ class ErrorHtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 */
-	public function setError(string $error)
+	public function setError(string $error): void
 	{
 		$this->error = $error;
 	}

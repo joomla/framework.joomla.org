@@ -54,8 +54,7 @@ class PackageModel implements DatabaseModelInterface
 		bool $isAbandoned,
 		bool $hasV1,
 		bool $hasV2
-	): void
-	{
+	): void {
 		$db = $this->getDb();
 
 		$data = (object) [
@@ -159,7 +158,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @return  array
 	 */
-	public function getSortedPackages() : array
+	public function getSortedPackages(): array
 	{
 		$packages = $this->getPackages();
 
@@ -199,8 +198,7 @@ class PackageModel implements DatabaseModelInterface
 		bool $isAbandoned,
 		bool $hasV1,
 		bool $hasV2
-	): void
-	{
+	): void {
 		$db = $this->getDb();
 
 		$data = (object) [

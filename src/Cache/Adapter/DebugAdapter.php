@@ -12,9 +12,9 @@ use DebugBar\DebugBar;
 use Joomla\FrameworkWebsite\Cache\ResetInterface;
 use Psr\Cache\CacheItemInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Component\Cache\PruneableInterface;
 use Symfony\Component\Cache\ResettableInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\CallbackInterface;
 
 /**
@@ -330,7 +330,7 @@ class DebugAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
 	 *
 	 * @return  void
 	 */
-	public function reset()
+	public function reset(): void
 	{
 		if (!$this->pool instanceof ResetInterface)
 		{

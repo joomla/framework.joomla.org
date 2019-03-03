@@ -82,7 +82,7 @@ class Helper
 	 *
 	 * @return  boolean
 	 */
-	public function getPackageHasVersion1(string $package) : bool
+	public function getPackageHasVersion1(string $package): bool
 	{
 		return $this->getPackages()->get("packages.$package.has_v1", true);
 	}
@@ -94,7 +94,7 @@ class Helper
 	 *
 	 * @return  boolean
 	 */
-	public function getPackageHasVersion2(string $package) : bool
+	public function getPackageHasVersion2(string $package): bool
 	{
 		return $this->getPackages()->get("packages.$package.has_v2", true);
 	}

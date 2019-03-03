@@ -84,7 +84,7 @@ class PageHtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 */
-	public function setActivePackage(\stdClass $package)
+	public function setActivePackage(\stdClass $package): void
 	{
 		$this->package = $package;
 	}
@@ -96,7 +96,7 @@ class PageHtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 */
-	public function setPageContent(string $contents)
+	public function setPageContent(string $contents): void
 	{
 		$this->contents = $contents;
 	}
@@ -108,7 +108,7 @@ class PageHtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 */
-	public function setSidebarContent(string $contents)
+	public function setSidebarContent(string $contents): void
 	{
 		$this->sidebarContents = $contents;
 	}

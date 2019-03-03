@@ -29,7 +29,7 @@ class CacheProvider implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 */
-	public function register(Container $container)
+	public function register(Container $container): void
 	{
 		// This service cannot be protected as it is decorated when the debug bar is available
 		$container->alias('cache', CacheItemPoolInterface::class)
