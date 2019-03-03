@@ -31,9 +31,10 @@ class CacheProvider implements ServiceProviderInterface
 	 */
 	public function register(Container $container)
 	{
-		$container->alias(CacheItemPoolInterface::class, 'cache')
-			->alias(AdapterInterface::class, 'cache')
-			->share('cache', [$this, 'getCacheService'], true);
+		// This service cannot be protected as it is decorated when the debug bar is available
+		$container->alias('cache', CacheItemPoolInterface::class)
+			->alias(AdapterInterface::class, CacheItemPoolInterface::class)
+			->share(CacheItemPoolInterface::class, [$this, 'getCacheService']);
 	}
 
 	/**

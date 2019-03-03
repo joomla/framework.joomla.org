@@ -29,7 +29,7 @@ class DebugTransport extends AbstractTransport
 	/**
 	 * Wrapped transport class
 	 *
-	 * @var TransportInterface
+	 * @var  TransportInterface
 	 */
 	private $wrappedTransport;
 
