@@ -12,7 +12,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
     "bootstrap": "^4.3.1",
-    "smooth-scroll": "^15.0.0"
+    "smooth-scroll": "^16.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^9.4.9",
