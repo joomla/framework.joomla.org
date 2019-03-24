@@ -9,6 +9,7 @@
 namespace Joomla\FrameworkWebsite\Command;
 
 use Joomla\Console\Command\AbstractCommand;
+use Symfony\Component\Console\Helper\ProcessHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -43,10 +44,13 @@ class UpdateCommand extends AbstractCommand
 		$symfonyStyle->title('Update Server');
 		$symfonyStyle->comment('Updating server to git HEAD');
 
+		/** @var ProcessHelper $processHelper */
+		$processHelper = $this->getHelperSet()->get('process');
+
 		// Pull from remote repo
 		try
 		{
-			(new Process('git pull', JPATH_ROOT))->mustRun();
+			$processHelper->mustRun($output, new Process(['git', 'pull'], JPATH_ROOT));
 		}
 		catch (ProcessFailedException $e)
 		{
@@ -62,7 +66,7 @@ class UpdateCommand extends AbstractCommand
 		// Run Composer install
 		try
 		{
-			(new Process('composer install --no-dev -o -a', JPATH_ROOT))->mustRun();
+			$processHelper->mustRun($output, new Process(['composer', 'install', '--no-dev', '-o', '-a'], JPATH_ROOT));
 		}
 		catch (ProcessFailedException $e)
 		{
@@ -78,7 +82,7 @@ class UpdateCommand extends AbstractCommand
 		// Run Phinx Migrations
 		try
 		{
-			(new Process('vendor/bin/phinx migrate', JPATH_ROOT))->mustRun();
+			$processHelper->mustRun($output, new Process(['vendor/bin/phinx', 'migrate'], JPATH_ROOT));
 		}
 		catch (ProcessFailedException $e)
 		{
