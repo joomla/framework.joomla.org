@@ -919,12 +919,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/event.git",
-                "reference": "ba75ff84a25b2bf7d3b2b1805fcbce7a8bb45b85"
+                "reference": "e4c851e69735279717865272c324006682d5181d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/event/zipball/ba75ff84a25b2bf7d3b2b1805fcbce7a8bb45b85",
-                "reference": "ba75ff84a25b2bf7d3b2b1805fcbce7a8bb45b85",
+                "url": "https://api.github.com/repos/joomla-framework/event/zipball/e4c851e69735279717865272c324006682d5181d",
+                "reference": "e4c851e69735279717865272c324006682d5181d",
                 "shasum": ""
             },
             "require": {
@@ -932,7 +932,11 @@
             },
             "require-dev": {
                 "joomla/coding-standards": "~2.0@alpha",
+                "joomla/console": "~2.0",
                 "phpunit/phpunit": "~6.3"
+            },
+            "suggest": {
+                "joomla/console": "If you want to use the DebugEventDispatcherCommand class, please install joomla/console:~2.0"
             },
             "type": "joomla-package",
             "extra": {
@@ -956,7 +960,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2018-10-03T01:22:12+00:00"
+            "time": "2019-03-24T00:59:17+00:00"
         },
         {
             "name": "joomla/filesystem",
@@ -1428,12 +1432,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/router.git",
-                "reference": "7558239b9c8ffa0f447068e5fad14e9b3650dbe5"
+                "reference": "8fe6a3263324e3d4605e8cfaf0e738df41021bba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/router/zipball/7558239b9c8ffa0f447068e5fad14e9b3650dbe5",
-                "reference": "7558239b9c8ffa0f447068e5fad14e9b3650dbe5",
+                "url": "https://api.github.com/repos/joomla-framework/router/zipball/8fe6a3263324e3d4605e8cfaf0e738df41021bba",
+                "reference": "8fe6a3263324e3d4605e8cfaf0e738df41021bba",
                 "shasum": ""
             },
             "require": {
@@ -1442,10 +1446,12 @@
             "require-dev": {
                 "jeremeamia/superclosure": "~1.0",
                 "joomla/coding-standards": "~2.0@alpha",
+                "joomla/console": "~2.0",
                 "phpunit/phpunit": "~6.3"
             },
             "suggest": {
-                "jeremeamia/superclosure": "If you use Closure controllers, and want to be able to cache / serialize the router, please install jeremeamia/superclosure:~1.0"
+                "jeremeamia/superclosure": "If you use Closure controllers, and want to be able to cache / serialize the router, please install jeremeamia/superclosure:~1.0",
+                "joomla/console": "If you want to use the DebugRouterCommand class, please install joomla/console:~2.0"
             },
             "type": "joomla-package",
             "extra": {
@@ -1469,7 +1475,7 @@
                 "joomla",
                 "router"
             ],
-            "time": "2018-10-03T01:22:25+00:00"
+            "time": "2019-03-24T00:20:52+00:00"
         },
         {
             "name": "joomla/string",
