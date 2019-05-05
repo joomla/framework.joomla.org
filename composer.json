@@ -14,6 +14,7 @@
         "joomla/di": "~2.0@dev",
         "joomla/event": "~2.0@dev",
         "joomla/filesystem": "~2.0@dev",
+        "joomla/filter": "~2.0@dev",
         "joomla/github": "~2.0@dev",
         "joomla/http": "~2.0@dev",
         "joomla/input": "~2.0@dev",

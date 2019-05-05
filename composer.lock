@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27c059f9a999d7be624ac41bb60b9f12",
+    "content-hash": "12292b2e30301287a032056240532277",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -1018,26 +1018,26 @@
         },
         {
             "name": "joomla/filter",
-            "version": "1.3.5",
+            "version": "dev-2.0-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/filter.git",
-                "reference": "ee1d870b5c188056745e1dd3cece21522e2158b8"
+                "reference": "26cc4ef6c575b2a20ac8c6ecd488d343d8a32bc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/ee1d870b5c188056745e1dd3cece21522e2158b8",
-                "reference": "ee1d870b5c188056745e1dd3cece21522e2158b8",
+                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/26cc4ef6c575b2a20ac8c6ecd488d343d8a32bc5",
+                "reference": "26cc4ef6c575b2a20ac8c6ecd488d343d8a32bc5",
                 "shasum": ""
             },
             "require": {
                 "joomla/string": "~1.3|~2.0",
-                "php": "^5.3.10|~7.0"
+                "php": "~7.0"
             },
             "require-dev": {
                 "joomla/coding-standards": "~2.0@alpha",
-                "joomla/language": "~1.3",
-                "phpunit/phpunit": "^4.8.35|^5.4.3|~6.0"
+                "joomla/language": "~2.0@dev",
+                "phpunit/phpunit": "~6.3"
             },
             "suggest": {
                 "joomla/language": "Required only if you want to use `OutputFilter::stringURLSafe`."
@@ -1045,7 +1045,7 @@
             "type": "joomla-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-2.0-dev": "2.0-dev"
                 }
             },
             "autoload": {
@@ -1064,7 +1064,7 @@
                 "framework",
                 "joomla"
             ],
-            "time": "2018-05-26T15:48:53+00:00"
+            "time": "2018-10-03T01:21:59+00:00"
         },
         {
             "name": "joomla/github",
@@ -3950,6 +3950,7 @@
         "joomla/di": 20,
         "joomla/event": 20,
         "joomla/filesystem": 20,
+        "joomla/filter": 20,
         "joomla/github": 20,
         "joomla/http": 20,
         "joomla/input": 20,
