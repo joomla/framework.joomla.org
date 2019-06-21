@@ -104,7 +104,7 @@ class DebugDispatcher implements DispatcherInterface
 	 *
 	 * @return  callable[]  An array of registered listeners sorted according to their priorities.
 	 */
-	public function getListeners($event)
+	public function getListeners($event = null)
 	{
 		return $this->dispatcher->getListeners($event);
 	}
