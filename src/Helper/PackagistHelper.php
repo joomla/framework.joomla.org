@@ -10,7 +10,6 @@ namespace Joomla\FrameworkWebsite\Helper;
 
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Exception\ExecutionFailureException;
-use Joomla\Database\Mysql\MysqlQuery;
 use Joomla\Database\ParameterType;
 use Joomla\FrameworkWebsite\PackageAware;
 use Joomla\Http\Http;
@@ -93,7 +92,6 @@ class PackagistHelper
 		{
 			foreach ($this->fetchDownloadCounts() as $package => $count)
 			{
-				/** @var MysqlQuery $query */
 				$query = $this->database->getQuery(true)
 					->update('#__packages')
 					->set($this->database->quoteName('downloads') . ' = :downloads')

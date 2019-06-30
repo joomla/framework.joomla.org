@@ -78,7 +78,7 @@ class DebugDispatcher implements DispatcherInterface
 	 *
 	 * @return  EventInterface  The event after being passed through all listeners.
 	 */
-	public function dispatch(string $name, EventInterface $event = null): EventInterface
+	public function dispatch(string $name, ?EventInterface $event = null): EventInterface
 	{
 		/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
 		$collector = $this->debugBar['time'];

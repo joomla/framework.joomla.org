@@ -9,8 +9,8 @@
 namespace Joomla\FrameworkWebsite\Helper;
 
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\DatabaseQuery;
 use Joomla\Database\Exception\ExecutionFailureException;
-use Joomla\Database\Mysql\MysqlQuery;
 use Joomla\Database\ParameterType;
 use Joomla\Github\Github;
 
@@ -96,7 +96,7 @@ class GitHubHelper
 					continue;
 				}
 
-				/** @var MysqlQuery $query */
+				/** @var DatabaseQuery $query */
 				$query = $this->database->getQuery(true);
 				$query->setQuery('INSERT INTO `#__contributors` (github_id, username, avatar, profile) VALUES (:github, :username, :avatar, :profile) ON DUPLICATE KEY UPDATE username = :username, avatar = :avatar, profile = :profile');
 
@@ -136,7 +136,6 @@ class GitHubHelper
 	 */
 	public function syncUserData(): void
 	{
-		/** @var MysqlQuery $query */
 		$query = $this->database->getQuery(true);
 		$query->select($this->database->quoteName(['username']))
 			->from($this->database->quoteName('#__contributors'));
@@ -151,7 +150,6 @@ class GitHubHelper
 			{
 				$userData = $this->github->users->get($username);
 
-				/** @var MysqlQuery $query */
 				$query = $this->database->getQuery(true);
 				$query->update($this->database->quoteName('#__contributors'))
 					->set($this->database->quoteName('name') . ' = :name')
@@ -190,7 +188,6 @@ class GitHubHelper
 		{
 			foreach ($this->getCommitCounts() as $username => $count)
 			{
-				/** @var MysqlQuery $query */
 				$query = $this->database->getQuery(true);
 				$query->update($this->database->quoteName('#__contributors'))
 					->set($this->database->quoteName('commits') . ' = :commits')
