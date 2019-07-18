@@ -80,8 +80,15 @@ class SyncCommand extends AbstractCommand
 			{
 				$packageId = array_search($packageName, $loadedPackages);
 
+				if ($packageId === false)
+				{
+					$symfonyStyle->warning("Could not find package ID for the $displayName package.");
+
+					continue;
+				}
+
 				$this->packageModel->updatePackage(
-					$packageId,
+					(int) $packageId,
 					$packageName,
 					$this->helper->getPackageDisplayName($packageName),
 					$this->helper->getPackageRepositoryName($packageName),

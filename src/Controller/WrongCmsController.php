@@ -22,7 +22,7 @@ class WrongCmsController extends AbstractController
 	/**
 	 * Execute the controller.
 	 *
-	 * @return  string
+	 * @return  boolean
 	 */
 	public function execute(): bool
 	{

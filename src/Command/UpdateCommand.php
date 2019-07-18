@@ -44,6 +44,13 @@ class UpdateCommand extends AbstractCommand
 		$symfonyStyle->title('Update Server');
 		$symfonyStyle->comment('Updating server to git HEAD');
 
+		if (!$this->getHelperSet())
+		{
+			$symfonyStyle->error('The helper set has not been registered to the update command.');
+
+			return 1;
+		}
+
 		/** @var ProcessHelper $processHelper */
 		$processHelper = $this->getHelperSet()->get('process');
 

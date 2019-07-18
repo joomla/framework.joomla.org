@@ -124,7 +124,10 @@ class DebugBarProvider implements ServiceProviderInterface
 		$db = $container->get(DatabaseInterface::class);
 		$db->connect();
 
-		return new PDOCollector(new TraceablePDO($db->getConnection()));
+		/** @var \PDO $pdo */
+		$pdo = $db->getConnection();
+
+		return new PDOCollector(new TraceablePDO($pdo));
 	}
 
 	/**

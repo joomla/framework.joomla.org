@@ -25,14 +25,14 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	/**
 	 * Application debug bar
 	 *
-	 * @var  DebugBar
+	 * @var  DebugBar|null
 	 */
 	private $debugBar;
 
 	/**
 	 * Application router
 	 *
-	 * @var  Router
+	 * @var  Router|null
 	 */
 	private $router;
 
@@ -62,6 +62,11 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 			$collector = $this->debugBar['time'];
 
 			$collector->startMeasure('routing');
+		}
+
+		if (!$this->router)
+		{
+			throw new \RuntimeException('The router has not been set to the application.');
 		}
 
 		$route = $this->router->parseRoute($this->get('uri.route'), $this->input->getMethod());
