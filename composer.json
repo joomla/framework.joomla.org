@@ -2,7 +2,7 @@
     "name": "joomla/framework-website",
     "description": "Application code for framework.joomla.org",
     "homepage": "http://github.com/joomla/framework.joomla.org",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "require": {
         "php": "^7.2",
         "ext-json": "*",
