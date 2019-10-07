@@ -179,9 +179,8 @@ EOF
 			{
 				$symfonyStyle->error(
 					sprintf(
-						'Error fetching data for the `%1$s` package\'s `%2$s` path on the  `%3$s` branch: %4$s',
+						'Error fetching data for the `%1$s` package\'s `%2$s` branch: %3$s',
 						$package->display,
-						$path,
 						$branch,
 						$exception->getMessage()
 					)
