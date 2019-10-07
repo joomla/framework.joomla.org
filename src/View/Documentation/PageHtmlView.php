@@ -10,12 +10,12 @@ namespace Joomla\FrameworkWebsite\View\Documentation;
 
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\Renderer\RendererInterface;
-use Joomla\View\BaseHtmlView;
+use Joomla\View\HtmlView;
 
 /**
  * Documentation page HTML view class for the application
  */
-class PageHtmlView extends BaseHtmlView
+class PageHtmlView extends HtmlView
 {
 	/**
 	 * The page contents for display.

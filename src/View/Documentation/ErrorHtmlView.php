@@ -10,12 +10,12 @@ namespace Joomla\FrameworkWebsite\View\Documentation;
 
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\Renderer\RendererInterface;
-use Joomla\View\BaseHtmlView;
+use Joomla\View\HtmlView;
 
 /**
  * Documentation error HTML view class for the application
  */
-class ErrorHtmlView extends BaseHtmlView
+class ErrorHtmlView extends HtmlView
 {
 	/**
 	 * The error message for display.

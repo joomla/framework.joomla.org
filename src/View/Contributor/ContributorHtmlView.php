@@ -10,12 +10,12 @@ namespace Joomla\FrameworkWebsite\View\Contributor;
 
 use Joomla\FrameworkWebsite\Model\ContributorModel;
 use Joomla\Renderer\RendererInterface;
-use Joomla\View\BaseHtmlView;
+use Joomla\View\HtmlView;
 
 /**
  * Contributor HTML view class for the application
  */
-class ContributorHtmlView extends BaseHtmlView
+class ContributorHtmlView extends HtmlView
 {
 	/**
 	 * The contributor model object.
