@@ -28,22 +28,22 @@
         "joomla/utilities": "^2.0@dev",
         "joomla/view": "^2.0@dev",
         "fig/link-util": "^1.0",
-        "monolog/monolog": "^1.24",
+        "monolog/monolog": "^1.25.1",
         "psr/link": "^1.0",
         "ramsey/uuid": "^3.8",
-        "robmorgan/phinx": "^0.10.7",
+        "robmorgan/phinx": "^0.10.8",
         "symfony/asset": "4.3.*",
-        "symfony/cache": "4.2.*",
+        "symfony/cache": "4.3.*",
         "symfony/console": "4.3.*",
         "symfony/process": "4.3.*",
         "symfony/web-link": "4.3.*",
         "symfony/yaml": "4.3.*",
         "theiconic/php-ga-measurement-protocol": "^2.7.1",
-        "twig/twig": "^2.11.3",
-        "zendframework/zend-diactoros": "^2.1.2"
+        "twig/twig": "^2.12",
+        "zendframework/zend-diactoros": "^2.1.3"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.15.1",
+        "friendsofphp/php-cs-fixer": "^2.15.3",
         "joomla/coding-standards": "dev-master",
         "maximebf/debugbar": "^1.15"
     },
