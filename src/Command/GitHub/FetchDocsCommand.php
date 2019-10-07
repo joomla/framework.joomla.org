@@ -216,7 +216,7 @@ EOF
 						)
 					);
 
-					continue;
+					break;
 			}
 		}
 	}
