@@ -53,6 +53,7 @@ use Joomla\Renderer\TwigRenderer;
 use Joomla\Router\Command\DebugRouterCommand;
 use Joomla\Router\Route;
 use Joomla\Router\Router;
+use Joomla\Router\RouterInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -102,7 +103,8 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->share('application.packages', [$this, 'getApplicationPackagesService'], true);
 
-		$container->alias(Router::class, 'application.router')
+		$container->alias(RouterInterface::class, 'application.router')
+			->alias(Router::class, 'application.router')
 			->share('application.router', [$this, 'getApplicationRouterService'], true);
 
 		$container->share(Input::class, [$this, 'getInputClassService'], true);
@@ -248,9 +250,9 @@ class ApplicationProvider implements ServiceProviderInterface
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
-	 * @return  Router
+	 * @return  RouterInterface
 	 */
-	public function getApplicationRouterService(Container $container): Router
+	public function getApplicationRouterService(Container $container): RouterInterface
 	{
 		$router = new Router;
 

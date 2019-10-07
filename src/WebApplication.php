@@ -13,7 +13,7 @@ use Joomla\Application\AbstractWebApplication;
 use Joomla\Controller\ControllerInterface;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\ContainerAwareTrait;
-use Joomla\Router\Router;
+use Joomla\Router\RouterInterface;
 
 /**
  * Web application class
@@ -32,7 +32,7 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	/**
 	 * Application router
 	 *
-	 * @var  Router|null
+	 * @var  RouterInterface|null
 	 */
 	private $router;
 
@@ -123,11 +123,11 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	/**
 	 * Set the application's router
 	 *
-	 * @param   Router  $router  Router object to set
+	 * @param   RouterInterface  $router  Router object to set
 	 *
 	 * @return  $this
 	 */
-	public function setRouter(Router $router): self
+	public function setRouter(RouterInterface $router): self
 	{
 		$this->router = $router;
 
