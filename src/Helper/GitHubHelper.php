@@ -8,11 +8,13 @@
 
 namespace Joomla\FrameworkWebsite\Helper;
 
+use Joomla\Application\AbstractApplication;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\DatabaseQuery;
 use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\Database\ParameterType;
 use Joomla\Github\Github;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Helper interacting with the GitHub API
@@ -27,6 +29,20 @@ class GitHubHelper
 	private const IGNORE_ACCOUNTS = [
 		'joomla-jenkins',
 	];
+
+	/**
+	 * Application object
+	 *
+	 * @var  AbstractApplication
+	 */
+	private $application;
+
+	/**
+	 * Cache pool
+	 *
+	 * @var  CacheItemPoolInterface
+	 */
+	private $cache;
 
 	/**
 	 * Array tracking commit counts for each contributor
@@ -52,13 +68,31 @@ class GitHubHelper
 	/**
 	 * Instantiate the helper.
 	 *
-	 * @param   Github             $github    The GitHub API adapter.
-	 * @param   DatabaseInterface  $database  The database driver.
+	 * @param   Github                  $github       The GitHub API adapter.
+	 * @param   DatabaseInterface       $database     The database driver.
+	 * @param   CacheItemPoolInterface  $cache        Cache pool.
+	 * @param   AbstractApplication     $application  The application object.
 	 */
-	public function __construct(Github $github, DatabaseInterface $database)
+	public function __construct(Github $github, DatabaseInterface $database, CacheItemPoolInterface $cache, AbstractApplication $application)
 	{
-		$this->database = $database;
-		$this->github   = $github;
+		$this->application = $application;
+		$this->cache       = $cache;
+		$this->database    = $database;
+		$this->github      = $github;
+	}
+
+	/**
+	 * Generate the cache key for a documentation file
+	 *
+	 * @param   string     $version  The Framework version to fetch documentation for.
+	 * @param   \stdClass  $package  The Framework package the documentation belongs to.
+	 * @param   string     $path     The path to the documentation file.
+	 *
+	 * @return  string
+	 */
+	public function generateDocsFileCacheKey(string $version, \stdClass $package, string $path): string
+	{
+		return str_replace('/', '.', $version . '/' . $package->package . '/' . $path);
 	}
 
 	/**
@@ -69,6 +103,62 @@ class GitHubHelper
 	public function getCommitCounts(): array
 	{
 		return $this->commitCounts;
+	}
+
+	/**
+	 * Render a documentation file
+	 *
+	 * @param   string     $version  The Framework version to fetch documentation for.
+	 * @param   \stdClass  $package  The Framework package the documentation belongs to.
+	 * @param   string     $path     The path to the documentation file.
+	 *
+	 * @return  string
+	 */
+	public function renderDocsFile(string $version, \stdClass $package, string $path): string
+	{
+		$docsPath = JPATH_ROOT . '/docs/' . $version . '/' . $package->package . '/' . $path . '.md';
+
+		if (!file_exists($docsPath))
+		{
+			throw new \InvalidArgumentException(
+				sprintf(
+					'No documentation found for `%s` in the `%2$s` package for version `%3$s`.',
+					$path,
+					$package->display,
+					$version
+				),
+				404
+			);
+		}
+
+		$key = $this->generateDocsFileCacheKey($version, $package, $path);
+
+		$item = $this->cache->getItem($key);
+
+		// Make sure we got a hit on the item, otherwise we'll have to re-cache
+		if ($item->isHit())
+		{
+			$rendered = $item->get();
+		}
+		else
+		{
+			$rendered = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
+
+			$routePrefix = $this->application->get('uri.base.path') . 'docs/' . $version . '/' . $package->package . '/';
+
+			// Fix links - TODO: This should only change relative links for the docs files
+			$rendered = preg_replace('/href=\"(.*)\.md\"/', 'href="' . $routePrefix . '$1"', $rendered);
+
+			// Cache the result for 7 days
+			$sevenDaysInSeconds = 60 * 60 * 24 * 7;
+
+			$item->set($rendered);
+			$item->expiresAfter($sevenDaysInSeconds);
+
+			$this->cache->save($item);
+		}
+
+		return $rendered;
 	}
 
 	/**

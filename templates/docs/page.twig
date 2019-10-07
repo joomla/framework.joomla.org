@@ -1,0 +1,35 @@
+{% extends 'index.twig' %}
+
+{% block title %}Joomla! Framework Documentation - {{ activePackage.display }} Package{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ preload(asset('css/code.css', 'mix'), 'preload', {'as': 'style'}) }}" type="text/css"{{ sri('css/code.css') }}>
+{% endblock %}
+
+{% block content %}
+    <section class="docs container">
+        <h1 class="centered-title">Framework Documentation - {{ activePackage.display }} Package</h1>
+
+        <div class="sidenav-body">
+            <aside class="sidebar">
+                <h3>Package Index</h3>
+                <nav>
+                    {{ sidebarContents|raw }}
+                </nav>
+                <h3>Package List</h3>
+                <nav>
+                    <ul>
+                        {% for package in packages if package.stable %}
+                            <li>
+                                <a href="{{ route('docs/latest/' ~ package.package) }}">{{ package.display }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </aside>
+            <section class="content">
+                {{ contents|raw }}
+            </section>
+        </div>
+    </section>
+{% endblock %}

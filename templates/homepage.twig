@@ -1,13 +1,14 @@
 {% extends "index.twig" %}
 
 {% block bodyNavigation %}
-<nav class="container-fluid homepage" data-scroll-header>
+<nav class="container-fluid main-nav homepage" data-scroll-header>
     <ul>
         <li><a data-scroll href="#go"><span class="fas fa-cloud-download-alt" aria-hidden="true"></span><span class="title">Download</span></a></li>
         <li><a data-scroll href="#about"><span class="fas fa-info-circle" aria-hidden="true"></span><span class="title">About</span></a></li>
         <li><a data-scroll href="#involved"><span class="fas fa-globe-americas" aria-hidden="true"></span><span class="title">Get Involved</span></a></li>
         <li><a data-scroll href="#resources"><span class="fas fa-book" aria-hidden="true"></span><span class="title">Resources</span></a></li>
         <li><a href="{{ route('contributors') }}"><span class="fas fa-user" aria-hidden="true"></span><span class="title">Team</span></a></li>
+        <li><a href="{{ route('docs') }}"><span class="fas fa-file-alt" aria-hidden="true"></span><span class="title">Documentation</span></a></li>
         <li><a href="{{ route('status') }}"><span class="fas fa-wrench" aria-hidden="true"></span><span class="title">Status</span></a></li>
     </ul>
 </nav>

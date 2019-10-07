@@ -17,8 +17,10 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\Command\DebugEventDispatcherCommand;
 use Joomla\Event\DispatcherInterface;
+use Joomla\FrameworkWebsite\Command\ClearCacheCommand;
 use Joomla\FrameworkWebsite\Command\GenerateSriCommand;
 use Joomla\FrameworkWebsite\Command\GitHub\ContributorsCommand;
+use Joomla\FrameworkWebsite\Command\GitHub\FetchDocsCommand;
 use Joomla\FrameworkWebsite\Command\Package\SyncCommand as PackageSyncCommand;
 use Joomla\FrameworkWebsite\Command\Packagist\DownloadsCommand;
 use Joomla\FrameworkWebsite\Command\Packagist\SyncCommand as PackagistSyncCommand;
@@ -27,6 +29,9 @@ use Joomla\FrameworkWebsite\Command\UpdateCommand;
 use Joomla\FrameworkWebsite\Controller\Api\PackageControllerGet;
 use Joomla\FrameworkWebsite\Controller\Api\StatusControllerGet;
 use Joomla\FrameworkWebsite\Controller\ContributorsController;
+use Joomla\FrameworkWebsite\Controller\Documentation\IndexController;
+use Joomla\FrameworkWebsite\Controller\Documentation\PageController as DocumentationPageController;
+use Joomla\FrameworkWebsite\Controller\Documentation\RedirectController;
 use Joomla\FrameworkWebsite\Controller\HomepageController;
 use Joomla\FrameworkWebsite\Controller\PackageController;
 use Joomla\FrameworkWebsite\Controller\PageController;
@@ -39,6 +44,9 @@ use Joomla\FrameworkWebsite\Model\ContributorModel;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
 use Joomla\FrameworkWebsite\View\Contributor\ContributorHtmlView;
+use Joomla\FrameworkWebsite\View\Documentation\ErrorHtmlView;
+use Joomla\FrameworkWebsite\View\Documentation\IndexHtmlView;
+use Joomla\FrameworkWebsite\View\Documentation\PageHtmlView;
 use Joomla\FrameworkWebsite\View\Package\PackageHtmlView;
 use Joomla\FrameworkWebsite\View\Package\PackageJsonView;
 use Joomla\FrameworkWebsite\View\Status\StatusHtmlView;
@@ -53,6 +61,7 @@ use Joomla\Renderer\TwigRenderer;
 use Joomla\Router\Command\DebugRouterCommand;
 use Joomla\Router\Route;
 use Joomla\Router\Router;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -111,10 +120,12 @@ class ApplicationProvider implements ServiceProviderInterface
 		 * Console Commands
 		 */
 
+		$container->share(ClearCacheCommand::class, [$this, 'getClearCacheCommandService'], true);
 		$container->share(ContributorsCommand::class, [$this, 'getContributorsCommandService'], true);
 		$container->share(DebugEventDispatcherCommand::class, [$this, 'getDebugEventDispatcherCommandService'], true);
 		$container->share(DebugRouterCommand::class, [$this, 'getDebugRouterCommandService'], true);
 		$container->share(DownloadsCommand::class, [$this, 'getDownloadsCommandService'], true);
+		$container->share(FetchDocsCommand::class, [$this, 'getGitHubFetchDocsCommandService'], true);
 		$container->share(GenerateSriCommand::class, [$this, 'getGenerateSriCommandService'], true);
 		$container->share(PackageSyncCommand::class, [$this, 'getPackageSyncCommandService'], true);
 		$container->share(PackagistSyncCommand::class, [$this, 'getPackagistSyncCommandService'], true);
@@ -134,6 +145,15 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->alias(ContributorsController::class, 'controller.contributors')
 			->share('controller.contributors', [$this, 'getControllerContributorsService'], true);
+
+		$container->alias(IndexController::class, 'controller.documentation.index')
+			->share('controller.documentation.index', [$this, 'getControllerDocumentationIndexService'], true);
+
+		$container->alias(DocumentationPageController::class, 'controller.documentation.page')
+			->share('controller.documentation.page', [$this, 'getControllerDocumentationPageService'], true);
+
+		$container->alias(RedirectController::class, 'controller.documentation.redirect')
+			->share('controller.documentation.redirect', [$this, 'getControllerDocumentationRedirectService'], true);
 
 		$container->alias(HomepageController::class, 'controller.homepage')
 			->share('controller.homepage', [$this, 'getControllerHomepageService'], true);
@@ -163,6 +183,15 @@ class ApplicationProvider implements ServiceProviderInterface
 		// Views
 		$container->alias(ContributorHtmlView::class, 'view.contributor.html')
 			->share('view.contributor.html', [$this, 'getViewContributorHtmlService'], true);
+
+		$container->alias(ErrorHtmlView::class, 'view.documentation.error.html')
+			->share('view.documentation.error.html', [$this, 'getViewDocumentationErrorHtmlService'], true);
+
+		$container->alias(IndexHtmlView::class, 'view.documentation.index.html')
+			->share('view.documentation.index.html', [$this, 'getViewDocumentationIndexHtmlService'], true);
+
+		$container->alias(PageHtmlView::class, 'view.documentation.page.html')
+			->share('view.documentation.page.html', [$this, 'getViewDocumentationPageHtmlService'], true);
 
 		$container->alias(PackageHtmlView::class, 'view.package.html')
 			->share('view.package.html', [$this, 'getViewPackageHtmlService'], true);
@@ -213,7 +242,12 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getApplicationHelperGithubService(Container $container): GitHubHelper
 	{
-		return new GitHubHelper($container->get(Github::class), $container->get(DatabaseInterface::class));
+		return new GitHubHelper(
+			$container->get(Github::class),
+			$container->get(DatabaseInterface::class),
+			$container->get(CacheItemPoolInterface::class),
+			$container->get(JoomlaApplication\AbstractApplication::class)
+		);
 	}
 
 	/**
@@ -293,6 +327,24 @@ class ApplicationProvider implements ServiceProviderInterface
 		);
 
 		$router->get(
+			'/docs',
+			IndexController::class
+		);
+
+		$router->get(
+			'/docs/:version/:package',
+			RedirectController::class
+		);
+
+		$router->get(
+			'/docs/:version/:package/:filename',
+			DocumentationPageController::class,
+			[
+				'filename' => '.*',
+			]
+		);
+
+		$router->get(
 			'/status',
 			StatusController::class
 		);
@@ -312,15 +364,35 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 		$router->get(
 			'/api/v1/packages',
-			StatusControllerGet::class
+			StatusControllerGet::class,
+			[],
+			[
+				'_format' => 'json',
+			]
 		);
 
 		$router->get(
 			'/api/v1/packages/:package',
-			PackageControllerGet::class
+			PackageControllerGet::class,
+			[],
+			[
+				'_format' => 'json',
+			]
 		);
 
 		return $router;
+	}
+
+	/**
+	 * Get the ClearCacheCommand service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ClearCacheCommand
+	 */
+	public function getClearCacheCommandService(Container $container): ClearCacheCommand
+	{
+		return new ClearCacheCommand($container->get(CacheItemPoolInterface::class));
 	}
 
 	/**
@@ -333,10 +405,12 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getCommandLoaderService(Container $container): LoaderInterface
 	{
 		$mapping = [
+			ClearCacheCommand::getDefaultName()           => ClearCacheCommand::class,
 			ContributorsCommand::getDefaultName()         => ContributorsCommand::class,
 			DebugEventDispatcherCommand::getDefaultName() => DebugEventDispatcherCommand::class,
 			DebugRouterCommand::getDefaultName()          => DebugRouterCommand::class,
 			DownloadsCommand::getDefaultName()            => DownloadsCommand::class,
+			FetchDocsCommand::getDefaultName()            => FetchDocsCommand::class,
 			PackageSyncCommand::getDefaultName()          => PackageSyncCommand::class,
 			PackagistSyncCommand::getDefaultName()        => PackagistSyncCommand::class,
 			GenerateSriCommand::getDefaultName()          => GenerateSriCommand::class,
@@ -424,7 +498,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
-	 * Get the `controller.homepage` service
+	 * Get the `controller.contributors` service
 	 *
 	 * @param   Container  $container  The DI container.
 	 *
@@ -434,6 +508,58 @@ class ApplicationProvider implements ServiceProviderInterface
 	{
 		return new ContributorsController(
 			$container->get(ContributorHtmlView::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the `controller.documentation.index` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  IndexController
+	 */
+	public function getControllerDocumentationIndexService(Container $container): IndexController
+	{
+		return new IndexController(
+			$container->get(IndexHtmlView::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the `controller.documentation.page` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  DocumentationPageController
+	 */
+	public function getControllerDocumentationPageService(Container $container): DocumentationPageController
+	{
+		return new DocumentationPageController(
+			$container->get(PackageModel::class),
+			$container->get(ErrorHtmlView::class),
+			$container->get(PageHtmlView::class),
+			$container->get(GitHubHelper::class),
+			$container->get(Input::class),
+			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the `controller.documentation.redirect` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  RedirectController
+	 */
+	public function getControllerDocumentationRedirectService(Container $container): RedirectController
+	{
+		return new RedirectController(
+			$container->get(PackageModel::class),
+			$container->get(ErrorHtmlView::class),
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
 		);
@@ -573,6 +699,23 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the FetchDocsCommand service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  FetchDocsCommand
+	 */
+	public function getGitHubFetchDocsCommandService(Container $container): FetchDocsCommand
+	{
+		return new FetchDocsCommand(
+			$container->get(PackageModel::class),
+			$container->get(Github::class),
+			$container->get(GitHubHelper::class),
+			$container->get(CacheItemPoolInterface::class)
+		);
+	}
+
+	/**
 	 * Get the Input class service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -693,6 +836,63 @@ class ApplicationProvider implements ServiceProviderInterface
 		);
 
 		$view->setLayout('contributors.twig');
+
+		return $view;
+	}
+
+	/**
+	 * Get the `view.documentation.error.html` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ErrorHtmlView
+	 */
+	public function getViewDocumentationErrorHtmlService(Container $container): ErrorHtmlView
+	{
+		$view = new ErrorHtmlView(
+			$container->get('model.package'),
+			$container->get('renderer')
+		);
+
+		$view->setLayout('docs/error.twig');
+
+		return $view;
+	}
+
+	/**
+	 * Get the `view.documentation.index.html` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  IndexHtmlView
+	 */
+	public function getViewDocumentationIndexHtmlService(Container $container): IndexHtmlView
+	{
+		$view = new IndexHtmlView(
+			$container->get('model.package'),
+			$container->get('renderer')
+		);
+
+		$view->setLayout('docs/index.twig');
+
+		return $view;
+	}
+
+	/**
+	 * Get the `view.documentation.page.html` service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  PageHtmlView
+	 */
+	public function getViewDocumentationPageHtmlService(Container $container): PageHtmlView
+	{
+		$view = new PageHtmlView(
+			$container->get('model.package'),
+			$container->get('renderer')
+		);
+
+		$view->setLayout('docs/page.twig');
 
 		return $view;
 	}

@@ -11,7 +11,7 @@
 /cache/*
 !/cache/.placeholder
 
-# App Docs #
+# Documentation Cache #
 /docs/*
 !/docs/.placeholder
 

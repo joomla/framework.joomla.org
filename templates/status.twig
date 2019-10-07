@@ -35,7 +35,7 @@
                         {{ release.package.downloads|number_format }}
                     </td>
                     <td data-label="1.x Build Status">
-                        {% if release.package.repo in ['console', 'preload', 'renderer', 'symfony-event-dispatcher-bridge', 'test'] %}
+                        {% if not release.package.has_v1 %}
                             N/A
                         {% else %}
                             {% set _1xbranch = release.package.repo in ['crypt'] ? '1.x-dev' : 'master'  %}
@@ -43,7 +43,7 @@
                         {% endif %}
                     </td>
                     <td data-label="2.0 Build Status">
-                        {% if release.package.repo in ['cache', 'compat', 'date', 'facebook-api', 'google-api', 'image', 'ldap', 'linkedin-api', 'log', 'openstreetmap-api', 'test', 'twitter-api'] %}
+                        {% if not release.package.has_v2 %}
                             N/A
                         {% else %}
                             {% set _2xbranch = release.package.repo in ['crypt', 'renderer', 'symfony-event-dispatcher-bridge'] ? 'master' : '2.0-dev'  %}

@@ -435,7 +435,7 @@ readers do not read off random characters that represent icons */
 //.#{$fa-css-prefix}-fighter-jet:before { content: fa-content($fa-var-fighter-jet); }
 //.#{$fa-css-prefix}-figma:before { content: fa-content($fa-var-figma); }
 //.#{$fa-css-prefix}-file:before { content: fa-content($fa-var-file); }
-//.#{$fa-css-prefix}-file-alt:before { content: fa-content($fa-var-file-alt); }
+.#{$fa-css-prefix}-file-alt:before { content: fa-content($fa-var-file-alt); }
 //.#{$fa-css-prefix}-file-archive:before { content: fa-content($fa-var-file-archive); }
 //.#{$fa-css-prefix}-file-audio:before { content: fa-content($fa-var-file-audio); }
 //.#{$fa-css-prefix}-file-code:before { content: fa-content($fa-var-file-code); }

@@ -10,6 +10,7 @@ namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\ParameterType;
+use Joomla\FrameworkWebsite\Model\Exception\PackageNotFoundException;
 use Joomla\Model\DatabaseModelInterface;
 use Joomla\Model\DatabaseModelTrait;
 
@@ -39,11 +40,21 @@ class PackageModel implements DatabaseModelInterface
 	 * @param   boolean  $isStable      Flag indicating the package is stable
 	 * @param   boolean  $isDeprecated  Flag indicating the package is deprecated
 	 * @param   boolean  $isAbandoned   Flag indicating the package is abandoned
+	 * @param   boolean  $hasV1         Flag indicating the package has a 1.x branch
+	 * @param   boolean  $hasV2         Flag indicating the package has a 2.x branch
 	 *
 	 * @return  void
 	 */
-	public function addPackage(string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated, bool $isAbandoned): void
-	{
+	public function addPackage(
+		string $packageName,
+		string $displayName,
+		string $repoName,
+		bool $isStable,
+		bool $isDeprecated,
+		bool $isAbandoned,
+		bool $hasV1,
+		bool $hasV2
+	): void {
 		$db = $this->getDb();
 
 		$data = (object) [
@@ -53,6 +64,8 @@ class PackageModel implements DatabaseModelInterface
 			'stable'     => (int) $isStable,
 			'deprecated' => (int) $isDeprecated,
 			'abandoned'  => (int) $isAbandoned,
+			'has_v1'     => (int) $hasV1,
+			'has_v2'     => (int) $hasV2,
 		];
 
 		$db->insertObject('#__packages', $data);
@@ -85,7 +98,7 @@ class PackageModel implements DatabaseModelInterface
 	 *
 	 * @return  \stdClass
 	 *
-	 * @throws  \RuntimeException
+	 * @throws  PackageNotFoundException
 	 */
 	public function getPackage(string $packageName): \stdClass
 	{
@@ -102,7 +115,7 @@ class PackageModel implements DatabaseModelInterface
 
 		if (!$package)
 		{
-			throw new \RuntimeException(sprintf('Unable to find release data for the `%s` package', $package->display), 404);
+			throw new PackageNotFoundException(sprintf('Unable to find release data for the `%s` package', $package->display), 404);
 		}
 
 		return $package;
@@ -141,6 +154,26 @@ class PackageModel implements DatabaseModelInterface
 	}
 
 	/**
+	 * Get the packages as a sorted array
+	 *
+	 * @return  array
+	 */
+	public function getSortedPackages(): array
+	{
+		$packages = $this->getPackages();
+
+		usort(
+			$packages,
+			function ($a, $b)
+			{
+				return strcmp($a->display, $b->display);
+			}
+		);
+
+		return $packages;
+	}
+
+	/**
 	 * Update a package
 	 *
 	 * @param   integer  $packageId     The local package ID
@@ -150,11 +183,22 @@ class PackageModel implements DatabaseModelInterface
 	 * @param   boolean  $isStable      Flag indicating the package is stable
 	 * @param   boolean  $isDeprecated  Flag indicating the package is deprecated
 	 * @param   boolean  $isAbandoned   Flag indicating the package is abandoned
+	 * @param   boolean  $hasV1         Flag indicating the package has a 1.x branch
+	 * @param   boolean  $hasV2         Flag indicating the package has a 2.x branch
 	 *
 	 * @return  void
 	 */
-	public function updatePackage(int $packageId, string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated, bool $isAbandoned): void
-	{
+	public function updatePackage(
+		int $packageId,
+		string $packageName,
+		string $displayName,
+		string $repoName,
+		bool $isStable,
+		bool $isDeprecated,
+		bool $isAbandoned,
+		bool $hasV1,
+		bool $hasV2
+	): void {
 		$db = $this->getDb();
 
 		$data = (object) [
@@ -165,6 +209,8 @@ class PackageModel implements DatabaseModelInterface
 			'stable'     => (int) $isStable,
 			'deprecated' => (int) $isDeprecated,
 			'abandoned'  => (int) $isAbandoned,
+			'has_v1'     => (int) $hasV1,
+			'has_v2'     => (int) $hasV2,
 		];
 
 		$db->updateObject('#__packages', $data, 'id');

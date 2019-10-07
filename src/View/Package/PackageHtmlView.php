@@ -12,12 +12,12 @@ use Joomla\FrameworkWebsite\Helper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
 use Joomla\Renderer\RendererInterface;
-use Joomla\View\BaseHtmlView;
+use Joomla\View\HtmlView;
 
 /**
  * Package HTML view class for the application
  */
-class PackageHtmlView extends BaseHtmlView
+class PackageHtmlView extends HtmlView
 {
 	/**
 	 * Helper object
