@@ -86,12 +86,17 @@ class DebugDispatcher implements DispatcherInterface
 
 		$collector->startMeasure($label);
 
-		$event = $this->dispatcher->dispatch($name, $event);
-
-		// Needed because the application's before respond event may be cut short
-		if ($collector->hasStartedMeasure($label))
+		try
 		{
-			$collector->stopMeasure($label);
+			$event = $this->dispatcher->dispatch($name, $event);
+		}
+		finally
+		{
+			// Needed because the application's before respond event may be cut short
+			if ($collector->hasStartedMeasure($label))
+			{
+				$collector->stopMeasure($label);
+			}
 		}
 
 		return $event;
