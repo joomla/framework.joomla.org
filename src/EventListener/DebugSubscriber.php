@@ -120,19 +120,12 @@ class DebugSubscriber implements SubscriberInterface
 		/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
 		$collector = $this->debugBar['time'];
 
-		if ($collector->hasStartedMeasure('routing'))
+		foreach (['routing', 'controller', 'execution'] as $measure)
 		{
-			$collector->stopMeasure('routing');
-		}
-
-		if ($collector->hasStartedMeasure('controller'))
-		{
-			$collector->stopMeasure('controller');
-		}
-
-		if ($collector->hasStartedMeasure('execution'))
-		{
-			$collector->stopMeasure('execution');
+			if ($collector->hasStartedMeasure($measure))
+			{
+				$collector->stopMeasure($measure);
+			}
 		}
 	}
 
