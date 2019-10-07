@@ -405,6 +405,7 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getCommandLoaderService(Container $container): LoaderInterface
 	{
 		$mapping = [
+			ClearCacheCommand::getDefaultName()           => ClearCacheCommand::class,
 			ContributorsCommand::getDefaultName()         => ContributorsCommand::class,
 			DebugEventDispatcherCommand::getDefaultName() => DebugEventDispatcherCommand::class,
 			DebugRouterCommand::getDefaultName()          => DebugRouterCommand::class,
