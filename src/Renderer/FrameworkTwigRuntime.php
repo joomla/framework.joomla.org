@@ -108,7 +108,14 @@ class FrameworkTwigRuntime
 				throw new \RuntimeException(sprintf('SRI manifest file "%s" does not exist.', $this->sriManifestPath));
 			}
 
-			$this->sriManifestData = json_decode(file_get_contents($this->sriManifestPath), true);
+			$sriManifestContents = file_get_contents($this->sriManifestPath);
+
+			if ($sriManifestContents === false)
+			{
+				throw new \RuntimeException(sprintf('Could not read SRI manifest file "%s".', $this->sriManifestPath));
+			}
+
+			$this->sriManifestData = json_decode($sriManifestContents, true);
 
 			if (0 < json_last_error())
 			{

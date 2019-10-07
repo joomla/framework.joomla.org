@@ -78,7 +78,7 @@ class DebugDispatcher implements DispatcherInterface
 	 *
 	 * @return  EventInterface  The event after being passed through all listeners.
 	 */
-	public function dispatch(string $name, EventInterface $event = null): EventInterface
+	public function dispatch(string $name, ?EventInterface $event = null): EventInterface
 	{
 		/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
 		$collector = $this->debugBar['time'];
@@ -104,7 +104,7 @@ class DebugDispatcher implements DispatcherInterface
 	 *
 	 * @return  callable[]  An array of registered listeners sorted according to their priorities.
 	 */
-	public function getListeners($event)
+	public function getListeners($event = null)
 	{
 		return $this->dispatcher->getListeners($event);
 	}

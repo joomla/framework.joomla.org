@@ -15,6 +15,7 @@ use Joomla\Console\Loader\LoaderInterface;
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
+use Joomla\Event\Command\DebugEventDispatcherCommand;
 use Joomla\Event\DispatcherInterface;
 use Joomla\FrameworkWebsite\Command\ClearCacheCommand;
 use Joomla\FrameworkWebsite\Command\GenerateSriCommand;
@@ -57,6 +58,8 @@ use Joomla\Input\Input;
 use Joomla\Registry\Registry;
 use Joomla\Renderer\RendererInterface;
 use Joomla\Renderer\TwigRenderer;
+use Joomla\Router\Command\DebugRouterCommand;
+use Joomla\Router\Route;
 use Joomla\Router\Router;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
@@ -119,8 +122,10 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->share(ClearCacheCommand::class, [$this, 'getClearCacheCommandService'], true);
 		$container->share(ContributorsCommand::class, [$this, 'getContributorsCommandService'], true);
-		$container->share(FetchDocsCommand::class, [$this, 'getGitHubFetchDocsCommandService'], true);
+		$container->share(DebugEventDispatcherCommand::class, [$this, 'getDebugEventDispatcherCommandService'], true);
+		$container->share(DebugRouterCommand::class, [$this, 'getDebugRouterCommandService'], true);
 		$container->share(DownloadsCommand::class, [$this, 'getDownloadsCommandService'], true);
+		$container->share(FetchDocsCommand::class, [$this, 'getGitHubFetchDocsCommandService'], true);
 		$container->share(GenerateSriCommand::class, [$this, 'getGenerateSriCommandService'], true);
 		$container->share(PackageSyncCommand::class, [$this, 'getPackageSyncCommandService'], true);
 		$container->share(PackagistSyncCommand::class, [$this, 'getPackagistSyncCommandService'], true);
@@ -314,15 +319,7 @@ class ApplicationProvider implements ServiceProviderInterface
 		/*
 		 * Web routes
 		 */
-		$router->get(
-			'/',
-			HomepageController::class
-		);
-
-		$router->head(
-			'/',
-			HomepageController::class
-		);
+		$router->addRoute(new Route(['GET', 'HEAD'], '/', HomepageController::class));
 
 		$router->get(
 			'/contributors',
@@ -408,15 +405,16 @@ class ApplicationProvider implements ServiceProviderInterface
 	public function getCommandLoaderService(Container $container): LoaderInterface
 	{
 		$mapping = [
-			ClearCacheCommand::getDefaultName()    => ClearCacheCommand::class,
-			ContributorsCommand::getDefaultName()  => ContributorsCommand::class,
-			FetchDocsCommand::getDefaultName()     => FetchDocsCommand::class,
-			PackageSyncCommand::getDefaultName()   => PackageSyncCommand::class,
-			DownloadsCommand::getDefaultName()     => DownloadsCommand::class,
-			PackagistSyncCommand::getDefaultName() => PackagistSyncCommand::class,
-			GenerateSriCommand::getDefaultName()   => GenerateSriCommand::class,
-			ResetCacheCommand::getDefaultName()    => ResetCacheCommand::class,
-			UpdateCommand::getDefaultName()        => UpdateCommand::class,
+			ContributorsCommand::getDefaultName()         => ContributorsCommand::class,
+			DebugEventDispatcherCommand::getDefaultName() => DebugEventDispatcherCommand::class,
+			DebugRouterCommand::getDefaultName()          => DebugRouterCommand::class,
+			DownloadsCommand::getDefaultName()            => DownloadsCommand::class,
+			FetchDocsCommand::getDefaultName()            => FetchDocsCommand::class,
+			PackageSyncCommand::getDefaultName()          => PackageSyncCommand::class,
+			PackagistSyncCommand::getDefaultName()        => PackagistSyncCommand::class,
+			GenerateSriCommand::getDefaultName()          => GenerateSriCommand::class,
+			ResetCacheCommand::getDefaultName()           => ResetCacheCommand::class,
+			UpdateCommand::getDefaultName()               => UpdateCommand::class,
 		];
 
 		return new ContainerLoader($container, $mapping);
@@ -642,6 +640,34 @@ class ApplicationProvider implements ServiceProviderInterface
 		return new WrongCmsController(
 			$container->get(Input::class),
 			$container->get(WebApplication::class)
+		);
+	}
+
+	/**
+	 * Get the DebugEventDispatcherCommand service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  DebugEventDispatcherCommand
+	 */
+	public function getDebugEventDispatcherCommandService(Container $container): DebugEventDispatcherCommand
+	{
+		return new DebugEventDispatcherCommand(
+			$container->get(DispatcherInterface::class)
+		);
+	}
+
+	/**
+	 * Get the DebugRouterCommand service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  DebugRouterCommand
+	 */
+	public function getDebugRouterCommandService(Container $container): DebugRouterCommand
+	{
+		return new DebugRouterCommand(
+			$container->get(Router::class)
 		);
 	}
 

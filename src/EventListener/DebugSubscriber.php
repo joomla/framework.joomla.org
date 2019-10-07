@@ -11,8 +11,8 @@ namespace Joomla\FrameworkWebsite\EventListener;
 use DebugBar\DebugBar;
 use Joomla\Application\AbstractWebApplication;
 use Joomla\Application\ApplicationEvents;
+use Joomla\Application\Event\ApplicationErrorEvent;
 use Joomla\Application\Event\ApplicationEvent;
-use Joomla\Event\EventInterface;
 use Joomla\Event\Priority;
 use Joomla\Event\SubscriberInterface;
 use Zend\Diactoros\Response\JsonResponse;
@@ -106,11 +106,11 @@ class DebugSubscriber implements SubscriberInterface
 	/**
 	 * Handle application errors.
 	 *
-	 * @param   EventInterface  $event  Event object
+	 * @param   ApplicationErrorEvent  $event  Event object
 	 *
 	 * @return  void
 	 */
-	public function handleError(EventInterface $event): void
+	public function handleError(ApplicationErrorEvent $event): void
 	{
 		/** @var \DebugBar\DataCollector\ExceptionsCollector $collector */
 		$collector = $this->debugBar['exceptions'];

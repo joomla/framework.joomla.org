@@ -18,7 +18,7 @@ trait PackageAware
 	/**
 	 * Registry containing the package data
 	 *
-	 * @var  Registry
+	 * @var  Registry|null
 	 */
 	protected $packages;
 

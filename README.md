@@ -1,12 +1,10 @@
 # Joomla! Framework Site
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/joomla/framework.joomla.org.svg)](https://greenkeeper.io/)
-
 This application is the code powering the [Joomla! Framework](https://framework.joomla.org) website.
 
 ## Requirements
 
-* PHP 7.0+
+* PHP 7.2+
     * PDO with MySQL support
 * Composer
 * Apache with mod_rewrite enabled

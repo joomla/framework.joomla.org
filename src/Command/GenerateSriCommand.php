@@ -51,7 +51,16 @@ class GenerateSriCommand extends AbstractCommand
 			return 1;
 		}
 
-		$mixManifest = json_decode(file_get_contents($mixManifestFile), true);
+		$mixManifestData = file_get_contents($mixManifestFile);
+
+		if ($mixManifestData === false)
+		{
+			$symfonyStyle->error('The Mix manifest file could not be read.');
+
+			return 1;
+		}
+
+		$mixManifest = json_decode($mixManifestData, true);
 
 		$sriData = [];
 
@@ -59,9 +68,25 @@ class GenerateSriCommand extends AbstractCommand
 		{
 			$fullPath = $mediaDir . $file;
 
+			if (!file_exists($fullPath))
+			{
+				$symfonyStyle->warning(sprintf('The Mix resource "%s" is missing.', $fullPath));
+
+				continue;
+			}
+
+			$fileContents = file_get_contents($fullPath);
+
+			if ($fileContents === false)
+			{
+				$symfonyStyle->warning(sprintf('The Mix resource "%s" could not be read.', $fullPath));
+
+				continue;
+			}
+
 			$sriData[$file] = [
 				'crossorigin' => 'anonymous',
-				'integrity'   => 'sha384-' . base64_encode(hash('sha384', file_get_contents($fullPath), true)),
+				'integrity'   => 'sha384-' . base64_encode(hash('sha384', $fileContents, true)),
 			];
 		}
 

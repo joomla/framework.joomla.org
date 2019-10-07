@@ -56,8 +56,7 @@ abstract class AnalyticsController extends AbstractController implements LoggerA
 	{
 		// On a GET request, submit analytics data if enabled
 		if ($this->getInput()->getMethod() === 'GET'
-			&& $this->getApplication()->get('analytics.enabled', false)
-			&& $this->analytics)
+			&& $this->getApplication()->get('analytics.enabled', false))
 		{
 			// Don't allow sending Analytics data to cause a failure
 			try
