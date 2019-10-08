@@ -67,6 +67,9 @@ class DebugSubscriber implements SubscriberInterface
 		/** @var AbstractWebApplication $application */
 		$application = $event->getApplication();
 
+		// Ensure responses are not cached
+		$application->allowCache(false);
+
 		if (!($application->mimeType === 'application/json' || $application->getResponse() instanceof JsonResponse))
 		{
 			$debugBarOutput = $this->debugBar->getJavascriptRenderer()->render();
