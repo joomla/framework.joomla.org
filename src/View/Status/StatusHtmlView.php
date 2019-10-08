@@ -11,12 +11,12 @@ namespace Joomla\FrameworkWebsite\View\Status;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
 use Joomla\Renderer\RendererInterface;
-use Joomla\View\BaseHtmlView;
+use Joomla\View\HtmlView;
 
 /**
  * Status dashboard HTML view class for the application
  */
-class StatusHtmlView extends BaseHtmlView
+class StatusHtmlView extends HtmlView
 {
 	/**
 	 * The package model object.
