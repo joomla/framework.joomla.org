@@ -96,8 +96,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(ContainerLoader::class, LoaderInterface::class)
 			->share(LoaderInterface::class, [$this, 'getCommandLoaderService'], true);
 
+		// This service cannot be protected as it is decorated when the debug bar is available
 		$container->alias(ContainerControllerResolver::class, ControllerResolverInterface::class)
-			->share(ControllerResolverInterface::class, [$this, 'getControllerResolverService'], true);
+			->share(ControllerResolverInterface::class, [$this, 'getControllerResolverService']);
 
 		$container->alias(Helper::class, 'application.helper')
 			->share('application.helper', [$this, 'getApplicationHelperService'], true);

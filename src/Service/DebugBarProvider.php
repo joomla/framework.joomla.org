@@ -16,11 +16,13 @@ use DebugBar\DataCollector\PDO\TraceablePDO;
 use DebugBar\DebugBar;
 use DebugBar\StandardDebugBar;
 use Joomla\Application\AbstractWebApplication;
+use Joomla\Application\Controller\ControllerResolverInterface;
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\DI\Exception\DependencyResolutionException;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
+use Joomla\FrameworkWebsite\Controller\DebugControllerResolver;
 use Joomla\FrameworkWebsite\DebugBar\JoomlaHttpDriver;
 use Joomla\FrameworkWebsite\Event\DebugDispatcher;
 use Joomla\FrameworkWebsite\EventListener\DebugSubscriber;
@@ -59,6 +61,8 @@ class DebugBarProvider implements ServiceProviderInterface
 
 		$container->alias(DebugSubscriber::class, 'event.subscriber.debug')
 			->share('event.subscriber.debug', [$this, 'getEventSubscriberDebugService'], true);
+
+		$container->extend(ControllerResolverInterface::class, [$this, 'getDecoratedControllerResolverService']);
 
 		$container->extend(DispatcherInterface::class, [$this, 'getDecoratedDispatcherService']);
 
@@ -156,6 +160,19 @@ class DebugBarProvider implements ServiceProviderInterface
 	public function getDebugHttpDriverService(Container $container): JoomlaHttpDriver
 	{
 		return new JoomlaHttpDriver($container->get(AbstractWebApplication::class));
+	}
+
+	/**
+	 * Get the decorated controller resolver service
+	 *
+	 * @param   ControllerResolverInterface  $resolver   The original ControllerResolverInterface service.
+	 * @param   Container                    $container  The DI container.
+	 *
+	 * @return  ControllerResolverInterface
+	 */
+	public function getDecoratedControllerResolverService(ControllerResolverInterface $resolver, Container $container): ControllerResolverInterface
+	{
+		return new DebugControllerResolver($resolver, $container->get('debug.bar'));
 	}
 
 	/**
