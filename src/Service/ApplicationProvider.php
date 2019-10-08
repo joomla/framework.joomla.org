@@ -103,9 +103,10 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->share('application.packages', [$this, 'getApplicationPackagesService'], true);
 
+		// This service cannot be protected as it is decorated when the debug bar is available
 		$container->alias(RouterInterface::class, 'application.router')
 			->alias(Router::class, 'application.router')
-			->share('application.router', [$this, 'getApplicationRouterService'], true);
+			->share('application.router', [$this, 'getApplicationRouterService']);
 
 		$container->share(Input::class, [$this, 'getInputClassService'], true);
 

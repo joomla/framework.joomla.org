@@ -56,14 +56,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 	 */
 	protected function doExecute(): void
 	{
-		if ($this->debugBar)
-		{
-			/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
-			$collector = $this->debugBar['time'];
-
-			$collector->startMeasure('routing');
-		}
-
 		if (!$this->router)
 		{
 			throw new \RuntimeException('The router has not been set to the application.');
@@ -75,14 +67,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 		foreach ($route->getRouteVariables() as $key => $value)
 		{
 			$this->input->def($key, $value);
-		}
-
-		if ($this->debugBar)
-		{
-			/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
-			$collector = $this->debugBar['time'];
-
-			$collector->stopMeasure('routing');
 		}
 
 		if ($this->debugBar)

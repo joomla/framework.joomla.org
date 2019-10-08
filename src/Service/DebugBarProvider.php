@@ -24,6 +24,8 @@ use Joomla\Event\DispatcherInterface;
 use Joomla\FrameworkWebsite\DebugBar\JoomlaHttpDriver;
 use Joomla\FrameworkWebsite\Event\DebugDispatcher;
 use Joomla\FrameworkWebsite\EventListener\DebugSubscriber;
+use Joomla\FrameworkWebsite\Router\DebugRouter;
+use Joomla\Router\RouterInterface;
 
 /**
  * Debug bar service provider
@@ -59,6 +61,8 @@ class DebugBarProvider implements ServiceProviderInterface
 			->share('event.subscriber.debug', [$this, 'getEventSubscriberDebugService'], true);
 
 		$container->extend(DispatcherInterface::class, [$this, 'getDecoratedDispatcherService']);
+
+		$container->extend('application.router', [$this, 'getDecoratedRouterService']);
 
 		$container->extend('twig.extension.profiler', [$this, 'getDecoratedTwigExtensionProfilerService']);
 
@@ -168,6 +172,19 @@ class DebugBarProvider implements ServiceProviderInterface
 		$dispatcher->addSubscriber($container->get('event.subscriber.debug'));
 
 		return $dispatcher;
+	}
+
+	/**
+	 * Get the decorated `application.router` service
+	 *
+	 * @param   RouterInterface  $router     The original RouterInterface service.
+	 * @param   Container        $container  The DI container.
+	 *
+	 * @return  RouterInterface
+	 */
+	public function getDecoratedRouterService(RouterInterface $router, Container $container): RouterInterface
+	{
+		return new DebugRouter($router, $container->get('debug.bar'));
 	}
 
 	/**
