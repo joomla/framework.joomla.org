@@ -17,6 +17,7 @@ use DebugBar\DebugBar;
 use DebugBar\StandardDebugBar;
 use Joomla\Application\AbstractWebApplication;
 use Joomla\Application\Controller\ControllerResolverInterface;
+use Joomla\Application\Web\WebClient;
 use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\DI\Exception\DependencyResolutionException;
@@ -24,10 +25,13 @@ use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 use Joomla\FrameworkWebsite\Controller\DebugControllerResolver;
 use Joomla\FrameworkWebsite\DebugBar\JoomlaHttpDriver;
+use Joomla\FrameworkWebsite\DebugWebApplication;
 use Joomla\FrameworkWebsite\Event\DebugDispatcher;
 use Joomla\FrameworkWebsite\EventListener\DebugSubscriber;
 use Joomla\FrameworkWebsite\Router\DebugRouter;
+use Joomla\Input\Input;
 use Joomla\Router\RouterInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Debug bar service provider
@@ -65,6 +69,8 @@ class DebugBarProvider implements ServiceProviderInterface
 		$container->extend(ControllerResolverInterface::class, [$this, 'getDecoratedControllerResolverService']);
 
 		$container->extend(DispatcherInterface::class, [$this, 'getDecoratedDispatcherService']);
+
+		$container->extend(AbstractWebApplication::class, [$this, 'getDecoratedWebApplicationService']);
 
 		$container->extend('application.router', [$this, 'getDecoratedRouterService']);
 
@@ -215,6 +221,34 @@ class DebugBarProvider implements ServiceProviderInterface
 	public function getDecoratedTwigExtensionProfilerService(\Twig_Extension_Profiler $profiler, Container $container): TimeableTwigExtensionProfiler
 	{
 		return new TimeableTwigExtensionProfiler($container->get('twig.profiler.profile'), $container->get('debug.bar')['time']);
+	}
+
+	/**
+	 * Get the decorated web application service
+	 *
+	 * @param   AbstractWebApplication  $application  The original AbstractWebApplication service.
+	 * @param   Container               $container    The DI container.
+	 *
+	 * @return  DebugWebApplication
+	 */
+	public function getDecoratedWebApplicationService(AbstractWebApplication $application, Container $container): DebugWebApplication
+	{
+		$application = new DebugWebApplication(
+			$container->get('debug.bar'),
+			$container->get(ControllerResolverInterface::class),
+			$container->get(RouterInterface::class),
+			$container->get(Input::class),
+			$container->get('config'),
+			$container->get(WebClient::class)
+		);
+
+		$application->httpVersion = '2';
+
+		// Inject extra services
+		$application->setDispatcher($container->get(DispatcherInterface::class));
+		$application->setLogger($container->get(LoggerInterface::class));
+
+		return $application;
 	}
 
 	/**

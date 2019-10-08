@@ -83,8 +83,9 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->share(ConsoleApplication::class, [$this, 'getConsoleApplicationService'], true);
 
+		// This service cannot be protected as it is decorated when the debug bar is available
 		$container->alias(WebApplication::class, AbstractWebApplication::class)
-			->share(AbstractWebApplication::class, [$this, 'getWebApplicationClassService'], true);
+			->share(AbstractWebApplication::class, [$this, 'getWebApplicationClassService']);
 
 		/*
 		 * Application Helpers and Dependencies
@@ -802,14 +803,11 @@ class ApplicationProvider implements ServiceProviderInterface
 	 */
 	public function getWebApplicationClassService(Container $container): WebApplication
 	{
-		/** @var Registry $config */
-		$config = $container->get('config');
-
 		$application = new WebApplication(
 			$container->get(ControllerResolverInterface::class),
 			$container->get(RouterInterface::class),
 			$container->get(Input::class),
-			$config,
+			$container->get('config'),
 			$container->get(WebClient::class)
 		);
 
