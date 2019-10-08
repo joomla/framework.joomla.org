@@ -8,59 +8,76 @@
 
 namespace Joomla\FrameworkWebsite;
 
-use DebugBar\DebugBar;
 use Joomla\Application\AbstractWebApplication;
-use Joomla\Controller\ControllerInterface;
-use Joomla\DI\ContainerAwareInterface;
-use Joomla\DI\ContainerAwareTrait;
+use Joomla\Application\Controller\ControllerResolverInterface;
+use Joomla\Application\Web\WebClient;
+use Joomla\Input\Input;
+use Joomla\Registry\Registry;
 use Joomla\Router\RouterInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Web application class
  */
-class WebApplication extends AbstractWebApplication implements ContainerAwareInterface
+class WebApplication extends AbstractWebApplication
 {
-	use ContainerAwareTrait;
+	/**
+	 * The application's controller resolver.
+	 *
+	 * @var    ControllerResolverInterface
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected $controllerResolver;
 
 	/**
-	 * Application debug bar
+	 * The application's router.
 	 *
-	 * @var  DebugBar|null
+	 * @var    RouterInterface
+	 * @since  __DEPLOY_VERSION__
 	 */
-	private $debugBar;
+	protected $router;
 
 	/**
-	 * Application router
+	 * Class constructor.
 	 *
-	 * @var  RouterInterface|null
-	 */
-	private $router;
-
-	/**
-	 * Checks the accept encoding of the browser and compresses the data before sending it to the client if possible.
+	 * @param   ControllerResolverInterface  $controllerResolver  The application's controller resolver
+	 * @param   RouterInterface              $router              The application's router
+	 * @param   Input                        $input               An optional argument to provide dependency injection for the application's
+	 *                                                            input object.
+	 * @param   Registry                     $config              An optional argument to provide dependency injection for the application's
+	 *                                                            config object.
+	 * @param   WebClient                    $client              An optional argument to provide dependency injection for the application's
+	 *                                                            client object.
+	 * @param   ResponseInterface            $response            An optional argument to provide dependency injection for the application's
+	 *                                                            response object.
 	 *
-	 * @return  void
+	 * @since   __DEPLOY_VERSION__
 	 */
-	protected function compress(): void
+	public function __construct(
+		ControllerResolverInterface $controllerResolver,
+		RouterInterface $router,
+		Input $input = null,
+		Registry $config = null,
+		WebClient $client = null,
+		ResponseInterface $response = null
+	)
 	{
-		if (!$this->get('debug', false))
-		{
-			parent::compress();
-		}
+		$this->controllerResolver = $controllerResolver;
+		$this->router             = $router;
+
+		// Call the constructor as late as possible (it runs `initialise`).
+		parent::__construct($input, $config, $client, $response);
 	}
 
 	/**
-	 * Method to run the application routines
+	 * Method to run the application routines.
 	 *
 	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
 	 */
 	protected function doExecute(): void
 	{
-		if (!$this->router)
-		{
-			throw new \RuntimeException('The router has not been set to the application.');
-		}
-
 		$route = $this->router->parseRoute($this->get('uri.route'), $this->input->getMethod());
 
 		// Add variables to the input if not already set
@@ -69,52 +86,6 @@ class WebApplication extends AbstractWebApplication implements ContainerAwareInt
 			$this->input->def($key, $value);
 		}
 
-		if ($this->debugBar)
-		{
-			/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
-			$collector = $this->debugBar['time'];
-
-			$collector->startMeasure('controller');
-		}
-
-		/** @var ControllerInterface $controller */
-		$controller = $this->getContainer()->get($route->getController());
-		$controller->execute();
-
-		if ($this->debugBar)
-		{
-			/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
-			$collector = $this->debugBar['time'];
-
-			$collector->stopMeasure('controller');
-		}
-	}
-
-	/**
-	 * Set the application's debug bar
-	 *
-	 * @param   DebugBar  $debugBar  DebugBar object to set
-	 *
-	 * @return  $this
-	 */
-	public function setDebugBar(DebugBar $debugBar): self
-	{
-		$this->debugBar = $debugBar;
-
-		return $this;
-	}
-
-	/**
-	 * Set the application's router
-	 *
-	 * @param   RouterInterface  $router  Router object to set
-	 *
-	 * @return  $this
-	 */
-	public function setRouter(RouterInterface $router): self
-	{
-		$this->router = $router;
-
-		return $this;
+		\call_user_func($this->controllerResolver->resolve($route));
 	}
 }

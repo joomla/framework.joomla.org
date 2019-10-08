@@ -8,7 +8,10 @@
 
 namespace Joomla\FrameworkWebsite\Service;
 
-use Joomla\Application as JoomlaApplication;
+use Joomla\Application\AbstractWebApplication;
+use Joomla\Application\Controller\ContainerControllerResolver;
+use Joomla\Application\Controller\ControllerResolverInterface;
+use Joomla\Application\Web\WebClient;
 use Joomla\Console\Application as ConsoleApplication;
 use Joomla\Console\Loader\ContainerLoader;
 use Joomla\Console\Loader\LoaderInterface;
@@ -58,6 +61,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
+use Zend\Diactoros\Response\JsonResponse;
 
 /**
  * Application service provider
@@ -79,8 +83,8 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		$container->share(ConsoleApplication::class, [$this, 'getConsoleApplicationService'], true);
 
-		$container->alias(WebApplication::class, JoomlaApplication\AbstractWebApplication::class)
-			->share(JoomlaApplication\AbstractWebApplication::class, [$this, 'getWebApplicationClassService'], true);
+		$container->alias(WebApplication::class, AbstractWebApplication::class)
+			->share(AbstractWebApplication::class, [$this, 'getWebApplicationClassService'], true);
 
 		/*
 		 * Application Helpers and Dependencies
@@ -92,6 +96,9 @@ class ApplicationProvider implements ServiceProviderInterface
 		$container->alias(ContainerLoader::class, LoaderInterface::class)
 			->share(LoaderInterface::class, [$this, 'getCommandLoaderService'], true);
 
+		$container->alias(ContainerControllerResolver::class, ControllerResolverInterface::class)
+			->share(ControllerResolverInterface::class, [$this, 'getControllerResolverService'], true);
+
 		$container->alias(Helper::class, 'application.helper')
 			->share('application.helper', [$this, 'getApplicationHelperService'], true);
 
@@ -102,6 +109,8 @@ class ApplicationProvider implements ServiceProviderInterface
 			->share('application.helper.packagist', [$this, 'getApplicationHelperPackagistService'], true);
 
 		$container->share('application.packages', [$this, 'getApplicationPackagesService'], true);
+
+		$container->share(WebClient::class, [$this, 'getWebClientService'], true);
 
 		// This service cannot be protected as it is decorated when the debug bar is available
 		$container->alias(RouterInterface::class, 'application.router')
@@ -491,6 +500,18 @@ class ApplicationProvider implements ServiceProviderInterface
 	}
 
 	/**
+	 * Get the controller resolver service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  ControllerResolverInterface
+	 */
+	public function getControllerResolverService(Container $container): ControllerResolverInterface
+	{
+		return new ContainerControllerResolver($container);
+	}
+
+	/**
 	 * Get the `controller.status` service
 	 *
 	 * @param   Container  $container  The DI container.
@@ -783,20 +804,38 @@ class ApplicationProvider implements ServiceProviderInterface
 		/** @var Registry $config */
 		$config = $container->get('config');
 
-		$application              = new WebApplication($container->get(Input::class), $config);
+		$application = new WebApplication(
+			$container->get(ControllerResolverInterface::class),
+			$container->get(RouterInterface::class),
+			$container->get(Input::class),
+			$config,
+			$container->get(WebClient::class)
+		);
+
 		$application->httpVersion = '2';
 
 		// Inject extra services
-		$application->setContainer($container);
 		$application->setDispatcher($container->get(DispatcherInterface::class));
 		$application->setLogger($container->get(LoggerInterface::class));
-		$application->setRouter($container->get(Router::class));
-
-		if ($config->get('debug', false) && $container->has('debug.bar'))
-		{
-			$application->setDebugBar($container->get('debug.bar'));
-		}
 
 		return $application;
+	}
+
+	/**
+	 * Get the web client service
+	 *
+	 * @param   Container  $container  The DI container.
+	 *
+	 * @return  WebClient
+	 */
+	public function getWebClientService(Container $container): WebClient
+	{
+		/** @var Input $input */
+		$input          = $container->get(Input::class);
+		$userAgent      = $input->server->getString('HTTP_USER_AGENT', '');
+		$acceptEncoding = $input->server->getString('HTTP_ACCEPT_ENCODING', '');
+		$acceptLanguage = $input->server->getString('HTTP_ACCEPT_LANGUAGE', '');
+
+		return new WebClient($userAgent, $acceptEncoding, $acceptLanguage);
 	}
 }
