@@ -42,8 +42,6 @@ class DebugWebApplication extends WebApplication
 	 *                                                            client object.
 	 * @param   ResponseInterface            $response            An optional argument to provide dependency injection for the application's
 	 *                                                            response object.
-	 *
-	 * @since   __DEPLOY_VERSION__
 	 */
 	public function __construct(
 		DebugBar $debugBar,
@@ -65,8 +63,6 @@ class DebugWebApplication extends WebApplication
 	 * Method to run the application routines.
 	 *
 	 * @return  void
-	 *
-	 * @since   __DEPLOY_VERSION__
 	 */
 	protected function doExecute(): void
 	{

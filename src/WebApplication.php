@@ -24,16 +24,14 @@ class WebApplication extends AbstractWebApplication
 	/**
 	 * The application's controller resolver.
 	 *
-	 * @var    ControllerResolverInterface
-	 * @since  __DEPLOY_VERSION__
+	 * @var  ControllerResolverInterface
 	 */
 	protected $controllerResolver;
 
 	/**
 	 * The application's router.
 	 *
-	 * @var    RouterInterface
-	 * @since  __DEPLOY_VERSION__
+	 * @var  RouterInterface
 	 */
 	protected $router;
 
@@ -50,8 +48,6 @@ class WebApplication extends AbstractWebApplication
 	 *                                                            client object.
 	 * @param   ResponseInterface            $response            An optional argument to provide dependency injection for the application's
 	 *                                                            response object.
-	 *
-	 * @since   __DEPLOY_VERSION__
 	 */
 	public function __construct(
 		ControllerResolverInterface $controllerResolver,
@@ -73,8 +69,6 @@ class WebApplication extends AbstractWebApplication
 	 * Method to run the application routines.
 	 *
 	 * @return  void
-	 *
-	 * @since   __DEPLOY_VERSION__
 	 */
 	protected function doExecute(): void
 	{

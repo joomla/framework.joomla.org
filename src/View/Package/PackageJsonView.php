@@ -14,8 +14,6 @@ use Joomla\View\BaseJsonView;
 
 /**
  * Package JSON view class for the application
- *
- * @since  1.0
  */
 class PackageJsonView extends BaseJsonView
 {
