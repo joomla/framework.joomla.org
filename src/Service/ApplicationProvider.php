@@ -325,12 +325,20 @@ class ApplicationProvider implements ServiceProviderInterface
 		 */
 		$router->get(
 			'/api/v1/packages',
-			StatusControllerGet::class
+			StatusControllerGet::class,
+			[],
+			[
+				'_format' => 'json',
+			]
 		);
 
 		$router->get(
 			'/api/v1/packages/:package',
-			PackageControllerGet::class
+			PackageControllerGet::class,
+			[],
+			[
+				'_format' => 'json',
+			]
 		);
 
 		return $router;

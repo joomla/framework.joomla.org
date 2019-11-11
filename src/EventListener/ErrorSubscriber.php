@@ -149,6 +149,7 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 
 		switch (true)
 		{
+			case $app->input->getString('_format', 'html') === 'json' :
 			case $app->mimeType === 'application/json' :
 			case $app->getResponse() instanceof JsonResponse :
 				$data = [
