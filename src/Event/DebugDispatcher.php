@@ -71,6 +71,34 @@ class DebugDispatcher implements DispatcherInterface
 	}
 
 	/**
+	 * Clear the listeners in this dispatcher.
+	 *
+	 * If an event is specified, the listeners will be cleared only for that event.
+	 *
+	 * @param   string  $event  The event name.
+	 *
+	 * @return  $this
+	 */
+	public function clearListeners($event = null)
+	{
+		$this->dispatcher->clearListeners($event);
+
+		return $this;
+	}
+
+	/**
+	 * Count the number of registered listeners for the given event.
+	 *
+	 * @param   string  $event  The event name.
+	 *
+	 * @return  integer
+	 */
+	public function countListeners($event)
+	{
+		return $this->dispatcher->countListeners($event);
+	}
+
+	/**
 	 * Dispatches an event to all registered listeners.
 	 *
 	 * @param   string          $name   The name of the event to dispatch.
@@ -109,7 +137,7 @@ class DebugDispatcher implements DispatcherInterface
 	 *
 	 * @return  callable[]  An array of registered listeners sorted according to their priorities.
 	 */
-	public function getListeners($event = null)
+	public function getListeners(?string $event = null)
 	{
 		return $this->dispatcher->getListeners($event);
 	}
@@ -124,7 +152,7 @@ class DebugDispatcher implements DispatcherInterface
 	 *
 	 * @return  boolean  True if the listener is registered, false otherwise.
 	 */
-	public function hasListener(callable $callback, $eventName = null)
+	public function hasListener(callable $callback, ?string $eventName = null)
 	{
 		return $this->dispatcher->hasListener($callback, $eventName);
 	}
