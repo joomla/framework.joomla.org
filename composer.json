@@ -28,7 +28,7 @@
         "joomla/utilities": "^2.0@dev",
         "joomla/view": "^2.0@dev",
         "fig/link-util": "^1.0",
-        "monolog/monolog": "^1.25.1",
+        "monolog/monolog": "^2.0",
         "psr/link": "^1.0",
         "ramsey/uuid": "^3.8",
         "robmorgan/phinx": "^0.10.8",
