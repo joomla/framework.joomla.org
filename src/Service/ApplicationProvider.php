@@ -61,7 +61,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
-use Zend\Diactoros\Response\JsonResponse;
 
 /**
  * Application service provider
