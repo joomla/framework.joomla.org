@@ -10,12 +10,12 @@ namespace Joomla\FrameworkWebsite\View\Package;
 
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
-use Joomla\View\BaseJsonView;
+use Joomla\View\JsonView;
 
 /**
  * Package JSON view class for the application
  */
-class PackageJsonView extends BaseJsonView
+class PackageJsonView extends JsonView
 {
 	/**
 	 * The active package

@@ -10,12 +10,12 @@ namespace Joomla\FrameworkWebsite\View\Status;
 
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
-use Joomla\View\BaseJsonView;
+use Joomla\View\JsonView;
 
 /**
  * Status dashboard JSON view class for the application
  */
-class StatusJsonView extends BaseJsonView
+class StatusJsonView extends JsonView
 {
 	/**
 	 * The package model object.
