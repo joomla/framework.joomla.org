@@ -28,7 +28,7 @@
         "joomla/utilities": "^2.0@dev",
         "joomla/view": "^2.0@dev",
         "fig/link-util": "^1.0",
-        "monolog/monolog": "^2.0",
+        "monolog/monolog": "^2.0.1",
         "psr/link": "^1.0",
         "ramsey/uuid": "^3.8",
         "robmorgan/phinx": "^0.11.1",
@@ -38,13 +38,13 @@
         "symfony/web-link": "4.3.*",
         "symfony/yaml": "4.3.*",
         "theiconic/php-ga-measurement-protocol": "^2.7.1",
-        "twig/twig": "^2.12.1",
-        "zendframework/zend-diactoros": "^2.1.5"
+        "twig/twig": "^2.12.2",
+        "zendframework/zend-diactoros": "^2.2"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
         "joomla/coding-standards": "dev-master",
-        "maximebf/debugbar": "^1.15.1"
+        "maximebf/debugbar": "^1.16"
     },
     "replace": {
         "paragonie/random_compat": "*",
