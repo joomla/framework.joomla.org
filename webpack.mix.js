@@ -1,4 +1,5 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
+require('laravel-mix-purgecss');
 
 // Configure base path for mix stuff going to web
 mix.setPublicPath('www/media/');
@@ -31,7 +32,12 @@ mix
         postCss: [
             require('autoprefixer')()
         ]
-    });
+    })
+    .purgeCss({
+        folders: ['templates'],
+        extensions: ['twig'],
+    })
+;
 
 // Version assets
 mix.version();
