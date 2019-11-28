@@ -11,16 +11,16 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.4.1",
     "smooth-scroll": "^16.1.0"
   },
   "devDependencies": {
-    "autoprefixer": "^9.6.4",
+    "autoprefixer": "^9.7.2",
     "cross-env": "^6.0.3",
-    "laravel-mix": "^4.1.4",
-    "resolve-url-loader": "^3.1.0",
-    "sass": "^1.23.0",
-    "sass-loader": "^7.3.1",
+    "laravel-mix": "^5.0.0",
+    "resolve-url-loader": "^3.1.1",
+    "sass": "^1.23.7",
+    "sass-loader": "^8.0.0",
     "vue-template-compiler": "^2.6.10"
   },
   "browserslist": [
