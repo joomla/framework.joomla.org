@@ -66,8 +66,9 @@
         </main>
         <footer class="clearfix" role="contentinfo" id="resources">
             {% block footerContent %}
+                {% import 'macros.twig' as macros  %}
                 <div class="container">
-                    {{ footer_copyright() }}
+                    {{ macros.footer_copyright() }}
                 </div>
             {% endblock %}
         </footer>

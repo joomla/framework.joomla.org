@@ -153,6 +153,7 @@
 {% endblock %}
 
 {% block footerContent %}
+{% import 'macros.twig' as macros  %}
 <div class="container homepage-footer">
     <div class="footer-area resources">
         <h3><span class="fas fa-book" aria-hidden="true"></span> Resources</h3>
@@ -182,7 +183,7 @@
         <p><a href="https://groups.google.com/group/joomla-dev-framework">Join the Google Group</a> and let us know how you have implemented it.</p>
     </div>
     <div class="footer-area copyright">
-        {{ footer_copyright() }}
+        {{ macros.footer_copyright() }}
     </div>
 </div>
 {% endblock %}
