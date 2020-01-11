@@ -13,7 +13,7 @@ use Joomla\Controller\AbstractController;
 use Joomla\Input\Input;
 use Joomla\Renderer\RendererInterface;
 use Joomla\Router\Exception\RouteNotFoundException;
-use Zend\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\HtmlResponse;
 
 /**
  * Controller handling the site's simple text pages

@@ -15,8 +15,8 @@ use Joomla\Application\Event\ApplicationErrorEvent;
 use Joomla\Application\Event\ApplicationEvent;
 use Joomla\Event\Priority;
 use Joomla\Event\SubscriberInterface;
-use Zend\Diactoros\Response\JsonResponse;
-use Zend\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\Response\JsonResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 
 /**
  * Debug event subscriber

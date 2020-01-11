@@ -12,7 +12,7 @@ use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\View\Package\PackageHtmlView;
 use Joomla\Input\Input;
-use Zend\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\HtmlResponse;
 
 /**
  * Controller handling a package's status data listing

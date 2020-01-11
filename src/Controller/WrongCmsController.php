@@ -9,7 +9,7 @@
 namespace Joomla\FrameworkWebsite\Controller;
 
 use Joomla\Controller\AbstractController;
-use Zend\Diactoros\Response\TextResponse;
+use Laminas\Diactoros\Response\TextResponse;
 
 /**
  * Controller class to display a message to individuals looking for the wrong CMS
