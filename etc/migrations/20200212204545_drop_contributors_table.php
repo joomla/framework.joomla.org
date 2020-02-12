@@ -31,6 +31,8 @@ class DropContributorsTable extends AbstractMigration
 	 */
 	public function change()
 	{
-		$this->table('contributors')->drop();
+		$this->table('contributors')
+			->drop()
+			->update();
 	}
 }
