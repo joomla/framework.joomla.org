@@ -1,18 +1,7 @@
 nav.homepage {
   ul {
     li {
-      margin-left: 5%;
-      @include media-breakpoint-up(md) {
-        margin-left: 4%;
-      }
-      @include media-breakpoint-up(xl) {
-        margin-left: 6%;
-      }
-      &:first-child {
-        margin-left: 0;
-      }
       span {
-        vertical-align: top;
         &.title {
           display: none;
           @include media-breakpoint-up(md) {
