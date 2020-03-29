@@ -28,7 +28,7 @@ class PageController extends AbstractController
 	 *
 	 * @const  array
 	 */
-	private const EXCLUDED_LAYOUTS = ['contributors', 'exception', 'homepage', 'index', 'macros', 'package', 'status'];
+	private const EXCLUDED_LAYOUTS = ['exception', 'homepage', 'index', 'macros', 'package', 'status'];
 
 	/**
 	 * The template renderer.
