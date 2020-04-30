@@ -9,17 +9,15 @@
 namespace Joomla\FrameworkWebsite\Controller\Api;
 
 use Joomla\Application\AbstractApplication;
-use Joomla\Controller\AbstractController;
+use Joomla\FrameworkWebsite\Controller\AnalyticsController;
 use Joomla\FrameworkWebsite\View\Package\PackageJsonView;
 use Joomla\Input\Input;
+use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
  * API Controller handling a package's status data listing
- *
- * @method         \Joomla\FrameworkWebsite\WebApplication  getApplication()  Get the application object.
- * @property-read  \Joomla\FrameworkWebsite\WebApplication  $app              Application object
  */
-class PackageControllerGet extends AbstractController
+class PackageControllerGet extends AnalyticsController
 {
 	/**
 	 * The view object.
@@ -32,12 +30,13 @@ class PackageControllerGet extends AbstractController
 	 * Constructor.
 	 *
 	 * @param   PackageJsonView      $view       The view object.
+	 * @param   Analytics            $analytics  Analytics object.
 	 * @param   Input                $input      The input object.
 	 * @param   AbstractApplication  $app        The application object.
 	 */
-	public function __construct(PackageJsonView $view, Input $input = null, AbstractApplication $app = null)
+	public function __construct(PackageJsonView $view, Analytics $analytics, Input $input = null, AbstractApplication $app = null)
 	{
-		parent::__construct($input, $app);
+		parent::__construct($analytics, $input, $app);
 
 		$this->view = $view;
 	}
@@ -49,6 +48,8 @@ class PackageControllerGet extends AbstractController
 	 */
 	public function execute(): bool
 	{
+		$this->sendAnalytics();
+
 		// Disable browser caching
 		$this->getApplication()->allowCache(false);
 

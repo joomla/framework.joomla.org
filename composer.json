@@ -37,6 +37,7 @@
         "symfony/process": "^5.0.2",
         "symfony/web-link": "^5.0.2",
         "symfony/yaml": "^5.0.2",
+        "theiconic/php-ga-measurement-protocol": "^2.7.1",
         "twig/twig": "^2.12.3"
     },
     "require-dev": {
