@@ -13,10 +13,6 @@
             "path": "cache/twig"
         }
     },
-    "analytics": {
-        "enabled": false,
-        "account": ""
-    },
     "log": {
         "level": "error",
         "application": "error"
