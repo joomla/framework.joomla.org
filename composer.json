@@ -31,7 +31,7 @@
         "laminas/laminas-diactoros": "^2.3",
         "monolog/monolog": "^2.1",
         "psr/link": "^1.0",
-        "ramsey/uuid": "^3.9.2",
+        "ramsey/uuid": "^4.0.1",
         "robmorgan/phinx": "^0.12.3",
         "symfony/asset": "^5.1.2",
         "symfony/process": "^5.1.2",
