@@ -34,8 +34,11 @@ mix
         ]
     })
     .purgeCss({
-        folders: ['templates'],
-        extensions: ['twig'],
+        extend: {
+            content: [
+                'templates/**/*.twig',
+            ],
+        }
     })
 ;
 
