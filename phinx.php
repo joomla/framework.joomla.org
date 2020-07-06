@@ -38,8 +38,8 @@ return [
 		'migrations' => '%%PHINX_CONFIG_DIR%%/etc/migrations',
 	],
 	'environments' => [
-		'default_database' => 'application',
-		'application'      => [
+		'default_environment' => 'application',
+		'application'         => [
 			'name'         => $config->get('database.database'),
 			'connection'   => $db->getConnection(),
 			'table_prefix' => $config->get('database.prefix'),
