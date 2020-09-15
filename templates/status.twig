@@ -35,7 +35,7 @@
                         {{ release.package.downloads|number_format }}
                     </td>
                     <td data-label="1.x Build Status">
-                        {% if release.package.repo in ['console', 'preload', 'renderer', 'symfony-event-dispatcher-bridge', 'test'] %}
+                        {% if release.package.repo in ['console', 'preload', 'renderer', 'symfony-event-dispatcher-bridge'] %}
                             N/A
                         {% else %}
                             {% set _1xbranch = release.package.repo in ['crypt'] ? '1.x-dev' : 'master'  %}
