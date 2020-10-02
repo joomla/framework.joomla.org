@@ -17,7 +17,7 @@
   "devDependencies": {
     "autoprefixer": "^9.8.4",
     "cross-env": "^7.0.2",
-    "laravel-mix": "^5.0.4",
+    "laravel-mix": "^5.0.5",
     "laravel-mix-purgecss": "^5.0.0",
     "resolve-url-loader": "^3.1.1",
     "sass": "^1.26.9",
