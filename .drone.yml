@@ -1,0 +1,34 @@
+---
+kind: pipeline
+name: default
+
+clone:
+
+steps:
+  - name: composer
+    image: joomlaprojects/docker-images:php7.2
+    volumes:
+      - name: composer-cache
+        path: /tmp/composer-cache
+    commands:
+      - composer install
+
+  - name: phpcs
+    image: joomlaprojects/docker-images:php7.2
+    depends_on: [ composer ]
+    commands:
+      - echo $(date)
+      - ./vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards
+      - ./vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml
+      - echo $(date)
+
+volumes:
+- name: composer-cache
+  host:
+    path: /tmp/composer-cache
+
+---
+kind: signature
+hmac: 400e7cdcd516fbb54ccc3f0f152e39a86346a47b7876a65741fec4898fe80b1f
+
+...
