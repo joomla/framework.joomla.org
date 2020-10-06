@@ -5,22 +5,49 @@ name: default
 clone:
 
 steps:
-  - name: composer
-    image: joomlaprojects/docker-images:php7.2
-    volumes:
-      - name: composer-cache
-        path: /tmp/composer-cache
-    commands:
-      - composer install
+- name: composer
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - php -v
+  - composer update
+  - composer require phpmd/phpmd phpstan/phpstan
+  volumes:
+  - name: composer-cache
+    path: /tmp/composer-cache
 
-  - name: phpcs
-    image: joomlaprojects/docker-images:php7.2
-    depends_on: [ composer ]
-    commands:
-      - echo $(date)
-      - ./vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards
-      - ./vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml
-      - echo $(date)
+- name: phpcs
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards
+  - vendor/bin/phpcs -p --report=full --extensions=php --standard=Joomla src/
+
+- name: phpmd
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - vendor/bin/phpmd src text cleancode
+  - vendor/bin/phpmd src text codesize
+  - vendor/bin/phpmd src text controversial
+  - vendor/bin/phpmd src text design
+  - vendor/bin/phpmd src text unusedcode
+  failure: ignore
+
+- name: phpstan
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - vendor/bin/phpstan analyse src
+  failure: ignore
+
+- name: phploc
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - phploc src
+  failure: ignore
+
+- name: phpcpd
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - phpcpd src
+  failure: ignore
 
 volumes:
 - name: composer-cache
@@ -29,6 +56,6 @@ volumes:
 
 ---
 kind: signature
-hmac: 400e7cdcd516fbb54ccc3f0f152e39a86346a47b7876a65741fec4898fe80b1f
+hmac: cf019bbd105ee0ef53b38bcc7d382d9274ec8c38a3deb12130c07ef59c7c1f15
 
 ...
