@@ -19,7 +19,7 @@ steps:
   image: joomlaprojects/docker-images:php7.4
   commands:
   - vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards
-  - vendor/bin/phpcs -p --report=full --extensions=php --standard=Joomla src/
+  - vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/
 
 - name: phpmd
   image: joomlaprojects/docker-images:php7.4
@@ -56,6 +56,6 @@ volumes:
 
 ---
 kind: signature
-hmac: cf019bbd105ee0ef53b38bcc7d382d9274ec8c38a3deb12130c07ef59c7c1f15
+hmac: 010d6ac5a8a43d60ca78d1d15c6132c3734157a7a03d36633a54f5d03335b38e
 
 ...
