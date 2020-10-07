@@ -1,0 +1,61 @@
+---
+kind: pipeline
+name: default
+
+clone:
+
+steps:
+- name: composer
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - php -v
+  - composer update
+  - composer require phpmd/phpmd phpstan/phpstan
+  volumes:
+  - name: composer-cache
+    path: /tmp/composer-cache
+
+- name: phpcs
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards
+  - vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/
+
+- name: phpmd
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - vendor/bin/phpmd src text cleancode
+  - vendor/bin/phpmd src text codesize
+  - vendor/bin/phpmd src text controversial
+  - vendor/bin/phpmd src text design
+  - vendor/bin/phpmd src text unusedcode
+  failure: ignore
+
+- name: phpstan
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - vendor/bin/phpstan analyse src
+  failure: ignore
+
+- name: phploc
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - phploc src
+  failure: ignore
+
+- name: phpcpd
+  image: joomlaprojects/docker-images:php7.4
+  commands:
+  - phpcpd src
+  failure: ignore
+
+volumes:
+- name: composer-cache
+  host:
+    path: /tmp/composer-cache
+
+---
+kind: signature
+hmac: 010d6ac5a8a43d60ca78d1d15c6132c3734157a7a03d36633a54f5d03335b38e
+
+...
