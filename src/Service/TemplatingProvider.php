@@ -107,6 +107,7 @@ class TemplatingProvider implements ServiceProviderInterface
 		$context = new ApplicationContext($app);
 
 		$mediaPath = $app->get('uri.media.path', '/media/');
+		$mediaPath = str_replace($context->getBasePath(), '/', $mediaPath);
 
 		$defaultPackage = new PathPackage($mediaPath, new EmptyVersionStrategy, $context);
 
