@@ -69,10 +69,6 @@ steps:
       username:
         from_secret: framework_username
       port: 22
-      key:
-        from_secret: framework_key
-      passphrase:
-        from_secret: framework_password
       script:
         - cd /home/fwjoomla/siteData
         - bin/framework update:server
@@ -91,6 +87,6 @@ volumes:
 
 ---
 kind: signature
-hmac: e3b9ce4eb165ee71d6cb44cceb9cd26c3fe71844d73f10aa18dad419753ccff7
+hmac: 361d4c3d1019208718fdfe50862a0c5a735441ca83dbe3b36e8f783160b4527e
 
 ...
