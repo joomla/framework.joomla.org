@@ -68,11 +68,9 @@ steps:
         from_secret: framework_host
       username:
         from_secret: framework_username
+      password:
+        from_secret: framework_password
       port: 22
-      key:
-        from_secret: ssh_key
-      passphrase:
-        from_secret: ssh_passphrase
       script:
         - cd /home/fwjoomla/siteData
         - bin/framework update:server
@@ -91,6 +89,6 @@ volumes:
 
 ---
 kind: signature
-hmac: ec24bd0a8a9ca401e2b8dc36805f9eb07c8603a3e892591e19e8b3e50f24a943
+hmac: 6b9f985c7861fc1350815797957f230fc040d0eb34a4b320ccbc1278ea0b10c4
 
 ...
