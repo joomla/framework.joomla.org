@@ -63,6 +63,16 @@ class WebApplication extends AbstractWebApplication
 
 		// Call the constructor as late as possible (it runs `initialise`).
 		parent::__construct($input, $config, $client, $response);
+
+		// If an explicitly media URI is set, don't do anything.
+		$mediaURI = trim($this->get('media_uri'));
+
+		if (!$mediaURI)
+		{
+			// No explicit media URI was set, build it dynamically from the base uri.
+			$this->set('uri.media.full', 'media/');
+			$this->set('uri.media.path', 'media/');
+		}
 	}
 
 	/**
