@@ -5,57 +5,82 @@ name: default
 clone:
 
 steps:
-- name: composer
-  image: joomlaprojects/docker-images:php7.4
-  commands:
-  - php -v
-  - composer update
-  - composer require phpmd/phpmd phpstan/phpstan
-  volumes:
-  - name: composer-cache
-    path: /tmp/composer-cache
+  - name: composer
+    image: joomlaprojects/docker-images:php7.4
+    commands:
+      - php -v
+      - composer update
+      - composer require phpmd/phpmd phpstan/phpstan
+    volumes:
+      - name: composer-cache
+        path: /tmp/composer-cache
 
-- name: phpcs
-  image: joomlaprojects/docker-images:php7.4
-  commands:
-  - vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards
-  - vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/
+  - name: phpcs
+    image: joomlaprojects/docker-images:php7.4
+    commands:
+      - vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards
+      - vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/
 
-- name: phpmd
-  image: joomlaprojects/docker-images:php7.4
-  commands:
-  - vendor/bin/phpmd src text cleancode
-  - vendor/bin/phpmd src text codesize
-  - vendor/bin/phpmd src text controversial
-  - vendor/bin/phpmd src text design
-  - vendor/bin/phpmd src text unusedcode
-  failure: ignore
+  - name: phpmd
+    image: joomlaprojects/docker-images:php7.4
+    commands:
+      - vendor/bin/phpmd src text cleancode
+      - vendor/bin/phpmd src text codesize
+      - vendor/bin/phpmd src text controversial
+      - vendor/bin/phpmd src text design
+      - vendor/bin/phpmd src text unusedcode
+    failure: ignore
 
-- name: phpstan
-  image: joomlaprojects/docker-images:php7.4
-  commands:
-  - vendor/bin/phpstan analyse src
-  failure: ignore
+  - name: phpstan
+    image: joomlaprojects/docker-images:php7.4
+    commands:
+      - vendor/bin/phpstan analyse src
+    failure: ignore
 
-- name: phploc
-  image: joomlaprojects/docker-images:php7.4
-  commands:
-  - phploc src
-  failure: ignore
+  - name: phploc
+    image: joomlaprojects/docker-images:php7.4
+    commands:
+      - phploc src
+    failure: ignore
 
-- name: phpcpd
-  image: joomlaprojects/docker-images:php7.4
-  commands:
-  - phpcpd src
-  failure: ignore
+  - name: phpcpd
+    image: joomlaprojects/docker-images:php7.4
+    commands:
+      - phpcpd src
+    failure: ignore
+
+  - name: deployment
+    image: appleboy/drone-ssh
+    depends_on:
+      - phpcs
+    settings:
+      host:
+        from_secret: framework_host
+      username:
+        from_secret: framework_username
+      port: 22
+      key:
+        from_secret: framework_key
+      passphrase:
+        from_secret: framework_password
+      script:
+        - cd /home/fwjoomla/siteData
+        - bin/framework update:server
+    when:
+      branch:
+        - master
+      status:
+        - success
+      event:
+        - push
 
 volumes:
-- name: composer-cache
-  host:
-    path: /tmp/composer-cache
+  - name: composer-cache
+    host:
+      path: /tmp/composer-cache
 
 ---
 kind: signature
-hmac: 010d6ac5a8a43d60ca78d1d15c6132c3734157a7a03d36633a54f5d03335b38e
+hmac: 4c1d1d1a11f27ec2b36eeb9bef2b20ea4e1208f685b43e69b765b629d88d70d3
 
 ...
