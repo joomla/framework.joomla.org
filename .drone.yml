@@ -17,12 +17,16 @@ steps:
 
   - name: phpcs
     image: joomlaprojects/docker-images:php7.4
+    depends_on:
+      - composer
     commands:
       - vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards
       - vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/
 
   - name: phpmd
     image: joomlaprojects/docker-images:php7.4
+    depends_on:
+      - composer
     commands:
       - vendor/bin/phpmd src text cleancode
       - vendor/bin/phpmd src text codesize
@@ -33,18 +37,24 @@ steps:
 
   - name: phpstan
     image: joomlaprojects/docker-images:php7.4
+    depends_on:
+      - composer
     commands:
       - vendor/bin/phpstan analyse src
     failure: ignore
 
   - name: phploc
     image: joomlaprojects/docker-images:php7.4
+    depends_on:
+      - composer
     commands:
       - phploc src
     failure: ignore
 
   - name: phpcpd
     image: joomlaprojects/docker-images:php7.4
+    depends_on:
+      - composer
     commands:
       - phpcpd src
     failure: ignore
@@ -60,9 +70,9 @@ steps:
         from_secret: framework_username
       port: 22
       key:
-        from_secret: framework_key
+        from_secret: ssh_key
       passphrase:
-        from_secret: framework_password
+        from_secret: ssh_passphrase
       script:
         - cd /home/fwjoomla/siteData
         - bin/framework update:server
@@ -81,6 +91,6 @@ volumes:
 
 ---
 kind: signature
-hmac: 4c1d1d1a11f27ec2b36eeb9bef2b20ea4e1208f685b43e69b765b629d88d70d3
+hmac: ec24bd0a8a9ca401e2b8dc36805f9eb07c8603a3e892591e19e8b3e50f24a943
 
 ...
