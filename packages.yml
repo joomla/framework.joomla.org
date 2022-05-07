@@ -7,7 +7,6 @@ packages:
     compat:
         deprecated: true
     console:
-        stable: false
     controller: ~
     crypt: ~
     data: ~
@@ -63,7 +62,6 @@ packages:
         repo: openstreetmap-api
         deprecated: true
     preload:
-        stable: false
     profiler: ~
     registry: ~
     renderer:
