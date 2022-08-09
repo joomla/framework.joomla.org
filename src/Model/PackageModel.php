@@ -73,6 +73,7 @@ class PackageModel implements DatabaseModelInterface
 			->select('*')
 			->from($db->quoteName('#__packages'))
 			->where($db->quoteName('abandoned') . ' = :abandoned')
+			->order('display')
 			->bind('abandoned', $abandoned, ParameterType::INTEGER);
 
 		return $db->setQuery($query)->loadObjectList('id');
