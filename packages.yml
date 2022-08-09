@@ -19,6 +19,7 @@ packages:
         display: DateTime
     di:
         display: DI
+    entities: ~
     event: ~
     facebook:
         repo: facebook-api
