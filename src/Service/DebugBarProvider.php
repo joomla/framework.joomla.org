@@ -84,7 +84,7 @@ class DebugBarProvider implements ServiceProviderInterface
         }
 
         $debugBar = new StandardDebugBar();
-// Add collectors
+        // Add collectors
         foreach ($container->getTagged('debug.collector') as $collector) {
             $debugBar->addCollector($collector);
         }
@@ -93,6 +93,7 @@ class DebugBarProvider implements ServiceProviderInterface
         $renderer = $debugBar->getJavascriptRenderer();
         $renderer->dumpCssAssets(JPATH_ROOT . '/www/media/css/debugbar.css');
         $renderer->dumpJsAssets(JPATH_ROOT . '/www/media/js/debugbar.js');
+
         return $debugBar;
     }
 
@@ -107,6 +108,7 @@ class DebugBarProvider implements ServiceProviderInterface
     {
         $collector = new MonologCollector();
         $collector->addLogger($container->get('monolog.logger.application.web'));
+
         return $collector;
     }
 
@@ -122,8 +124,9 @@ class DebugBarProvider implements ServiceProviderInterface
         /** @var DatabaseInterface $db */
         $db = $container->get(DatabaseInterface::class);
         $db->connect();
-/** @var \PDO $pdo */
+        /** @var \PDO $pdo */
         $pdo = $db->getConnection();
+
         return new PDOCollector(new TraceablePDO($pdo));
     }
 
@@ -159,8 +162,10 @@ class DebugBarProvider implements ServiceProviderInterface
      *
      * @return  ControllerResolverInterface
      */
-    public function getDecoratedControllerResolverService(ControllerResolverInterface $resolver, Container $container): ControllerResolverInterface
-    {
+    public function getDecoratedControllerResolverService(
+        ControllerResolverInterface $resolver,
+        Container $container
+    ): ControllerResolverInterface {
         return new DebugControllerResolver($resolver, $container->get('debug.bar'));
     }
 
@@ -172,10 +177,13 @@ class DebugBarProvider implements ServiceProviderInterface
      *
      * @return  DispatcherInterface
      */
-    public function getDecoratedDispatcherService(DispatcherInterface $dispatcher, Container $container): DispatcherInterface
-    {
+    public function getDecoratedDispatcherService(
+        DispatcherInterface $dispatcher,
+        Container $container
+    ): DispatcherInterface {
         $dispatcher = new DebugDispatcher($dispatcher, $container->get('debug.bar'));
         $dispatcher->addSubscriber($container->get('event.subscriber.debug'));
+
         return $dispatcher;
     }
 
@@ -200,9 +208,14 @@ class DebugBarProvider implements ServiceProviderInterface
      *
      * @return  TimeableTwigExtensionProfiler
      */
-    public function getDecoratedTwigExtensionProfilerService(\Twig_Extension_Profiler $profiler, Container $container): TimeableTwigExtensionProfiler
-    {
-        return new TimeableTwigExtensionProfiler($container->get('twig.profiler.profile'), $container->get('debug.bar')['time']);
+    public function getDecoratedTwigExtensionProfilerService(
+        \Twig_Extension_Profiler $profiler,
+        Container $container
+    ): TimeableTwigExtensionProfiler {
+        return new TimeableTwigExtensionProfiler(
+            $container->get('twig.profiler.profile'),
+            $container->get('debug.bar')['time']
+        );
     }
 
     /**
@@ -213,13 +226,23 @@ class DebugBarProvider implements ServiceProviderInterface
      *
      * @return  DebugWebApplication
      */
-    public function getDecoratedWebApplicationService(AbstractWebApplication $application, Container $container): DebugWebApplication
-    {
-        $application = new DebugWebApplication($container->get('debug.bar'), $container->get(ControllerResolverInterface::class), $container->get(RouterInterface::class), $container->get(Input::class), $container->get('config'), $container->get(WebClient::class));
+    public function getDecoratedWebApplicationService(
+        AbstractWebApplication $application,
+        Container $container
+    ): DebugWebApplication {
+        $application              = new DebugWebApplication(
+            $container->get('debug.bar'),
+            $container->get(ControllerResolverInterface::class),
+            $container->get(RouterInterface::class),
+            $container->get(Input::class),
+            $container->get('config'),
+            $container->get(WebClient::class)
+        );
         $application->httpVersion = '2';
-// Inject extra services
+        // Inject extra services
         $application->setDispatcher($container->get(DispatcherInterface::class));
         $application->setLogger($container->get(LoggerInterface::class));
+
         return $application;
     }
 
