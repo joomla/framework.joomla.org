@@ -20,8 +20,7 @@ steps:
     depends_on:
       - composer
     commands:
-      - vendor/bin/phpcs --config-set installed_paths vendor/joomla/coding-standards
-      - vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/
+      - vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/ bin/ www/
 
   - name: phpmd
     image: joomlaprojects/docker-images:php7.4
@@ -89,6 +88,6 @@ volumes:
 
 ---
 kind: signature
-hmac: 6b9f985c7861fc1350815797957f230fc040d0eb34a4b320ccbc1278ea0b10c4
+hmac: cfdb9d635b44bffeaf7b3f291a2823a4656b95a052fe78508241b7f87169bb80
 
 ...
