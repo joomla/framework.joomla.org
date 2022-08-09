@@ -35,7 +35,7 @@
                         {{ release.package.downloads|number_format }}
                     </td>
                     <td data-label="1.x Build Status">
-                        {% if release.package.repo in ['console', 'preload', 'renderer', 'symfony-event-dispatcher-bridge'] %}
+                        {% if release.package.repo in ['console', 'cve-api', 'preload', 'renderer', 'symfony-event-dispatcher-bridge'] %}
                             N/A
                         {% else %}
                             <a href="https://ci.joomla.org/joomla-framework/{{ release.package.repo }}"><img src="https://ci.joomla.org/api/badges/joomla-framework/{{ release.package.repo }}/status.svg?ref=refs/heads/1.x-dev" alt="Build Status" /></a>
