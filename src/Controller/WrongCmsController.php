@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -19,20 +20,17 @@ use Laminas\Diactoros\Response\TextResponse;
  */
 class WrongCmsController extends AbstractController
 {
-	/**
-	 * Execute the controller.
-	 *
-	 * @return  boolean
-	 */
-	public function execute(): bool
-	{
-		// Enable browser caching
-		$this->getApplication()->allowCache(true);
-
-		$response = new TextResponse("This isn't the CMS you're looking for.", 404);
-
-		$this->getApplication()->setResponse($response);
-
-		return true;
-	}
+    /**
+     * Execute the controller.
+     *
+     * @return  boolean
+     */
+    public function execute(): bool
+    {
+        // Enable browser caching
+        $this->getApplication()->allowCache(true);
+        $response = new TextResponse("This isn't the CMS you're looking for.", 404);
+        $this->getApplication()->setResponse($response);
+        return true;
+    }
 }

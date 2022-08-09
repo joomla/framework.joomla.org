@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -17,58 +18,51 @@ use Joomla\Router\ResolvedRoute;
  */
 class DebugControllerResolver implements ControllerResolverInterface
 {
-	/**
-	 * The delegated controller resolver
-	 *
-	 * @var  ControllerResolverInterface
-	 */
-	private $controllerResolver;
+    /**
+     * The delegated controller resolver
+     *
+     * @var  ControllerResolverInterface
+     */
+    private $controllerResolver;
+/**
+     * Application debug bar
+     *
+     * @var  DebugBar
+     */
+    private $debugBar;
+/**
+     * Controller resolver constructor.
+     *
+     * @param   ControllerResolverInterface  $controllerResolver  The delegated router
+     * @param   DebugBar                     $debugBar            Application debug bar
+     */
+    public function __construct(ControllerResolverInterface $controllerResolver, DebugBar $debugBar)
+    {
+        $this->controllerResolver = $controllerResolver;
+        $this->debugBar           = $debugBar;
+    }
 
-	/**
-	 * Application debug bar
-	 *
-	 * @var  DebugBar
-	 */
-	private $debugBar;
+    /**
+     * Resolve the controller for a route
+     *
+     * @param   ResolvedRoute  $route  The route to resolve the controller for
+     *
+     * @return  callable
+     *
+     * @throws  \InvalidArgumentException
+     */
+    public function resolve(ResolvedRoute $route): callable
+    {
+        /** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+        $collector = $this->debugBar['time'];
+        $label     = 'resolving controller';
+        $collector->startMeasure($label);
+        try {
+            $resolved = $this->controllerResolver->resolve($route);
+        } finally {
+            $collector->stopMeasure($label);
+        }
 
-	/**
-	 * Controller resolver constructor.
-	 *
-	 * @param   ControllerResolverInterface  $controllerResolver  The delegated router
-	 * @param   DebugBar                     $debugBar            Application debug bar
-	 */
-	public function __construct(ControllerResolverInterface $controllerResolver, DebugBar $debugBar)
-	{
-		$this->controllerResolver = $controllerResolver;
-		$this->debugBar           = $debugBar;
-	}
-
-	/**
-	 * Resolve the controller for a route
-	 *
-	 * @param   ResolvedRoute  $route  The route to resolve the controller for
-	 *
-	 * @return  callable
-	 *
-	 * @throws  \InvalidArgumentException
-	 */
-	public function resolve(ResolvedRoute $route): callable
-	{
-		/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
-		$collector = $this->debugBar['time'];
-		$label     = 'resolving controller';
-
-		$collector->startMeasure($label);
-
-		try
-		{
-			$resolved = $this->controllerResolver->resolve($route);
-		}
-		finally
-		{
-			$collector->stopMeasure($label);
-		}
-
-		return $resolved;
-	}
+        return $resolved;
+    }
 }

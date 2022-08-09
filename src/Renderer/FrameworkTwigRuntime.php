@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -16,145 +17,130 @@ use Joomla\Preload\PreloadManager;
  */
 class FrameworkTwigRuntime
 {
-	/**
-	 * Application object
-	 *
-	 * @var  AbstractApplication
-	 */
-	private $app;
+    /**
+     * Application object
+     *
+     * @var  AbstractApplication
+     */
+    private $app;
+/**
+     * The HTTP/2 preload manager
+     *
+     * @var  PreloadManager
+     */
+    private $preloadManager;
+/**
+     * The SRI manifest data
+     *
+     * @var  array|null
+     */
+    private $sriManifestData;
+/**
+     * The path to the SRI manifest data
+     *
+     * @var  string
+     */
+    private $sriManifestPath;
+/**
+     * Constructor
+     *
+     * @param   AbstractApplication  $app              The application object
+     * @param   PreloadManager       $preloadManager   The HTTP/2 preload manager
+     * @param   string               $sriManifestPath  The path to the SRI manifest data
+     */
+    public function __construct(AbstractApplication $app, PreloadManager $preloadManager, string $sriManifestPath)
+    {
+        $this->app             = $app;
+        $this->preloadManager  = $preloadManager;
+        $this->sriManifestPath = $sriManifestPath;
+    }
 
-	/**
-	 * The HTTP/2 preload manager
-	 *
-	 * @var  PreloadManager
-	 */
-	private $preloadManager;
+    /**
+     * Retrieves the current URI
+     *
+     * @return  string
+     */
+    public function getRequestUri(): string
+    {
+        return $this->app->get('uri.request');
+    }
 
-	/**
-	 * The SRI manifest data
-	 *
-	 * @var  array|null
-	 */
-	private $sriManifestData;
+    /**
+     * Get the URI for a route
+     *
+     * @param   string  $route  Route to get the path for
+     *
+     * @return  string
+     */
+    public function getRouteUri(string $route = ''): string
+    {
+        return $this->app->get('uri.base.path') . $route;
+    }
 
-	/**
-	 * The path to the SRI manifest data
-	 *
-	 * @var  string
-	 */
-	private $sriManifestPath;
+    /**
+     * Get the full URL for a route
+     *
+     * @param   string  $route  Route to get the URL for
+     *
+     * @return  string
+     */
+    public function getRouteUrl(string $route = ''): string
+    {
+        return $this->app->get('uri.base.host') . $this->getRouteUri($route);
+    }
 
-	/**
-	 * Constructor
-	 *
-	 * @param   AbstractApplication  $app              The application object
-	 * @param   PreloadManager       $preloadManager   The HTTP/2 preload manager
-	 * @param   string               $sriManifestPath  The path to the SRI manifest data
-	 */
-	public function __construct(AbstractApplication $app, PreloadManager $preloadManager, string $sriManifestPath)
-	{
-		$this->app             = $app;
-		$this->preloadManager  = $preloadManager;
-		$this->sriManifestPath = $sriManifestPath;
-	}
+    /**
+     * Get the SRI attributes for an asset
+     *
+     * @param   string  $path  A public path
+     *
+     * @return  string
+     */
+    public function getSriAttributes(string $path): string
+    {
+        if ($this->sriManifestData === null) {
+            if (!file_exists($this->sriManifestPath)) {
+                throw new \RuntimeException(sprintf('SRI manifest file "%s" does not exist.', $this->sriManifestPath));
+            }
 
-	/**
-	 * Retrieves the current URI
-	 *
-	 * @return  string
-	 */
-	public function getRequestUri(): string
-	{
-		return $this->app->get('uri.request');
-	}
+            $sriManifestContents = file_get_contents($this->sriManifestPath);
+            if ($sriManifestContents === false) {
+                throw new \RuntimeException(sprintf('Could not read SRI manifest file "%s".', $this->sriManifestPath));
+            }
 
-	/**
-	 * Get the URI for a route
-	 *
-	 * @param   string  $route  Route to get the path for
-	 *
-	 * @return  string
-	 */
-	public function getRouteUri(string $route = ''): string
-	{
-		return $this->app->get('uri.base.path') . $route;
-	}
+            $this->sriManifestData = json_decode($sriManifestContents, true);
+            if (0 < json_last_error()) {
+                throw new \RuntimeException(sprintf('Error parsing JSON from SRI manifest file "%s" - %s', $this->sriManifestPath, json_last_error_msg()));
+            }
+        }
 
-	/**
-	 * Get the full URL for a route
-	 *
-	 * @param   string  $route  Route to get the URL for
-	 *
-	 * @return  string
-	 */
-	public function getRouteUrl(string $route = ''): string
-	{
-		return $this->app->get('uri.base.host') . $this->getRouteUri($route);
-	}
+        $assetKey = "/$path";
+        if (!isset($this->sriManifestData[$assetKey])) {
+            return '';
+        }
 
-	/**
-	 * Get the SRI attributes for an asset
-	 *
-	 * @param   string  $path  A public path
-	 *
-	 * @return  string
-	 */
-	public function getSriAttributes(string $path): string
-	{
-		if ($this->sriManifestData === null)
-		{
-			if (!file_exists($this->sriManifestPath))
-			{
-				throw new \RuntimeException(sprintf('SRI manifest file "%s" does not exist.', $this->sriManifestPath));
-			}
+        $attributes = '';
+        foreach ($this->sriManifestData[$assetKey] as $key => $value) {
+            $attributes .= ' ' . $key . '="' . $value . '"';
+        }
 
-			$sriManifestContents = file_get_contents($this->sriManifestPath);
+        return $attributes;
+    }
 
-			if ($sriManifestContents === false)
-			{
-				throw new \RuntimeException(sprintf('Could not read SRI manifest file "%s".', $this->sriManifestPath));
-			}
-
-			$this->sriManifestData = json_decode($sriManifestContents, true);
-
-			if (0 < json_last_error())
-			{
-				throw new \RuntimeException(sprintf('Error parsing JSON from SRI manifest file "%s" - %s', $this->sriManifestPath, json_last_error_msg()));
-			}
-		}
-
-		$assetKey = "/$path";
-
-		if (!isset($this->sriManifestData[$assetKey]))
-		{
-			return '';
-		}
-
-		$attributes = '';
-
-		foreach ($this->sriManifestData[$assetKey] as $key => $value)
-		{
-			$attributes .= ' ' . $key . '="' . $value . '"';
-		}
-
-		return $attributes;
-	}
-
-	/**
-	 * Preload a resource
-	 *
-	 * @param   string  $uri         The URI for the resource to preload
-	 * @param   string  $linkType    The preload method to apply
-	 * @param   array   $attributes  The attributes of this link (e.g. "array('as' => true)", "array('pr' => 0.5)")
-	 *
-	 * @return  string
-	 *
-	 * @throws  \InvalidArgumentException
-	 */
-	public function preloadAsset(string $uri, string $linkType = 'preload', array $attributes = []): string
-	{
-		$this->preloadManager->link($uri, $linkType, $attributes);
-
-		return $uri;
-	}
+    /**
+     * Preload a resource
+     *
+     * @param   string  $uri         The URI for the resource to preload
+     * @param   string  $linkType    The preload method to apply
+     * @param   array   $attributes  The attributes of this link (e.g. "array('as' => true)", "array('pr' => 0.5)")
+     *
+     * @return  string
+     *
+     * @throws  \InvalidArgumentException
+     */
+    public function preloadAsset(string $uri, string $linkType = 'preload', array $attributes = []): string
+    {
+        $this->preloadManager->link($uri, $linkType, $attributes);
+        return $uri;
+    }
 }

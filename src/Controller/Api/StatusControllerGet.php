@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -19,45 +20,39 @@ use TheIconic\Tracking\GoogleAnalytics\Analytics;
  */
 class StatusControllerGet extends AnalyticsController
 {
-	/**
-	 * The view object.
-	 *
-	 * @var  StatusJsonView
-	 */
-	private $view;
+    /**
+     * The view object.
+     *
+     * @var  StatusJsonView
+     */
+    private $view;
+/**
+     * Constructor.
+     *
+     * @param   StatusJsonView       $view       The view object.
+     * @param   Analytics            $analytics  Analytics object.
+     * @param   Input                $input      The input object.
+     * @param   AbstractApplication  $app        The application object.
+     */
+    public function __construct(StatusJsonView $view, Analytics $analytics, Input $input = null, AbstractApplication $app = null)
+    {
+        parent::__construct($analytics, $input, $app);
+        $this->view = $view;
+    }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param   StatusJsonView       $view       The view object.
-	 * @param   Analytics            $analytics  Analytics object.
-	 * @param   Input                $input      The input object.
-	 * @param   AbstractApplication  $app        The application object.
-	 */
-	public function __construct(StatusJsonView $view, Analytics $analytics, Input $input = null, AbstractApplication $app = null)
-	{
-		parent::__construct($analytics, $input, $app);
-
-		$this->view = $view;
-	}
-
-	/**
-	 * Execute the controller.
-	 *
-	 * @return  boolean
-	 */
-	public function execute(): bool
-	{
-		$this->sendAnalytics();
-
-		// Disable browser caching
-		$this->getApplication()->allowCache(false);
-
-		// This is a JSON response
-		$this->getApplication()->mimeType = 'application/json';
-
-		$this->getApplication()->setBody($this->view->render());
-
-		return true;
-	}
+    /**
+     * Execute the controller.
+     *
+     * @return  boolean
+     */
+    public function execute(): bool
+    {
+        $this->sendAnalytics();
+// Disable browser caching
+        $this->getApplication()->allowCache(false);
+// This is a JSON response
+        $this->getApplication()->mimeType = 'application/json';
+        $this->getApplication()->setBody($this->view->render());
+        return true;
+    }
 }

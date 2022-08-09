@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -21,54 +22,50 @@ use Psr\Log\LoggerInterface;
  */
 class EventProvider implements ServiceProviderInterface
 {
-	/**
-	 * Registers the service provider with a DI container.
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  void
-	 */
-	public function register(Container $container): void
-	{
-		// This service cannot be protected as it is decorated when the debug bar is available
-		$container->alias(Dispatcher::class, DispatcherInterface::class)
-			->share(DispatcherInterface::class, [$this, 'getDispatcherService']);
+    /**
+     * Registers the service provider with a DI container.
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  void
+     */
+    public function register(Container $container): void
+    {
+        // This service cannot be protected as it is decorated when the debug bar is available
+        $container->alias(Dispatcher::class, DispatcherInterface::class)
+            ->share(DispatcherInterface::class, [$this, 'getDispatcherService']);
+        $container->share(ErrorSubscriber::class, [$this, 'getErrorSubscriber'], true)
+            ->tag('event.subscriber', [ErrorSubscriber::class]);
+    }
 
-		$container->share(ErrorSubscriber::class, [$this, 'getErrorSubscriber'], true)
-			->tag('event.subscriber', [ErrorSubscriber::class]);
-	}
+    /**
+     * Get the DispatcherInterface service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  DispatcherInterface
+     */
+    public function getDispatcherService(Container $container): DispatcherInterface
+    {
+        $dispatcher = new Dispatcher();
+        foreach ($container->getTagged('event.subscriber') as $subscriber) {
+            $dispatcher->addSubscriber($subscriber);
+        }
 
-	/**
-	 * Get the DispatcherInterface service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  DispatcherInterface
-	 */
-	public function getDispatcherService(Container $container): DispatcherInterface
-	{
-		$dispatcher = new Dispatcher;
+        return $dispatcher;
+    }
 
-		foreach ($container->getTagged('event.subscriber') as $subscriber)
-		{
-			$dispatcher->addSubscriber($subscriber);
-		}
-
-		return $dispatcher;
-	}
-
-	/**
-	 * Get the ErrorSubscriber service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  ErrorSubscriber
-	 */
-	public function getErrorSubscriber(Container $container): ErrorSubscriber
-	{
-		$subscriber = new ErrorSubscriber($container->get(RendererInterface::class));
-		$subscriber->setLogger($container->get(LoggerInterface::class));
-
-		return $subscriber;
-	}
+    /**
+     * Get the ErrorSubscriber service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  ErrorSubscriber
+     */
+    public function getErrorSubscriber(Container $container): ErrorSubscriber
+    {
+        $subscriber = new ErrorSubscriber($container->get(RendererInterface::class));
+        $subscriber->setLogger($container->get(LoggerInterface::class));
+        return $subscriber;
+    }
 }

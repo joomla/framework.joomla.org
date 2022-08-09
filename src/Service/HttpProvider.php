@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -18,46 +19,44 @@ use Joomla\Http\HttpFactory;
  */
 class HttpProvider implements ServiceProviderInterface
 {
-	/**
-	 * Registers the service provider with a DI container.
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  void
-	 */
-	public function register(Container $container): void
-	{
-		$container->alias(Http::class, 'http')
-			->share('http', [$this, 'getHttpService'], true);
+    /**
+     * Registers the service provider with a DI container.
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  void
+     */
+    public function register(Container $container): void
+    {
+        $container->alias(Http::class, 'http')
+            ->share('http', [$this, 'getHttpService'], true);
+        $container->alias(HttpFactory::class, 'http.factory')
+            ->share('http.factory', [$this, 'getHttpFactoryService'], true);
+    }
 
-		$container->alias(HttpFactory::class, 'http.factory')
-			->share('http.factory', [$this, 'getHttpFactoryService'], true);
-	}
+    /**
+     * Get the `http` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  Http
+     */
+    public function getHttpService(Container $container): Http
+    {
+        /** @var HttpFactory $factory */
+        $factory = $container->get('http.factory');
+        return $factory->getHttp();
+    }
 
-	/**
-	 * Get the `http` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  Http
-	 */
-	public function getHttpService(Container $container): Http
-	{
-		/** @var HttpFactory $factory */
-		$factory = $container->get('http.factory');
-
-		return $factory->getHttp();
-	}
-
-	/**
-	 * Get the `http.factory` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  HttpFactory
-	 */
-	public function getHttpFactoryService(Container $container): HttpFactory
-	{
-		return new HttpFactory;
-	}
+    /**
+     * Get the `http.factory` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  HttpFactory
+     */
+    public function getHttpFactoryService(Container $container): HttpFactory
+    {
+        return new HttpFactory();
+    }
 }

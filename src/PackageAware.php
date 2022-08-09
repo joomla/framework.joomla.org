@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -15,41 +16,38 @@ use Joomla\Registry\Registry;
  */
 trait PackageAware
 {
-	/**
-	 * Registry containing the package data
-	 *
-	 * @var  Registry|null
-	 */
-	protected $packages;
+    /**
+     * Registry containing the package data
+     *
+     * @var  Registry|null
+     */
+    protected $packages;
+/**
+     * Get the package registry.
+     *
+     * @return  Registry
+     *
+     * @throws  \UnexpectedValueException May be thrown if the registry has not been set.
+     */
+    public function getPackages(): Registry
+    {
+        if ($this->packages) {
+            return $this->packages;
+        }
 
-	/**
-	 * Get the package registry.
-	 *
-	 * @return  Registry
-	 *
-	 * @throws  \UnexpectedValueException May be thrown if the registry has not been set.
-	 */
-	public function getPackages(): Registry
-	{
-		if ($this->packages)
-		{
-			return $this->packages;
-		}
+        throw new \UnexpectedValueException('Package registry not set in ' . \get_class($this));
+    }
 
-		throw new \UnexpectedValueException('Package registry not set in ' . \get_class($this));
-	}
-
-	/**
-	 * Set the package registry.
-	 *
-	 * @param   Registry  $packages  The package registry
-	 *
-	 * @return  $this
-	 */
-	public function setPackages(Registry $packages)
-	{
-		$this->packages = $packages;
-
-		return $this;
-	}
+    /**
+     * Set the package registry.
+     *
+     * @param   Registry  $packages  The package registry
+     *
+     * @return  $this
+     */
+    public function setPackages(Registry $packages)
+    {
+        $this->packages = $packages;
+        return $this;
+    }
 }

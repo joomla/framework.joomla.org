@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -17,50 +18,43 @@ use Joomla\Registry\Registry;
  */
 class ConfigurationProvider implements ServiceProviderInterface
 {
-	/**
-	 * Configuration instance
-	 *
-	 * @var  Registry
-	 */
-	private $config;
+    /**
+     * Configuration instance
+     *
+     * @var  Registry
+     */
+    private $config;
+/**
+     * Constructor.
+     *
+     * @param   string  $file  Path to the config file.
+     *
+     * @throws  \RuntimeException
+     */
+    public function __construct(string $file)
+    {
+        // Verify the configuration exists and is readable.
+        if (!is_readable($file)) {
+            throw new \RuntimeException('Configuration file does not exist or is unreadable.');
+        }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param   string  $file  Path to the config file.
-	 *
-	 * @throws  \RuntimeException
-	 */
-	public function __construct(string $file)
-	{
-		// Verify the configuration exists and is readable.
-		if (!is_readable($file))
-		{
-			throw new \RuntimeException('Configuration file does not exist or is unreadable.');
-		}
+        $this->config = (new Registry())->loadFile($file);
+// Hardcode database driver option
+        $this->config->set('database.driver', 'mysql');
+    }
 
-		$this->config = (new Registry)->loadFile($file);
+    /**
+     * Registers the service provider with a DI container.
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  void
+     */
+    public function register(Container $container): void
+    {
+        $container->share('config', function (): Registry {
 
-		// Hardcode database driver option
-		$this->config->set('database.driver', 'mysql');
-	}
-
-	/**
-	 * Registers the service provider with a DI container.
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  void
-	 */
-	public function register(Container $container): void
-	{
-		$container->share(
-			'config',
-			function (): Registry
-			{
-				return $this->config;
-			},
-			true
-		);
-	}
+                return $this->config;
+        }, true);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -18,48 +19,42 @@ use Joomla\View\HtmlView;
  */
 class StatusHtmlView extends HtmlView
 {
-	/**
-	 * The package model object.
-	 *
-	 * @var  PackageModel
-	 */
-	private $packageModel;
+    /**
+     * The package model object.
+     *
+     * @var  PackageModel
+     */
+    private $packageModel;
+/**
+     * The release model object.
+     *
+     * @var  ReleaseModel
+     */
+    private $releaseModel;
+/**
+     * Instantiate the view.
+     *
+     * @param   PackageModel       $packageModel  The package model object.
+     * @param   ReleaseModel       $releaseModel  The release model object.
+     * @param   RendererInterface  $renderer      The renderer object.
+     */
+    public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, RendererInterface $renderer)
+    {
+        parent::__construct($renderer);
+        $this->packageModel = $packageModel;
+        $this->releaseModel = $releaseModel;
+    }
 
-	/**
-	 * The release model object.
-	 *
-	 * @var  ReleaseModel
-	 */
-	private $releaseModel;
-
-	/**
-	 * Instantiate the view.
-	 *
-	 * @param   PackageModel       $packageModel  The package model object.
-	 * @param   ReleaseModel       $releaseModel  The release model object.
-	 * @param   RendererInterface  $renderer      The renderer object.
-	 */
-	public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, RendererInterface $renderer)
-	{
-		parent::__construct($renderer);
-
-		$this->packageModel = $packageModel;
-		$this->releaseModel = $releaseModel;
-	}
-
-	/**
-	 * Method to render the view
-	 *
-	 * @return  string  The rendered view
-	 */
-	public function render()
-	{
-		$this->setData(
-			[
-				'releases'  => $this->releaseModel->getLatestReleases($this->packageModel->getActivePackages()),
-			]
-		);
-
-		return parent::render();
-	}
+    /**
+     * Method to render the view
+     *
+     * @return  string  The rendered view
+     */
+    public function render()
+    {
+        $this->setData([
+                'releases'  => $this->releaseModel->getLatestReleases($this->packageModel->getActivePackages()),
+            ]);
+        return parent::render();
+    }
 }

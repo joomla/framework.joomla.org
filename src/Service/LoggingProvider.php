@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -20,112 +21,100 @@ use Monolog\Processor\WebProcessor;
  */
 class LoggingProvider implements ServiceProviderInterface
 {
-	/**
-	 * Registers the service provider with a DI container.
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  void
-	 */
-	public function register(Container $container): void
-	{
-		/*
-		 * Monolog Handlers
-		 */
-		$container->share('monolog.handler.application', [$this, 'getMonologHandlerApplicationService'], true);
+    /**
+     * Registers the service provider with a DI container.
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  void
+     */
+    public function register(Container $container): void
+    {
+        /*
+       * Monolog Handlers
+         */
+        $container->share('monolog.handler.application', [$this, 'getMonologHandlerApplicationService'], true);
+/*
+         * Monolog Processors
+         */
+        $container->share('monolog.processor.psr3', [$this, 'getMonologProcessorPsr3Service'], true);
+        $container->share('monolog.processor.web', [$this, 'getMonologProcessorWebService'], true);
+/*
+         * Application Loggers
+         */
+        $container->share('monolog.logger.application.cli', [$this, 'getMonologLoggerApplicationCliService'], true);
+        $container->share('monolog.logger.application.web', [$this, 'getMonologLoggerApplicationWebService'], true);
+    }
 
-		/*
-		 * Monolog Processors
-		 */
-		$container->share('monolog.processor.psr3', [$this, 'getMonologProcessorPsr3Service'], true);
-		$container->share('monolog.processor.web', [$this, 'getMonologProcessorWebService'], true);
+    /**
+     * Get the `monolog.handler.application` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  StreamHandler
+     */
+    public function getMonologHandlerApplicationService(Container $container): StreamHandler
+    {
+        /** @var \Joomla\Registry\Registry $config */
+        $config = $container->get('config');
+        $level = strtoupper($config->get('log.application', $config->get('log.level', 'error')));
+        return new StreamHandler(JPATH_ROOT . '/logs/framework.log', \constant('\\Monolog\\Logger::' . $level));
+    }
 
-		/*
-		 * Application Loggers
-		 */
-		$container->share('monolog.logger.application.cli', [$this, 'getMonologLoggerApplicationCliService'], true);
-		$container->share('monolog.logger.application.web', [$this, 'getMonologLoggerApplicationWebService'], true);
-	}
+    /**
+     * Get the `monolog.logger.application.cli` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  Logger
+     */
+    public function getMonologLoggerApplicationCliService(Container $container): Logger
+    {
+        return new Logger('Framework', [
+                $container->get('monolog.handler.application'),
+            ], [
+                $container->get('monolog.processor.psr3'),
+            ]);
+    }
 
-	/**
-	 * Get the `monolog.handler.application` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  StreamHandler
-	 */
-	public function getMonologHandlerApplicationService(Container $container): StreamHandler
-	{
-		/** @var \Joomla\Registry\Registry $config */
-		$config = $container->get('config');
+    /**
+     * Get the `monolog.logger.application.web` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  Logger
+     */
+    public function getMonologLoggerApplicationWebService(Container $container): Logger
+    {
+        return new Logger('Framework', [
+                $container->get('monolog.handler.application'),
+            ], [
+                $container->get('monolog.processor.psr3'),
+                $container->get('monolog.processor.web'),
+            ]);
+    }
 
-		$level = strtoupper($config->get('log.application', $config->get('log.level', 'error')));
+    /**
+     * Get the `monolog.processor.psr3` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  PsrLogMessageProcessor
+     */
+    public function getMonologProcessorPsr3Service(Container $container): PsrLogMessageProcessor
+    {
+        return new PsrLogMessageProcessor();
+    }
 
-		return new StreamHandler(JPATH_ROOT . '/logs/framework.log', \constant('\\Monolog\\Logger::' . $level));
-	}
-
-	/**
-	 * Get the `monolog.logger.application.cli` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  Logger
-	 */
-	public function getMonologLoggerApplicationCliService(Container $container): Logger
-	{
-		return new Logger(
-			'Framework',
-			[
-				$container->get('monolog.handler.application'),
-			],
-			[
-				$container->get('monolog.processor.psr3'),
-			]
-		);
-	}
-
-	/**
-	 * Get the `monolog.logger.application.web` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  Logger
-	 */
-	public function getMonologLoggerApplicationWebService(Container $container): Logger
-	{
-		return new Logger(
-			'Framework',
-			[
-				$container->get('monolog.handler.application'),
-			],
-			[
-				$container->get('monolog.processor.psr3'),
-				$container->get('monolog.processor.web'),
-			]
-		);
-	}
-
-	/**
-	 * Get the `monolog.processor.psr3` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  PsrLogMessageProcessor
-	 */
-	public function getMonologProcessorPsr3Service(Container $container): PsrLogMessageProcessor
-	{
-		return new PsrLogMessageProcessor;
-	}
-
-	/**
-	 * Get the `monolog.processor.web` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  WebProcessor
-	 */
-	public function getMonologProcessorWebService(Container $container): WebProcessor
-	{
-		return new WebProcessor;
-	}
+    /**
+     * Get the `monolog.processor.web` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  WebProcessor
+     */
+    public function getMonologProcessorWebService(Container $container): WebProcessor
+    {
+        return new WebProcessor();
+    }
 }

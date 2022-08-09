@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -22,41 +23,36 @@ use Laminas\Diactoros\Response\HtmlResponse;
  */
 class PackageController extends AbstractController
 {
-	/**
-	 * The view object.
-	 *
-	 * @var  PackageHtmlView
-	 */
-	private $view;
+    /**
+     * The view object.
+     *
+     * @var  PackageHtmlView
+     */
+    private $view;
+/**
+     * Constructor.
+     *
+     * @param   PackageHtmlView      $view   The view object.
+     * @param   Input                $input  The input object.
+     * @param   AbstractApplication  $app    The application object.
+     */
+    public function __construct(PackageHtmlView $view, Input $input = null, AbstractApplication $app = null)
+    {
+        parent::__construct($input, $app);
+        $this->view = $view;
+    }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param   PackageHtmlView      $view   The view object.
-	 * @param   Input                $input  The input object.
-	 * @param   AbstractApplication  $app    The application object.
-	 */
-	public function __construct(PackageHtmlView $view, Input $input = null, AbstractApplication $app = null)
-	{
-		parent::__construct($input, $app);
-
-		$this->view = $view;
-	}
-
-	/**
-	 * Execute the controller.
-	 *
-	 * @return  boolean
-	 */
-	public function execute(): bool
-	{
-		// Enable browser caching
-		$this->getApplication()->allowCache(true);
-
-		$this->view->setPackage($this->getInput()->getString('package'));
-
-		$this->getApplication()->setResponse(new HtmlResponse($this->view->render()));
-
-		return true;
-	}
+    /**
+     * Execute the controller.
+     *
+     * @return  boolean
+     */
+    public function execute(): bool
+    {
+        // Enable browser caching
+        $this->getApplication()->allowCache(true);
+        $this->view->setPackage($this->getInput()->getString('package'));
+        $this->getApplication()->setResponse(new HtmlResponse($this->view->render()));
+        return true;
+    }
 }

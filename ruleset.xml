@@ -29,29 +29,11 @@
 
     <rule ref="PSR12" />
 
-    <ruleret ref="Joomla">
-        <exclude name="Joomla.Commenting.ClassComment.MissingSinceTag"/>
-        <exclude name="Joomla.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
-        <exclude name="Joomla.NamingConventions.ValidVariableName.NotCamelCaps"/>
-        <exclude name="Joomla.NamingConventions.ValidFunctionName.ScopeNotCamelCaps"/>
-        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
-    </ruleret>
-
-    <ruleert ref="Joomla.Classes.InstantiateNewClasses">
-        <properties>
-            <property name="shortArraySyntax" value="true"/>
-        </properties>
-    </ruleert>
-
-    <rulerte ref="Joomla.Commenting.FileComment.MissingPackageTag">
-        <exclude-pattern>*/phinx.php</exclude-pattern>
-    </rulerte>
-
     <!-- Extend the line length to avoid the need for goofy concatenation or sprintf on a query string -->
-    <ruleert ref="Generic.Files.LineLength">
+    <rule ref="Generic.Files.LineLength">
    		<properties>
    			<property name="lineLimit" value="250" />
    			<property name="absoluteLineLimit" value="0" />
    		</properties>
-   	</ruleert>
+   	</rule>
 </ruleset>

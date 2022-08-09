@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -22,39 +23,35 @@ use Laminas\Diactoros\Response\HtmlResponse;
  */
 class StatusController extends AbstractController
 {
-	/**
-	 * The view object.
-	 *
-	 * @var  StatusHtmlView
-	 */
-	private $view;
+    /**
+     * The view object.
+     *
+     * @var  StatusHtmlView
+     */
+    private $view;
+/**
+     * Constructor.
+     *
+     * @param   StatusHtmlView       $view   The view object.
+     * @param   Input                $input  The input object.
+     * @param   AbstractApplication  $app    The application object.
+     */
+    public function __construct(StatusHtmlView $view, Input $input = null, AbstractApplication $app = null)
+    {
+        parent::__construct($input, $app);
+        $this->view = $view;
+    }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param   StatusHtmlView       $view   The view object.
-	 * @param   Input                $input  The input object.
-	 * @param   AbstractApplication  $app    The application object.
-	 */
-	public function __construct(StatusHtmlView $view, Input $input = null, AbstractApplication $app = null)
-	{
-		parent::__construct($input, $app);
-
-		$this->view = $view;
-	}
-
-	/**
-	 * Execute the controller.
-	 *
-	 * @return  boolean
-	 */
-	public function execute(): bool
-	{
-		// Enable browser caching
-		$this->getApplication()->allowCache(true);
-
-		$this->getApplication()->setResponse(new HtmlResponse($this->view->render()));
-
-		return true;
-	}
+    /**
+     * Execute the controller.
+     *
+     * @return  boolean
+     */
+    public function execute(): bool
+    {
+        // Enable browser caching
+        $this->getApplication()->allowCache(true);
+        $this->getApplication()->setResponse(new HtmlResponse($this->view->render()));
+        return true;
+    }
 }
