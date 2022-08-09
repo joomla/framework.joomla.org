@@ -27,19 +27,20 @@ class SyncCommand extends AbstractCommand
      * @var  string|null
      */
     protected static $defaultName = 'package:sync';
-/**
+    /**
      * The helper object
      *
      * @var  Helper
      */
     private $helper;
-/**
+    /**
      * The package model
      *
      * @var  PackageModel
      */
     private $packageModel;
-/**
+
+    /**
      * Instantiate the command.
      *
      * @param   Helper        $helper        The helper object.
@@ -75,15 +76,31 @@ class SyncCommand extends AbstractCommand
                     continue;
                 }
 
-                $this->packageModel->updatePackage((int) $packageId, $packageName, $this->helper->getPackageDisplayName($packageName), $this->helper->getPackageRepositoryName($packageName), $this->helper->getPackageStable($packageName), $this->helper->getPackageDeprecated($packageName), $this->helper->getPackageAbandoned($packageName));
+                $this->packageModel->updatePackage(
+                    (int)$packageId,
+                    $packageName,
+                    $this->helper->getPackageDisplayName($packageName),
+                    $this->helper->getPackageRepositoryName($packageName),
+                    $this->helper->getPackageStable($packageName),
+                    $this->helper->getPackageDeprecated($packageName),
+                    $this->helper->getPackageAbandoned($packageName)
+                );
                 $symfonyStyle->comment("Updated $displayName package data.");
             } else {
-                $this->packageModel->addPackage($packageName, $this->helper->getPackageDisplayName($packageName), $this->helper->getPackageRepositoryName($packageName), $this->helper->getPackageStable($packageName), $this->helper->getPackageDeprecated($packageName), $this->helper->getPackageAbandoned($packageName));
+                $this->packageModel->addPackage(
+                    $packageName,
+                    $this->helper->getPackageDisplayName($packageName),
+                    $this->helper->getPackageRepositoryName($packageName),
+                    $this->helper->getPackageStable($packageName),
+                    $this->helper->getPackageDeprecated($packageName),
+                    $this->helper->getPackageAbandoned($packageName)
+                );
                 $symfonyStyle->comment("$displayName package added to the database.");
             }
         }
 
         $symfonyStyle->success('Package data synchronized.');
+
         return 0;
     }
 
