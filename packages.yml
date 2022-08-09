@@ -9,6 +9,7 @@ packages:
     console:
     controller: ~
     crypt: ~
+    cve-api: ~
     data: ~
     database: ~
     date:
