@@ -73,7 +73,7 @@ class PackageModel implements DatabaseModelInterface
 			->select('*')
 			->from($db->quoteName('#__packages'))
 			->where($db->quoteName('abandoned') . ' = :abandoned')
-			->order('display')
+			->order($db->quoteName('display'))
 			->bind('abandoned', $abandoned, ParameterType::INTEGER);
 
 		return $db->setQuery($query)->loadObjectList('id');
@@ -136,7 +136,8 @@ class PackageModel implements DatabaseModelInterface
 
 		$query = $db->getQuery(true)
 			->select('*')
-			->from($db->quoteName('#__packages'));
+			->from($db->quoteName('#__packages'))
+            ->order($db->quoteName('display'));
 
 		return $db->setQuery($query)->loadObjectList('id');
 	}
