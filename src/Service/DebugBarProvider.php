@@ -10,8 +10,7 @@
 namespace Joomla\FrameworkWebsite\Service;
 
 use DebugBar\Bridge\MonologCollector;
-use DebugBar\Bridge\Twig\TimeableTwigExtensionProfiler;
-use DebugBar\Bridge\TwigProfileCollector;
+use DebugBar\Bridge\NamespacedTwigProfileCollector;
 use DebugBar\DataCollector\PDO\PDOCollector;
 use DebugBar\DataCollector\PDO\TraceablePDO;
 use DebugBar\DebugBar;
@@ -33,6 +32,7 @@ use Joomla\FrameworkWebsite\Router\DebugRouter;
 use Joomla\Input\Input;
 use Joomla\Router\RouterInterface;
 use Psr\Log\LoggerInterface;
+use Twig\Extension\ProfilerExtension;
 
 /**
  * Debug bar service provider
@@ -137,9 +137,9 @@ class DebugBarProvider implements ServiceProviderInterface
      *
      * @return  TwigProfileCollector
      */
-    public function getDebugCollectorTwigService(Container $container): TwigProfileCollector
+    public function getDebugCollectorTwigService(Container $container): NamespacedTwigProfileCollector
     {
-        return new TwigProfileCollector($container->get('twig.profiler.profile'), $container->get('twig.loader'));
+        return new NamespacedTwigProfileCollector($container->get('twig.profiler.profile'));
     }
 
     /**
@@ -203,19 +203,16 @@ class DebugBarProvider implements ServiceProviderInterface
     /**
      * Get the decorated `twig.extension.profiler` service
      *
-     * @param   \Twig_Extension_Profiler  $profiler   The original \Twig_Extension_Profiler service.
-     * @param   Container                 $container  The DI container.
+     * @param   ProfilerExtension  $profiler   The original ProfilerExtension service.
+     * @param   Container          $container  The DI container.
      *
-     * @return  TimeableTwigExtensionProfiler
+     * @return  NamespacedTwigProfileCollector
      */
     public function getDecoratedTwigExtensionProfilerService(
-        \Twig_Extension_Profiler $profiler,
+        ProfilerExtension $profiler,
         Container $container
-    ): TimeableTwigExtensionProfiler {
-        return new TimeableTwigExtensionProfiler(
-            $container->get('twig.profiler.profile'),
-            $container->get('debug.bar')['time']
-        );
+    ): ProfilerExtension {
+        return new ProfilerExtension($container->get('twig.profiler.profile'));
     }
 
     /**
