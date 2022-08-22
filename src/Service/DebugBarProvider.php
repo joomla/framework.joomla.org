@@ -55,7 +55,7 @@ class DebugBarProvider implements ServiceProviderInterface
             ->share('debug.collector.monolog', [$this, 'getDebugCollectorMonologService'], true);
         $container->alias(PDOCollector::class, 'debug.collector.pdo')
             ->share('debug.collector.pdo', [$this, 'getDebugCollectorPdoService'], true);
-        $container->alias(TwigProfileCollector::class, 'debug.collector.twig')
+        $container->alias(NamespacedTwigProfileCollector::class, 'debug.collector.twig')
             ->share('debug.collector.twig', [$this, 'getDebugCollectorTwigService'], true);
         $container->alias(JoomlaHttpDriver::class, 'debug.http.driver')
             ->share('debug.http.driver', [$this, 'getDebugHttpDriverService'], true);
@@ -135,7 +135,7 @@ class DebugBarProvider implements ServiceProviderInterface
      *
      * @param   Container  $container  The DI container.
      *
-     * @return  TwigProfileCollector
+     * @return  NamespacedTwigProfileCollector
      */
     public function getDebugCollectorTwigService(Container $container): NamespacedTwigProfileCollector
     {
