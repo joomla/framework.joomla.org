@@ -373,6 +373,22 @@ class ApplicationProvider implements ServiceProviderInterface
     }
 
     /**
+     * Get the `controller.status` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  StatusController
+     */
+    public function getControllerStatusService(Container $container): StatusController
+    {
+        return new StatusController(
+            $container->get(StatusHtmlView::class),
+            $container->get(Input::class),
+            $container->get(WebApplication::class)
+        );
+    }
+
+    /**
      * Get the `controller.wrong.cms` service
      *
      * @param   Container  $container  The DI container.
@@ -466,6 +482,21 @@ class ApplicationProvider implements ServiceProviderInterface
     public function getModelReleaseService(Container $container): ReleaseModel
     {
         return new ReleaseModel($container->get(DatabaseInterface::class));
+    }
+
+    /**
+     * Get the PackageSyncCommand service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  PackageSyncCommand
+     */
+    public function getPackageSyncCommandService(Container $container): PackageSyncCommand
+    {
+        return new PackageSyncCommand(
+            $container->get(Helper::class),
+            $container->get(PackageModel::class)
+        );
     }
 
     /**
@@ -676,22 +707,6 @@ class ApplicationProvider implements ServiceProviderInterface
     }
 
     /**
-     * Get the `controller.status` service
-     *
-     * @param   Container  $container  The DI container.
-     *
-     * @return  StatusController
-     */
-    public function getControllerStatusService(Container $container): StatusController
-    {
-        return new StatusController(
-            $container->get(StatusHtmlView::class),
-            $container->get(Input::class),
-            $container->get(WebApplication::class)
-        );
-    }
-
-    /**
      * Get the FetchDocsCommand service
      *
      * @param   Container  $container  The DI container.
@@ -705,21 +720,6 @@ class ApplicationProvider implements ServiceProviderInterface
             $container->get(Github::class),
             $container->get(GitHubHelper::class),
             $container->get(CacheItemPoolInterface::class)
-        );
-    }
-
-    /**
-     * Get the PackageSyncCommand service
-     *
-     * @param   Container  $container  The DI container.
-     *
-     * @return  PackageSyncCommand
-     */
-    public function getPackageSyncCommandService(Container $container): PackageSyncCommand
-    {
-        return new PackageSyncCommand(
-            $container->get(Helper::class),
-            $container->get(PackageModel::class)
         );
     }
 
