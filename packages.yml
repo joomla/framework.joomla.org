@@ -9,10 +9,10 @@ packages:
         deprecated: true
         has_v2: false
     console:
-        stable: false
         has_v1: false
     controller: ~
     crypt: ~
+    cve-api: ~
     data: ~
     database: ~
     date:
@@ -23,6 +23,7 @@ packages:
         display: DateTime
     di:
         display: DI
+    entities: ~
     event: ~
     facebook:
         repo: facebook-api
@@ -74,7 +75,6 @@ packages:
         deprecated: true
         has_v2: false
     preload:
-        stable: false
         has_v1: false
     profiler: ~
     registry: ~

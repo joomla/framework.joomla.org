@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -18,53 +19,44 @@ use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;
  */
 class MixPathPackage extends PathPackage
 {
-	/**
-	 * Decorated Package instance
-	 *
-	 * @var  Package
-	 */
-	private $decoratedPackage;
+    /**
+     * Decorated Package instance
+     *
+     * @var  Package
+     */
+    private $decoratedPackage;
+/**
+     * Constructor
+     *
+     * @param   Package                   $decoratedPackage  Decorated Package instance
+     * @param   string                    $basePath          The base path to be prepended to relative paths
+     * @param   VersionStrategyInterface  $versionStrategy   The version strategy
+     * @param   ContextInterface          $context           The context
+     */
+    public function __construct(Package $decoratedPackage, string $basePath, VersionStrategyInterface $versionStrategy, ContextInterface $context = null)
+    {
+        parent::__construct($basePath, $versionStrategy, $context);
+        $this->decoratedPackage = $decoratedPackage;
+    }
 
-	/**
-	 * Constructor
-	 *
-	 * @param   Package                   $decoratedPackage  Decorated Package instance
-	 * @param   string                    $basePath          The base path to be prepended to relative paths
-	 * @param   VersionStrategyInterface  $versionStrategy   The version strategy
-	 * @param   ContextInterface          $context           The context
-	 */
-	public function __construct(
-		Package $decoratedPackage,
-		string $basePath,
-		VersionStrategyInterface $versionStrategy,
-		ContextInterface $context = null
-	) {
-		parent::__construct($basePath, $versionStrategy, $context);
+    /**
+     * Returns an absolute or root-relative public path.
+     *
+     * @param   string  $path  A path
+     *
+     * @return  string  The public path
+     */
+    public function getUrl($path)
+    {
+        if ($this->isAbsoluteUrl($path)) {
+            return $path;
+        }
 
-		$this->decoratedPackage = $decoratedPackage;
-	}
+        $versionedPath = $this->getVersionStrategy()->applyVersion("/$path");
+        if ($versionedPath === $path) {
+            return $this->decoratedPackage->getUrl($path);
+        }
 
-	/**
-	 * Returns an absolute or root-relative public path.
-	 *
-	 * @param   string  $path  A path
-	 *
-	 * @return  string  The public path
-	 */
-	public function getUrl($path)
-	{
-		if ($this->isAbsoluteUrl($path))
-		{
-			return $path;
-		}
-
-		$versionedPath = $this->getVersionStrategy()->applyVersion("/$path");
-
-		if ($versionedPath === $path)
-		{
-			return $this->decoratedPackage->getUrl($path);
-		}
-
-		return $this->getBasePath() . ltrim($versionedPath, '/');
-	}
+        return $this->getBasePath() . ltrim($versionedPath, '/');
+    }
 }

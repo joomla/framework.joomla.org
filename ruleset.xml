@@ -27,23 +27,7 @@
     <file>./src</file>
     <file>./www</file>
 
-    <rule ref="Joomla">
-        <exclude name="Joomla.Commenting.ClassComment.MissingSinceTag"/>
-        <exclude name="Joomla.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
-        <exclude name="Joomla.NamingConventions.ValidVariableName.NotCamelCaps"/>
-        <exclude name="Joomla.NamingConventions.ValidFunctionName.ScopeNotCamelCaps"/>
-        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
-    </rule>
-
-    <rule ref="Joomla.Classes.InstantiateNewClasses">
-        <properties>
-            <property name="shortArraySyntax" value="true"/>
-        </properties>
-    </rule>
-
-    <rule ref="Joomla.Commenting.FileComment.MissingPackageTag">
-        <exclude-pattern>*/phinx.php</exclude-pattern>
-    </rule>
+    <rule ref="PSR12" />
 
     <!-- Extend the line length to avoid the need for goofy concatenation or sprintf on a query string -->
     <rule ref="Generic.Files.LineLength">

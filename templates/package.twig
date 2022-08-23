@@ -35,8 +35,8 @@
                         {% if package.repo in ['test'] %}
                             N/A
                         {% else %}
-                            <a href="https://travis-ci.org/joomla-framework/{{ package.repo }}">
-                                <img src="https://travis-ci.org/joomla-framework/{{ package.repo }}.png?branch={{ release.version }}" alt="Build Status">
+                            <a href="https://ci.joomla.org/joomla-framework/{{ package.repo }}">
+                                <img src="https://ci.joomla.org/api/badges/joomla-framework/{{ package.repo }}/status.svg?ref=refs/tags/{{ release.version }}" alt="Build Status">
                             </a>
                         {% endif %}
                     </td>

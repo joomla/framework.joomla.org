@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -19,17 +20,17 @@ use Joomla\Model\DatabaseModelTrait;
  */
 class PackageModel implements DatabaseModelInterface
 {
-	use DatabaseModelTrait;
+    use DatabaseModelTrait;
 
-	/**
-	 * Instantiate the model.
-	 *
-	 * @param   DatabaseDriver  $db  The database adapter.
-	 */
-	public function __construct(DatabaseDriver $db)
-	{
-		$this->setDb($db);
-	}
+    /**
+     * Instantiate the model.
+     *
+     * @param   DatabaseDriver  $db  The database adapter.
+     */
+    public function __construct(DatabaseDriver $db)
+    {
+        $this->setDb($db);
+    }
 
 	/**
 	 * Add a package
@@ -68,28 +69,26 @@ class PackageModel implements DatabaseModelInterface
 			'has_v2'     => (int) $hasV2,
 		];
 
-		$db->insertObject('#__packages', $data);
-	}
+        $db->insertObject('#__packages', $data);
+    }
 
-	/**
-	 * Get the active package data
-	 *
-	 * @return  array
-	 */
-	public function getActivePackages(): array
-	{
-		$abandoned = false;
-
-		$db = $this->getDb();
-
-		$query = $db->getQuery(true)
-			->select('*')
-			->from($db->quoteName('#__packages'))
-			->where($db->quoteName('abandoned') . ' = :abandoned')
-			->bind('abandoned', $abandoned, ParameterType::INTEGER);
-
-		return $db->setQuery($query)->loadObjectList('id');
-	}
+    /**
+     * Get the active package data
+     *
+     * @return  array
+     */
+    public function getActivePackages(): array
+    {
+        $abandoned = false;
+        $db = $this->getDb();
+        $query = $db->getQuery(true)
+            ->select('*')
+            ->from($db->quoteName('#__packages'))
+            ->where($db->quoteName('abandoned') . ' = :abandoned')
+            ->order($db->quoteName('display'))
+            ->bind('abandoned', $abandoned, ParameterType::INTEGER);
+        return $db->setQuery($query)->loadObjectList('id');
+    }
 
 	/**
 	 * Get a package's data

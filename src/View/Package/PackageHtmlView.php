@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -19,79 +20,70 @@ use Joomla\View\HtmlView;
  */
 class PackageHtmlView extends HtmlView
 {
-	/**
-	 * Helper object
-	 *
-	 * @var  Helper
-	 */
-	private $helper;
+    /**
+     * Helper object
+     *
+     * @var  Helper
+     */
+    private $helper;
+/**
+     * The active package
+     *
+     * @var  string
+     */
+    private $package = '';
+/**
+     * The package model object.
+     *
+     * @var  PackageModel
+     */
+    private $packageModel;
+/**
+     * The release model object.
+     *
+     * @var  ReleaseModel
+     */
+    private $releaseModel;
+/**
+     * Instantiate the view.
+     *
+     * @param   PackageModel       $packageModel     The package model object.
+     * @param   ReleaseModel       $releaseModel     The release model object.
+     * @param   Helper             $helper           Helper object.
+     * @param   RendererInterface  $renderer         The renderer object.
+     */
+    public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, Helper $helper, RendererInterface $renderer)
+    {
+        parent::__construct($renderer);
+        $this->helper       = $helper;
+        $this->packageModel = $packageModel;
+        $this->releaseModel = $releaseModel;
+    }
 
-	/**
-	 * The active package
-	 *
-	 * @var  string
-	 */
-	private $package = '';
+    /**
+     * Method to render the view
+     *
+     * @return  string  The rendered view
+     */
+    public function render()
+    {
+        $package = $this->packageModel->getPackage($this->package);
+        $this->setData([
+                'releases' => $this->releaseModel->getPackageHistory($package),
+                'package'  => $package,
+            ]);
+        return parent::render();
+    }
 
-	/**
-	 * The package model object.
-	 *
-	 * @var  PackageModel
-	 */
-	private $packageModel;
-
-	/**
-	 * The release model object.
-	 *
-	 * @var  ReleaseModel
-	 */
-	private $releaseModel;
-
-	/**
-	 * Instantiate the view.
-	 *
-	 * @param   PackageModel       $packageModel     The package model object.
-	 * @param   ReleaseModel       $releaseModel     The release model object.
-	 * @param   Helper             $helper           Helper object.
-	 * @param   RendererInterface  $renderer         The renderer object.
-	 */
-	public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, Helper $helper, RendererInterface $renderer)
-	{
-		parent::__construct($renderer);
-
-		$this->helper       = $helper;
-		$this->packageModel = $packageModel;
-		$this->releaseModel = $releaseModel;
-	}
-
-	/**
-	 * Method to render the view
-	 *
-	 * @return  string  The rendered view
-	 */
-	public function render()
-	{
-		$package = $this->packageModel->getPackage($this->package);
-
-		$this->setData(
-			[
-				'releases' => $this->releaseModel->getPackageHistory($package),
-				'package'  => $package,
-			]
-		);
-
-		return parent::render();
-	}
-
-	/**
-	 * Set the active package
-	 *
-	 * @param   string  $package  The active package name
-	 *
-	 * @return  void
-	 */
-	public function setPackage(string $package): void
-	{
-		$this->package = $package;
-	}
+    /**
+     * Set the active package
+     *
+     * @param   string  $package  The active package name
+     *
+     * @return  void
+     */
+    public function setPackage(string $package): void
+    {
+        $this->package = $package;
+    }
 }

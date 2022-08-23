@@ -38,16 +38,14 @@
                         {% if not release.package.has_v1 %}
                             N/A
                         {% else %}
-                            {% set _1xbranch = release.package.repo in ['crypt'] ? '1.x-dev' : 'master'  %}
-                            <a href="https://travis-ci.org/joomla-framework/{{ release.package.repo }}"><img src="https://travis-ci.org/joomla-framework/{{ release.package.repo }}.png?branch={{ _1xbranch }}" alt="Build Status" /></a>
+                            <a href="https://ci.joomla.org/joomla-framework/{{ release.package.repo }}"><img src="https://ci.joomla.org/api/badges/joomla-framework/{{ release.package.repo }}/status.svg?ref=refs/heads/1.x-dev" alt="Build Status" /></a>
                         {% endif %}
                     </td>
                     <td data-label="2.0 Build Status">
                         {% if not release.package.has_v2 %}
                             N/A
                         {% else %}
-                            {% set _2xbranch = release.package.repo in ['crypt', 'renderer', 'symfony-event-dispatcher-bridge'] ? 'master' : '2.0-dev'  %}
-                            <a href="https://travis-ci.org/joomla-framework/{{ release.package.repo }}"><img src="https://travis-ci.org/joomla-framework/{{ release.package.repo }}.png?branch={{ _2xbranch }}" alt="Build Status" /></a>
+                            <a href="https://ci.joomla.org/joomla-framework/{{ release.package.repo }}"><img src="https://ci.joomla.org/api/badges/joomla-framework/{{ release.package.repo }}/status.svg?ref=refs/heads/2.0-dev" alt="Build Status" /></a>
                         {% endif %}
                     </td>
                 </tr>

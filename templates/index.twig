@@ -4,7 +4,7 @@
         <!-- For Responsive -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" href="{{ preload(asset('css/template.css', 'mix'), 'preload', {'as': 'style'}) }}" type="text/css"{{ sri('css/template.css') }}>
+        <link rel="stylesheet" href="{{ asset('css/template.css', 'mix') }}" type="text/css"{{ sri('css/template.css') }}>
         {% block stylesheets %}{% endblock %}
         {% if appDebug %}
             <link rel="stylesheet" href="{{ asset('css/debugbar.css') }}" type="text/css">
@@ -33,28 +33,14 @@
         <link href="favicon.ico" rel="shortcut icon" />
         <!-- End for misc -->
 
-        <script>
-       	var _prum = [['id', '59300ad15992c776ad970068'],
-       	             ['mark', 'firstbyte', (new Date()).getTime()]];
-       	(function() {
-       	    var s = document.getElementsByTagName('script')[0]
-       	      , p = document.createElement('script');
-       	    p.async = 'async';
-       	    p.src = 'https://rum-static.pingdom.net/prum.min.js';
-       	    s.parentNode.insertBefore(p, s);
-       	})();
-       	</script>
+        {% block headJavaScript %}
+        {% endblock %}
     </head>
     <body id="go">
-        <!-- Google Tag Manager -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NX46ZP" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NX46ZP');</script>
-        <!-- End Google Tag Manager -->
         {% block bodyNavigation %}
             <nav class="container-fluid main-nav">
                 <ul>
                     <li><a href="{{ route() }}"><span class="fab fa-joomla" aria-hidden="true"></span><span class="title">Framework</span></a></li>
-                    <li><a href="{{ route('contributors') }}"><span class="fas fa-user" aria-hidden="true"></span><span class="title">Team</span></a></li>
                     <li><a href="{{ route('docs') }}"><span class="fas fa-file-alt" aria-hidden="true"></span><span class="title">Documentation</span></a></li>
                     <li><a href="{{ route('status') }}"><span class="fas fa-wrench" aria-hidden="true"></span><span class="title">Status</span></a></li>
                 </ul>
@@ -65,13 +51,14 @@
         </main>
         <footer class="clearfix" role="contentinfo" id="resources">
             {% block footerContent %}
+                {% import 'macros.twig' as macros  %}
                 <div class="container">
-                    {{ footer_copyright() }}
+                    {{ macros.footer_copyright() }}
                 </div>
             {% endblock %}
         </footer>
 
-        <script src="{{ preload(asset('js/template.js', 'mix'), 'preload', {'as': 'script'}) }}"{{ sri('js/template.js') }}></script>
+        <script src="{{ asset('js/template.js', 'mix') }}"{{ sri('js/template.js') }}></script>
         {% block bodyJavaScript %}{% endblock %}
         {% if appDebug %}
             <script src="{{ asset('js/debugbar.js') }}"></script>

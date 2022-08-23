@@ -7,7 +7,6 @@
         <li><a data-scroll href="#about"><span class="fas fa-info-circle" aria-hidden="true"></span><span class="title">About</span></a></li>
         <li><a data-scroll href="#involved"><span class="fas fa-globe-americas" aria-hidden="true"></span><span class="title">Get Involved</span></a></li>
         <li><a data-scroll href="#resources"><span class="fas fa-book" aria-hidden="true"></span><span class="title">Resources</span></a></li>
-        <li><a href="{{ route('contributors') }}"><span class="fas fa-user" aria-hidden="true"></span><span class="title">Team</span></a></li>
         <li><a href="{{ route('docs') }}"><span class="fas fa-file-alt" aria-hidden="true"></span><span class="title">Documentation</span></a></li>
         <li><a href="{{ route('status') }}"><span class="fas fa-wrench" aria-hidden="true"></span><span class="title">Status</span></a></li>
     </ul>
@@ -22,7 +21,7 @@
         <span class="fas fa-5x fa-cloud-download-alt" aria-hidden="true"></span>
         <div class="cta clearfix">
             <div>Designed by software developers for software developers. Easy to Adapt. Easy to Extend.</div>
-            <div><a href="https://getcomposer.org/download/" class="btn btn-lg btn-success pull-left">Download Composer</a> <a href="https://github.com/joomla-framework" class="btn btn-lg btn-info pull-right">GitHub Organization</a></div>
+            <div><a href="https://getcomposer.org/download/" class="btn btn-lg btn-success float-left">Download Composer</a> <a href="https://github.com/joomla-framework" class="btn btn-lg btn-info float-right">GitHub Organization</a></div>
         </div>
     </div>
 </section>
@@ -154,6 +153,7 @@
 {% endblock %}
 
 {% block footerContent %}
+{% import 'macros.twig' as macros  %}
 <div class="container homepage-footer">
     <div class="footer-area resources">
         <h3><span class="fas fa-book" aria-hidden="true"></span> Resources</h3>
@@ -183,7 +183,7 @@
         <p><a href="https://groups.google.com/group/joomla-dev-framework">Join the Google Group</a> and let us know how you have implemented it.</p>
     </div>
     <div class="footer-area copyright">
-        {{ footer_copyright() }}
+        {{ macros.footer_copyright() }}
     </div>
 </div>
 {% endblock %}

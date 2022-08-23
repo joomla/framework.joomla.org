@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -12,7 +13,7 @@ use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\Input\Input;
 use Joomla\Renderer\RendererInterface;
-use Zend\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\HtmlResponse;
 
 /**
  * Controller handling the site's homepage
@@ -22,39 +23,35 @@ use Zend\Diactoros\Response\HtmlResponse;
  */
 class HomepageController extends AbstractController
 {
-	/**
-	 * The template renderer.
-	 *
-	 * @var  RendererInterface
-	 */
-	private $renderer;
+    /**
+     * The template renderer.
+     *
+     * @var  RendererInterface
+     */
+    private $renderer;
+/**
+     * Constructor.
+     *
+     * @param   RendererInterface    $renderer  The template renderer.
+     * @param   Input                $input     The input object.
+     * @param   AbstractApplication  $app       The application object.
+     */
+    public function __construct(RendererInterface $renderer, Input $input = null, AbstractApplication $app = null)
+    {
+        parent::__construct($input, $app);
+        $this->renderer = $renderer;
+    }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param   RendererInterface    $renderer  The template renderer.
-	 * @param   Input                $input     The input object.
-	 * @param   AbstractApplication  $app       The application object.
-	 */
-	public function __construct(RendererInterface $renderer, Input $input = null, AbstractApplication $app = null)
-	{
-		parent::__construct($input, $app);
-
-		$this->renderer = $renderer;
-	}
-
-	/**
-	 * Execute the controller.
-	 *
-	 * @return  boolean
-	 */
-	public function execute(): bool
-	{
-		// Enable browser caching
-		$this->getApplication()->allowCache(true);
-
-		$this->getApplication()->setResponse(new HtmlResponse($this->renderer->render('homepage.twig')));
-
-		return true;
-	}
+    /**
+     * Execute the controller.
+     *
+     * @return  boolean
+     */
+    public function execute(): bool
+    {
+        // Enable browser caching
+        $this->getApplication()->allowCache(true);
+        $this->getApplication()->setResponse(new HtmlResponse($this->renderer->render('homepage.twig')));
+        return true;
+    }
 }

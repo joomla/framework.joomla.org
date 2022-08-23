@@ -15,7 +15,6 @@ nav.homepage {
         margin-left: 0;
       }
       span {
-        vertical-align: top;
         &.title {
           display: none;
           @include media-breakpoint-up(md) {

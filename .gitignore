@@ -1,11 +1,6 @@
 .idea
 .DS_Store
 /vendor/
-/last_build.json
-
-# Don't push reports to repo #
-/coverage/
-/www/coverage/
 
 # App Cache #
 /cache/*
@@ -23,9 +18,7 @@
 /etc/config.json
 
 # Unit Testing #
-/app-coverage
 /phpunit.xml
-/testconfigs
 
 # Node modules should be local
 node_modules/
@@ -33,6 +26,10 @@ node_modules/
 # DebugBar assets
 /www/media/css/debugbar.css
 /www/media/js/debugbar.js
+
+# Only track security.txt from .well-known directory
+/www/.well-known/*
+!/www/.well-known/security.txt
 
 # PHP-CS-Fixer
 /.php_cs.cache

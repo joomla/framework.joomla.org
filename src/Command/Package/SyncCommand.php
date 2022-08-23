@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -20,108 +21,92 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class SyncCommand extends AbstractCommand
 {
-	/**
-	 * The default command name
-	 *
-	 * @var  string|null
-	 */
-	protected static $defaultName = 'package:sync';
+    /**
+     * The default command name
+     *
+     * @var  string|null
+     */
+    protected static $defaultName = 'package:sync';
+    /**
+     * The helper object
+     *
+     * @var  Helper
+     */
+    private $helper;
+    /**
+     * The package model
+     *
+     * @var  PackageModel
+     */
+    private $packageModel;
 
-	/**
-	 * The helper object
-	 *
-	 * @var  Helper
-	 */
-	private $helper;
+    /**
+     * Instantiate the command.
+     *
+     * @param   Helper        $helper        The helper object.
+     * @param   PackageModel  $packageModel  The package model.
+     */
+    public function __construct(Helper $helper, PackageModel $packageModel)
+    {
+        $this->helper       = $helper;
+        $this->packageModel = $packageModel;
+        parent::__construct();
+    }
 
-	/**
-	 * The package model
-	 *
-	 * @var  PackageModel
-	 */
-	private $packageModel;
+    /**
+     * Internal function to execute the command.
+     *
+     * @param   InputInterface   $input   The input to inject into the command.
+     * @param   OutputInterface  $output  The output to inject into the command.
+     *
+     * @return  integer  The command exit code
+     */
+    protected function doExecute(InputInterface $input, OutputInterface $output): int
+    {
+        $symfonyStyle = new SymfonyStyle($input, $output);
+        $symfonyStyle->title('Sync Package Data');
+        $packageNames   = array_keys($this->helper->getPackages()->extract('packages')->toArray());
+        $loadedPackages = $this->packageModel->getPackageNames();
+        foreach ($packageNames as $packageName) {
+            $displayName = $this->helper->getPackageDisplayName($packageName);
+            if (\in_array($packageName, $loadedPackages)) {
+                $packageId = array_search($packageName, $loadedPackages);
+                if ($packageId === false) {
+                    $symfonyStyle->warning("Could not find package ID for the $displayName package.");
+                    continue;
+                }
 
-	/**
-	 * Instantiate the command.
-	 *
-	 * @param   Helper        $helper        The helper object.
-	 * @param   PackageModel  $packageModel  The package model.
-	 */
-	public function __construct(Helper $helper, PackageModel $packageModel)
-	{
-		$this->helper       = $helper;
-		$this->packageModel = $packageModel;
+                $this->packageModel->updatePackage(
+                    (int)$packageId,
+                    $packageName,
+                    $this->helper->getPackageDisplayName($packageName),
+                    $this->helper->getPackageRepositoryName($packageName),
+                    $this->helper->getPackageStable($packageName),
+                    $this->helper->getPackageDeprecated($packageName),
+                    $this->helper->getPackageAbandoned($packageName),
+                    $this->helper->getPackageHasVersion1($packageName),
+                    $this->helper->getPackageHasVersion2($packageName)
+                );
+                $symfonyStyle->comment("Updated $displayName package data.");
+            } else {
+                $this->packageModel->addPackage(
+                    $packageName,
+                    $this->helper->getPackageDisplayName($packageName),
+                    $this->helper->getPackageRepositoryName($packageName),
+                    $this->helper->getPackageStable($packageName),
+                    $this->helper->getPackageDeprecated($packageName),
+                    $this->helper->getPackageAbandoned($packageName),
+                    $this->helper->getPackageHasVersion1($packageName),
+                    $this->helper->getPackageHasVersion2($packageName)
+                );
+                $symfonyStyle->comment("$displayName package added to the database.");
+            }
+        }
 
-		parent::__construct();
-	}
+        $symfonyStyle->success('Package data synchronized.');
 
-	/**
-	 * Internal function to execute the command.
-	 *
-	 * @param   InputInterface   $input   The input to inject into the command.
-	 * @param   OutputInterface  $output  The output to inject into the command.
-	 *
-	 * @return  integer  The command exit code
-	 */
-	protected function doExecute(InputInterface $input, OutputInterface $output): int
-	{
-		$symfonyStyle = new SymfonyStyle($input, $output);
-
-		$symfonyStyle->title('Sync Package Data');
-
-		$packageNames   = array_keys($this->helper->getPackages()->extract('packages')->toArray());
-		$loadedPackages = $this->packageModel->getPackageNames();
-
-		foreach ($packageNames as $packageName)
-		{
-			$displayName = $this->helper->getPackageDisplayName($packageName);
-
-			if (\in_array($packageName, $loadedPackages))
-			{
-				$packageId = array_search($packageName, $loadedPackages);
-
-				if ($packageId === false)
-				{
-					$symfonyStyle->warning("Could not find package ID for the $displayName package.");
-
-					continue;
-				}
-
-				$this->packageModel->updatePackage(
-					(int) $packageId,
-					$packageName,
-					$this->helper->getPackageDisplayName($packageName),
-					$this->helper->getPackageRepositoryName($packageName),
-					$this->helper->getPackageStable($packageName),
-					$this->helper->getPackageDeprecated($packageName),
-					$this->helper->getPackageAbandoned($packageName),
-					$this->helper->getPackageHasVersion1($packageName),
-					$this->helper->getPackageHasVersion2($packageName)
-				);
-
-				$symfonyStyle->comment("Updated $displayName package data.");
-			}
-			else
-			{
-				$this->packageModel->addPackage(
-					$packageName,
-					$this->helper->getPackageDisplayName($packageName),
-					$this->helper->getPackageRepositoryName($packageName),
-					$this->helper->getPackageStable($packageName),
-					$this->helper->getPackageDeprecated($packageName),
-					$this->helper->getPackageAbandoned($packageName),
-					$this->helper->getPackageHasVersion1($packageName),
-					$this->helper->getPackageHasVersion2($packageName)
-				);
-
-				$symfonyStyle->comment("$displayName package added to the database.");
-			}
-		}
-
-		$symfonyStyle->success('Package data synchronized.');
-
-		return 0;
-	}
+        return 0;
+    }
 
 	/**
 	 * Configures the current command.

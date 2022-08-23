@@ -9,7 +9,7 @@
 
 namespace Joomla\FrameworkWebsite;
 
-use Joomla\Application\AbstractWebApplication;
+use DebugBar\DebugBar;
 use Joomla\Application\Controller\ControllerResolverInterface;
 use Joomla\Application\Web\WebClient;
 use Joomla\Input\Input;
@@ -18,25 +18,20 @@ use Joomla\Router\RouterInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Web application class
+ * Debug web application class
  */
-class WebApplication extends AbstractWebApplication
+class DebugWebApplication extends WebApplication
 {
     /**
-     * The application's controller resolver.
+     * The application's debug bar.
      *
-     * @var  ControllerResolverInterface
+     * @var  DebugBar
      */
-    protected $controllerResolver;
-/**
-     * The application's router.
-     *
-     * @var  RouterInterface
-     */
-    protected $router;
+    private $debugBar;
 /**
      * Class constructor.
      *
+     * @param   DebugBar                     $debugBar            The application's debug bar
      * @param   ControllerResolverInterface  $controllerResolver  The application's controller resolver
      * @param   RouterInterface              $router              The application's router
      * @param   Input                        $input               An optional argument to provide dependency injection for the application's
@@ -48,19 +43,11 @@ class WebApplication extends AbstractWebApplication
      * @param   ResponseInterface            $response            An optional argument to provide dependency injection for the application's
      *                                                            response object.
      */
-    public function __construct(ControllerResolverInterface $controllerResolver, RouterInterface $router, Input $input = null, Registry $config = null, WebClient $client = null, ResponseInterface $response = null)
+    public function __construct(DebugBar $debugBar, ControllerResolverInterface $controllerResolver, RouterInterface $router, Input $input = null, Registry $config = null, WebClient $client = null, ResponseInterface $response = null)
     {
-        $this->controllerResolver = $controllerResolver;
-        $this->router             = $router;
+        $this->debugBar = $debugBar;
 // Call the constructor as late as possible (it runs `initialise`).
-        parent::__construct($input, $config, $client, $response);
-// If an explicitly media URI is set, don't do anything.
-        $mediaURI = trim($this->get('media_uri'));
-        if (!$mediaURI) {
-        // No explicit media URI was set, build it dynamically from the base uri.
-            $this->set('uri.media.full', 'media/');
-            $this->set('uri.media.path', 'media/');
-        }
+        parent::__construct($controllerResolver, $router, $input, $config, $client, $response);
     }
 
     /**
@@ -76,6 +63,15 @@ class WebApplication extends AbstractWebApplication
             $this->input->def($key, $value);
         }
 
-        \call_user_func($this->controllerResolver->resolve($route));
+        $controller = $this->controllerResolver->resolve($route);
+/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+        $collector = $this->debugBar['time'];
+        $label     = 'controller';
+        $collector->startMeasure($label);
+        try {
+            $controller();
+        } finally {
+            $collector->stopMeasure($label);
+        }
     }
 }

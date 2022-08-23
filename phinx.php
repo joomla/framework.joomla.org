@@ -25,9 +25,6 @@ $container = (new Joomla\DI\Container)
 // Alias the CLI application to Joomla's base application class as this is the primary application for the environment
 $container->alias(Joomla\Application\AbstractApplication::class, Joomla\Console\Application::class);
 
-// Alias the Joomla\Input\Input service to the CLI input class (overloads the original definition)
-$container->alias(Joomla\Input\Input::class, Joomla\Input\Cli::class);
-
 // Get the config so we can push stuff into the Phinx config
 /** @var Joomla\Registry\Registry $config */
 $config = $container->get('config');
@@ -42,8 +39,8 @@ return [
 		'migrations' => '%%PHINX_CONFIG_DIR%%/etc/migrations',
 	],
 	'environments' => [
-		'default_database' => 'application',
-		'application'      => [
+		'default_environment' => 'application',
+		'application'         => [
 			'name'         => $config->get('database.database'),
 			'connection'   => $db->getConnection(),
 			'table_prefix' => $config->get('database.prefix'),

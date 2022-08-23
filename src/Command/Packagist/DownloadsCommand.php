@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -19,60 +20,53 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class DownloadsCommand extends AbstractCommand
 {
-	/**
-	 * The default command name
-	 *
-	 * @var  string|null
-	 */
-	protected static $defaultName = 'packagist:sync:downloads';
+    /**
+     * The default command name
+     *
+     * @var  string|null
+     */
+    protected static $defaultName = 'packagist:sync:downloads';
+/**
+     * The packagist helper object
+     *
+     * @var  PackagistHelper
+     */
+    private $packagistHelper;
+/**
+     * Instantiate the command.
+     *
+     * @param   PackagistHelper  $packagistHelper  The packagist helper object.
+     */
+    public function __construct(PackagistHelper $packagistHelper)
+    {
+        $this->packagistHelper = $packagistHelper;
+        parent::__construct();
+    }
 
-	/**
-	 * The packagist helper object
-	 *
-	 * @var  PackagistHelper
-	 */
-	private $packagistHelper;
+    /**
+     * Internal function to execute the command.
+     *
+     * @param   InputInterface   $input   The input to inject into the command.
+     * @param   OutputInterface  $output  The output to inject into the command.
+     *
+     * @return  integer  The command exit code
+     */
+    protected function doExecute(InputInterface $input, OutputInterface $output): int
+    {
+        $symfonyStyle = new SymfonyStyle($input, $output);
+        $symfonyStyle->title('Sync Download Counts from Packagist');
+        $this->packagistHelper->syncDownloadCounts();
+        $symfonyStyle->success('Update completed.');
+        return 0;
+    }
 
-	/**
-	 * Instantiate the command.
-	 *
-	 * @param   PackagistHelper  $packagistHelper  The packagist helper object.
-	 */
-	public function __construct(PackagistHelper $packagistHelper)
-	{
-		$this->packagistHelper = $packagistHelper;
-
-		parent::__construct();
-	}
-
-	/**
-	 * Internal function to execute the command.
-	 *
-	 * @param   InputInterface   $input   The input to inject into the command.
-	 * @param   OutputInterface  $output  The output to inject into the command.
-	 *
-	 * @return  integer  The command exit code
-	 */
-	protected function doExecute(InputInterface $input, OutputInterface $output): int
-	{
-		$symfonyStyle = new SymfonyStyle($input, $output);
-
-		$symfonyStyle->title('Sync Download Counts from Packagist');
-
-		$this->packagistHelper->syncDownloadCounts();
-
-		$symfonyStyle->success('Update completed.');
-
-		return 0;
-	}
-
-	/**
-	 * Configures the current command.
-	 *
-	 * @return  void
-	 */
-	protected function configure(): void
-	{
-		$this->setDescription('Synchronizes download counts with Packagist');
-	}
+    /**
+     * Configures the current command.
+     *
+     * @return  void
+     */
+    protected function configure(): void
+    {
+        $this->setDescription('Synchronizes download counts with Packagist');
+    }
 }
