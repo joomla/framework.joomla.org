@@ -108,13 +108,13 @@ class SyncCommand extends AbstractCommand
         return 0;
     }
 
-	/**
-	 * Configures the current command.
-	 *
-	 * @return  void
-	 */
-	protected function configure(): void
-	{
-		$this->setDescription('Synchronizes Framework package data to the database');
-	}
+    /**
+     * Configures the current command.
+     *
+     * @return  void
+     */
+    protected function configure(): void
+    {
+        $this->setDescription('Synchronizes Framework package data to the database');
+    }
 }

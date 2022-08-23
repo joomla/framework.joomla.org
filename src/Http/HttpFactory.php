@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -18,37 +19,35 @@ use Joomla\Http\TransportInterface;
  */
 class HttpFactory extends BaseFactory
 {
-	/**
-	 * Application debug bar
-	 *
-	 * @var  DebugBar
-	 */
-	private $debugBar;
+    /**
+     * Application debug bar
+     *
+     * @var  DebugBar
+     */
+    private $debugBar;
+/**
+     * Constructor.
+     *
+     * @param   DebugBar  $debugBar  Application debug bar.
+     */
+    public function __construct(DebugBar $debugBar)
+    {
+        $this->debugBar = $debugBar;
+    }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param   DebugBar  $debugBar  Application debug bar.
-	 */
-	public function __construct(DebugBar $debugBar)
-	{
-		$this->debugBar = $debugBar;
-	}
-
-	/**
-	 * Finds an available TransportInterface object for communication
-	 *
-	 * @param   array|\ArrayAccess  $options  Options for creating TransportInterface object
-	 * @param   array|string        $default  Adapter (string) or queue of adapters (array) to use
-	 *
-	 * @return  TransportInterface|boolean  Interface sub-class or boolean false if no adapters are available
-	 *
-	 * @throws  \InvalidArgumentException
-	 */
-	public function getAvailableDriver($options = [], $default = null)
-	{
-		$wrappedDriver = parent::getAvailableDriver($options, $default);
-
-		return new DebugTransport($this->debugBar, $wrappedDriver, $options);
-	}
+    /**
+     * Finds an available TransportInterface object for communication
+     *
+     * @param   array|\ArrayAccess  $options  Options for creating TransportInterface object
+     * @param   array|string        $default  Adapter (string) or queue of adapters (array) to use
+     *
+     * @return  TransportInterface|boolean  Interface sub-class or boolean false if no adapters are available
+     *
+     * @throws  \InvalidArgumentException
+     */
+    public function getAvailableDriver($options = [], $default = null)
+    {
+        $wrappedDriver = parent::getAvailableDriver($options, $default);
+        return new DebugTransport($this->debugBar, $wrappedDriver, $options);
+    }
 }

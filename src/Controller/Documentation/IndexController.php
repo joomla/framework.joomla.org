@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -22,39 +23,35 @@ use Zend\Diactoros\Response\HtmlResponse;
  */
 class IndexController extends AbstractController
 {
-	/**
-	 * The view object.
-	 *
-	 * @var  IndexHtmlView
-	 */
-	private $view;
+    /**
+     * The view object.
+     *
+     * @var  IndexHtmlView
+     */
+    private $view;
+/**
+     * Constructor.
+     *
+     * @param   IndexHtmlView        $view   The view object.
+     * @param   Input                $input  The input object.
+     * @param   AbstractApplication  $app    The application object.
+     */
+    public function __construct(IndexHtmlView $view, Input $input = null, AbstractApplication $app = null)
+    {
+        parent::__construct($input, $app);
+        $this->view = $view;
+    }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param   IndexHtmlView        $view   The view object.
-	 * @param   Input                $input  The input object.
-	 * @param   AbstractApplication  $app    The application object.
-	 */
-	public function __construct(IndexHtmlView $view, Input $input = null, AbstractApplication $app = null)
-	{
-		parent::__construct($input, $app);
-
-		$this->view = $view;
-	}
-
-	/**
-	 * Execute the controller.
-	 *
-	 * @return  boolean
-	 */
-	public function execute(): bool
-	{
-		// Enable browser caching
-		$this->getApplication()->allowCache(true);
-
-		$this->getApplication()->setResponse(new HtmlResponse($this->view->render()));
-
-		return true;
-	}
+    /**
+     * Execute the controller.
+     *
+     * @return  boolean
+     */
+    public function execute(): bool
+    {
+        // Enable browser caching
+        $this->getApplication()->allowCache(true);
+        $this->getApplication()->setResponse(new HtmlResponse($this->view->render()));
+        return true;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -19,60 +20,53 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class ClearCacheCommand extends AbstractCommand
 {
-	/**
-	 * The default command name
-	 *
-	 * @var  string|null
-	 */
-	protected static $defaultName = 'cache:clear';
+    /**
+     * The default command name
+     *
+     * @var  string|null
+     */
+    protected static $defaultName = 'cache:clear';
+/**
+     * Cache pool
+     *
+     * @var  CacheItemPoolInterface
+     */
+    private $cache;
+/**
+     * Instantiate the command.
+     *
+     * @param   CacheItemPoolInterface  $cache  Cache pool.
+     */
+    public function __construct(CacheItemPoolInterface $cache)
+    {
+        $this->cache = $cache;
+        parent::__construct();
+    }
 
-	/**
-	 * Cache pool
-	 *
-	 * @var  CacheItemPoolInterface
-	 */
-	private $cache;
+    /**
+     * Internal function to execute the command.
+     *
+     * @param   InputInterface   $input   The input to inject into the command.
+     * @param   OutputInterface  $output  The output to inject into the command.
+     *
+     * @return  integer  The command exit code
+     */
+    protected function doExecute(InputInterface $input, OutputInterface $output): int
+    {
+        $symfonyStyle = new SymfonyStyle($input, $output);
+        $symfonyStyle->title('Clear Cache');
+        $this->cache->clear();
+        $symfonyStyle->success('Cache cleared.');
+        return 0;
+    }
 
-	/**
-	 * Instantiate the command.
-	 *
-	 * @param   CacheItemPoolInterface  $cache  Cache pool.
-	 */
-	public function __construct(CacheItemPoolInterface $cache)
-	{
-		$this->cache = $cache;
-
-		parent::__construct();
-	}
-
-	/**
-	 * Internal function to execute the command.
-	 *
-	 * @param   InputInterface   $input   The input to inject into the command.
-	 * @param   OutputInterface  $output  The output to inject into the command.
-	 *
-	 * @return  integer  The command exit code
-	 */
-	protected function doExecute(InputInterface $input, OutputInterface $output): int
-	{
-		$symfonyStyle = new SymfonyStyle($input, $output);
-
-		$symfonyStyle->title('Clear Cache');
-
-		$this->cache->clear();
-
-		$symfonyStyle->success('Cache cleared.');
-
-		return 0;
-	}
-
-	/**
-	 * Configures the current command.
-	 *
-	 * @return  void
-	 */
-	protected function configure(): void
-	{
-		$this->setDescription('Clear the application cache pool');
-	}
+    /**
+     * Configures the current command.
+     *
+     * @return  void
+     */
+    protected function configure(): void
+    {
+        $this->setDescription('Clear the application cache pool');
+    }
 }

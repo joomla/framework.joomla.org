@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -17,39 +18,34 @@ use Joomla\View\HtmlView;
  */
 class IndexHtmlView extends HtmlView
 {
-	/**
-	 * The contributor model object.
-	 *
-	 * @var  PackageModel
-	 */
-	private $packageModel;
+    /**
+     * The contributor model object.
+     *
+     * @var  PackageModel
+     */
+    private $packageModel;
+/**
+     * Instantiate the view.
+     *
+     * @param   PackageModel       $packageModel  The package model object.
+     * @param   RendererInterface  $renderer      The renderer object.
+     */
+    public function __construct(PackageModel $packageModel, RendererInterface $renderer)
+    {
+        parent::__construct($renderer);
+        $this->packageModel = $packageModel;
+    }
 
-	/**
-	 * Instantiate the view.
-	 *
-	 * @param   PackageModel       $packageModel  The package model object.
-	 * @param   RendererInterface  $renderer      The renderer object.
-	 */
-	public function __construct(PackageModel $packageModel, RendererInterface $renderer)
-	{
-		parent::__construct($renderer);
-
-		$this->packageModel = $packageModel;
-	}
-
-	/**
-	 * Method to render the view
-	 *
-	 * @return  string  The rendered view
-	 */
-	public function render()
-	{
-		$this->setData(
-			[
-				'packages' => $this->packageModel->getSortedPackages(),
-			]
-		);
-
-		return parent::render();
-	}
+    /**
+     * Method to render the view
+     *
+     * @return  string  The rendered view
+     */
+    public function render()
+    {
+        $this->setData([
+                'packages' => $this->packageModel->getSortedPackages(),
+            ]);
+        return parent::render();
+    }
 }

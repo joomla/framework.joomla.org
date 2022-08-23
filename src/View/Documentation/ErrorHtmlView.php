@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Website
  *
@@ -17,59 +18,53 @@ use Joomla\View\HtmlView;
  */
 class ErrorHtmlView extends HtmlView
 {
-	/**
-	 * The error message for display.
-	 *
-	 * @var  string
-	 */
-	private $error = '';
+    /**
+     * The error message for display.
+     *
+     * @var  string
+     */
+    private $error = '';
+/**
+     * The package model object.
+     *
+     * @var  PackageModel
+     */
+    private $packageModel;
+/**
+     * Instantiate the view.
+     *
+     * @param   PackageModel       $packageModel  The package model object.
+     * @param   RendererInterface  $renderer      The renderer object.
+     */
+    public function __construct(PackageModel $packageModel, RendererInterface $renderer)
+    {
+        parent::__construct($renderer);
+        $this->packageModel = $packageModel;
+    }
 
-	/**
-	 * The package model object.
-	 *
-	 * @var  PackageModel
-	 */
-	private $packageModel;
+    /**
+     * Method to render the view
+     *
+     * @return  string  The rendered view
+     */
+    public function render()
+    {
+        $this->setData([
+                'error'    => $this->error,
+                'packages' => $this->packageModel->getSortedPackages(),
+            ]);
+        return parent::render();
+    }
 
-	/**
-	 * Instantiate the view.
-	 *
-	 * @param   PackageModel       $packageModel  The package model object.
-	 * @param   RendererInterface  $renderer      The renderer object.
-	 */
-	public function __construct(PackageModel $packageModel, RendererInterface $renderer)
-	{
-		parent::__construct($renderer);
-
-		$this->packageModel = $packageModel;
-	}
-
-	/**
-	 * Method to render the view
-	 *
-	 * @return  string  The rendered view
-	 */
-	public function render()
-	{
-		$this->setData(
-			[
-				'error'    => $this->error,
-				'packages' => $this->packageModel->getSortedPackages(),
-			]
-		);
-
-		return parent::render();
-	}
-
-	/**
-	 * Set the error message for display
-	 *
-	 * @param   string  $error  The error message to display
-	 *
-	 * @return  void
-	 */
-	public function setError(string $error): void
-	{
-		$this->error = $error;
-	}
+    /**
+     * Set the error message for display
+     *
+     * @param   string  $error  The error message to display
+     *
+     * @return  void
+     */
+    public function setError(string $error): void
+    {
+        $this->error = $error;
+    }
 }

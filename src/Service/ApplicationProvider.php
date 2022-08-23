@@ -555,22 +555,22 @@ class ApplicationProvider implements ServiceProviderInterface
     {
         return new StatusJsonView($container->get('model.package'), $container->get('model.release'));
     }
-	/**
-	 * Get the `application.helper.github` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  GitHubHelper
-	 */
-	public function getApplicationHelperGithubService(Container $container): GitHubHelper
-	{
-		return new GitHubHelper(
-			$container->get(Github::class),
-			$container->get(DatabaseInterface::class),
-			$container->get(CacheItemPoolInterface::class),
-			$container->get(AbstractApplication::class)
-		);
-	}
+    /**
+     * Get the `application.helper.github` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  GitHubHelper
+     */
+    public function getApplicationHelperGithubService(Container $container): GitHubHelper
+    {
+        return new GitHubHelper(
+            $container->get(Github::class),
+            $container->get(DatabaseInterface::class),
+            $container->get(CacheItemPoolInterface::class),
+            $container->get(AbstractApplication::class)
+        );
+    }
 
     /**
      * Get the WebApplication class service
@@ -589,196 +589,196 @@ class ApplicationProvider implements ServiceProviderInterface
         return $application;
     }
 
-	/**
-	 * Get the ClearCacheCommand service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  ClearCacheCommand
-	 */
-	public function getClearCacheCommandService(Container $container): ClearCacheCommand
-	{
-		return new ClearCacheCommand($container->get(CacheItemPoolInterface::class));
-	}
+    /**
+     * Get the ClearCacheCommand service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  ClearCacheCommand
+     */
+    public function getClearCacheCommandService(Container $container): ClearCacheCommand
+    {
+        return new ClearCacheCommand($container->get(CacheItemPoolInterface::class));
+    }
 
-	/**
-	 * Get the `controller.api.status` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  StatusControllerGet
-	 */
-	public function getControllerApiStatusService(Container $container): StatusControllerGet
-	{
-		$controller = new StatusControllerGet(
-			$container->get(StatusJsonView::class),
-			$container->get(Analytics::class),
-			$container->get(Input::class),
-			$container->get(WebApplication::class)
-		);
+    /**
+     * Get the `controller.api.status` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  StatusControllerGet
+     */
+    public function getControllerApiStatusService(Container $container): StatusControllerGet
+    {
+        $controller = new StatusControllerGet(
+            $container->get(StatusJsonView::class),
+            $container->get(Analytics::class),
+            $container->get(Input::class),
+            $container->get(WebApplication::class)
+        );
 
-		$controller->setLogger($container->get(LoggerInterface::class));
+        $controller->setLogger($container->get(LoggerInterface::class));
 
-		return $controller;
-	}
+        return $controller;
+    }
 
 
-	/**
-	 * Get the `controller.documentation.index` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  IndexController
-	 */
-	public function getControllerDocumentationIndexService(Container $container): IndexController
-	{
-		return new IndexController(
-			$container->get(IndexHtmlView::class),
-			$container->get(Input::class),
-			$container->get(WebApplication::class)
-		);
-	}
+    /**
+     * Get the `controller.documentation.index` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  IndexController
+     */
+    public function getControllerDocumentationIndexService(Container $container): IndexController
+    {
+        return new IndexController(
+            $container->get(IndexHtmlView::class),
+            $container->get(Input::class),
+            $container->get(WebApplication::class)
+        );
+    }
 
-	/**
-	 * Get the `controller.documentation.page` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  DocumentationPageController
-	 */
-	public function getControllerDocumentationPageService(Container $container): DocumentationPageController
-	{
-		return new DocumentationPageController(
-			$container->get(PackageModel::class),
-			$container->get(ErrorHtmlView::class),
-			$container->get(PageHtmlView::class),
-			$container->get(GitHubHelper::class),
-			$container->get(Input::class),
-			$container->get(WebApplication::class)
-		);
-	}
+    /**
+     * Get the `controller.documentation.page` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  DocumentationPageController
+     */
+    public function getControllerDocumentationPageService(Container $container): DocumentationPageController
+    {
+        return new DocumentationPageController(
+            $container->get(PackageModel::class),
+            $container->get(ErrorHtmlView::class),
+            $container->get(PageHtmlView::class),
+            $container->get(GitHubHelper::class),
+            $container->get(Input::class),
+            $container->get(WebApplication::class)
+        );
+    }
 
-	/**
-	 * Get the `controller.documentation.redirect` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  RedirectController
-	 */
-	public function getControllerDocumentationRedirectService(Container $container): RedirectController
-	{
-		return new RedirectController(
-			$container->get(PackageModel::class),
-			$container->get(ErrorHtmlView::class),
-			$container->get(Input::class),
-			$container->get(WebApplication::class)
-		);
-	}
+    /**
+     * Get the `controller.documentation.redirect` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  RedirectController
+     */
+    public function getControllerDocumentationRedirectService(Container $container): RedirectController
+    {
+        return new RedirectController(
+            $container->get(PackageModel::class),
+            $container->get(ErrorHtmlView::class),
+            $container->get(Input::class),
+            $container->get(WebApplication::class)
+        );
+    }
 
-	/**
-	 * Get the `controller.status` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  StatusController
-	 */
-	public function getControllerStatusService(Container $container): StatusController
-	{
-		return new StatusController(
-			$container->get(StatusHtmlView::class),
-			$container->get(Input::class),
-			$container->get(WebApplication::class)
-		);
-	}
+    /**
+     * Get the `controller.status` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  StatusController
+     */
+    public function getControllerStatusService(Container $container): StatusController
+    {
+        return new StatusController(
+            $container->get(StatusHtmlView::class),
+            $container->get(Input::class),
+            $container->get(WebApplication::class)
+        );
+    }
 
-	/**
-	 * Get the FetchDocsCommand service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  FetchDocsCommand
-	 */
-	public function getGitHubFetchDocsCommandService(Container $container): FetchDocsCommand
-	{
-		return new FetchDocsCommand(
-			$container->get(PackageModel::class),
-			$container->get(Github::class),
-			$container->get(GitHubHelper::class),
-			$container->get(CacheItemPoolInterface::class)
-		);
-	}
+    /**
+     * Get the FetchDocsCommand service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  FetchDocsCommand
+     */
+    public function getGitHubFetchDocsCommandService(Container $container): FetchDocsCommand
+    {
+        return new FetchDocsCommand(
+            $container->get(PackageModel::class),
+            $container->get(Github::class),
+            $container->get(GitHubHelper::class),
+            $container->get(CacheItemPoolInterface::class)
+        );
+    }
 
-	/**
-	 * Get the PackageSyncCommand service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  PackageSyncCommand
-	 */
-	public function getPackageSyncCommandService(Container $container): PackageSyncCommand
-	{
-		return new PackageSyncCommand(
-			$container->get(Helper::class),
-			$container->get(PackageModel::class)
-		);
-	}
+    /**
+     * Get the PackageSyncCommand service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  PackageSyncCommand
+     */
+    public function getPackageSyncCommandService(Container $container): PackageSyncCommand
+    {
+        return new PackageSyncCommand(
+            $container->get(Helper::class),
+            $container->get(PackageModel::class)
+        );
+    }
 
-	/**
-	 * Get the `view.documentation.error.html` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  ErrorHtmlView
-	 */
-	public function getViewDocumentationErrorHtmlService(Container $container): ErrorHtmlView
-	{
-		$view = new ErrorHtmlView(
-			$container->get('model.package'),
-			$container->get('renderer')
-		);
+    /**
+     * Get the `view.documentation.error.html` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  ErrorHtmlView
+     */
+    public function getViewDocumentationErrorHtmlService(Container $container): ErrorHtmlView
+    {
+        $view = new ErrorHtmlView(
+            $container->get('model.package'),
+            $container->get('renderer')
+        );
 
-		$view->setLayout('docs/error.twig');
+        $view->setLayout('docs/error.twig');
 
-		return $view;
-	}
+        return $view;
+    }
 
-	/**
-	 * Get the `view.documentation.index.html` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  IndexHtmlView
-	 */
-	public function getViewDocumentationIndexHtmlService(Container $container): IndexHtmlView
-	{
-		$view = new IndexHtmlView(
-			$container->get('model.package'),
-			$container->get('renderer')
-		);
+    /**
+     * Get the `view.documentation.index.html` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  IndexHtmlView
+     */
+    public function getViewDocumentationIndexHtmlService(Container $container): IndexHtmlView
+    {
+        $view = new IndexHtmlView(
+            $container->get('model.package'),
+            $container->get('renderer')
+        );
 
-		$view->setLayout('docs/index.twig');
+        $view->setLayout('docs/index.twig');
 
-		return $view;
-	}
+        return $view;
+    }
 
-	/**
-	 * Get the `view.documentation.page.html` service
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  PageHtmlView
-	 */
-	public function getViewDocumentationPageHtmlService(Container $container): PageHtmlView
-	{
-		$view = new PageHtmlView(
-			$container->get('model.package'),
-			$container->get('renderer')
-		);
+    /**
+     * Get the `view.documentation.page.html` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  PageHtmlView
+     */
+    public function getViewDocumentationPageHtmlService(Container $container): PageHtmlView
+    {
+        $view = new PageHtmlView(
+            $container->get('model.package'),
+            $container->get('renderer')
+        );
 
-		$view->setLayout('docs/page.twig');
+        $view->setLayout('docs/page.twig');
 
-		return $view;
-	}
+        return $view;
+    }
 
     /**
      * Get the web client service
