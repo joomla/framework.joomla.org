@@ -9,6 +9,7 @@
 
 namespace Joomla\FrameworkWebsite\Service;
 
+use Joomla\Application\AbstractApplication;
 use Joomla\Application\AbstractWebApplication;
 use Joomla\Application\Controller\ContainerControllerResolver;
 use Joomla\Application\Controller\ControllerResolverInterface;
@@ -40,6 +41,7 @@ use Joomla\FrameworkWebsite\Controller\PageController;
 use Joomla\FrameworkWebsite\Controller\StatusController;
 use Joomla\FrameworkWebsite\Controller\WrongCmsController;
 use Joomla\FrameworkWebsite\Helper;
+use Joomla\FrameworkWebsite\Helper\GitHubHelper;
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
@@ -51,6 +53,7 @@ use Joomla\FrameworkWebsite\View\Package\PackageJsonView;
 use Joomla\FrameworkWebsite\View\Status\StatusHtmlView;
 use Joomla\FrameworkWebsite\View\Status\StatusJsonView;
 use Joomla\FrameworkWebsite\WebApplication;
+use Joomla\Github\Github;
 use Joomla\Http\Http;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
@@ -101,6 +104,8 @@ class ApplicationProvider implements ServiceProviderInterface
             ->share(ControllerResolverInterface::class, [$this, 'getControllerResolverService']);
         $container->alias(Helper::class, 'application.helper')
             ->share('application.helper', [$this, 'getApplicationHelperService'], true);
+        $container->alias(GitHubHelper::class, 'application.helper.github')
+            ->share('application.helper.github', [$this, 'getApplicationHelperGithubService'], true);
         $container->alias(PackagistHelper::class, 'application.helper.packagist')
             ->share('application.helper.packagist', [$this, 'getApplicationHelperPackagistService'], true);
         $container->share('application.packages', [$this, 'getApplicationPackagesService'], true);
@@ -563,7 +568,7 @@ class ApplicationProvider implements ServiceProviderInterface
 			$container->get(Github::class),
 			$container->get(DatabaseInterface::class),
 			$container->get(CacheItemPoolInterface::class),
-			$container->get(JoomlaApplication\AbstractApplication::class)
+			$container->get(AbstractApplication::class)
 		);
 	}
 
@@ -774,7 +779,7 @@ class ApplicationProvider implements ServiceProviderInterface
 
 		return $view;
 	}
-    
+
     /**
      * Get the web client service
      *

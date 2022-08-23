@@ -235,7 +235,7 @@ class DebugAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
 	 *
 	 * @return  boolean
 	 */
-	public function clear()
+	public function clear(string $prefix = '')
 	{
 		/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
 		$collector = $this->debugBar['time'];

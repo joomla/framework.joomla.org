@@ -34,6 +34,7 @@
         "ramsey/uuid": "^4.0.1",
         "robmorgan/phinx": "^0.12.3",
         "symfony/asset": "^5.1.2",
+        "symfony/cache": "^5.1.2",
         "symfony/process": "^5.1.2",
         "symfony/web-link": "^5.1.2",
         "symfony/yaml": "^5.1.2",

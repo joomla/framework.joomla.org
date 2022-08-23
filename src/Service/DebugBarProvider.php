@@ -70,7 +70,6 @@ class DebugBarProvider implements ServiceProviderInterface
         $container->extend(DispatcherInterface::class, [$this, 'getDecoratedDispatcherService']);
         $container->extend(AbstractWebApplication::class, [$this, 'getDecoratedWebApplicationService']);
         $container->extend('application.router', [$this, 'getDecoratedRouterService']);
-        $container->extend('http.factory', [$this, 'getDecoratedHttpFactoryService']);
         $container->extend('twig.extension.profiler', [$this, 'getDecoratedTwigExtensionProfilerService']);
         $this->tagDebugCollectors($container);
         $this->tagTwigExtensions($container);
@@ -204,19 +203,6 @@ class DebugBarProvider implements ServiceProviderInterface
         $dispatcher->addSubscriber($container->get('event.subscriber.debug'));
 
         return $dispatcher;
-    }
-
-    /**
-     * Get the decorated `http.factory` service
-     *
-     * @param   BaseHttpFactory  $httpFactory  The original HttpFactory service.
-     * @param   Container        $container    The DI container.
-     *
-     * @return  HttpFactory
-     */
-    public function getDecoratedHttpFactoryService(BaseHttpFactory $httpFactory, Container $container): HttpFactory
-    {
-        return new HttpFactory($container->get('debug.bar'));
     }
 
     /**
