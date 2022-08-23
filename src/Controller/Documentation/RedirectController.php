@@ -31,13 +31,15 @@ class RedirectController extends AbstractController
      * @var  ErrorHtmlView
      */
     private $errorView;
-/**
+
+    /**
      * The model object.
      *
      * @var  PackageModel
      */
     private $model;
-/**
+
+    /**
      * Constructor.
      *
      * @param   PackageModel         $model      The model object.
@@ -75,7 +77,6 @@ class RedirectController extends AbstractController
                     $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/1.x/{$package->package}/overview"));
                 }
 
-
                 break;
             case '2.x':
                 if (!$package->has_v2) {
@@ -85,11 +86,9 @@ class RedirectController extends AbstractController
                     $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/$version/{$package->package}/overview"));
                 }
 
-
                 break;
             case 'latest':
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/2.x/{$package->package}/overview"));
-
+                $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/2.x/{$package->package}/overview"));
 
                 break;
             default:

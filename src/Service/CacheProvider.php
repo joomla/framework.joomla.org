@@ -51,7 +51,7 @@ class CacheProvider implements ServiceProviderInterface
     {
         /** @var \Joomla\Registry\Registry $config */
         $config = $container->get('config');
-// If caching isn't enabled then just return a void cache
+        // If caching isn't enabled then just return a void cache
         if (!$config->get('cache.enabled', false)) {
             return new NullAdapter();
         }
@@ -61,12 +61,11 @@ class CacheProvider implements ServiceProviderInterface
         $namespace = $config->get('cache.namespace', 'jfw');
         switch ($adapter) {
             case 'file':
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              $path = $config->get('cache.file.path', JPATH_ROOT . '/cache/pool');
-        // If no path is given, fall back to the system's temporary directory
+                $path = $config->get('cache.file.path', JPATH_ROOT . '/cache/pool');
+                // If no path is given, fall back to the system's temporary directory
                 if (empty($path)) {
                     $path = sys_get_temp_dir();
                 }
-
 
                 return new FilesystemAdapter($namespace, $lifetime, $path);
             case 'none':

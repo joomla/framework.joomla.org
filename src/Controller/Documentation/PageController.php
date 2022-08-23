@@ -33,25 +33,29 @@ class PageController extends AbstractController
      * @var  ErrorHtmlView
      */
     private $errorView;
-/**
+
+    /**
      * The GitHub helper
      *
      * @var  GitHubHelper
      */
     private $githubHelper;
-/**
+
+    /**
      * The model object.
      *
      * @var  PackageModel
      */
     private $model;
-/**
+
+    /**
      * The page view object.
      *
      * @var  PageHtmlView
      */
     private $pageView;
-/**
+
+    /**
      * Constructor.
      *
      * @param   PackageModel         $model         The model object.
@@ -94,7 +98,6 @@ class PageController extends AbstractController
 
                 $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
 
-
                 break;
             case '2.x':
                 if (!$package->has_v2) {
@@ -107,11 +110,9 @@ class PageController extends AbstractController
                     $this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));
                 }
 
-
                 break;
             case 'latest':
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/2.x/{$package->package}/{$filename}"));
-
+                $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/2.x/{$package->package}/{$filename}"));
 
                 break;
             default:
