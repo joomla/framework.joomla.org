@@ -54,30 +54,23 @@ class TemplatingProvider implements ServiceProviderInterface
             ->alias(TwigRenderer::class, 'renderer')
             ->share('renderer', [$this, 'getRendererService'], true);
         $container->alias(CacheInterface::class, 'twig.cache')
-            ->alias(\Twig_CacheInterface::class, 'twig.cache')
             ->share('twig.cache', [$this, 'getTwigCacheService'], true);
         $container->alias(Environment::class, 'twig.environment')
-            ->alias(\Twig_Environment::class, 'twig.environment')
             ->share('twig.environment', [$this, 'getTwigEnvironmentService'], true);
         $container->alias(DebugExtension::class, 'twig.extension.debug')
-            ->alias(\Twig_Extension_Debug::class, 'twig.extension.debug')
             ->share('twig.extension.debug', [$this, 'getTwigExtensionDebugService'], true);
         $container->alias(FrameworkExtension::class, 'twig.extension.framework')
             ->share('twig.extension.framework', [$this, 'getTwigExtensionFrameworkService'], true);
 // This service cannot be protected as it is decorated when the debug bar is available
         $container->alias(ProfilerExtension::class, 'twig.extension.profiler')
-            ->alias(\Twig_Extension_Profiler::class, 'twig.extension.profiler')
             ->share('twig.extension.profiler', [$this, 'getTwigExtensionProfilerService']);
         $container->alias(LoaderInterface::class, 'twig.loader')
-            ->alias(\Twig_LoaderInterface::class, 'twig.loader')
             ->share('twig.loader', [$this, 'getTwigLoaderService'], true);
         $container->alias(Profile::class, 'twig.profiler.profile')
-            ->alias(\Twig_Profiler_Profile::class, 'twig.profiler.profile')
             ->share('twig.profiler.profile', [$this, 'getTwigProfilerProfileService'], true);
         $container->alias(FrameworkTwigRuntime::class, 'twig.runtime.framework')
             ->share('twig.runtime.framework', [$this, 'getTwigRuntimeFrameworkService'], true);
         $container->alias(ContainerRuntimeLoader::class, 'twig.runtime.loader')
-            ->alias(\Twig_ContainerRuntimeLoader::class, 'twig.runtime.loader')
             ->share('twig.runtime.loader', [$this, 'getTwigRuntimeLoaderService'], true);
         $this->tagTwigExtensions($container);
     }
@@ -119,9 +112,9 @@ class TemplatingProvider implements ServiceProviderInterface
      *
      * @param   Container  $container  The DI container.
      *
-     * @return  \Twig_CacheInterface
+     * @return  CacheInterface
      */
-    public function getTwigCacheService(Container $container): \Twig_CacheInterface
+    public function getTwigCacheService(Container $container): CacheInterface
     {
         /** @var \Joomla\Registry\Registry $config */
         $config = $container->get('config');
@@ -202,9 +195,9 @@ class TemplatingProvider implements ServiceProviderInterface
      *
      * @param   Container  $container  The DI container.
      *
-     * @return  \Twig_LoaderInterface
+     * @return  LoaderInterface
      */
-    public function getTwigLoaderService(Container $container): \Twig_LoaderInterface
+    public function getTwigLoaderService(Container $container): LoaderInterface
     {
         return new FilesystemLoader([JPATH_TEMPLATES]);
     }
