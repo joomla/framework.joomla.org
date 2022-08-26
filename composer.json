@@ -16,7 +16,7 @@
         "joomla/event": "^2.0",
         "joomla/filesystem": "^2.0",
         "joomla/filter": "^2.0",
-        "joomla/github": "^2.0@dev",
+        "joomla/github": "^2.0",
         "joomla/http": "^2.0",
         "joomla/input": "^2.0",
         "joomla/model": "^2.0",
@@ -39,7 +39,7 @@
         "symfony/web-link": "^5.1.2",
         "symfony/yaml": "^5.1.2",
         "theiconic/php-ga-measurement-protocol": "^2.7.2",
-        "twig/twig": "^2.13"
+        "twig/twig": "^3.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16.4",
