@@ -61,7 +61,7 @@ class TemplatingProvider implements ServiceProviderInterface
             ->share('twig.extension.debug', [$this, 'getTwigExtensionDebugService'], true);
         $container->alias(FrameworkExtension::class, 'twig.extension.framework')
             ->share('twig.extension.framework', [$this, 'getTwigExtensionFrameworkService'], true);
-// This service cannot be protected as it is decorated when the debug bar is available
+        // This service cannot be protected as it is decorated when the debug bar is available
         $container->alias(ProfilerExtension::class, 'twig.extension.profiler')
             ->share('twig.extension.profiler', [$this, 'getTwigExtensionProfilerService']);
         $container->alias(LoaderInterface::class, 'twig.loader')
@@ -85,11 +85,11 @@ class TemplatingProvider implements ServiceProviderInterface
     public function getAssetPackagesService(Container $container): Packages
     {
         /** @var AbstractApplication $app */
-        $app = $container->get(AbstractApplication::class);
-        $context = new ApplicationContext($app);
-        $mediaPath = $app->get('uri.media.path', '/media/');
+        $app            = $container->get(AbstractApplication::class);
+        $context        = new ApplicationContext($app);
+        $mediaPath      = $app->get('uri.media.path', '/media/');
         $defaultPackage = new PathPackage($mediaPath, new EmptyVersionStrategy(), $context);
-        $mixStrategy = new MixPathPackage($defaultPackage, $mediaPath, new JsonManifestVersionStrategy(JPATH_ROOT . '/www/media/mix-manifest.json'), $context);
+        $mixStrategy    = new MixPathPackage($defaultPackage, $mediaPath, new JsonManifestVersionStrategy(JPATH_ROOT . '/www/media/mix-manifest.json'), $context);
         return new Packages($defaultPackage, [
                 'mix' => $mixStrategy,
             ]);
@@ -118,7 +118,7 @@ class TemplatingProvider implements ServiceProviderInterface
     {
         /** @var \Joomla\Registry\Registry $config */
         $config = $container->get('config');
-// Pull down the renderer config
+        // Pull down the renderer config
         $cacheEnabled = $config->get('template.cache.enabled', false);
         $cachePath    = $config->get('template.cache.path', 'cache/twig');
         $debug        = $config->get('template.debug', false);
@@ -139,16 +139,16 @@ class TemplatingProvider implements ServiceProviderInterface
     public function getTwigEnvironmentService(Container $container): Environment
     {
         /** @var \Joomla\Registry\Registry $config */
-        $config = $container->get('config');
-        $debug = $config->get('template.debug', false);
+        $config      = $container->get('config');
+        $debug       = $config->get('template.debug', false);
         $environment = new Environment($container->get('twig.loader'), ['debug' => $debug]);
-// Add the runtime loader
+        // Add the runtime loader
         $environment->addRuntimeLoader($container->get('twig.runtime.loader'));
-// Set up the environment's caching service
+        // Set up the environment's caching service
         $environment->setCache($container->get('twig.cache'));
-// Add the Twig extensions
+        // Add the Twig extensions
         $environment->setExtensions($container->getTagged('twig.extension'));
-// Add a global tracking the debug states
+        // Add a global tracking the debug states
         $environment->addGlobal('appDebug', $config->get('debug', false));
         $environment->addGlobal('fwDebug', $debug);
         return $environment;
@@ -248,8 +248,8 @@ class TemplatingProvider implements ServiceProviderInterface
     private function tagTwigExtensions(Container $container): void
     {
         /** @var \Joomla\Registry\Registry $config */
-        $config = $container->get('config');
-        $debug = $config->get('template.debug', false);
+        $config         = $container->get('config');
+        $debug          = $config->get('template.debug', false);
         $twigExtensions = ['twig.extension.framework'];
         if ($debug) {
             $twigExtensions[] = 'twig.extension.debug';

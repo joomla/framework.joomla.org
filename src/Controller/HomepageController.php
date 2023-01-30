@@ -29,7 +29,8 @@ class HomepageController extends AbstractController
      * @var  RendererInterface
      */
     private $renderer;
-/**
+
+    /**
      * Constructor.
      *
      * @param   RendererInterface    $renderer  The template renderer.

@@ -25,13 +25,15 @@ class DebugDispatcher implements DispatcherInterface
      * @var  DebugBar
      */
     private $debugBar;
-/**
+
+    /**
      * The delegated dispatcher
      *
      * @var  DispatcherInterface
      */
     private $dispatcher;
-/**
+
+    /**
      * Event subscriber constructor.
      *
      * @param   DispatcherInterface  $dispatcher  The delegated dispatcher
@@ -113,7 +115,7 @@ class DebugDispatcher implements DispatcherInterface
         try {
             $event = $this->dispatcher->dispatch($name, $event);
         } finally {
-        // Needed because the application's before respond event may be cut short
+            // Needed because the application's before respond event may be cut short
             if ($collector->hasStartedMeasure($label)) {
                 $collector->stopMeasure($label);
             }

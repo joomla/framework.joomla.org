@@ -22,7 +22,8 @@ trait PackageAware
      * @var  Registry|null
      */
     protected $packages;
-/**
+
+    /**
      * Get the package registry.
      *
      * @return  Registry

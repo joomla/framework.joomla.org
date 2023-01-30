@@ -26,13 +26,15 @@ class DownloadsCommand extends AbstractCommand
      * @var  string|null
      */
     protected static $defaultName = 'packagist:sync:downloads';
-/**
+
+    /**
      * The packagist helper object
      *
      * @var  PackagistHelper
      */
     private $packagistHelper;
-/**
+
+    /**
      * Instantiate the command.
      *
      * @param   PackagistHelper  $packagistHelper  The packagist helper object.

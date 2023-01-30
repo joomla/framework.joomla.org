@@ -29,7 +29,8 @@ class StatusController extends AbstractController
      * @var  StatusHtmlView
      */
     private $view;
-/**
+
+    /**
      * Constructor.
      *
      * @param   StatusHtmlView       $view   The view object.

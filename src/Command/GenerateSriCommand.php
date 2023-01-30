@@ -25,7 +25,7 @@ class GenerateSriCommand extends AbstractCommand
      * @var  string|null
      */
     protected static $defaultName = 'template:generate-sri';
-/**
+    /**
      * Internal function to execute the command.
      *
      * @param   InputInterface   $input   The input to inject into the command.
@@ -37,7 +37,7 @@ class GenerateSriCommand extends AbstractCommand
     {
         $symfonyStyle = new SymfonyStyle($input, $output);
         $symfonyStyle->title('Generate SRI Information');
-        $mediaDir = JPATH_ROOT . '/www/media';
+        $mediaDir        = JPATH_ROOT . '/www/media';
         $mixManifestFile = $mediaDir . '/mix-manifest.json';
         $sriManifestFile = $mediaDir . '/sri-manifest.json';
         if (!file_exists($mixManifestFile)) {
@@ -52,7 +52,7 @@ class GenerateSriCommand extends AbstractCommand
         }
 
         $mixManifest = json_decode($mixManifestData, true);
-        $sriData = [];
+        $sriData     = [];
         foreach (array_keys($mixManifest) as $file) {
             $fullPath = $mediaDir . $file;
             if (!file_exists($fullPath)) {

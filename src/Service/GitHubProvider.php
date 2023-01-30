@@ -44,7 +44,7 @@ class GitHubProvider implements ServiceProviderInterface
     {
         /** @var Registry $config */
         $config = $container->get('config');
-/** @var HttpFactory $factory */
+        /** @var HttpFactory $factory */
         $factory = $container->get(HttpFactory::class);
         $options = $config->extract('github');
         return new Github($options, $factory->getHttp($options));

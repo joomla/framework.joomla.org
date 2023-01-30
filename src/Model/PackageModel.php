@@ -21,13 +21,11 @@ class PackageModel implements DatabaseModelInterface
 {
     use DatabaseModelTrait;
 
-/**
+    /**
      * Instantiate the model.
      *
      * @param   DatabaseDriver  $db  The database adapter.
      */
-
-
     public function __construct(DatabaseDriver $db)
     {
         $this->setDb($db);
@@ -47,7 +45,7 @@ class PackageModel implements DatabaseModelInterface
      */
     public function addPackage(string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated, bool $isAbandoned): void
     {
-        $db = $this->getDb();
+        $db   = $this->getDb();
         $data = (object) [
             'package'    => $packageName,
             'display'    => $displayName,
@@ -67,8 +65,8 @@ class PackageModel implements DatabaseModelInterface
     public function getActivePackages(): array
     {
         $abandoned = false;
-        $db = $this->getDb();
-        $query = $db->getQuery(true)
+        $db        = $this->getDb();
+        $query     = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName('#__packages'))
             ->where($db->quoteName('abandoned') . ' = :abandoned')
@@ -88,7 +86,7 @@ class PackageModel implements DatabaseModelInterface
      */
     public function getPackage(string $packageName): \stdClass
     {
-        $db = $this->getDb();
+        $db    = $this->getDb();
         $query = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName('#__packages'))
@@ -109,7 +107,7 @@ class PackageModel implements DatabaseModelInterface
      */
     public function getPackageNames(): array
     {
-        $db = $this->getDb();
+        $db    = $this->getDb();
         $query = $db->getQuery(true)
             ->select(['id', 'package'])
             ->from($db->quoteName('#__packages'));
@@ -123,7 +121,7 @@ class PackageModel implements DatabaseModelInterface
      */
     public function getPackages(): array
     {
-        $db = $this->getDb();
+        $db    = $this->getDb();
         $query = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName('#__packages'))
@@ -146,7 +144,7 @@ class PackageModel implements DatabaseModelInterface
      */
     public function updatePackage(int $packageId, string $packageName, string $displayName, string $repoName, bool $isStable, bool $isDeprecated, bool $isAbandoned): void
     {
-        $db = $this->getDb();
+        $db   = $this->getDb();
         $data = (object) [
             'id'         => $packageId,
             'package'    => $packageName,

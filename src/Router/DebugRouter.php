@@ -25,13 +25,15 @@ class DebugRouter implements RouterInterface
      * @var  DebugBar
      */
     private $debugBar;
-/**
+
+    /**
      * The delegated router
      *
      * @var  RouterInterface
      */
     private $router;
-/**
+
+    /**
      * Router constructor.
      *
      * @param   RouterInterface  $router    The delegated router

@@ -29,7 +29,8 @@ class PackageController extends AbstractController
      * @var  PackageHtmlView
      */
     private $view;
-/**
+
+    /**
      * Constructor.
      *
      * @param   PackageHtmlView      $view   The view object.

@@ -29,25 +29,29 @@ class SyncCommand extends AbstractCommand
      * @var  string|null
      */
     protected static $defaultName = 'packagist:sync:releases';
-/**
+
+    /**
      * The HTTP driver
      *
      * @var  Http
      */
     private $http;
-/**
+
+    /**
      * The package model
      *
      * @var  PackageModel
      */
     private $packageModel;
-/**
+
+    /**
      * The release model object.
      *
      * @var  ReleaseModel
      */
     private $releaseModel;
-/**
+
+    /**
      * Instantiate the command.
      *
      * @param   Http          $http          The HTTP driver.
@@ -74,7 +78,7 @@ class SyncCommand extends AbstractCommand
     {
         $symfonyStyle = new SymfonyStyle($input, $output);
         $symfonyStyle->title('Sync Release Data with Packagist');
-        $updateReleases = $input->getOption('update');
+        $updateReleases  = $input->getOption('update');
         $addedReleases   = 0;
         $updatedReleases = 0;
         foreach ($this->packageModel->getPackages() as $package) {
@@ -100,7 +104,7 @@ class SyncCommand extends AbstractCommand
                         $updatedReleases++;
                         $symfonyStyle->comment(sprintf('Updated <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
                     } else {
-                // Add the release
+                        // Add the release
                         $this->releaseModel->addRelease($package, $versionData->version, new \DateTime($versionData->time));
                         $addedReleases++;
                         $symfonyStyle->comment(sprintf('Added <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
@@ -126,7 +130,8 @@ class SyncCommand extends AbstractCommand
     {
         $this->setDescription('Synchronizes release data with Packagist');
         $this->addOption('update', null, InputOption::VALUE_NONE, 'Flag indicating existing releases should be updated');
-        $this->setHelp(<<<'EOF'
+        $this->setHelp(
+            <<<'EOF'
 The <info>%command.name%</info> command synchronizes the package release data with Packagist
 
 <info>php %command.full_name%</info>

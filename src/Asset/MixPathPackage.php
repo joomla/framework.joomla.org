@@ -25,7 +25,7 @@ class MixPathPackage extends PathPackage
      * @var  Package
      */
     private $decoratedPackage;
-/**
+    /**
      * Constructor
      *
      * @param   Package                   $decoratedPackage  Decorated Package instance

@@ -28,13 +28,15 @@ class WebApplication extends AbstractWebApplication
      * @var  ControllerResolverInterface
      */
     protected $controllerResolver;
-/**
+
+    /**
      * The application's router.
      *
      * @var  RouterInterface
      */
     protected $router;
-/**
+
+    /**
      * Class constructor.
      *
      * @param   ControllerResolverInterface  $controllerResolver  The application's controller resolver
@@ -52,12 +54,12 @@ class WebApplication extends AbstractWebApplication
     {
         $this->controllerResolver = $controllerResolver;
         $this->router             = $router;
-// Call the constructor as late as possible (it runs `initialise`).
+        // Call the constructor as late as possible (it runs `initialise`).
         parent::__construct($input, $config, $client, $response);
-// If an explicitly media URI is set, don't do anything.
+        // If an explicitly media URI is set, don't do anything.
         $mediaURI = trim($this->get('media_uri'));
         if (!$mediaURI) {
-        // No explicit media URI was set, build it dynamically from the base uri.
+            // No explicit media URI was set, build it dynamically from the base uri.
             $this->set('uri.media.full', 'media/');
             $this->set('uri.media.path', 'media/');
         }
@@ -71,7 +73,7 @@ class WebApplication extends AbstractWebApplication
     protected function doExecute(): void
     {
         $route = $this->router->parseRoute($this->get('uri.route'), $this->input->getMethod());
-// Add variables to the input if not already set
+        // Add variables to the input if not already set
         foreach ($route->getRouteVariables() as $key => $value) {
             $this->input->def($key, $value);
         }

@@ -27,15 +27,14 @@ abstract class AnalyticsController extends AbstractController implements LoggerA
 {
     use LoggerAwareTrait;
 
-/**
+    /**
      * Analytics object.
      *
      * @var  Analytics
      */
-
-
     private $analytics;
-/**
+
+    /**
      * Constructor.
      *
      * @param   Analytics            $analytics  Analytics object.
@@ -60,7 +59,7 @@ abstract class AnalyticsController extends AbstractController implements LoggerA
             $this->getInput()->getMethod() === 'GET'
             && $this->getApplication()->get('analytics.enabled', false)
         ) {
-// Don't allow sending Analytics data to cause a failure
+            // Don't allow sending Analytics data to cause a failure
             try {
                 $this->analytics->setAsyncRequest(true)
                     ->setProtocolVersion('1')

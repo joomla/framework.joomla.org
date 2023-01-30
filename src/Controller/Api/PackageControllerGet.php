@@ -26,7 +26,8 @@ class PackageControllerGet extends AnalyticsController
      * @var  PackageJsonView
      */
     private $view;
-/**
+
+    /**
      * Constructor.
      *
      * @param   PackageJsonView      $view       The view object.
@@ -48,9 +49,11 @@ class PackageControllerGet extends AnalyticsController
     public function execute(): bool
     {
         $this->sendAnalytics();
-// Disable browser caching
+
+        // Disable browser caching
         $this->getApplication()->allowCache(false);
-// This is a JSON response
+
+        // This is a JSON response
         $this->getApplication()->mimeType = 'application/json';
         $this->view->setPackage($this->getInput()->getString('package'));
         $this->getApplication()->setBody($this->view->render());
