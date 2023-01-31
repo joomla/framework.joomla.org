@@ -24,19 +24,22 @@ class PackageJsonView extends JsonView
      * @var  string
      */
     private $package = '';
-/**
+
+    /**
      * The package model object.
      *
      * @var  PackageModel
      */
     private $packageModel;
-/**
+
+    /**
      * The release model object.
      *
      * @var  ReleaseModel
      */
     private $releaseModel;
-/**
+
+    /**
      * Instantiate the view.
      *
      * @param   PackageModel  $packageModel  The package model object.
@@ -57,7 +60,7 @@ class PackageJsonView extends JsonView
     {
         $package  = $this->packageModel->getPackage($this->package);
         $releases = $this->releaseModel->getPackageHistory($package);
-// Remove the ID and package ID for each item
+        // Remove the ID and package ID for each item
         foreach ($releases as $release) {
             unset($release->id, $release->package_id);
         }

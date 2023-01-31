@@ -23,25 +23,29 @@ class FrameworkTwigRuntime
      * @var  AbstractApplication
      */
     private $app;
-/**
+
+    /**
      * The HTTP/2 preload manager
      *
      * @var  PreloadManager
      */
     private $preloadManager;
-/**
+
+    /**
      * The SRI manifest data
      *
      * @var  array|null
      */
     private $sriManifestData;
-/**
+
+    /**
      * The path to the SRI manifest data
      *
      * @var  string
      */
     private $sriManifestPath;
-/**
+
+    /**
      * Constructor
      *
      * @param   AbstractApplication  $app              The application object

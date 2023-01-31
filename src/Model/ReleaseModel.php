@@ -21,13 +21,11 @@ class ReleaseModel implements DatabaseModelInterface
 {
     use DatabaseModelTrait;
 
-/**
+    /**
      * Instantiate the model.
      *
      * @param   DatabaseDriver  $db  The database adapter.
      */
-
-
     public function __construct(DatabaseDriver $db)
     {
         $this->setDb($db);
@@ -44,7 +42,7 @@ class ReleaseModel implements DatabaseModelInterface
      */
     public function addRelease(\stdClass $package, string $version, \DateTime $releaseDate): void
     {
-        $db = $this->getDb();
+        $db   = $this->getDb();
         $data = (object) [
             'package_id'   => $package->id,
             'version'      => $version,
@@ -62,7 +60,7 @@ class ReleaseModel implements DatabaseModelInterface
      */
     public function getLatestReleases(array $packages): array
     {
-        $db = $this->getDb();
+        $db       = $this->getDb();
         $subQuery = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName('#__releases'))
@@ -71,18 +69,18 @@ class ReleaseModel implements DatabaseModelInterface
             ->select('*')
             ->from('(' . (string) $subQuery . ') AS sub');
         $releases = $db->setQuery($query)->loadObjectList('id');
-        $reports = [];
-// Loop through the releases and build the reports
+        $reports  = [];
+        // Loop through the releases and build the reports
         foreach ($packages as $id => $package) {
             foreach ($releases as $release) {
-            // Skip if package is already included
+                // Skip if package is already included
                 if (isset($reports[$release->package_id])) {
                     continue;
                 }
 
                 // Skip if package is not included in list
                 if ($id == $release->package_id) {
-                    $release->package = $package;
+                    $release->package      = $package;
                     $reports[$package->id] = $release;
                     break;
                 }
@@ -109,7 +107,7 @@ class ReleaseModel implements DatabaseModelInterface
     public function getPackageHistory(\stdClass $package): array
     {
         // Get the package data for the package specified via the route
-        $db = $this->getDb();
+        $db    = $this->getDb();
         $query = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName('#__releases'))
@@ -117,7 +115,7 @@ class ReleaseModel implements DatabaseModelInterface
             ->order('version ASC');
         $query->bind('packageId', $package->id, ParameterType::INTEGER);
         $releases = $db->setQuery($query)->loadObjectList();
-// Bail if we don't have any data for the given package
+        // Bail if we don't have any data for the given package
         if (!\count($releases)) {
             throw new \RuntimeException(sprintf('Unable to find release data for the `%s` package', $package->display), 404);
         }
@@ -135,7 +133,7 @@ class ReleaseModel implements DatabaseModelInterface
      */
     public function getRelease(\stdClass $package, string $version): \stdClass
     {
-        $db = $this->getDb();
+        $db    = $this->getDb();
         $query = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName('#__releases'))
@@ -156,7 +154,7 @@ class ReleaseModel implements DatabaseModelInterface
      */
     public function hasRelease(\stdClass $package, string $version): bool
     {
-        $db = $this->getDb();
+        $db    = $this->getDb();
         $query = $db->getQuery(true)
             ->select($db->quoteName('id'))
             ->from($db->quoteName('#__releases'))
@@ -180,7 +178,7 @@ class ReleaseModel implements DatabaseModelInterface
      */
     public function updateRelease(int $releaseId, \stdClass $package, string $version, \DateTime $releaseDate): void
     {
-        $db = $this->getDb();
+        $db   = $this->getDb();
         $data = (object) [
             'id'           => $releaseId,
             'package_id'   => $package->id,

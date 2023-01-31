@@ -26,25 +26,29 @@ class PackageHtmlView extends HtmlView
      * @var  Helper
      */
     private $helper;
-/**
+
+    /**
      * The active package
      *
      * @var  string
      */
     private $package = '';
-/**
+
+    /**
      * The package model object.
      *
      * @var  PackageModel
      */
     private $packageModel;
-/**
+
+    /**
      * The release model object.
      *
      * @var  ReleaseModel
      */
     private $releaseModel;
-/**
+
+    /**
      * Instantiate the view.
      *
      * @param   PackageModel       $packageModel     The package model object.

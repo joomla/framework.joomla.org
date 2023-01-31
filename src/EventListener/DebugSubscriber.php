@@ -30,7 +30,8 @@ class DebugSubscriber implements SubscriberInterface
      * @var  DebugBar
      */
     private $debugBar;
-/**
+
+    /**
      * Event subscriber constructor.
      *
      * @param   DebugBar  $debugBar  Application debug bar
@@ -66,17 +67,17 @@ class DebugSubscriber implements SubscriberInterface
     {
         /** @var AbstractWebApplication $application */
         $application = $event->getApplication();
-// Ensure responses are not cached
+        // Ensure responses are not cached
         $application->allowCache(false);
         if (!($application->mimeType === 'application/json' || $application->getResponse() instanceof JsonResponse)) {
             $debugBarOutput = $this->debugBar->getJavascriptRenderer()->render();
-        // Fetch the body
+            // Fetch the body
             $body = $application->getBody();
-        // If for whatever reason we're missing the closing body tag, just append the scripts
+            // If for whatever reason we're missing the closing body tag, just append the scripts
             if (!stristr($body, '</body>')) {
                 $body .= $debugBarOutput;
             } else {
-        // Find the closing tag and put the scripts in
+                // Find the closing tag and put the scripts in
                 $pos = strripos($body, '</body>');
                 if ($pos !== false) {
                     $body = substr_replace($body, $debugBarOutput . '</body>', $pos, \strlen('</body>'));
@@ -104,7 +105,7 @@ class DebugSubscriber implements SubscriberInterface
         /** @var \DebugBar\DataCollector\ExceptionsCollector $collector */
         $collector = $this->debugBar['exceptions'];
         $collector->addThrowable($event->getError());
-/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+        /** @var \DebugBar\DataCollector\TimeDataCollector $collector */
         $collector = $this->debugBar['time'];
         foreach (['routing', 'controller', 'execution'] as $measure) {
             if ($collector->hasStartedMeasure($measure)) {

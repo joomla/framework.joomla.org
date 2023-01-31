@@ -30,15 +30,14 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-/**
+    /**
      * Layout renderer
      *
      * @var  RendererInterface
      */
-
-
     private $renderer;
-/**
+
+    /**
      * Event subscriber constructor.
      *
      * @param   RendererInterface  $renderer  Layout renderer

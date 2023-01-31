@@ -16,96 +16,95 @@ use Joomla\Application\AbstractWebApplication;
  */
 class JoomlaHttpDriver implements HttpDriverInterface
 {
-	/**
-	 * Web application
-	 *
-	 * @var  AbstractWebApplication
-	 */
-	private $application;
+    /**
+     * Web application
+     *
+     * @var  AbstractWebApplication
+     */
+    private $application;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param   AbstractWebApplication  $application  Web application
-	 */
-	public function __construct(AbstractWebApplication $application)
-	{
-		$this->application = $application;
-	}
+    /**
+     * Constructor.
+     *
+     * @param   AbstractWebApplication  $application  Web application
+     */
+    public function __construct(AbstractWebApplication $application)
+    {
+        $this->application = $application;
+    }
 
-	/**
-	 * Sets HTTP headers
-	 *
-	 * @param   array  $headers  Headers to add to the request
-	 *
-	 * @return  void
-	 */
-	public function setHeaders(array $headers): void
-	{
-		foreach ($headers as $name => $value)
-		{
-			$this->application->setHeader($name, $value);
-		}
-	}
+    /**
+     * Sets HTTP headers
+     *
+     * @param   array  $headers  Headers to add to the request
+     *
+     * @return  void
+     */
+    public function setHeaders(array $headers): void
+    {
+        foreach ($headers as $name => $value) {
+            $this->application->setHeader($name, $value);
+        }
+    }
 
-	/**
-	 * Checks if the session is started
-	 *
-	 * @return  boolean
-	 */
-	public function isSessionStarted()
-	{
-		// This application has no session integration
-		return false;
-	}
+    /**
+     * Checks if the session is started
+     *
+     * @return  boolean
+     */
+    public function isSessionStarted()
+    {
+        // This application has no session integration
+        return false;
+    }
 
-	/**
-	 * Sets a value in the session
-	 *
-	 * @param   string  $name   Name of a variable.
-	 * @param   mixed   $value  Value of a variable.
-	 *
-	 * @return  void
-	 */
-	public function setSessionValue($name, $value): void
-	{
-		// This application has no session integration
-	}
+    /**
+     * Sets a value in the session
+     *
+     * @param   string  $name   Name of a variable.
+     * @param   mixed   $value  Value of a variable.
+     *
+     * @return  void
+     */
+    public function setSessionValue($name, $value): void
+    {
+        // This application has no session integration
+    }
 
-	/**
-	 * Checks if a value is in the session
-	 *
-	 * @param   string  $name  Name of variable
-	 *
-	 * @return  boolean
-	 */
-	public function hasSessionValue($name)
-	{
-		// This application has no session integration
-		return false;
-	}
+    /**
+     * Checks if a value is in the session
+     *
+     * @param   string  $name  Name of variable
+     *
+     * @return  boolean
+     */
+    public function hasSessionValue($name)
+    {
+        // This application has no session integration
+        return false;
+    }
 
-	/**
-	 * Returns a value from the session
-	 *
-	 * @param   string  $name  Name of variable
-	 *
-	 * @return  mixed
-	 */
-	public function getSessionValue($name)
-	{
-		// This application has no session integration
-	}
+    /**
+     * Returns a value from the session
+     *
+     * @param   string  $name  Name of variable
+     *
+     * @return  mixed
+     */
+    public function getSessionValue($name)
+    {
+        // This application has no session integration
+    }
 
-	/**
-	 * Deletes a value from the session
-	 *
-	 * @param   string  $name  Name of variable
-	 *
-	 * @return  void
-	 */
-	public function deleteSessionValue($name): void
-	{
-		// This application has no session integration
-	}
+    /**
+     * Deletes a value from the session
+     *
+     * @param   string  $name  Name of variable
+     *
+     * @return  void
+     */
+    public function deleteSessionValue($name): void
+    {
+        // This application has no session integration
+    }
 }

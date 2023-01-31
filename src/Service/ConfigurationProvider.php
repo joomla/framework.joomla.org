@@ -24,7 +24,8 @@ class ConfigurationProvider implements ServiceProviderInterface
      * @var  Registry
      */
     private $config;
-/**
+
+    /**
      * Constructor.
      *
      * @param   string  $file  Path to the config file.
@@ -39,7 +40,7 @@ class ConfigurationProvider implements ServiceProviderInterface
         }
 
         $this->config = (new Registry())->loadFile($file);
-// Hardcode database driver option
+        // Hardcode database driver option
         $this->config->set('database.driver', 'mysql');
     }
 
@@ -53,8 +54,7 @@ class ConfigurationProvider implements ServiceProviderInterface
     public function register(Container $container): void
     {
         $container->share('config', function (): Registry {
-
-                return $this->config;
+            return $this->config;
         }, true);
     }
 }

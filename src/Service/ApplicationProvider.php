@@ -76,18 +76,18 @@ class ApplicationProvider implements ServiceProviderInterface
          */
 
         $container->share(ConsoleApplication::class, [$this, 'getConsoleApplicationService'], true);
-// This service cannot be protected as it is decorated when the debug bar is available
+        // This service cannot be protected as it is decorated when the debug bar is available
         $container->alias(WebApplication::class, AbstractWebApplication::class)
             ->share(AbstractWebApplication::class, [$this, 'getWebApplicationClassService']);
-/*
-      * Application Helpers and Dependencies
-         */
 
+        /*
+         * Application Helpers and Dependencies
+         */
         $container->alias(Analytics::class, 'analytics')
             ->share('analytics', [$this, 'getAnalyticsService'], true);
         $container->alias(ContainerLoader::class, LoaderInterface::class)
             ->share(LoaderInterface::class, [$this, 'getCommandLoaderService'], true);
-// This service cannot be protected as it is decorated when the debug bar is available
+        // This service cannot be protected as it is decorated when the debug bar is available
         $container->alias(ContainerControllerResolver::class, ControllerResolverInterface::class)
             ->share(ControllerResolverInterface::class, [$this, 'getControllerResolverService']);
         $container->alias(Helper::class, 'application.helper')
@@ -96,15 +96,15 @@ class ApplicationProvider implements ServiceProviderInterface
             ->share('application.helper.packagist', [$this, 'getApplicationHelperPackagistService'], true);
         $container->share('application.packages', [$this, 'getApplicationPackagesService'], true);
         $container->share(WebClient::class, [$this, 'getWebClientService'], true);
-// This service cannot be protected as it is decorated when the debug bar is available
+        // This service cannot be protected as it is decorated when the debug bar is available
         $container->alias(RouterInterface::class, 'application.router')
             ->alias(Router::class, 'application.router')
             ->share('application.router', [$this, 'getApplicationRouterService']);
         $container->share(Input::class, [$this, 'getInputClassService'], true);
-/*
-        * Console Commands
-         */
 
+        /*
+         * Console Commands
+         */
         $container->share(DebugEventDispatcherCommand::class, [$this, 'getDebugEventDispatcherCommandService'], true);
         $container->share(DebugRouterCommand::class, [$this, 'getDebugRouterCommandService'], true);
         $container->share(DownloadsCommand::class, [$this, 'getDownloadsCommandService'], true);
@@ -113,10 +113,10 @@ class ApplicationProvider implements ServiceProviderInterface
         $container->share(PackagistSyncCommand::class, [$this, 'getPackagistSyncCommandService'], true);
         $container->share(ResetCacheCommand::class, [$this, 'getResetCacheCommandService'], true);
         $container->share(UpdateCommand::class, [$this, 'getUpdateCommandService'], true);
-/*
-      * MVC Layer
-         */
 
+        /*
+         * MVC Layer
+         */
         // Controllers
         $container->alias(PackageControllerGet::class, 'controller.api.package')
             ->share('controller.api.package', [$this, 'getControllerApiPackageService'], true);
@@ -132,12 +132,12 @@ class ApplicationProvider implements ServiceProviderInterface
             ->share('controller.status', [$this, 'getControllerStatusService'], true);
         $container->alias(WrongCmsController::class, 'controller.wrong.cms')
             ->share('controller.wrong.cms', [$this, 'getControllerWrongCmsService'], true);
-// Models
+        // Models
         $container->alias(PackageModel::class, 'model.package')
             ->share('model.package', [$this, 'getModelPackageService'], true);
         $container->alias(ReleaseModel::class, 'model.release')
             ->share('model.release', [$this, 'getModelReleaseService'], true);
-// Views
+        // Views
         $container->alias(PackageHtmlView::class, 'view.package.html')
             ->share('view.package.html', [$this, 'getViewPackageHtmlService'], true);
         $container->alias(PackageJsonView::class, 'view.package.json')
@@ -210,7 +210,7 @@ class ApplicationProvider implements ServiceProviderInterface
     public function getApplicationRouterService(Container $container): RouterInterface
     {
         $router = new Router();
-/*
+        /*
          * CMS Admin Panels
          */
         $router->get('/administrator', WrongCmsController::class);
@@ -218,15 +218,15 @@ class ApplicationProvider implements ServiceProviderInterface
         $router->get('/wp-admin', WrongCmsController::class);
         $router->get('/wp-admin/*', WrongCmsController::class);
         $router->get('wp-login.php', WrongCmsController::class);
-/*
-        * Web routes
+        /*
+         * Web routes
          */
         $router->addRoute(new Route(['GET', 'HEAD'], '/', HomepageController::class));
         $router->get('/status', StatusController::class);
         $router->get('/:view', PageController::class);
         $router->get('/status/:package', PackageController::class);
-/*
-      * API routes
+        /*
+         * API routes
          */
         $router->get('/api/v1/packages', StatusControllerGet::class, [], [
                 '_format' => 'json',
@@ -569,9 +569,9 @@ class ApplicationProvider implements ServiceProviderInterface
      */
     public function getWebApplicationClassService(Container $container): WebApplication
     {
-        $application = new WebApplication($container->get(ControllerResolverInterface::class), $container->get(RouterInterface::class), $container->get(Input::class), $container->get('config'), $container->get(WebClient::class));
+        $application              = new WebApplication($container->get(ControllerResolverInterface::class), $container->get(RouterInterface::class), $container->get(Input::class), $container->get('config'), $container->get(WebClient::class));
         $application->httpVersion = '2';
-// Inject extra services
+        // Inject extra services
         $application->setDispatcher($container->get(DispatcherInterface::class));
         $application->setLogger($container->get(LoggerInterface::class));
         return $application;

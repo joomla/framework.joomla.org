@@ -34,12 +34,12 @@ class LoggingProvider implements ServiceProviderInterface
        * Monolog Handlers
          */
         $container->share('monolog.handler.application', [$this, 'getMonologHandlerApplicationService'], true);
-/*
+        /*
          * Monolog Processors
          */
         $container->share('monolog.processor.psr3', [$this, 'getMonologProcessorPsr3Service'], true);
         $container->share('monolog.processor.web', [$this, 'getMonologProcessorWebService'], true);
-/*
+        /*
          * Application Loggers
          */
         $container->share('monolog.logger.application.cli', [$this, 'getMonologLoggerApplicationCliService'], true);
@@ -57,7 +57,7 @@ class LoggingProvider implements ServiceProviderInterface
     {
         /** @var \Joomla\Registry\Registry $config */
         $config = $container->get('config');
-        $level = strtoupper($config->get('log.application', $config->get('log.level', 'error')));
+        $level  = strtoupper($config->get('log.application', $config->get('log.level', 'error')));
         return new StreamHandler(JPATH_ROOT . '/logs/framework.log', \constant('\\Monolog\\Logger::' . $level));
     }
 
