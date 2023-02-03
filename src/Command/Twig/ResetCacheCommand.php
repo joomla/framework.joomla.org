@@ -29,19 +29,22 @@ class ResetCacheCommand extends AbstractCommand
      * @var  string|null
      */
     protected static $defaultName = 'twig:reset-cache';
-/**
+
+    /**
      * The template renderer
      *
      * @var  TwigRenderer
      */
     private $renderer;
-/**
+
+    /**
      * The application configuration registry
      *
      * @var  Registry
      */
     private $config;
-/**
+
+    /**
      * Instantiate the command.
      *
      * @param   TwigRenderer  $renderer  The template renderer
@@ -66,7 +69,7 @@ class ResetCacheCommand extends AbstractCommand
     {
         $symfonyStyle = new SymfonyStyle($input, $output);
         $symfonyStyle->title('Reset Twig Cache');
-// Check if caching is enabled
+        // Check if caching is enabled
         if ($this->config->get('template.cache.enabled', false) === false) {
             $symfonyStyle->comment('Twig caching is disabled.');
             return 0;
@@ -74,7 +77,7 @@ class ResetCacheCommand extends AbstractCommand
 
         $symfonyStyle->comment('Resetting Twig cache.');
         $twigCache = $this->config->get('template.cache.path', '');
-// First remove the existing cache files
+        // First remove the existing cache files
         if (is_dir(JPATH_ROOT . '/' . $twigCache)) {
             foreach (Folder::folders(JPATH_ROOT . '/' . $twigCache) as $folder) {
                 Folder::delete(JPATH_ROOT . '/' . $twigCache . '/' . $folder);
@@ -83,7 +86,7 @@ class ResetCacheCommand extends AbstractCommand
 
         // Now get a list of all the templates
         $files = Folder::files(JPATH_TEMPLATES, '.twig', true, true);
-// Load each template now
+        // Load each template now
         $engine       = $this->renderer->getRenderer();
         $errorFiles   = [];
         foreach ($files as $file) {

@@ -16,14 +16,13 @@ class Helper
 {
     use PackageAware;
 
-/**
+    /**
      * Utility method to retrieve a package's abandoned state
      *
      * @param   string  $package  Package name
      *
      * @return  boolean
      */
-
 
     public function getPackageAbandoned(string $package): bool
     {

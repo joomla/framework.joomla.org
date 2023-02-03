@@ -15,7 +15,7 @@
         {% if appDebug %}
             <h3><span class="badge badge-danger">{{ exception.code|default(0) }}</span> {{ exception|get_class }}</h3>
             <p>{{ exception.message|strip_root_path }}</p>
-
+{{ dump(exception) }}
             {% if exception.previous %}
                 {% set _previous = exception.previous %}
                 <h3>Previous Exception</h3>

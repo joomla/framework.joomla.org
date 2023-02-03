@@ -56,7 +56,7 @@ class PackageModel implements DatabaseModelInterface
         bool $hasV1,
         bool $hasV2
     ): void {
-        $db = $this->getDb();
+        $db   = $this->getDb();
 
         $data = (object) [
             'package'    => $packageName,
@@ -80,8 +80,8 @@ class PackageModel implements DatabaseModelInterface
     public function getActivePackages(): array
     {
         $abandoned = false;
-        $db = $this->getDb();
-        $query = $db->getQuery(true)
+        $db        = $this->getDb();
+        $query     = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName('#__packages'))
             ->where($db->quoteName('abandoned') . ' = :abandoned')
@@ -101,7 +101,7 @@ class PackageModel implements DatabaseModelInterface
      */
     public function getPackage(string $packageName): \stdClass
     {
-        $db = $this->getDb();
+        $db    = $this->getDb();
 
         $query = $db->getQuery(true)
             ->select('*')
@@ -126,7 +126,7 @@ class PackageModel implements DatabaseModelInterface
      */
     public function getPackageNames(): array
     {
-        $db = $this->getDb();
+        $db    = $this->getDb();
 
         $query = $db->getQuery(true)
             ->select(['id', 'package'])
@@ -142,7 +142,7 @@ class PackageModel implements DatabaseModelInterface
      */
     public function getPackages(): array
     {
-        $db = $this->getDb();
+        $db    = $this->getDb();
 
         $query = $db->getQuery(true)
             ->select('*')
@@ -196,7 +196,7 @@ class PackageModel implements DatabaseModelInterface
         bool $hasV1,
         bool $hasV2
     ): void {
-        $db = $this->getDb();
+        $db   = $this->getDb();
 
         $data = (object) [
             'id'         => $packageId,

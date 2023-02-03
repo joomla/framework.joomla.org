@@ -25,13 +25,15 @@ class StatusHtmlView extends HtmlView
      * @var  PackageModel
      */
     private $packageModel;
-/**
+
+    /**
      * The release model object.
      *
      * @var  ReleaseModel
      */
     private $releaseModel;
-/**
+
+    /**
      * Instantiate the view.
      *
      * @param   PackageModel       $packageModel  The package model object.
@@ -53,7 +55,7 @@ class StatusHtmlView extends HtmlView
     public function render()
     {
         $this->setData([
-                'releases'  => $this->releaseModel->getLatestReleases($this->packageModel->getActivePackages()),
+                'releases' => $this->releaseModel->getLatestReleases($this->packageModel->getActivePackages()),
             ]);
         return parent::render();
     }

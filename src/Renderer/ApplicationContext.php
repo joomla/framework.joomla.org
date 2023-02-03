@@ -24,7 +24,8 @@ class ApplicationContext implements ContextInterface
      * @var  AbstractApplication
      */
     private $app;
-/**
+
+    /**
      * Constructor
      *
      * @param   AbstractApplication  $app  The application object

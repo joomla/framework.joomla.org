@@ -30,13 +30,15 @@ class PageController extends AbstractController
      * @const  array
      */
     private const EXCLUDED_LAYOUTS = ['exception', 'homepage', 'index', 'macros', 'package', 'status'];
-/**
+
+    /**
      * The template renderer.
      *
      * @var  RendererInterface
      */
     private $renderer;
-/**
+
+    /**
      * Constructor.
      *
      * @param   RendererInterface    $renderer  The template renderer.
@@ -60,7 +62,8 @@ class PageController extends AbstractController
         $this->getApplication()->allowCache(true);
         $view   = $this->getInput()->getString('view', '');
         $layout = "$view.twig";
-// Since this is a catch-all route, if the layout doesn't exist, or is an excluded layout, treat this as a 404
+
+        // Since this is a catch-all route, if the layout doesn't exist, or is an excluded layout, treat this as a 404
         if (!$this->renderer->pathExists($layout) || \in_array($view, self::EXCLUDED_LAYOUTS, true)) {
             throw new RouteNotFoundException(sprintf('Unable to handle request for route `%s`.', $this->getApplication()->get('uri.route')), 404);
         }

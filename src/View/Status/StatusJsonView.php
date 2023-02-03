@@ -24,13 +24,15 @@ class StatusJsonView extends JsonView
      * @var  PackageModel
      */
     private $packageModel;
-/**
+
+    /**
      * The release model object.
      *
      * @var  ReleaseModel
      */
     private $releaseModel;
-/**
+
+    /**
      * Instantiate the view.
      *
      * @param   PackageModel  $packageModel  The package model object.
@@ -50,7 +52,7 @@ class StatusJsonView extends JsonView
     public function render()
     {
         $releases = $this->releaseModel->getLatestReleases($this->packageModel->getPackages());
-// Remove the ID and package ID for each item
+        // Remove the ID and package ID for each item
         foreach ($releases as $release) {
             unset($release->id, $release->package->id);
         }

@@ -88,18 +88,18 @@ class ApplicationProvider implements ServiceProviderInterface
          */
 
         $container->share(ConsoleApplication::class, [$this, 'getConsoleApplicationService'], true);
-// This service cannot be protected as it is decorated when the debug bar is available
+        // This service cannot be protected as it is decorated when the debug bar is available
         $container->alias(WebApplication::class, AbstractWebApplication::class)
             ->share(AbstractWebApplication::class, [$this, 'getWebApplicationClassService']);
-/*
-      * Application Helpers and Dependencies
-         */
 
+        /*
+         * Application Helpers and Dependencies
+         */
         $container->alias(Analytics::class, 'analytics')
             ->share('analytics', [$this, 'getAnalyticsService'], true);
         $container->alias(ContainerLoader::class, LoaderInterface::class)
             ->share(LoaderInterface::class, [$this, 'getCommandLoaderService'], true);
-// This service cannot be protected as it is decorated when the debug bar is available
+        // This service cannot be protected as it is decorated when the debug bar is available
         $container->alias(ContainerControllerResolver::class, ControllerResolverInterface::class)
             ->share(ControllerResolverInterface::class, [$this, 'getControllerResolverService']);
         $container->alias(Helper::class, 'application.helper')
@@ -133,7 +133,6 @@ class ApplicationProvider implements ServiceProviderInterface
         /*
          * MVC Layer
          */
-
         // Controllers
         $container->alias(PackageControllerGet::class, 'controller.api.package')
             ->share('controller.api.package', [$this, 'getControllerApiPackageService'], true);
@@ -239,7 +238,7 @@ class ApplicationProvider implements ServiceProviderInterface
     public function getApplicationRouterService(Container $container): RouterInterface
     {
         $router = new Router();
-/*
+        /*
          * CMS Admin Panels
          */
         $router->get('/administrator', WrongCmsController::class);
@@ -247,8 +246,8 @@ class ApplicationProvider implements ServiceProviderInterface
         $router->get('/wp-admin', WrongCmsController::class);
         $router->get('/wp-admin/*', WrongCmsController::class);
         $router->get('wp-login.php', WrongCmsController::class);
-/*
-        * Web routes
+        /*
+         * Web routes
          */
         $router->addRoute(new Route(['GET', 'HEAD'], '/', HomepageController::class));
         $router->get('/docs', IndexController::class);
@@ -257,8 +256,8 @@ class ApplicationProvider implements ServiceProviderInterface
         $router->get('/status', StatusController::class);
         $router->get('/:view', PageController::class);
         $router->get('/status/:package', PackageController::class);
-/*
-      * API routes
+        /*
+         * API routes
          */
         $router->get('/api/v1/packages', StatusControllerGet::class, [], [
                 '_format' => 'json',
@@ -612,7 +611,7 @@ class ApplicationProvider implements ServiceProviderInterface
      */
     public function getWebApplicationClassService(Container $container): WebApplication
     {
-        $application = new WebApplication($container->get(ControllerResolverInterface::class), $container->get(RouterInterface::class), $container->get(Input::class), $container->get('config'), $container->get(WebClient::class));
+        $application              = new WebApplication($container->get(ControllerResolverInterface::class), $container->get(RouterInterface::class), $container->get(Input::class), $container->get('config'), $container->get(WebClient::class));
         $application->httpVersion = '2';
         // Inject extra services
         $application->setDispatcher($container->get(DispatcherInterface::class));

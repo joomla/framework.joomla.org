@@ -28,7 +28,8 @@ class DebugWebApplication extends WebApplication
      * @var  DebugBar
      */
     private $debugBar;
-/**
+
+    /**
      * Class constructor.
      *
      * @param   DebugBar                     $debugBar            The application's debug bar
@@ -46,7 +47,8 @@ class DebugWebApplication extends WebApplication
     public function __construct(DebugBar $debugBar, ControllerResolverInterface $controllerResolver, RouterInterface $router, Input $input = null, Registry $config = null, WebClient $client = null, ResponseInterface $response = null)
     {
         $this->debugBar = $debugBar;
-// Call the constructor as late as possible (it runs `initialise`).
+
+        // Call the constructor as late as possible (it runs `initialise`).
         parent::__construct($controllerResolver, $router, $input, $config, $client, $response);
     }
 
@@ -58,13 +60,15 @@ class DebugWebApplication extends WebApplication
     protected function doExecute(): void
     {
         $route = $this->router->parseRoute($this->get('uri.route'), $this->input->getMethod());
-// Add variables to the input if not already set
+
+        // Add variables to the input if not already set
         foreach ($route->getRouteVariables() as $key => $value) {
             $this->input->def($key, $value);
         }
 
         $controller = $this->controllerResolver->resolve($route);
-/** @var \DebugBar\DataCollector\TimeDataCollector $collector */
+
+        /** @var \DebugBar\DataCollector\TimeDataCollector $collector */
         $collector = $this->debugBar['time'];
         $label     = 'controller';
         $collector->startMeasure($label);

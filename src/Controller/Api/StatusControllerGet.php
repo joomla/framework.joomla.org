@@ -26,7 +26,8 @@ class StatusControllerGet extends AnalyticsController
      * @var  StatusJsonView
      */
     private $view;
-/**
+
+    /**
      * Constructor.
      *
      * @param   StatusJsonView       $view       The view object.
@@ -48,9 +49,11 @@ class StatusControllerGet extends AnalyticsController
     public function execute(): bool
     {
         $this->sendAnalytics();
-// Disable browser caching
+
+        // Disable browser caching
         $this->getApplication()->allowCache(false);
-// This is a JSON response
+
+        // This is a JSON response
         $this->getApplication()->mimeType = 'application/json';
         $this->getApplication()->setBody($this->view->render());
         return true;

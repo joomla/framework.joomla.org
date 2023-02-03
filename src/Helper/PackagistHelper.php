@@ -22,21 +22,21 @@ class PackagistHelper
 {
     use PackageAware;
 
-/**
+    /**
      * The database driver
      *
      * @var  DatabaseInterface
      */
-
-
     private $database;
-/**
+
+    /**
      * The HTTP driver
      *
      * @var  Http
      */
     private $http;
-/**
+
+    /**
      * Instantiate the helper.
      *
      * @param   Http               $http      The HTTP driver.
@@ -59,8 +59,8 @@ class PackagistHelper
         foreach (array_keys((array) $this->getPackages()->get('packages')) as $packageName) {
             $url = "https://packagist.org/packages/joomla/$packageName.json";
             try {
-                $response = $this->http->get($url);
-                $data     = json_decode($response->body);
+                $response             = $this->http->get($url);
+                $data                 = json_decode($response->body);
                 $counts[$packageName] = $data->package->downloads->total;
             } catch (\RuntimeException $exception) {
                 $counts[$packageName] = false;

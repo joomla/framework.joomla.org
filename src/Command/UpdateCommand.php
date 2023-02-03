@@ -29,7 +29,8 @@ class UpdateCommand extends AbstractCommand
      * @var  string|null
      */
     protected static $defaultName = 'update:server';
-/**
+
+    /**
      * Internal function to execute the command.
      *
      * @param   InputInterface   $input   The input to inject into the command.
@@ -49,7 +50,8 @@ class UpdateCommand extends AbstractCommand
 
         /** @var ProcessHelper $processHelper */
         $processHelper = $this->getHelperSet()->get('process');
-// Pull from remote repo
+
+        // Pull from remote repo
         try {
             $processHelper->mustRun($output, new Process(['git', 'pull'], JPATH_ROOT));
         } catch (ProcessFailedException $e) {
@@ -59,7 +61,8 @@ class UpdateCommand extends AbstractCommand
         }
 
         $symfonyStyle->comment('Updating Composer resources');
-// Run Composer install
+
+        // Run Composer install
         try {
             $processHelper->mustRun($output, new Process(['composer', 'install', '--no-dev', '-o', '-a'], JPATH_ROOT));
         } catch (ProcessFailedException $e) {
@@ -69,7 +72,8 @@ class UpdateCommand extends AbstractCommand
         }
 
         $symfonyStyle->comment('Running database migrations');
-// Run Phinx Migrations
+
+        // Run Phinx Migrations
         try {
             $processHelper->mustRun($output, new Process(['vendor/bin/phinx', 'migrate'], JPATH_ROOT));
         } catch (ProcessFailedException $e) {

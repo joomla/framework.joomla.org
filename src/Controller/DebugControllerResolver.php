@@ -24,13 +24,15 @@ class DebugControllerResolver implements ControllerResolverInterface
      * @var  ControllerResolverInterface
      */
     private $controllerResolver;
-/**
+
+    /**
      * Application debug bar
      *
      * @var  DebugBar
      */
     private $debugBar;
-/**
+
+    /**
      * Controller resolver constructor.
      *
      * @param   ControllerResolverInterface  $controllerResolver  The delegated router
