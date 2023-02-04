@@ -1,14 +1,14 @@
 {
     "/js/template.js": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-n8GXIuJlyihlCokdm8m8MJHGNAY328CVvohuQEmG9Hpelgo2NbWYwn3b4xzu1ZaM"
+        "integrity": "sha384-YwPXNmeT3849u7tUJt7mnLJFajWQNGC1HsCsF5fnby+S3aB1tDO+fiMT5EzbXns2"
     },
     "/css/code.css": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-eosw8dB72Frb0E4edUFjPGH5KSNvmggHiSgZzaeLJOgByGkVjjwj4uEoDEz9CFMv"
+        "integrity": "sha384-66Uy7BFBhuWPYQCqKOmMyE7fhpHsFSpb5HiQA90gb83oiy8WAnlPP0nK/ZMb9LfD"
     },
     "/css/template.css": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-nyfEzrtSyzYsDk+o1IeTQxH5i6AZXFMwoathcflq9r4OKSecdmTyALdgtf3udj71"
+        "integrity": "sha384-aq6w90MDQDf/Wcsh/fsnMnbtFpr/fbkLqTEyQD9nQbinhj+jD6a3y3PC5PNQuYYS"
     }
 }
