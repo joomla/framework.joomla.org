@@ -33,44 +33,44 @@ class FetchDocsCommand extends AbstractCommand
      * @var  string|null
      */
     protected static $defaultName = 'github:fetch-docs';
-/**
-     * Cache pool
-     *
-     * @var  CacheItemPoolInterface
-     */
+    /**
+         * Cache pool
+         *
+         * @var  CacheItemPoolInterface
+         */
     private $cache;
-/**
-     * Cache keys for rendered files which should be removed
-     *
-     * @var  string[]
-     */
+    /**
+         * Cache keys for rendered files which should be removed
+         *
+         * @var  string[]
+         */
     private $fileCacheKeys = [];
-/**
-     * The GitHub API adapter
-     *
-     * @var  Github
-     */
+    /**
+         * The GitHub API adapter
+         *
+         * @var  Github
+         */
     private $github;
-/**
-     * The GitHub helper
-     *
-     * @var  GitHubHelper
-     */
+    /**
+         * The GitHub helper
+         *
+         * @var  GitHubHelper
+         */
     private $githubHelper;
-/**
-     * The package model
-     *
-     * @var  PackageModel
-     */
+    /**
+         * The package model
+         *
+         * @var  PackageModel
+         */
     private $packageModel;
-/**
-     * Instantiate the command.
-     *
-     * @param   PackageModel            $packageModel  The package model.
-     * @param   Github                  $github        The GitHub API adapter.
-     * @param   GitHubHelper            $githubHelper  The GitHub helper.
-     * @param   CacheItemPoolInterface  $cache         Cache pool.
-     */
+    /**
+         * Instantiate the command.
+         *
+         * @param   PackageModel            $packageModel  The package model.
+         * @param   Github                  $github        The GitHub API adapter.
+         * @param   GitHubHelper            $githubHelper  The GitHub helper.
+         * @param   CacheItemPoolInterface  $cache         Cache pool.
+         */
     public function __construct(PackageModel $packageModel, Github $github, GitHubHelper $githubHelper, CacheItemPoolInterface $cache)
     {
         $this->cache        = $cache;
@@ -122,7 +122,8 @@ class FetchDocsCommand extends AbstractCommand
     {
         $this->setDescription('Fetches package documentation from GitHub');
         $this->addOption('package', 'p', InputOption::VALUE_OPTIONAL, 'Package to limit documentation lookup for');
-        $this->setHelp(<<<'EOF'
+        $this->setHelp(
+            <<<'EOF'
 The <info>%command.name%</info> command fetches the documentation for Framework packages from GitHub
 
 <info>php %command.full_name% %command.name%</info>
@@ -205,7 +206,7 @@ EOF
         }
 
         $docsPath = JPATH_ROOT . '/docs/' . $version . '/' . str_replace('docs/', $package->package . '/', $file->path);
-// Ensure folder exists
+        // Ensure folder exists
         Folder::create(\dirname($docsPath));
         if (!file_put_contents($docsPath, $fileContents)) {
             $symfonyStyle->error(sprintf('Could not write docs file to `%s`', $docsPath));
@@ -226,21 +227,8 @@ EOF
     private function processPackage(\stdClass $package, SymfonyStyle $symfonyStyle): void
     {
         // Set docs branches
-        switch ($package->package) {
-            case 'console':
-            case 'crypt':
-            case 'preload':
-            case 'renderer':
-                $branches = ['master'];
-                $versions = ['2.x'];
-
-                break;
-            default:
-                $branches = ['2.0-dev'];
-                $versions = ['2.x'];
-
-                break;
-        }
+        $branches = ['2.0-dev', '3.x-dev'];
+        $versions = ['2.x', '3.x'];
 
         foreach ($branches as $key => $branch) {
             $this->processDirectory($branch, $versions[$key], 'docs', $package, $symfonyStyle);

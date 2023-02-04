@@ -22,19 +22,18 @@ if (!file_exists(JPATH_ROOT . '/vendor/autoload.php')) {
 require JPATH_ROOT . '/vendor/autoload.php';
 
 // Wrap in a try/catch so we can display an error if need be
-try
-{
-	$container = (new Joomla\DI\Container)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\CacheProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
-		->registerServiceProvider(new Joomla\Database\Service\DatabaseProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\EventProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
-		->registerServiceProvider(new Joomla\Preload\Service\PreloadProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
+try {
+    $container = (new Joomla\DI\Container())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\CacheProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
+        ->registerServiceProvider(new Joomla\Database\Service\DatabaseProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\EventProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider())
+        ->registerServiceProvider(new Joomla\Preload\Service\PreloadProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider());
 
     // Conditionally include the DebugBar service provider based on the app being in debug mode
     if ((bool) $container->get('config')->get('debug', false)) {

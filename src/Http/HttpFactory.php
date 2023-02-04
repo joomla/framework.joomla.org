@@ -25,11 +25,11 @@ class HttpFactory extends BaseFactory
      * @var  DebugBar
      */
     private $debugBar;
-/**
-     * Constructor.
-     *
-     * @param   DebugBar  $debugBar  Application debug bar.
-     */
+    /**
+         * Constructor.
+         *
+         * @param   DebugBar  $debugBar  Application debug bar.
+         */
     public function __construct(DebugBar $debugBar)
     {
         $this->debugBar = $debugBar;

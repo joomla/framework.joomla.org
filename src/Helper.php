@@ -100,4 +100,16 @@ class Helper
     {
         return $this->getPackages()->get("packages.$package.has_v2", true);
     }
+
+    /**
+     * Utility method to retrieve whether a package has a 3.x branch
+     *
+     * @param   string  $package  Package name
+     *
+     * @return  boolean
+     */
+    public function getPackageHasVersion3(string $package): bool
+    {
+        return $this->getPackages()->get("packages.$package.has_v3", true);
+    }
 }

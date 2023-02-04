@@ -86,30 +86,34 @@ class SyncCommand extends AbstractCommand
             $url = "https://packagist.org/packages/joomla/{$package->package}.json";
             try {
                 $response = $this->http->get($url);
-                $data     = json_decode($response->body);if(!isset($data->package)) {var_dump($data);} else {
-                foreach ($data->package->versions as $versionData) {
-                    // Skip non stable versions
-                    if (!$this->versionIsStable($versionData->version)) {
-                        continue;
-                    }
-
-                    // Make sure this release is logged, or update if specified
-                    if ($this->releaseModel->hasRelease($package, $versionData->version)) {
-                        if (!$updateReleases) {
+                $data     = json_decode($response->body);
+                if (!isset($data->package)) {
+                    var_dump($data);
+                } else {
+                    foreach ($data->package->versions as $versionData) {
+                        // Skip non stable versions
+                        if (!$this->versionIsStable($versionData->version)) {
                             continue;
                         }
 
-                        $record = $this->releaseModel->getRelease($package, $versionData->version);
-                        $this->releaseModel->updateRelease($record->id, $package, $versionData->version, new \DateTime($versionData->time));
-                        $updatedReleases++;
-                        $symfonyStyle->comment(sprintf('Updated <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
-                    } else {
-                        // Add the release
-                        $this->releaseModel->addRelease($package, $versionData->version, new \DateTime($versionData->time));
-                        $addedReleases++;
-                        $symfonyStyle->comment(sprintf('Added <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
+                        // Make sure this release is logged, or update if specified
+                        if ($this->releaseModel->hasRelease($package, $versionData->version)) {
+                            if (!$updateReleases) {
+                                continue;
+                            }
+
+                            $record = $this->releaseModel->getRelease($package, $versionData->version);
+                            $this->releaseModel->updateRelease($record->id, $package, $versionData->version, new \DateTime($versionData->time));
+                            $updatedReleases++;
+                            $symfonyStyle->comment(sprintf('Updated <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
+                        } else {
+                            // Add the release
+                            $this->releaseModel->addRelease($package, $versionData->version, new \DateTime($versionData->time));
+                            $addedReleases++;
+                            $symfonyStyle->comment(sprintf('Added <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
+                        }
                     }
-                }}
+                }
             } catch (\RuntimeException $exception) {
                 $message = "Could not fetch release data for {$package->display} from Packagist";
                 $this->getApplication()->getLogger()->warning($message, ['exception' => $exception]);

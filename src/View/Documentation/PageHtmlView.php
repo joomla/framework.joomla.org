@@ -24,30 +24,30 @@ class PageHtmlView extends HtmlView
      * @var  string
      */
     private $contents = '';
-/**
-     * The active package.
-     *
-     * @var  \stdClass
-     */
+    /**
+         * The active package.
+         *
+         * @var  \stdClass
+         */
     private $package;
-/**
-     * The package model object.
-     *
-     * @var  PackageModel
-     */
+    /**
+         * The package model object.
+         *
+         * @var  PackageModel
+         */
     private $packageModel;
-/**
-     * The sidebar contents for display.
-     *
-     * @var  string
-     */
+    /**
+         * The sidebar contents for display.
+         *
+         * @var  string
+         */
     private $sidebarContents = '';
-/**
-     * Instantiate the view.
-     *
-     * @param   PackageModel       $packageModel  The package model object.
-     * @param   RendererInterface  $renderer      The renderer object.
-     */
+    /**
+         * Instantiate the view.
+         *
+         * @param   PackageModel       $packageModel  The package model object.
+         * @param   RendererInterface  $renderer      The renderer object.
+         */
     public function __construct(PackageModel $packageModel, RendererInterface $renderer)
     {
         parent::__construct($renderer);

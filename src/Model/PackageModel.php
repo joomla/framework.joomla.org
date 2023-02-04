@@ -54,7 +54,8 @@ class PackageModel implements DatabaseModelInterface
         bool $isDeprecated,
         bool $isAbandoned,
         bool $hasV1,
-        bool $hasV2
+        bool $hasV2,
+        bool $hasV3
     ): void {
         $db   = $this->getDb();
 
@@ -67,6 +68,7 @@ class PackageModel implements DatabaseModelInterface
             'abandoned'  => (int) $isAbandoned,
             'has_v1'     => (int) $hasV1,
             'has_v2'     => (int) $hasV2,
+            'has_v3'     => (int) $hasV3,
         ];
 
         $db->insertObject('#__packages', $data);
@@ -182,6 +184,7 @@ class PackageModel implements DatabaseModelInterface
      * @param   boolean  $isAbandoned   Flag indicating the package is abandoned
      * @param   boolean  $hasV1         Flag indicating the package has a 1.x branch
      * @param   boolean  $hasV2         Flag indicating the package has a 2.x branch
+     * @param   boolean  $hasV3         Flag indicating the package has a 3.x branch
      *
      * @return  void
      */
@@ -194,7 +197,8 @@ class PackageModel implements DatabaseModelInterface
         bool $isDeprecated,
         bool $isAbandoned,
         bool $hasV1,
-        bool $hasV2
+        bool $hasV2,
+        bool $hasV3
     ): void {
         $db   = $this->getDb();
 
@@ -208,6 +212,7 @@ class PackageModel implements DatabaseModelInterface
             'abandoned'  => (int) $isAbandoned,
             'has_v1'     => (int) $hasV1,
             'has_v2'     => (int) $hasV2,
+            'has_v3'     => (int) $hasV3,
         ];
 
         $db->updateObject('#__packages', $data, 'id');

@@ -33,7 +33,7 @@ mix
     .sass('assets/scss/code.scss', 'css')
     .options({
         postCss: [
-            require('autoprefixer')({ browsers: 'last 2 versions' })
+            require('autoprefixer')()
         ]
     });
 

@@ -5,9 +5,11 @@ packages:
     cache:
         deprecated: true
         has_v2: false
+        has_v3: false
     compat:
         deprecated: true
         has_v2: false
+        has_v3: false
     console:
         has_v1: false
     controller: ~
@@ -18,6 +20,7 @@ packages:
     date:
         deprecated: true
         has_v2: false
+        has_v3: false
     datetime:
         abandoned: true
         display: DateTime
@@ -29,6 +32,7 @@ packages:
         repo: facebook-api
         deprecated: true
         has_v2: false
+        has_v3: false
     filesystem: ~
     filter: ~
     form:
@@ -40,11 +44,13 @@ packages:
         repo: google-api
         deprecated: true
         has_v2: false
+        has_v3: false
     http:
         display: HTTP
     image:
         deprecated: true
         has_v2: false
+        has_v3: false
     input: ~
     keychain: ~
     language: ~
@@ -52,14 +58,17 @@ packages:
         display: LDAP
         deprecated: true
         has_v2: false
+        has_v3: false
     linkedin:
         display: LinkedIn
         repo: linkedin-api
         deprecated: true
         has_v2: false
+        has_v3: false
     log:
         deprecated: true
         has_v2: false
+        has_v3: false
     mediawiki:
         display: MediaWiki
         repo: mediawiki-api
@@ -74,6 +83,7 @@ packages:
         repo: openstreetmap-api
         deprecated: true
         has_v2: false
+        has_v3: false
     preload:
         has_v1: false
     profiler: ~
@@ -93,6 +103,7 @@ packages:
         repo: twitter-api
         deprecated: true
         has_v2: false
+        has_v3: false
     uri:
         display: URI
     utilities: ~

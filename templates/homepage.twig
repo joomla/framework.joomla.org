@@ -21,7 +21,7 @@
         <span class="fas fa-5x fa-cloud-download-alt" aria-hidden="true"></span>
         <div class="cta clearfix">
             <div>Designed by software developers for software developers. Easy to Adapt. Easy to Extend.</div>
-            <div><a href="https://getcomposer.org/download/" class="btn btn-lg btn-success float-left">Download Composer</a> <a href="https://github.com/joomla-framework" class="btn btn-lg btn-info float-right">GitHub Organization</a></div>
+            <div><a href="https://getcomposer.org/download/" class="btn btn-lg btn-success float-start">Download Composer</a> <a href="https://github.com/joomla-framework" class="btn btn-lg btn-info float-end">GitHub Organization</a></div>
         </div>
     </div>
 </section>
@@ -170,10 +170,14 @@
     <div class="footer-area subscribe">
         <h3>Subscribe</h3>
         <p>Subscribe to the Google Group mailing list.</p>
-        <form action="https://groups.google.com/group/joomla-dev-framework/boxsubscribe" class="form-inline signup" role="form">
-            <label class="sr-only" for="email">Email address</label>
-            <input type="email" id="email" name="email" placeholder="Email Address" class="form-control mr-sm-2" required>
-            <button type="submit" class="btn btn-primary" name="sub">Subscribe</button>
+        <form action="https://groups.google.com/group/joomla-dev-framework/boxsubscribe" class="form-inline row row-cols-lg-auto g-3 signup" role="form">
+            <div class="col-9">
+                <label class="sr-only" for="email">Email address</label>
+                <input type="email" id="email" name="email" placeholder="Email Address" class="form-control mr-sm-2" required>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary" name="sub">Subscribe</button>
+            </div>
         </form>
     </div>
     <div class="footer-area case-studies">

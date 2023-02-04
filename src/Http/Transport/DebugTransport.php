@@ -26,19 +26,19 @@ class DebugTransport extends AbstractTransport
      * @var  DebugBar
      */
     private $debugBar;
-/**
-     * Wrapped transport class
-     *
-     * @var  TransportInterface
-     */
+    /**
+         * Wrapped transport class
+         *
+         * @var  TransportInterface
+         */
     private $wrappedTransport;
-/**
-     * Constructor.
-     *
-     * @param   DebugBar            $debugBar          Application debug bar.
-     * @param   TransportInterface  $wrappedTransport  Wrapped transport class.
-     * @param   array|\ArrayAccess  $options           Client options array.
-     */
+    /**
+         * Constructor.
+         *
+         * @param   DebugBar            $debugBar          Application debug bar.
+         * @param   TransportInterface  $wrappedTransport  Wrapped transport class.
+         * @param   array|\ArrayAccess  $options           Client options array.
+         */
     public function __construct(DebugBar $debugBar, TransportInterface $wrappedTransport, $options = [])
     {
         parent::__construct($options);

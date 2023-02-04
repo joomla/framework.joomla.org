@@ -24,12 +24,12 @@ class IndexHtmlView extends HtmlView
      * @var  PackageModel
      */
     private $packageModel;
-/**
-     * Instantiate the view.
-     *
-     * @param   PackageModel       $packageModel  The package model object.
-     * @param   RendererInterface  $renderer      The renderer object.
-     */
+    /**
+         * Instantiate the view.
+         *
+         * @param   PackageModel       $packageModel  The package model object.
+         * @param   RendererInterface  $renderer      The renderer object.
+         */
     public function __construct(PackageModel $packageModel, RendererInterface $renderer)
     {
         parent::__construct($renderer);

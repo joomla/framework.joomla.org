@@ -13,7 +13,7 @@ use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\FrameworkWebsite\View\Documentation\IndexHtmlView;
 use Joomla\Input\Input;
-use Zend\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\HtmlResponse;
 
 /**
  * Controller handling the site's documentation index
@@ -29,13 +29,13 @@ class IndexController extends AbstractController
      * @var  IndexHtmlView
      */
     private $view;
-/**
-     * Constructor.
-     *
-     * @param   IndexHtmlView        $view   The view object.
-     * @param   Input                $input  The input object.
-     * @param   AbstractApplication  $app    The application object.
-     */
+    /**
+         * Constructor.
+         *
+         * @param   IndexHtmlView        $view   The view object.
+         * @param   Input                $input  The input object.
+         * @param   AbstractApplication  $app    The application object.
+         */
     public function __construct(IndexHtmlView $view, Input $input = null, AbstractApplication $app = null)
     {
         parent::__construct($input, $app);

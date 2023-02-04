@@ -30,44 +30,44 @@ class GitHubHelper
     private const IGNORE_ACCOUNTS = [
         'joomla-jenkins',
     ];
-/**
-     * Application object
-     *
-     * @var  AbstractApplication
-     */
+    /**
+         * Application object
+         *
+         * @var  AbstractApplication
+         */
     private $application;
-/**
-     * Cache pool
-     *
-     * @var  CacheItemPoolInterface
-     */
+    /**
+         * Cache pool
+         *
+         * @var  CacheItemPoolInterface
+         */
     private $cache;
-/**
-     * Array tracking commit counts for each contributor
-     *
-     * @var  array
-     */
+    /**
+         * Array tracking commit counts for each contributor
+         *
+         * @var  array
+         */
     private $commitCounts = [];
-/**
-     * The database driver
-     *
-     * @var  DatabaseInterface
-     */
+    /**
+         * The database driver
+         *
+         * @var  DatabaseInterface
+         */
     private $database;
-/**
-     * The GitHub API adapter
-     *
-     * @var  Github
-     */
+    /**
+         * The GitHub API adapter
+         *
+         * @var  Github
+         */
     private $github;
-/**
-     * Instantiate the helper.
-     *
-     * @param   Github                  $github       The GitHub API adapter.
-     * @param   DatabaseInterface       $database     The database driver.
-     * @param   CacheItemPoolInterface  $cache        Cache pool.
-     * @param   AbstractApplication     $application  The application object.
-     */
+    /**
+         * Instantiate the helper.
+         *
+         * @param   Github                  $github       The GitHub API adapter.
+         * @param   DatabaseInterface       $database     The database driver.
+         * @param   CacheItemPoolInterface  $cache        Cache pool.
+         * @param   AbstractApplication     $application  The application object.
+         */
     public function __construct(Github $github, DatabaseInterface $database, CacheItemPoolInterface $cache, AbstractApplication $application)
     {
         $this->application = $application;
@@ -116,17 +116,17 @@ class GitHubHelper
             throw new \InvalidArgumentException(sprintf('No documentation found for `%s` in the `%2$s` package for version `%3$s`.', $path, $package->display, $version), 404);
         }
 
-        $key = $this->generateDocsFileCacheKey($version, $package, $path);
+        $key  = $this->generateDocsFileCacheKey($version, $package, $path);
         $item = $this->cache->getItem($key);
-// Make sure we got a hit on the item, otherwise we'll have to re-cache
+        // Make sure we got a hit on the item, otherwise we'll have to re-cache
         if ($item->isHit()) {
             $rendered = $item->get();
         } else {
-            $rendered = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
+            $rendered    = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
             $routePrefix = $this->application->get('uri.base.path') . 'docs/' . $version . '/' . $package->package . '/';
-        // Fix links - TODO: This should only change relative links for the docs files
+            // Fix links - TODO: This should only change relative links for the docs files
             $rendered = preg_replace('/href=\"(.*)\.md\"/', 'href="' . $routePrefix . '$1"', $rendered);
-        // Cache the result for 7 days
+            // Cache the result for 7 days
             $sevenDaysInSeconds = 60 * 60 * 24 * 7;
             $item->set($rendered);
             $item->expiresAfter($sevenDaysInSeconds);
@@ -148,7 +148,7 @@ class GitHubHelper
     public function syncPackageContributors(string $package): void
     {
         $contributors = $this->github->repositories->getListContributors('joomla-framework', $package);
-// Begin a transaction in case of error
+        // Begin a transaction in case of error
         $this->database->transactionStart();
         try {
             foreach ($contributors as $contributor) {
@@ -195,7 +195,7 @@ class GitHubHelper
         try {
             foreach ($usernames as $username) {
                 $userData = $this->github->users->get($username);
-                $query = $this->database->getQuery(true);
+                $query    = $this->database->getQuery(true);
                 $query->update($this->database->quoteName('#__contributors'))
                     ->set($this->database->quoteName('name') . ' = :name')
                     ->where($this->database->quoteName('username') . ' = :username');

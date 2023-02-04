@@ -26,17 +26,17 @@ class ClearCacheCommand extends AbstractCommand
      * @var  string|null
      */
     protected static $defaultName = 'cache:clear';
-/**
-     * Cache pool
-     *
-     * @var  CacheItemPoolInterface
-     */
+    /**
+         * Cache pool
+         *
+         * @var  CacheItemPoolInterface
+         */
     private $cache;
-/**
-     * Instantiate the command.
-     *
-     * @param   CacheItemPoolInterface  $cache  Cache pool.
-     */
+    /**
+         * Instantiate the command.
+         *
+         * @param   CacheItemPoolInterface  $cache  Cache pool.
+         */
     public function __construct(CacheItemPoolInterface $cache)
     {
         $this->cache = $cache;

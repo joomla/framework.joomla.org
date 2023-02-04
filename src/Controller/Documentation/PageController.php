@@ -16,8 +16,8 @@ use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\View\Documentation\ErrorHtmlView;
 use Joomla\FrameworkWebsite\View\Documentation\PageHtmlView;
 use Joomla\Input\Input;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 
 /**
  * Controller handling a package's documentation page
@@ -111,8 +111,20 @@ class PageController extends AbstractController
                 }
 
                 break;
+            case '3.x':
+                if (!$package->has_v3) {
+                    $this->errorView->setError(sprintf('The %s package does not have a 3.x branch to document.', $package->display));
+                    $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
+                } else {
+                    $this->pageView->setActivePackage($package);
+                    $this->pageView->setPageContent($this->githubHelper->renderDocsFile($version, $package, $filename));
+                    $this->pageView->setSidebarContent($this->githubHelper->renderDocsFile($version, $package, 'index'));
+                    $this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));
+                }
+
+                break;
             case 'latest':
-                $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/2.x/{$package->package}/{$filename}"));
+                $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/3.x/{$package->package}/{$filename}"));
 
                 break;
             default:
