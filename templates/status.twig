@@ -35,7 +35,7 @@
                         {% if not release.package.has_v1 %}
                             N/A
                         {% else %}
-                            {{ release.version }}
+                            {{ release.v1.version }}
                             <a href="https://ci.joomla.org/joomla-framework/{{ release.package.repo }}"><img src="https://ci.joomla.org/api/badges/joomla-framework/{{ release.package.repo }}/status.svg?ref=refs/heads/1.x-dev" alt="Build Status" /></a>
                         {% endif %}
                     </td>
@@ -43,7 +43,7 @@
                         {% if not release.package.has_v2 %}
                             N/A
                         {% else %}
-                            {{ release.version }}
+                            {{ release.v2.version }}
                             <a href="https://ci.joomla.org/joomla-framework/{{ release.package.repo }}"><img src="https://ci.joomla.org/api/badges/joomla-framework/{{ release.package.repo }}/status.svg?ref=refs/heads/2.0-dev" alt="Build Status" /></a>
                         {% endif %}
                     </td>
@@ -51,7 +51,7 @@
                         {% if not release.package.has_v3 %}
                             N/A
                         {% else %}
-                            {{ release.version }}
+                            {{ release.v3.version }}
                             <a href="https://ci.joomla.org/joomla-framework/{{ release.package.repo }}"><img src="https://ci.joomla.org/api/badges/joomla-framework/{{ release.package.repo }}/status.svg?ref=refs/heads/3.x-dev" alt="Build Status" /></a>
                         {% endif %}
                     </td>

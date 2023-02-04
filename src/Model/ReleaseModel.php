@@ -73,16 +73,23 @@ class ReleaseModel implements DatabaseModelInterface
         // Loop through the releases and build the reports
         foreach ($packages as $id => $package) {
             foreach ($releases as $release) {
+                $major = 'v' . substr($release->version, 0, 1);
+
                 // Skip if package is already included
-                if (isset($reports[$release->package_id])) {
+                if (isset($reports[$release->package_id])
+                    && isset($reports[$release->package_id]->$major)) {
                     continue;
                 }
 
                 // Skip if package is not included in list
                 if ($id == $release->package_id) {
-                    $release->package      = $package;
-                    $reports[$package->id] = $release;
-                    break;
+                    if (!isset($reports[$package->id])) {
+                        $info = new \stdClass();
+                        $info->package = $package;
+                        $reports[$package->id] = $info;
+                    }
+
+                    $reports[$package->id]->$major = $release;
                 }
 
                 /**$release->package = $packages[$release->package_id];

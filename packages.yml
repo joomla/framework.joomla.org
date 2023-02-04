@@ -26,7 +26,8 @@ packages:
         display: DateTime
     di:
         display: DI
-    entities: ~
+    entities:
+        has_v1: false
     event: ~
     facebook:
         repo: facebook-api
