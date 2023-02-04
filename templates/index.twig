@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="stylesheet" href="{{ asset('css/template.css', 'mix') }}" type="text/css"{{ sri('css/template.css') }}>
+        {% block stylesheets %}{% endblock %}
         {% if appDebug %}
             <link rel="stylesheet" href="{{ asset('css/debugbar.css') }}" type="text/css">
         {% endif %}
@@ -37,9 +38,10 @@
     </head>
     <body id="go">
         {% block bodyNavigation %}
-            <nav class="container-fluid">
+            <nav class="container-fluid main-nav">
                 <ul>
                     <li><a href="{{ route() }}"><span class="fab fa-joomla" aria-hidden="true"></span><span class="title">Framework</span></a></li>
+                    <li><a href="{{ route('docs') }}"><span class="fas fa-file-alt" aria-hidden="true"></span><span class="title">Documentation</span></a></li>
                     <li><a href="{{ route('status') }}"><span class="fas fa-wrench" aria-hidden="true"></span><span class="title">Status</span></a></li>
                 </ul>
             </nav>
