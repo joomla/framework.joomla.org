@@ -87,6 +87,9 @@ class SyncCommand extends AbstractCommand
             try {
                 $response = $this->http->get($url);
                 $data     = json_decode($response->body);
+                if (!isset($data->package)) {
+                    continue;
+                }
                 foreach ($data->package->versions as $versionData) {
                     // Skip non stable versions
                     if (!$this->versionIsStable($versionData->version)) {

@@ -61,6 +61,10 @@ class PackagistHelper
             try {
                 $response             = $this->http->get($url);
                 $data                 = json_decode($response->body);
+                if (!isset($data->package)) {
+                    $counts[$packageName] = false;
+                    continue;
+                }
                 $counts[$packageName] = $data->package->downloads->total;
             } catch (\RuntimeException $exception) {
                 $counts[$packageName] = false;
