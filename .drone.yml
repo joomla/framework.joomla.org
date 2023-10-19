@@ -10,7 +10,7 @@ steps:
     commands:
       - php -v
       - composer update
-      - composer require phpmd/phpmd phpstan/phpstan
+      - composer require phpstan/phpstan
     volumes:
       - name: composer-cache
         path: /tmp/composer-cache
@@ -68,6 +68,6 @@ volumes:
 
 ---
 kind: signature
-hmac: 957585e98539faea81ab947104abb3f31ffeec255c0fda4f0903849c99db7e6c
+hmac: 2215efab7624c713f07192802222fa7d5fa0ad041fc3a3af3c8bbf591e9b629d
 
 ...
