@@ -46,7 +46,7 @@ class MixPathPackage extends PathPackage
      *
      * @return  string  The public path
      */
-    public function getUrl($path)
+    public function getUrl(string $path): string
     {
         if ($this->isAbsoluteUrl($path)) {
             return $path;
