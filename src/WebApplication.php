@@ -57,7 +57,7 @@ class WebApplication extends AbstractWebApplication
         // Call the constructor as late as possible (it runs `initialise`).
         parent::__construct($input, $config, $client, $response);
         // If an explicitly media URI is set, don't do anything.
-        $mediaURI = trim($this->get('media_uri'));
+        $mediaURI = trim($this->get('media_uri', ''));
         if (!$mediaURI) {
             // No explicit media URI was set, build it dynamically from the base uri.
             $this->set('uri.media.full', 'media/');
@@ -72,7 +72,7 @@ class WebApplication extends AbstractWebApplication
      */
     protected function doExecute(): void
     {
-        $route = $this->router->parseRoute($this->get('uri.route'), $this->input->getMethod());
+        $route = $this->router->parseRoute($this->get('uri.route', ''), $this->input->getMethod());
         // Add variables to the input if not already set
         foreach ($route->getRouteVariables() as $key => $value) {
             $this->input->def($key, $value);
