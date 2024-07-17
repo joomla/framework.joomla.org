@@ -28,7 +28,7 @@ class AddReleasesTable extends AbstractMigration
 	public function change()
 	{
 		$this->table('releases')
-			->addColumn('package_id', 'integer')
+			->addColumn('package_id', 'integer', ['null' => false, 'signed' => false])
 			->addColumn('version', 'string', ['limit' => 25, 'null' => false])
 			->addColumn('tests', 'integer', ['null' => true, 'default' => 0])
 			->addColumn('assertions', 'integer', ['null' => true, 'default' => 0])
