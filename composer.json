@@ -4,35 +4,35 @@
     "homepage": "http://github.com/joomla/framework.joomla.org",
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": "^7.4",
+        "php": "^8.1",
         "ext-json": "*",
         "ext-pdo": "*",
         "fig/link-util": "^1.1",
-        "joomla/application": "^2.0",
-        "joomla/console": "^2.0",
-        "joomla/controller": "^2.0",
-        "joomla/database": "^2.0",
-        "joomla/di": "^2.0",
-        "joomla/event": "^2.0",
-        "joomla/filesystem": "^2.0",
-        "joomla/filter": "^2.0",
-        "joomla/github": "^2.0@dev",
-        "joomla/http": "^2.0",
-        "joomla/input": "^2.0",
-        "joomla/model": "^2.0",
-        "joomla/preload": "^2.0",
-        "joomla/registry": "^2.0",
-        "joomla/renderer": "^2.0",
-        "joomla/router": "^2.0",
-        "joomla/string": "^2.0",
-        "joomla/uri": "^2.0",
-        "joomla/utilities": "^2.0",
-        "joomla/view": "^2.0",
-        "laminas/laminas-diactoros": "^2.3",
+        "joomla/application": "^3.0",
+        "joomla/console": "^3.0",
+        "joomla/controller": "^3.0",
+        "joomla/database": "^3.0",
+        "joomla/di": "^3.0",
+        "joomla/event": "^3.0",
+        "joomla/filesystem": "^3.0",
+        "joomla/filter": "^3.0",
+        "joomla/github": "^3.0@dev",
+        "joomla/http": "^3.0",
+        "joomla/input": "^3.0",
+        "joomla/model": "^3.0",
+        "joomla/preload": "^3.0",
+        "joomla/registry": "^3.0",
+        "joomla/renderer": "^3.0",
+        "joomla/router": "^3.0",
+        "joomla/string": "^3.0",
+        "joomla/uri": "^3.0",
+        "joomla/utilities": "^3.0",
+        "joomla/view": "^3.0",
+        "laminas/laminas-diactoros": "^2.17",
         "monolog/monolog": "^2.1",
         "psr/link": "^1.0",
         "ramsey/uuid": "^4.0.1",
-        "robmorgan/phinx": "^0.14.0",
+        "robmorgan/phinx": "^0.16.1",
         "symfony/asset": "^5.1.2",
         "symfony/process": "^5.1.2",
         "symfony/web-link": "^5.1.2",
@@ -41,14 +41,12 @@
         "twig/twig": "^3.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.13.2",
-        "squizlabs/php_codesniffer": "~3.0",
-        "maximebf/debugbar": "^1.16.3"
+        "friendsofphp/php-cs-fixer": "^3.59",
+        "squizlabs/php_codesniffer": "~3.10",
+        "maximebf/debugbar": "^1.22.3"
     },
     "replace": {
-        "paragonie/random_compat": "*",
-        "symfony/polyfill-php70": "*",
-        "symfony/polyfill-php72": "*"
+        "paragonie/random_compat": "*"
     },
     "autoload": {
         "psr-4": {
@@ -57,7 +55,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.4.0"
+            "php": "8.1.0"
         }
     }
 }

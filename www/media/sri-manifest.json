@@ -1,10 +1,10 @@
 {
     "/js/template.js": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-zLiUgZq9Yo9jYmXKamnlZE1SmN2cnHTtZl2PtmJsTPqraJE/QjU726B1gN+FH3Yr"
+        "integrity": "sha384-8Hw6nxS/mlXhPlzl+P3F/U1F2mhZF4rgSxe1cBQ8d4pztuUHWJ7PoRG+l/BFrIAV"
     },
     "/css/template.css": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-PYPtEPMh8qba0msFvqBpJJ8H++kRIsXJQQtrlYtwXmQ7iUpbUryzB6Z/L9y05Ffv"
+        "integrity": "sha384-sDmUczFF5j9FUDfpHwyc8tYSg7PzAE2qsZp8ajpm/vEe4LajWt9DPILphgJ4I52A"
     }
 }

@@ -4,9 +4,14 @@ packages:
     authentication: ~
     cache:
         deprecated: true
+        has_v2: false
+        has_v3: false
     compat:
         deprecated: true
+        has_v2: false
+        has_v3: false
     console:
+        has_v1: false
     controller: ~
     crypt: ~
     cve-api: ~
@@ -14,16 +19,21 @@ packages:
     database: ~
     date:
         deprecated: true
+        has_v2: false
+        has_v3: false
     datetime:
         abandoned: true
         display: DateTime
     di:
         display: DI
-    entities: ~
+    entities:
+        has_v1: false
     event: ~
     facebook:
         repo: facebook-api
         deprecated: true
+        has_v2: false
+        has_v3: false
     filesystem: ~
     filter: ~
     form:
@@ -34,22 +44,32 @@ packages:
     google:
         repo: google-api
         deprecated: true
+        has_v2: false
+        has_v3: false
     http:
         display: HTTP
     image:
         deprecated: true
+        has_v2: false
+        has_v3: false
     input: ~
     keychain: ~
     language: ~
     ldap:
         display: LDAP
         deprecated: true
+        has_v2: false
+        has_v3: false
     linkedin:
         display: LinkedIn
         repo: linkedin-api
         deprecated: true
+        has_v2: false
+        has_v3: false
     log:
         deprecated: true
+        has_v2: false
+        has_v3: false
     mediawiki:
         display: MediaWiki
         repo: mediawiki-api
@@ -63,21 +83,28 @@ packages:
         display: OpenStreetMap
         repo: openstreetmap-api
         deprecated: true
+        has_v2: false
+        has_v3: false
     preload:
+        has_v1: false
     profiler: ~
     registry: ~
     renderer:
         stable: false
+        has_v1: false
     router: ~
     session: ~
     string: ~
     'symfony-event-dispatcher-bridge':
         display: 'Symfony Event Dispatcher Bridge'
         stable: false
+        has_v1: false
     test: ~
     twitter:
         repo: twitter-api
         deprecated: true
+        has_v2: false
+        has_v3: false
     uri:
         display: URI
     utilities: ~

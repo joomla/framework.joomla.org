@@ -23,6 +23,7 @@ use Joomla\Event\Command\DebugEventDispatcherCommand;
 use Joomla\Event\DispatcherInterface;
 use Joomla\FrameworkWebsite\Command\GenerateSriCommand;
 use Joomla\FrameworkWebsite\Command\Package\SyncCommand as PackageSyncCommand;
+use Joomla\FrameworkWebsite\Command\Package\SyncPullsCommand;
 use Joomla\FrameworkWebsite\Command\Packagist\DownloadsCommand;
 use Joomla\FrameworkWebsite\Command\Packagist\SyncCommand as PackagistSyncCommand;
 use Joomla\FrameworkWebsite\Command\Twig\ResetCacheCommand;
@@ -43,6 +44,7 @@ use Joomla\FrameworkWebsite\View\Package\PackageJsonView;
 use Joomla\FrameworkWebsite\View\Status\StatusHtmlView;
 use Joomla\FrameworkWebsite\View\Status\StatusJsonView;
 use Joomla\FrameworkWebsite\WebApplication;
+use Joomla\Github\Github;
 use Joomla\Http\Http;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
@@ -110,6 +112,7 @@ class ApplicationProvider implements ServiceProviderInterface
         $container->share(DownloadsCommand::class, [$this, 'getDownloadsCommandService'], true);
         $container->share(GenerateSriCommand::class, [$this, 'getGenerateSriCommandService'], true);
         $container->share(PackageSyncCommand::class, [$this, 'getPackageSyncCommandService'], true);
+        $container->share(SyncPullsCommand::class, [$this, 'getPullSyncCommandService'], true);
         $container->share(PackagistSyncCommand::class, [$this, 'getPackagistSyncCommandService'], true);
         $container->share(ResetCacheCommand::class, [$this, 'getResetCacheCommandService'], true);
         $container->share(UpdateCommand::class, [$this, 'getUpdateCommandService'], true);
@@ -252,6 +255,7 @@ class ApplicationProvider implements ServiceProviderInterface
             DownloadsCommand::getDefaultName()            => DownloadsCommand::class,
             PackageSyncCommand::getDefaultName()          => PackageSyncCommand::class,
             PackagistSyncCommand::getDefaultName()        => PackagistSyncCommand::class,
+            SyncPullsCommand::getDefaultName()            => SyncPullsCommand::class,
             GenerateSriCommand::getDefaultName()          => GenerateSriCommand::class,
             ResetCacheCommand::getDefaultName()           => ResetCacheCommand::class,
             UpdateCommand::getDefaultName()               => UpdateCommand::class,
@@ -470,6 +474,18 @@ class ApplicationProvider implements ServiceProviderInterface
     public function getPackageSyncCommandService(Container $container): PackageSyncCommand
     {
         return new PackageSyncCommand($container->get(Helper::class), $container->get(PackageModel::class));
+    }
+
+    /**
+     * Get the SyncPullsCommand service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  SyncPullsCommand
+     */
+    public function getPullSyncCommandService(Container $container): SyncPullsCommand
+    {
+        return new SyncPullsCommand($container->get(Github::class), $container->get(Helper::class), $container->get(DatabaseInterface::class));
     }
 
     /**
