@@ -6,7 +6,7 @@ clone:
 
 steps:
   - name: composer
-    image: joomlaprojects/docker-images:php7.4
+    image: joomlaprojects/docker-images:php8.1
     commands:
       - php -v
       - composer update
@@ -16,14 +16,14 @@ steps:
         path: /tmp/composer-cache
 
   - name: phpcs
-    image: joomlaprojects/docker-images:php7.4
+    image: joomlaprojects/docker-images:php8.1
     depends_on:
       - composer
     commands:
       - vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/ bin/ www/
 
   - name: phpmd
-    image: joomlaprojects/docker-images:php7.4
+    image: joomlaprojects/docker-images:php8.1
     depends_on:
       - composer
     commands:
@@ -35,7 +35,7 @@ steps:
     failure: ignore
 
   - name: phpstan
-    image: joomlaprojects/docker-images:php7.4
+    image: joomlaprojects/docker-images:php8.1
     depends_on:
       - composer
     commands:
@@ -43,7 +43,7 @@ steps:
     failure: ignore
 
   - name: phploc
-    image: joomlaprojects/docker-images:php7.4
+    image: joomlaprojects/docker-images:php8.1
     depends_on:
       - composer
     commands:
@@ -51,7 +51,7 @@ steps:
     failure: ignore
 
   - name: phpcpd
-    image: joomlaprojects/docker-images:php7.4
+    image: joomlaprojects/docker-images:php8.1
     depends_on:
       - composer
     commands:
@@ -88,6 +88,6 @@ volumes:
 
 ---
 kind: signature
-hmac: cfdb9d635b44bffeaf7b3f291a2823a4656b95a052fe78508241b7f87169bb80
+hmac: 3976132d114c361d6cd7b0429b51b729adcea4f1065ccba4e589889cad94ae12
 
 ...
