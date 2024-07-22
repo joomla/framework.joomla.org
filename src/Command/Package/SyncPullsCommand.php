@@ -84,15 +84,18 @@ class SyncPullsCommand extends AbstractCommand
         $packages   = $this->helper->getPackages()->extract('packages')->toArray();
 
         foreach ($packages as $name => $package) {
+            $symfonyStyle->write('Retrieving PRs for ' . $name);
             try {
                 $packageName = $name;
                 if (isset($package['repo'])) {
                     $packageName = $package['repo'];
+                    $symfonyStyle->write(' (' . $packageName . ')');
                 }
+                $symfonyStyle->write(': ');
                 $pulls     = $this->github->pulls->getList('joomla-framework', $packageName);
                 $pullcount = count($pulls);
             } catch (UnexpectedResponseException $exception) {
-                var_dump($packageName);
+                $symfonyStyle->error($exception->getMessage());
                 $pullcount = 0;
             }
             $query = $this->database->getQuery(true)
@@ -102,6 +105,7 @@ class SyncPullsCommand extends AbstractCommand
             $query->bind('pullcount', $pullcount, ParameterType::INTEGER)
                 ->bind('packagename', $packageName, ParameterType::STRING);
             $this->database->setQuery($query)->execute();
+            $symfonyStyle->writeln($pullcount);
         }
 
         $symfonyStyle->success('Pull data synchronized.');
