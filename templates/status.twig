@@ -15,6 +15,7 @@
                 <th scope="col">1.x Series</th>
                 <th scope="col">2.x Series</th>
                 <th scope="col">3.x Series</th>
+                <th scope="col">4.x Series</th>
                 <th scope="col">PRs</th>
             </tr>
         </thead>
@@ -54,6 +55,14 @@
                         {% else %}
                             {{ release.v3.version }}
                             <a href="https://ci.joomla.org/joomla-framework/{{ release.package.repo }}"><img src="https://ci.joomla.org/api/badges/joomla-framework/{{ release.package.repo }}/status.svg?ref=refs/heads/3.x-dev" alt="Build Status" /></a>
+                        {% endif %}
+                    </td>
+                    <td data-label="4.x Series">
+                        {% if not release.package.has_v4 %}
+                            N/A
+                        {% else %}
+                            {{ release.v4.version }}
+                            <a href="https://ci.joomla.org/joomla-framework/{{ release.package.repo }}"><img src="https://ci.joomla.org/api/badges/joomla-framework/{{ release.package.repo }}/status.svg?ref=refs/heads/4.x-dev" alt="Build Status" /></a>
                         {% endif %}
                     </td>
                     <td data-label="PRs">

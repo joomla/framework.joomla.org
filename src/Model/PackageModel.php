@@ -55,7 +55,8 @@ class PackageModel implements DatabaseModelInterface
         bool $isAbandoned,
         bool $hasV1,
         bool $hasV2,
-        bool $hasV3
+        bool $hasV3,
+        bool $hasV4
     ): void {
         $db   = $this->getDb();
 
@@ -69,6 +70,7 @@ class PackageModel implements DatabaseModelInterface
             'has_v1'     => (int) $hasV1,
             'has_v2'     => (int) $hasV2,
             'has_v3'     => (int) $hasV3,
+            'has_v4'     => (int) $hasV4,
         ];
 
         $db->insertObject('#__packages', $data);
@@ -198,7 +200,8 @@ class PackageModel implements DatabaseModelInterface
         bool $isAbandoned,
         bool $hasV1,
         bool $hasV2,
-        bool $hasV3
+        bool $hasV3,
+        bool $hasV4
     ): void {
         $db   = $this->getDb();
 
@@ -213,6 +216,7 @@ class PackageModel implements DatabaseModelInterface
             'has_v1'     => (int) $hasV1,
             'has_v2'     => (int) $hasV2,
             'has_v3'     => (int) $hasV3,
+            'has_v4'     => (int) $hasV4,
         ];
 
         $db->updateObject('#__packages', $data, 'id');

@@ -6,10 +6,12 @@ packages:
         deprecated: true
         has_v2: false
         has_v3: false
+        has_v4: false
     compat:
         deprecated: true
         has_v2: false
         has_v3: false
+        has_v4: false
     console:
         has_v1: false
     controller: ~
@@ -21,6 +23,7 @@ packages:
         deprecated: true
         has_v2: false
         has_v3: false
+        has_v4: false
     datetime:
         abandoned: true
         display: DateTime
@@ -34,6 +37,7 @@ packages:
         deprecated: true
         has_v2: false
         has_v3: false
+        has_v4: false
     filesystem: ~
     filter: ~
     form:
@@ -46,12 +50,14 @@ packages:
         deprecated: true
         has_v2: false
         has_v3: false
+        has_v4: false
     http:
         display: HTTP
     image:
         deprecated: true
         has_v2: false
         has_v3: false
+        has_v4: false
     input: ~
     keychain: ~
     language: ~
@@ -60,16 +66,19 @@ packages:
         deprecated: true
         has_v2: false
         has_v3: false
+        has_v4: false
     linkedin:
         display: LinkedIn
         repo: linkedin-api
         deprecated: true
         has_v2: false
         has_v3: false
+        has_v4: false
     log:
         deprecated: true
         has_v2: false
         has_v3: false
+        has_v4: false
     mediawiki:
         display: MediaWiki
         repo: mediawiki-api
@@ -85,6 +94,7 @@ packages:
         deprecated: true
         has_v2: false
         has_v3: false
+        has_v4: false
     preload:
         has_v1: false
     profiler: ~
@@ -105,6 +115,7 @@ packages:
         deprecated: true
         has_v2: false
         has_v3: false
+        has_v4: false
     uri:
         display: URI
     utilities: ~

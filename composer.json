@@ -43,7 +43,8 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.59",
         "squizlabs/php_codesniffer": "~3.10",
-        "maximebf/debugbar": "^1.22.3"
+        "maximebf/debugbar": "^1.22.3",
+        "phpstan/phpstan": "^1.12"
     },
     "replace": {
         "paragonie/random_compat": "*"
