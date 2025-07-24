@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class Addv3Info extends AbstractMigration
+class Addv4Info extends AbstractMigration
 {
     /**
      * Change Method.
@@ -28,7 +28,7 @@ class Addv3Info extends AbstractMigration
     public function change()
     {
         $this->table('packages')
-            ->addColumn('has_v3', 'boolean', ['default' => true])
+            ->addColumn('has_v4', 'boolean', ['default' => true])
             ->update();
     }
 }

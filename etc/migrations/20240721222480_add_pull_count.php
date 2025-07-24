@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class Addv3Info extends AbstractMigration
+class AddPullCount extends AbstractMigration
 {
     /**
      * Change Method.
@@ -28,7 +28,7 @@ class Addv3Info extends AbstractMigration
     public function change()
     {
         $this->table('packages')
-            ->addColumn('has_v3', 'boolean', ['default' => true])
+            ->addColumn('pullcount', 'integer', ['null' => false, 'default' => 0])
             ->update();
     }
 }

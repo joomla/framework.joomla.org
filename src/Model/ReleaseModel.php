@@ -61,44 +61,32 @@ class ReleaseModel implements DatabaseModelInterface
     public function getLatestReleases(array $packages): array
     {
         $db       = $this->getDb();
-        $subQuery = $db->getQuery(true)
+        $query = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName('#__releases'))
             ->order('package_id ASC, version DESC');
-        $query = $db->getQuery(true)
-            ->select('*')
-            ->from('(' . (string) $subQuery . ') AS sub');
-        $releases = $db->setQuery($query)->loadObjectList('id');
+        $releases = $db->setQuery($query)->loadObjectList();
         $reports  = [];
         // Loop through the releases and build the reports
-        foreach ($packages as $id => $package) {
-            foreach ($releases as $release) {
-                $major = 'v' . substr($release->version, 0, 1);
+        foreach ($packages as $package) {
+            $info                  = new \stdClass();
+            $info->package         = $package;
+            $reports[$package->id] = $info;
+        }
 
-                // Skip if package is already included
-                if (
-                    isset($reports[$release->package_id])
-                    && isset($reports[$release->package_id]->$major)
-                ) {
-                    continue;
-                }
+        foreach ($releases as $release) {
+            $major = 'v' . substr($release->version, 0, 1);
 
-                // Skip if package is not included in list
-                if ($id == $release->package_id) {
-                    if (!isset($reports[$package->id])) {
-                        $info                  = new \stdClass();
-                        $info->package         = $package;
-                        $reports[$package->id] = $info;
-                    }
-
-                    $reports[$package->id]->$major = $release;
-                }
-
-                /**$release->package = $packages[$release->package_id];
-                unset($release->package_id);
-
-                $reports[$release->package->id] = $release;**/
+            // Skip if package is already included
+            if (!isset($reports[$release->package_id])) {
+                continue;
             }
+
+            if (isset($reports[$release->package_id]->$major)) {
+                continue;
+            }
+
+            $reports[$release->package_id]->$major = $release;
         }
 
         return $reports;
