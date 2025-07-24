@@ -87,7 +87,7 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
             case $event->getError() instanceof MethodNotAllowedException:
                 // Log the error for reference
 
-                $this->logger->error(sprintf('Route `%s` not supported by method `%s`', $app->get('uri.route'), $app->input->getMethod()), ['exception' => $event->getError()]);
+                $this->logger->error(sprintf('Route `%s` not supported by method `%s`', $app->get('uri.route'), $app->getInput()->getMethod()), ['exception' => $event->getError()]);
                 $this->prepareResponse($event);
                 $app->setHeader('Allow', implode(', ', $event->getError()->getAllowedMethods()));
 
@@ -132,7 +132,7 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
         $app = $event->getApplication();
         $app->allowCache(false);
         switch (true) {
-            case $app->input->getString('_format', 'html') === 'json':
+            case $app->getInput()->getString('_format', 'html') === 'json':
             case $app->mimeType === 'application/json':
             case $app->getResponse() instanceof JsonResponse:
                 $data = [

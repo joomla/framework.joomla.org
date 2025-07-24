@@ -89,28 +89,6 @@ class PageController extends AbstractController
 
         $package = $this->model->getPackage($packageName);
         switch ($version) {
-            case '1.x':
-                if (!$package->has_v1) {
-                    $this->errorView->setError(sprintf('The %s package does not have a 1.x branch to document.', $package->display));
-                } else {
-                    $this->errorView->setError('The Framework 1.x releases are not documented.');
-                }
-
-                $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
-
-                break;
-            case '2.x':
-                if (!$package->has_v2) {
-                    $this->errorView->setError(sprintf('The %s package does not have a 2.x branch to document.', $package->display));
-                    $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
-                } else {
-                    $this->pageView->setActivePackage($package);
-                    $this->pageView->setPageContent($this->githubHelper->renderDocsFile($version, $package, $filename));
-                    $this->pageView->setSidebarContent($this->githubHelper->renderDocsFile($version, $package, 'index'));
-                    $this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));
-                }
-
-                break;
             case '3.x':
                 if (!$package->has_v3) {
                     $this->errorView->setError(sprintf('The %s package does not have a 3.x branch to document.', $package->display));
@@ -123,8 +101,20 @@ class PageController extends AbstractController
                 }
 
                 break;
+            case '4.x':
+                if (!$package->has_v4) {
+                    $this->errorView->setError(sprintf('The %s package does not have a 4.x branch to document.', $package->display));
+                    $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
+                } else {
+                    $this->pageView->setActivePackage($package);
+                    $this->pageView->setPageContent($this->githubHelper->renderDocsFile($version, $package, $filename));
+                    $this->pageView->setSidebarContent($this->githubHelper->renderDocsFile($version, $package, 'index'));
+                    $this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));
+                }
+
+                break;
             case 'latest':
-                $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/3.x/{$package->package}/{$filename}"));
+                $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/4.x/{$package->package}/{$filename}"));
 
                 break;
             default:

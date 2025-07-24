@@ -69,16 +69,16 @@ class RedirectController extends AbstractController
 
         $package = $this->model->getPackage($packageName);
         switch ($version) {
-            case '1.x':
-                if (!$package->has_v1) {
-                    $this->errorView->setError(sprintf('The %s package does not have a 1.x branch to document.', $package->display));
+            case '3.x':
+                if (!$package->has_v2) {
+                    $this->errorView->setError(sprintf('The %s package does not have a 2.x branch to document.', $package->display));
                     $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
                 } else {
-                    $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/1.x/{$package->package}/overview"));
+                    $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/$version/{$package->package}/overview"));
                 }
 
                 break;
-            case '2.x':
+            case '4.x':
                 if (!$package->has_v2) {
                     $this->errorView->setError(sprintf('The %s package does not have a 2.x branch to document.', $package->display));
                     $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
@@ -88,7 +88,7 @@ class RedirectController extends AbstractController
 
                 break;
             case 'latest':
-                $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/2.x/{$package->package}/overview"));
+                $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/4.x/{$package->package}/overview"));
 
                 break;
             default:

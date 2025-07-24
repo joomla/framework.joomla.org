@@ -227,8 +227,8 @@ EOF
     private function processPackage(\stdClass $package, SymfonyStyle $symfonyStyle): void
     {
         // Set docs branches
-        $branches = ['2.0-dev', '3.x-dev'];
-        $versions = ['2.x', '3.x'];
+        $branches = ['3.x-dev', '4.x-dev'];
+        $versions = ['3.x', '4.x'];
 
         foreach ($branches as $key => $branch) {
             $this->processDirectory($branch, $versions[$key], 'docs', $package, $symfonyStyle);
