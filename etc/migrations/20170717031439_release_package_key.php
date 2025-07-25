@@ -28,7 +28,7 @@ class ReleasePackageKey extends AbstractMigration
 	public function change()
 	{
 		$this->table('releases')
-			->addForeignKey('package_id', 'packages', ['id'])
+			->addForeignKey('package_id', 'packages', ['id'], ['delete' => 'CASCADE'])
 			->update();
 	}
 }

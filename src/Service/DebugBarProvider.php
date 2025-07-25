@@ -23,14 +23,18 @@ use Joomla\DI\Container;
 use Joomla\DI\Exception\DependencyResolutionException;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
+use Joomla\FrameworkWebsite\Cache\Adapter\DebugAdapter;
 use Joomla\FrameworkWebsite\Controller\DebugControllerResolver;
 use Joomla\FrameworkWebsite\DebugBar\JoomlaHttpDriver;
 use Joomla\FrameworkWebsite\DebugWebApplication;
 use Joomla\FrameworkWebsite\Event\DebugDispatcher;
 use Joomla\FrameworkWebsite\EventListener\DebugSubscriber;
+use Joomla\FrameworkWebsite\Http\HttpFactory;
 use Joomla\FrameworkWebsite\Router\DebugRouter;
+use Joomla\Http\HttpFactory as BaseHttpFactory;
 use Joomla\Input\Input;
 use Joomla\Router\RouterInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Twig\Extension\ProfilerExtension;
 
@@ -61,6 +65,7 @@ class DebugBarProvider implements ServiceProviderInterface
             ->share('debug.http.driver', [$this, 'getDebugHttpDriverService'], true);
         $container->alias(DebugSubscriber::class, 'event.subscriber.debug')
             ->share('event.subscriber.debug', [$this, 'getEventSubscriberDebugService'], true);
+        $container->extend(CacheItemPoolInterface::class, [$this, 'getDecoratedCacheService']);
         $container->extend(ControllerResolverInterface::class, [$this, 'getDecoratedControllerResolverService']);
         $container->extend(DispatcherInterface::class, [$this, 'getDecoratedDispatcherService']);
         $container->extend(AbstractWebApplication::class, [$this, 'getDecoratedWebApplicationService']);
@@ -152,6 +157,19 @@ class DebugBarProvider implements ServiceProviderInterface
     public function getDebugHttpDriverService(Container $container): JoomlaHttpDriver
     {
         return new JoomlaHttpDriver($container->get(AbstractWebApplication::class));
+    }
+
+    /**
+     * Get the decorated `cache` service
+     *
+     * @param   CacheItemPoolInterface  $cache      The original CacheItemPoolInterface service.
+     * @param   Container               $container  The DI container.
+     *
+     * @return  CacheItemPoolInterface
+     */
+    public function getDecoratedCacheService(CacheItemPoolInterface $cache, Container $container): CacheItemPoolInterface
+    {
+        return new DebugAdapter($container->get('debug.bar'), $cache);
     }
 
     /**

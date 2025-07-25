@@ -28,5 +28,14 @@ mix
     })
 ;
 
+// Code syntax highlighting
+mix
+    .sass('assets/scss/code.scss', 'css')
+    .options({
+        postCss: [
+            require('autoprefixer')()
+        ]
+    });
+
 // Version assets
 mix.version();

@@ -59,11 +59,11 @@ class DebugWebApplication extends WebApplication
      */
     protected function doExecute(): void
     {
-        $route = $this->router->parseRoute($this->get('uri.route', ''), $this->input->getMethod());
+        $route = $this->router->parseRoute($this->get('uri.route', ''), $this->getInput()->getMethod());
 
         // Add variables to the input if not already set
         foreach ($route->getRouteVariables() as $key => $value) {
-            $this->input->def($key, $value);
+            $this->getInput()->def($key, $value);
         }
 
         $controller = $this->controllerResolver->resolve($route);
