@@ -13,7 +13,7 @@
 
 // Ensure we've initialized Composer
 if (!file_exists(JPATH_ROOT . '/vendor/autoload.php')) {
-    header('HTTP/1.1 500 Internal Server Error', null, 500);
+    header('HTTP/1.1 500 Internal Server Error', true, 500);
     echo '<html><head><title>Server Error</title></head><body><h1>Composer Not Installed</h1><p>Composer is not set up properly, please run "composer install".</p></body></html>';
 
     exit(500);
@@ -59,7 +59,7 @@ try {
 } catch (\Throwable $e) {
     error_log($e);
 
-    header('HTTP/1.1 500 Internal Server Error', null, 500);
+    header('HTTP/1.1 500 Internal Server Error', true, 500);
     echo '<html><head><title>Container Initialization Error</title></head><body><h1>Container Initialization Error</h1><p>An error occurred while creating the DI container: ' . $e->getMessage() . '</p></body></html>';
 
     exit(1);
@@ -82,7 +82,7 @@ try {
     error_log($e);
 
     if (!headers_sent()) {
-        header('HTTP/1.1 500 Internal Server Error', null, 500);
+        header('HTTP/1.1 500 Internal Server Error', true, 500);
         header('Content-Type: text/html; charset=utf-8');
     }
 

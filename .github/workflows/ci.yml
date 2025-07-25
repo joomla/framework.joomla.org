@@ -1,0 +1,75 @@
+name: Deployment
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  composer:
+    name: Install PHP dependencies
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        id: cache-php
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Install PHP dependencies
+        if: steps.cache-php.outputs.cache-hit != 'true'
+        run: |
+          git config --global --add safe.directory $GITHUB_WORKSPACE
+          composer config --global home
+          composer install --no-progress
+
+  code-style-php:
+    name: Check PHP code style
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.4
+    needs: [composer]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache/restore@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Check PHP code style
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: true
+        run: vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/ bin/ www/
+
+  phpstan:
+    name: Run PHPstan
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.4
+    needs: [code-style-php]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache/restore@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Run PHPstan
+        run: |
+          ./vendor/bin/phpstan --error-format=github
+
+  deployment:
+    name: Deployment to server
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Update server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/fwjoomla/siteData
+            bin/framework update:server

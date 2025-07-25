@@ -4,47 +4,48 @@
     "homepage": "http://github.com/joomla/framework.joomla.org",
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "ext-json": "*",
         "ext-pdo": "*",
         "fig/link-util": "^1.1",
-        "joomla/application": "^3.0",
-        "joomla/console": "^3.0",
-        "joomla/controller": "^3.0",
-        "joomla/database": "^3.0",
-        "joomla/di": "^3.0",
-        "joomla/event": "^3.0",
-        "joomla/filesystem": "^3.0",
-        "joomla/filter": "^3.0",
-        "joomla/github": "^3.0@dev",
-        "joomla/http": "^3.0",
-        "joomla/input": "^3.0",
-        "joomla/model": "^3.0",
-        "joomla/preload": "^3.0",
-        "joomla/registry": "^3.0",
-        "joomla/renderer": "^3.0",
-        "joomla/router": "^3.0",
-        "joomla/string": "^3.0",
-        "joomla/uri": "^3.0",
-        "joomla/utilities": "^3.0",
-        "joomla/view": "^3.0",
-        "laminas/laminas-diactoros": "^2.17",
+        "joomla/application": "^4.0",
+        "joomla/console": "^4.0",
+        "joomla/controller": "^4.0",
+        "joomla/database": "^4.0",
+        "joomla/di": "^4.0",
+        "joomla/event": "^4.0",
+        "joomla/filesystem": "^4.0",
+        "joomla/filter": "^4.0",
+        "joomla/github": "^4.0",
+        "joomla/http": "^4.0",
+        "joomla/input": "^4.0",
+        "joomla/model": "^4.0",
+        "joomla/preload": "^4.0",
+        "joomla/registry": "^4.0",
+        "joomla/renderer": "dev-4.x-dev",
+        "joomla/router": "^4.0",
+        "joomla/string": "^4.0",
+        "joomla/uri": "^4.0",
+        "joomla/utilities": "^4.0",
+        "joomla/view": "^4.0",
+        "laminas/laminas-diactoros": "^3.6.0",
         "monolog/monolog": "^2.1",
-        "psr/link": "^1.0",
+        "psr/link": "^2.0",
         "ramsey/uuid": "^4.0.1",
         "robmorgan/phinx": "^0.16.1",
-        "symfony/asset": "^5.1.2",
-        "symfony/process": "^5.1.2",
-        "symfony/web-link": "^5.1.2",
-        "symfony/yaml": "^5.1.2",
+        "symfony/asset": "^v7.2.0",
+        "symfony/process": "^7.1.7.0",
+        "symfony/web-link": "^v7.3.0",
+        "symfony/yaml": "^v7.3.1",
         "theiconic/php-ga-measurement-protocol": "^2.7.2",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.19.0.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.59",
-        "squizlabs/php_codesniffer": "~3.10",
-        "maximebf/debugbar": "^1.22.3",
-        "phpstan/phpstan": "^1.12"
+        "squizlabs/php_codesniffer": "^3.10",
+        "php-debugbar/php-debugbar": "^v2.2.4",
+        "phpstan/phpstan": "^2.1.19",
+        "phpstan/phpstan-deprecation-rules": "^2.0.3"
     },
     "replace": {
         "paragonie/random_compat": "*"
@@ -56,7 +57,7 @@
     },
     "config": {
         "platform": {
-            "php": "8.1.0"
+            "php": "8.3.0"
         }
     }
 }
