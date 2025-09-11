@@ -11,10 +11,12 @@
                 <h3>Package List</h3>
                 <nav>
                     <ul>
-                        {% for package in packages if package.stable %}
+                        {% for package in packages %}
+                            {% if package.stable %}
                             <li>
                                 <a href="{{ route('docs/latest/' ~ package.package) }}">{{ package.display }}</a>
                             </li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </nav>
