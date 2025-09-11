@@ -15,7 +15,10 @@ $theme-colors: (
 
 $body-bg: $darker-black !default;
 
+$card-bg: var(--body-bg) !default;
+
 $link-color: #214a73;
+$link-decoration: none;
 
 $font-family-sans-serif: 'Source Sans Pro', sans-serif;
 $font-family-monospace:  'Source Sans Pro', sans-serif;

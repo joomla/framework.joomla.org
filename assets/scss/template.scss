@@ -9,7 +9,8 @@
 @import '~@fortawesome/fontawesome-free/scss/variables';
 @import '~@fortawesome/fontawesome-free/scss/mixins';
 @import '~@fortawesome/fontawesome-free/scss/core';
-@import "~@fortawesome/fontawesome-free/scss/_larger";
+@import '~@fortawesome/fontawesome-free/scss/sizing';
+//@import "~@fortawesome/fontawesome-free/scss/_larger";
 //@import '~@fortawesome/fontawesome-free/scss/fixed-width';
 //@import '~@fortawesome/fontawesome-free/scss/list';
 //@import '~@fortawesome/fontawesome-free/scss/bordered-pulled';
@@ -24,11 +25,11 @@
 @import "~@fortawesome/fontawesome-free/scss/solid";
 
 // Bootstrap
-@import "~bootstrap/scss/_functions";
-@import "~bootstrap/scss/_variables";
-@import "~bootstrap/scss/_maps";
-@import "~bootstrap/scss/_mixins";
-@import "~bootstrap/scss/_utilities";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/maps";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
 
 @import "~bootstrap/scss/_root";
 @import "~bootstrap/scss/_reboot";
@@ -62,7 +63,8 @@
 //@import "~bootstrap/scss/_offcanvas";
 //@import "~bootstrap/scss/_placeholders";
 
-@import "~bootstrap/scss/_helpers";
+@import "~bootstrap/scss/helpers";
+@import "~bootstrap/scss/utilities/api";
 
 // Site components
 @import "_global";

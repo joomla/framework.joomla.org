@@ -5,7 +5,7 @@ require('laravel-mix-purgecss');
 mix.setPublicPath('www/media/');
 
 // Configure base path for media assets
-mix.setResourceRoot('/media/');
+mix.setResourceRoot('/framework.joomla.org/www/media/');
 
 // Core app JS
 mix.js('assets/js/template.js', 'js');
