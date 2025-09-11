@@ -36,6 +36,7 @@ use Joomla\Input\Input;
 use Joomla\Router\RouterInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Twig\Extension\ProfilerExtension;
 
 /**
@@ -162,12 +163,12 @@ class DebugBarProvider implements ServiceProviderInterface
     /**
      * Get the decorated `cache` service
      *
-     * @param   CacheItemPoolInterface  $cache      The original CacheItemPoolInterface service.
+     * @param   AdapterInterface  $cache      The original CacheItemPoolInterface service.
      * @param   Container               $container  The DI container.
      *
      * @return  CacheItemPoolInterface
      */
-    public function getDecoratedCacheService(CacheItemPoolInterface $cache, Container $container): CacheItemPoolInterface
+    public function getDecoratedCacheService(AdapterInterface $cache, Container $container): CacheItemPoolInterface
     {
         return new DebugAdapter($container->get('debug.bar'), $cache);
     }
@@ -224,7 +225,7 @@ class DebugBarProvider implements ServiceProviderInterface
      * @param   ProfilerExtension  $profiler   The original ProfilerExtension service.
      * @param   Container          $container  The DI container.
      *
-     * @return  NamespacedTwigProfileCollector
+     * @return  ProfilerExtension
      */
     public function getDecoratedTwigExtensionProfilerService(
         ProfilerExtension $profiler,

@@ -86,7 +86,7 @@ class DebugAdapter implements AdapterInterface, CacheInterface, PruneableInterfa
      *
      * @param   string  $key  The key for which to return the corresponding Cache Item.
      *
-     * @return  CacheItemInterface  The corresponding Cache Item.
+     * @return  \Symfony\Component\Cache\CacheItem  The corresponding Cache Item.
      */
     public function getItem($key): \Symfony\Component\Cache\CacheItem
     {

@@ -86,7 +86,7 @@ class SyncCommand extends AbstractCommand
             $url = "https://packagist.org/packages/joomla/{$package->package}.json";
             try {
                 $response = $this->http->get($url);
-                $data     = json_decode($response->body);
+                $data     = json_decode((string) $response->getBody());
                 if (!isset($data->package)) {
                     var_dump($data);
                 } else {

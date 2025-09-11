@@ -9,7 +9,6 @@
 
 namespace Joomla\FrameworkWebsite\View\Package;
 
-use Joomla\FrameworkWebsite\Helper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
 use Joomla\Renderer\RendererInterface;
@@ -20,13 +19,6 @@ use Joomla\View\HtmlView;
  */
 class PackageHtmlView extends HtmlView
 {
-    /**
-     * Helper object
-     *
-     * @var  Helper
-     */
-    private $helper;
-
     /**
      * The active package
      *
@@ -53,13 +45,11 @@ class PackageHtmlView extends HtmlView
      *
      * @param   PackageModel       $packageModel     The package model object.
      * @param   ReleaseModel       $releaseModel     The release model object.
-     * @param   Helper             $helper           Helper object.
      * @param   RendererInterface  $renderer         The renderer object.
      */
-    public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, Helper $helper, RendererInterface $renderer)
+    public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, RendererInterface $renderer)
     {
         parent::__construct($renderer);
-        $this->helper       = $helper;
         $this->packageModel = $packageModel;
         $this->releaseModel = $releaseModel;
     }

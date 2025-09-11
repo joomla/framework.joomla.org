@@ -117,7 +117,7 @@ class PackageModel implements DatabaseModelInterface
         $package = $db->setQuery($query)->loadObject();
 
         if (!$package) {
-            throw new PackageNotFoundException(sprintf('Unable to find release data for the `%s` package', $package->display), 404);
+            throw new PackageNotFoundException(sprintf('Unable to find release data for the `%s` package', $packageName), 404);
         }
 
         return $package;

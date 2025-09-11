@@ -68,6 +68,7 @@ class PageController extends AbstractController
     public function __construct(PackageModel $model, ErrorHtmlView $errorView, PageHtmlView $pageView, GitHubHelper $githubHelper, Input $input = null, AbstractApplication $app = null)
     {
         parent::__construct($input, $app);
+        $this->errorView    = $errorView;
         $this->pageView     = $pageView;
         $this->githubHelper = $githubHelper;
         $this->model        = $model;

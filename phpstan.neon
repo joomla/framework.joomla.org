@@ -1,13 +1,13 @@
 includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
-    - phpstan-baseline.neon
 parameters:
   level: 5
+  phpVersion: 80300
   paths:
     - bin
-    - src
     - www
-  scanDirectories:
-    - vendor
+    - src
   ignoreErrors:
   reportUnmatchedIgnoredErrors: false
+  bootstrapFiles:
+    - phpstan_constants.php
