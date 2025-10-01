@@ -1276,16 +1276,16 @@
         },
         {
             "name": "joomla/filter",
-            "version": "4.0.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomla-framework/filter.git",
-                "reference": "63a30dd72de04a76f34fa09f475135fe708c75d4"
+                "reference": "fcde280785f188e93530f7da68102f7dd8f9f723"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/63a30dd72de04a76f34fa09f475135fe708c75d4",
-                "reference": "63a30dd72de04a76f34fa09f475135fe708c75d4",
+                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/fcde280785f188e93530f7da68102f7dd8f9f723",
+                "reference": "fcde280785f188e93530f7da68102f7dd8f9f723",
                 "shasum": ""
             },
             "require": {
@@ -1321,9 +1321,9 @@
             ],
             "support": {
                 "issues": "https://github.com/joomla-framework/filter/issues",
-                "source": "https://github.com/joomla-framework/filter/tree/4.0.0"
+                "source": "https://github.com/joomla-framework/filter/tree/4.0.1"
             },
-            "time": "2025-07-23T19:57:09+00:00"
+            "time": "2025-09-30T15:42:06+00:00"
         },
         {
             "name": "joomla/github",
@@ -3626,7 +3626,7 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.32.0",
+            "version": "v1.33.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -3687,7 +3687,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.32.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.33.0"
             },
             "funding": [
                 {
@@ -3696,6 +3696,10 @@
                 },
                 {
                     "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
                     "type": "github"
                 },
                 {
