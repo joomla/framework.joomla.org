@@ -4,6 +4,7 @@
         <!-- For Responsive -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css', 'mix') }}" type="text/css"{{ sri('css/bootstrap.css') }}>
         <link rel="stylesheet" href="{{ asset('css/template.css', 'mix') }}" type="text/css"{{ sri('css/template.css') }}>
         {% block stylesheets %}{% endblock %}
         {% if appDebug %}
@@ -38,17 +39,35 @@
     </head>
     <body id="go" data-bs-theme="light">
         {% block bodyNavigation %}
-            <nav class="container-fluid main-nav">
-                <ul>
-                    <li><a href="{{ route() }}"><span class="fab fa-joomla" aria-hidden="true"></span><span class="title">Framework</span></a></li>
-                    <li><a href="{{ route('docs') }}"><span class="fas fa-file-alt" aria-hidden="true"></span><span class="title">Documentation</span></a></li>
-                    <li><a href="{{ route('status') }}"><span class="fas fa-wrench" aria-hidden="true"></span><span class="title">Status</span></a></li>
-                </ul>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Joomla Framework</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a  class="nav-link" href="{{ route() }}">
+                                    <span class="fab fa-joomla" aria-hidden="true"></span><span class="title">Framework</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a {{ (route == 'docs') ? 'class="nav-link active" aria-current="page"' : 'class="nav-link"' }} href="{{ route('docs') }}">
+                                    <span class="fas fa-file-alt" aria-hidden="true"></span><span class="title">Documentation</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a {{ (route == 'status') ? 'class="nav-link active" aria-current="page"' : 'class="nav-link"' }} href="{{ route('status') }}">
+                                    <span class="fas fa-wrench" aria-hidden="true"></span><span class="title">Status</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         {% endblock %}
-        <main>
-            {% block content %}{% endblock %}
-        </main>
+        {% block content %}{% endblock %}
         <footer class="clearfix" role="contentinfo" id="resources">
             {% block footerContent %}
                 {% import 'macros.twig' as macros  %}
@@ -59,6 +78,7 @@
         </footer>
 
         <script src="{{ asset('js/template.js', 'mix') }}"{{ sri('js/template.js') }}></script>
+        <script src="{{ asset('js/bootstrap.bundle.js', 'mix') }}"{{ sri('js/bootstrap.bundle.js') }}></script>
         {% block bodyJavaScript %}{% endblock %}
         {% if appDebug %}
             <script src="{{ asset('js/debugbar.js') }}"></script>

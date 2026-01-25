@@ -65,6 +65,7 @@ class PackageHtmlView extends HtmlView
         $this->setData([
                 'releases' => $this->releaseModel->getPackageHistory($package),
                 'package'  => $package,
+                'route'    => 'status',
             ]);
         return parent::render();
     }

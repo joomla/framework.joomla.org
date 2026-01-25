@@ -1,14 +1,34 @@
 {% extends "index.twig" %}
 
 {% block bodyNavigation %}
-<nav class="container-fluid main-nav homepage" data-scroll-header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-scroll-header>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Joomla Framework</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a data-scroll href="#go" class="nav-link active" aria-current="page">
+                        <span class="fas fa-cloud-download-alt" aria-hidden="true"></span><span class="title">Download</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a data-scroll href="#about" class="nav-link">
+                        <span class="fas fa-info-circle" aria-hidden="true"></span><span class="title">About</span>
+                    </a>
+                </li>
+                <li class="nav-item"><a data-scroll href="#involved" class="nav-link"><span class="fas fa-globe-americas" aria-hidden="true"></span><span class="title">Get Involved</span></a></li>
+                <li class="nav-item"><a data-scroll href="#resources" class="nav-link"><span class="fas fa-book" aria-hidden="true"></span><span class="title">Resources</span></a></li>
+                <li class="nav-item"><a href="{{ route('docs') }}" class="nav-link"><span class="fas fa-file-alt" aria-hidden="true"></span><span class="title">Documentation</span></a></li>
+                <li class="nav-item"><a href="{{ route('status') }}" class="nav-link"><span class="fas fa-wrench" aria-hidden="true"></span><span class="title">Status</span></a></li>
+            </ul>
+        </div>
+    </div>
+
     <ul>
-        <li><a data-scroll href="#go"><span class="fas fa-cloud-download-alt" aria-hidden="true"></span><span class="title">Download</span></a></li>
-        <li><a data-scroll href="#about"><span class="fas fa-info-circle" aria-hidden="true"></span><span class="title">About</span></a></li>
-        <li><a data-scroll href="#involved"><span class="fas fa-globe-americas" aria-hidden="true"></span><span class="title">Get Involved</span></a></li>
-        <li><a data-scroll href="#resources"><span class="fas fa-book" aria-hidden="true"></span><span class="title">Resources</span></a></li>
-        <li><a href="{{ route('docs') }}"><span class="fas fa-file-alt" aria-hidden="true"></span><span class="title">Documentation</span></a></li>
-        <li><a href="{{ route('status') }}"><span class="fas fa-wrench" aria-hidden="true"></span><span class="title">Status</span></a></li>
+
     </ul>
 </nav>
 {% endblock %}
@@ -172,7 +192,7 @@
         <p>Subscribe to the Google Group mailing list.</p>
         <form action="https://groups.google.com/group/joomla-dev-framework/boxsubscribe" class="form-inline row row-cols-lg-auto g-3 signup" role="form">
             <div class="col-9">
-                <label class="sr-only" for="email">Email address</label>
+                <label class="visually-hidden" for="email">Email address</label>
                 <input type="email" id="email" name="email" placeholder="Email Address" class="form-control mr-sm-2" required>
             </div>
             <div class="col-3">

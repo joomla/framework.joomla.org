@@ -37,5 +37,9 @@ mix
         ]
     });
 
+mix.css('node_modules/bootstrap/dist/css/bootstrap.css', 'css');
+mix.css('node_modules/bootstrap/dist/css/bootstrap.min.css', 'css');
+mix.js('node_modules/bootstrap/dist/js/bootstrap.bundle.js', 'js');
+
 // Version assets
 mix.version();

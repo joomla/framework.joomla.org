@@ -56,6 +56,7 @@ class StatusHtmlView extends HtmlView
     {
         $this->setData([
                 'releases' => $this->releaseModel->getLatestReleases($this->packageModel->getActivePackages()),
+                'route'    => 'status',
             ]);
         return parent::render();
     }

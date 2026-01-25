@@ -45,6 +45,7 @@ class IndexHtmlView extends HtmlView
     {
         $this->setData([
                 'packages' => $this->packageModel->getSortedPackages(),
+                'route'    => 'docs',
             ]);
         return parent::render();
     }

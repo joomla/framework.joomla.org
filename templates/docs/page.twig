@@ -7,31 +7,31 @@
 {% endblock %}
 
 {% block content %}
-    <section class="docs container">
-        <h1 class="centered-title">Framework Documentation - {{ activePackage.display }} Package</h1>
-
-        <div class="sidenav-body">
-            <aside class="sidebar">
-                <h3>Package Index</h3>
-                <nav>
+    <div class="d-flex">
+        <button class="btn btn-dark d-md-none sidebartoggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-expanded="false" aria-label="Toggle mainnavigation">Show Navigation</button>
+        <div id="sidebar" class="col_sidebar p-4 bg-light bg-gradient border-end flex-lg-shrink-0 sticky-lg-top overflow-auto">
+            <nav>
+                <span class="text-uppercase fw-bolder fs-6">Package Index</span>
                     {{ sidebarContents|raw }}
-                </nav>
                 <h3>Package List</h3>
-                <nav>
-                    <ul>
-                        {% for package in packages %}
-                            {% if package.stable %}
+                <ul class="list-unstyled">
+                    {% for package in packages %}
+                        {% if package.stable %}
                             <li>
-                                <a href="{{ route('docs/latest/' ~ package.package) }}">{{ package.display }}</a>
+                                <a class="text-decoration-none px-3 py-2 d-block" href="{{ route('docs/latest/' ~ package.package) }}">{{ package.display }}</a>
                             </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </nav>
-            </aside>
-            <section class="content markdown-body">
-                {{ contents|raw }}
-            </section>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
         </div>
-    </section>
+        <main class="col_main container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="centered-title">Framework Documentation - {{ activePackage.display }} Package</h1>
+                    {{ contents|raw }}
+                </div>
+            </div>
+        </main>#
+    </div>
 {% endblock %}

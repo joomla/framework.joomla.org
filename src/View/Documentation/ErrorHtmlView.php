@@ -52,6 +52,7 @@ class ErrorHtmlView extends HtmlView
         $this->setData([
                 'error'    => $this->error,
                 'packages' => $this->packageModel->getSortedPackages(),
+                'route'    => 'docs',
             ]);
         return parent::render();
     }

@@ -66,6 +66,7 @@ class PageHtmlView extends HtmlView
                 'contents'        => $this->contents,
                 'packages'        => $this->packageModel->getSortedPackages(),
                 'sidebarContents' => $this->sidebarContents,
+                'route'           => 'docs',
             ]);
         return parent::render();
     }

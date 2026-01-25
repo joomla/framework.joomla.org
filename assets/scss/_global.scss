@@ -83,6 +83,7 @@ main {
 
 footer {
   color: #a4a4a4;
+  background: $darker-black;
   padding-top: 1.25rem;
   font-size: $font-size-sm;
   @include media-breakpoint-down(lg) {
@@ -162,3 +163,32 @@ footer {
     @extend .bg-light;
   }
 }**/
+
+@media screen and (max-width: 991px) {
+  .col_sidebar {
+    width: 90%;
+    max-width: 360px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    transition: .25s ease-in-out;
+    transform: translateX(-100%);
+    z-index: 1999;
+  }
+  .col_sidebar.show {
+    transform: translateX(0);
+  }
+  .sidebartoggle {
+    right: 16px;
+    bottom: 16px;
+    z-index: 2000;
+    position: fixed;
+  }
+}
+@media screen and (min-width: 992px) {
+  .col_sidebar {
+    width: 300px;
+    height: calc(100vh - 56px);
+  }
+}
