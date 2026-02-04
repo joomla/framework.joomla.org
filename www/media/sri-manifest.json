@@ -19,6 +19,66 @@
         "crossorigin": "anonymous",
         "integrity": "sha384-HfJePispJTwbfAZu8swldlIOThsee2CXzG84e8kp+VVy9qVAZB1ekMOEyDOu2KXt"
     },
+    "/images/j-framework-500.png": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-mxBTkRg6ubq6fZzYAHQyluP7O92+MP41uTSly8+q+FAu/gJYmVR1Mh+UjCsgqRp0"
+    },
+    "/images/j-framework-767.png": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-wCCE36YpWVx7A2gtpfei7izTwwKxJliydHXt3ABTen4x2MxFf7aIKXkOlQ+QLBNM"
+    },
+    "/images/j-framework-1200.png": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-T7PCd1Syqi7reoehn6IQhT8f6wGbxxGdmjPxHpBgUQ+l35/Ir2bYn7Da5DBMzMbY"
+    },
+    "/images/j-framework-full.png": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-tY2SJceDCMCDL9gdOU+Ywv1QX7GRSAsnoT9tx7AxnHJ0IuOiEO/68zm1xoJWoL46"
+    },
+    "/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-bNFfEGE8gqu/OrejxP29U6mcYcjl1MT9QQCP9d3I3tW29JM/z48LHFzzR6JB2RgO"
+    },
+    "/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-oaTy4BjHxQ8WguoxCtcO26MO/oSRUi+2Mu5tPttlIGLon4NSwYyc8rAcIt4O9L4o"
+    },
+    "/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-FlhYfxVaRGxDmeD2ZcTNo9+fTFRiVtGpzalBUwtDs/5TnTljSWklnXgejlWI8iC6"
+    },
+    "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-600-normal.woff2": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-Ovhf48/NzFhqI22sRQiGMFWHjvwjgfM2AOMHW7kMWSHvjRhVrzQAPcwm5w+URZzl"
+    },
+    "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-600-normal.woff": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-nthLI9IYK9kPX7Tfalt2cK6iuH8NkjdPhlLpqltKzqzQjh33IXZePTuzja7C8ruW"
+    },
+    "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-ext-600-normal.woff2": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-qaUuKFA2hJh8Ibrik1Hpa/j8OorSbEf6IQElO+FEZ1P/RjI1VJTokXNGoBrrU53D"
+    },
+    "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-ext-600-normal.woff": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-ATb0xw5Ua2z/rhnyJi0Rnmc6Cqg8wkGQT2t9cS1xA8iLlqMJ4Rbp/llK3ke6/krj"
+    },
+    "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-400-normal.woff2": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-Q9+ziwSKX7GanApOAZWI4MYQgck99C0vlxlEOTtxQb0Lu/8ijQqW7ecCnd2faw3b"
+    },
+    "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-400-normal.woff": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-w2c2Mev3Qb+xmvweAu/Xc84tJL2XBxX4hP3jSKNdSL1b00yfiXF2ox15tDJVQt0W"
+    },
+    "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-ext-400-normal.woff2": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-svCvLBPedkL7kNcLRPEd4AQ/q1YuuudGFII6d8+YQ7zfrorxyECM3OxwbeppWOBf"
+    },
+    "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-ext-400-normal.woff": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-E+RxpxN+JNpGgMVo0Jr7AbSAwqBFadN3t1hQjj97vNIPHLWo8R+8afu3cKW1d/5V"
+    },
     "/css/template.css.map": {
         "crossorigin": "anonymous",
         "integrity": "sha384-Whaggc1408d8Z5eByOtr+7IPhS+bxL0nBBWkkiY5Yz/Fu/f3X/liZruMgf+IB/Lv"
