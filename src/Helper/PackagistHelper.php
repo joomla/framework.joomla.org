@@ -60,7 +60,7 @@ class PackagistHelper
             $url = "https://packagist.org/packages/joomla/$packageName.json";
             try {
                 $response             = $this->http->get($url);
-                $data                 = json_decode($response->body);
+                $data                 = json_decode((string) $response->getBody());
                 $counts[$packageName] = $data->package->downloads->total;
             } catch (\RuntimeException $exception) {
                 $counts[$packageName] = false;

@@ -1,0 +1,37 @@
+{% extends 'index.twig' %}
+
+{% block title %}Joomla! Framework Documentation - {{ activePackage.display }} Package{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ preload(asset('css/code.css', 'mix'), 'preload', {'as': 'style'}) }}" type="text/css"{{ sri('css/code.css') }}>
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex">
+        <button class="btn btn-dark d-md-none sidebartoggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-expanded="false" aria-label="Toggle mainnavigation">Show Navigation</button>
+        <div id="sidebar" class="col_sidebar p-4 bg-light bg-gradient border-end flex-lg-shrink-0 sticky-lg-top overflow-auto">
+            <nav>
+                <span class="text-uppercase fw-bolder fs-6">Package Index</span>
+                    {{ sidebarContents|raw }}
+                <h3>Package List</h3>
+                <ul class="list-unstyled">
+                    {% for package in packages %}
+                        {% if package.stable %}
+                            <li>
+                                <a class="text-decoration-none px-3 py-2 d-block" href="{{ route('docs/latest/' ~ package.package) }}">{{ package.display }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+        <main class="col_main container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="centered-title">Framework Documentation - {{ activePackage.display }} Package</h1>
+                    {{ contents|raw }}
+                </div>
+            </div>
+        </main>#
+    </div>
+{% endblock %}

@@ -19,7 +19,12 @@
     },
     "log": {
         "level": "error",
-        "application": "error"
+        "application": "error",
+        "database": "error"
+    },
+    "cache": {
+        "enabled": true,
+        "adapter": "file"
     },
     "github": {
         "gh": {

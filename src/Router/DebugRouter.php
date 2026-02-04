@@ -91,8 +91,8 @@ class DebugRouter implements RouterInterface
      *
      * @return  ResolvedRoute
      *
-     * @throws  Exception\MethodNotAllowedException if the route was found but does not support the request method
-     * @throws  Exception\RouteNotFoundException if the route was not found
+     * @throws  \Joomla\Router\Exception\MethodNotAllowedException if the route was found but does not support the request method
+     * @throws  \Joomla\Router\Exception\RouteNotFoundException if the route was not found
      */
     public function parseRoute($route, $method = 'GET')
     {

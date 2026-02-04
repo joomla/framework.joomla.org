@@ -5,7 +5,7 @@ require('laravel-mix-purgecss');
 mix.setPublicPath('www/media/');
 
 // Configure base path for media assets
-mix.setResourceRoot('/media/');
+mix.setResourceRoot('/framework.joomla.org/www/media/');
 
 // Core app JS
 mix.js('assets/js/template.js', 'js');
@@ -27,6 +27,19 @@ mix
         }
     })
 ;
+
+// Code syntax highlighting
+mix
+    .sass('assets/scss/code.scss', 'css')
+    .options({
+        postCss: [
+            require('autoprefixer')()
+        ]
+    });
+
+mix.css('node_modules/bootstrap/dist/css/bootstrap.css', 'css');
+mix.css('node_modules/bootstrap/dist/css/bootstrap.min.css', 'css');
+mix.js('node_modules/bootstrap/dist/js/bootstrap.bundle.js', 'js');
 
 // Version assets
 mix.version();

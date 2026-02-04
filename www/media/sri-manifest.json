@@ -1,10 +1,46 @@
 {
     "/js/template.js": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-8Hw6nxS/mlXhPlzl+P3F/U1F2mhZF4rgSxe1cBQ8d4pztuUHWJ7PoRG+l/BFrIAV"
+        "integrity": "sha384-LLn03kzZOg0WWfT+PB1LrqWr0zChExZ5rUX3PSI9YpY7eybz94/EsQZGxF970ft9"
+    },
+    "/js/template.js.map": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-+WWhorhGPte9WmHC6eKMmcY36TgQED9N6tx7lx5Cj5cLtmCfYAmHuL1TtqpPVEpy"
+    },
+    "/js/bootstrap.bundle.js": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-Sbv0UfAvgtlkAyM2BQTQmncIJAcPNCL9VVCIuJlqmQ/E3UMbMVZsHN0vYGdUDS03"
+    },
+    "/js/bootstrap.bundle.js.map": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-hmOrDSMnqugp8v/jcN7oZ+m1u+ZR8nL8rTaIYfhyXjWE3cSO5lrLZwh19AK8t7z3"
     },
     "/css/template.css": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-sDmUczFF5j9FUDfpHwyc8tYSg7PzAE2qsZp8ajpm/vEe4LajWt9DPILphgJ4I52A"
+        "integrity": "sha384-HfJePispJTwbfAZu8swldlIOThsee2CXzG84e8kp+VVy9qVAZB1ekMOEyDOu2KXt"
+    },
+    "/css/template.css.map": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-Whaggc1408d8Z5eByOtr+7IPhS+bxL0nBBWkkiY5Yz/Fu/f3X/liZruMgf+IB/Lv"
+    },
+    "/css/code.css": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-kkE0ovC27Ld1NSWxYu5wKmsB3+w71qv+a+W9aGX7iz1yOXNZumDIZaGf6JjDxhcl"
+    },
+    "/css/bootstrap.min.css": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-lyDfnJn0wY08DfX0vsCoupd5LHed6PtHbZVWmQya15yAbDaWMv+DxAoad0sxSeBm"
+    },
+    "/css/bootstrap.min.css.map": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-R4yWJ0eD18jqBbQn5TmCsm4LTp2EhRd/mDvUTNiJ//HMaAK77IIOoDc00M+3xVy0"
+    },
+    "/css/bootstrap.css": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-UnMno2PmOWFyAY4UaT2dN+knK3mct3jKpu7iCmgRhKxkK54LIzcX8GCd2kevIpJt"
+    },
+    "/css/bootstrap.css.map": {
+        "crossorigin": "anonymous",
+        "integrity": "sha384-1VIuPAPHaX7SO+8LETTlsXBggKmL9LJTS263P92m/+5VwE91RpIf7Yt+/8pvkuxT"
     }
 }

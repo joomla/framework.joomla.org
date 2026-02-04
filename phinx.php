@@ -12,6 +12,7 @@ define('JPATH_TEMPLATES', JPATH_ROOT . '/templates');
 
 $container = (new Joomla\DI\Container)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
+	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\CacheProvider)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
 	->registerServiceProvider(new Joomla\Database\Service\DatabaseProvider)
 	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\EventProvider)

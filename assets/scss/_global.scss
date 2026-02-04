@@ -27,7 +27,7 @@ a {
   position: relative;
 }
 
-nav {
+nav.main-nav {
   background-color: $darker-black;
   color: #ffffff;
   padding: .5rem 0;
@@ -83,6 +83,7 @@ main {
 
 footer {
   color: #a4a4a4;
+  background: $darker-black;
   padding-top: 1.25rem;
   font-size: $font-size-sm;
   @include media-breakpoint-down(lg) {
@@ -97,5 +98,97 @@ footer {
   }
   a {
     color: theme-color("primary");
+  }
+}
+
+.sidenav-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  .sidebar {
+    flex-basis: 100%;
+    @include media-breakpoint-up(md) {
+      flex-basis: calc(30% - 1vw);
+    }
+    @include media-breakpoint-up(lg) {
+      flex-basis: calc(25% - 1vw);
+    }
+    @include media-breakpoint-up(xl) {
+      flex-basis: calc(20% - 1vw);
+    }
+  }
+  .content {
+    flex-basis: 100%;
+    @include media-breakpoint-up(md) {
+      flex-basis: calc(70% - 1vw);
+    }
+    @include media-breakpoint-up(lg) {
+      flex-basis: calc(75% - 1vw);
+    }
+    @include media-breakpoint-up(xl) {
+      flex-basis: calc(80% - 1vw);
+    }
+  }
+  @supports (display: grid) {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1.25rem;
+    @include media-breakpoint-up(md) {
+      grid-template-columns: 30% 70%;
+    }
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: 25% 75%;
+    }
+    @include media-breakpoint-up(xl) {
+      grid-template-columns: 20% 80%;
+    }
+    .sidebar {
+      order: 2;
+      @include media-breakpoint-up(md) {
+        order: 1;
+      }
+    }
+    .content {
+      order: 1;
+      @include media-breakpoint-up(md) {
+        order: 2;
+      }
+    }
+  }
+}
+
+/**.highlight {
+  pre {
+    font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+    @extend .bg-light;
+  }
+}**/
+
+@media screen and (max-width: 991px) {
+  .col_sidebar {
+    width: 90%;
+    max-width: 360px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    transition: .25s ease-in-out;
+    transform: translateX(-100%);
+    z-index: 1999;
+  }
+  .col_sidebar.show {
+    transform: translateX(0);
+  }
+  .sidebartoggle {
+    right: 16px;
+    bottom: 16px;
+    z-index: 2000;
+    position: fixed;
+  }
+}
+@media screen and (min-width: 992px) {
+  .col_sidebar {
+    width: 300px;
+    height: calc(100vh - 56px);
   }
 }

@@ -24,7 +24,7 @@
             {% for release in releases %}
                 <tr>
                     <th scope="row" data-label="Package">
-                        <a href="https://github.com/joomla-framework/{{ release.package.repo }}"><span class="fab fa-github" aria-hidden="true"></span><span class="sr-only">Open {{ release.package.display }} on GitHub</span></a> <a href="{{ route('status/' ~ release.package.package) }}">{{ release.package.display }}</a>
+                        <a href="https://github.com/joomla-framework/{{ release.package.repo }}"><span class="fab fa-github" aria-hidden="true"></span><span class="visually-hidden">Open {{ release.package.display }} on GitHub</span></a> <a href="{{ route('status/' ~ release.package.package) }}">{{ release.package.display }}</a>
                         {% if release.package.deprecated %}
                             <br><span class="badge badge-warning">Deprecated</span>
                         {% endif %}
