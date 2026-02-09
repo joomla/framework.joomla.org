@@ -1,9 +1,9 @@
 {
-    "/js/template.js": "/js/template.js?id=aacc1e7a4286bbd1dee35c38197fdb05",
-    "/js/template.js.map": "/js/template.js.map?id=c4852a29bb82bfaec378cc8f6a0c4e0e",
+    "/js/template.js": "/js/template.js?id=701aeb242f478b5a7dd82946fc49f364",
+    "/js/template.js.map": "/js/template.js.map?id=46165b8fe5187afa05b5984db93fcc49",
     "/js/bootstrap.bundle.js": "/js/bootstrap.bundle.js?id=5897ae226f6979fa15364502bfcbb3ca",
-    "/js/bootstrap.bundle.js.map": "/js/bootstrap.bundle.js.map?id=28d3ac281071f461f7695f390a673fb5",
-    "/css/template.css": "/css/template.css?id=3bfdd3ed34c6b0a29efca2b893d556a7",
+    "/js/bootstrap.bundle.js.map": "/js/bootstrap.bundle.js.map?id=c0cb2caf9ce2159fa1172c321aabc405",
+    "/css/template.css": "/css/template.css?id=3a87f5d757c3602c2d1c575ece8cb14b",
     "/images/j-framework-500.png": "/images/j-framework-500.png?eb58ea988d36a6d5361c88f91a2ce91b?id=8be051c81c4fae492fdfb7c542427424",
     "/images/j-framework-767.png": "/images/j-framework-767.png?ef25a5a10800f0b842fa46959595b8e0?id=d838de5af186126488474ea2690d3f69",
     "/images/j-framework-1200.png": "/images/j-framework-1200.png?0ea52e59a42e69e834e0dcc2be30c1e1?id=0300ea655569e1f4fa6f22b5e638dbe5",
@@ -19,10 +19,10 @@
     "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-400-normal.woff": "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-400-normal.woff?7a5ba508b998fd7044edbe0ae324a292?id=ffb4b5f1f424cfd5090ea865af02272e",
     "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-ext-400-normal.woff2": "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-ext-400-normal.woff2?23e9c5217d09910f51ad8a673369cd83?id=e97d4cc57bf1ceb88c735b4ade73a999",
     "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-ext-400-normal.woff": "/fonts/vendor/@fontsource/source-sans-pro/files/source-sans-pro-latin-ext-400-normal.woff?185cedfb4e64a9a8801a8504ae00a42b?id=75c7a19bb7defd64e339ab9c3fe87896",
-    "/css/template.css.map": "/css/template.css.map?id=f42469accd6883285adb0bb9281f9de6",
+    "/css/template.css.map": "/css/template.css.map?id=03fceb58be85b4ff8fa4ae9c98f611b8",
     "/css/code.css": "/css/code.css?id=e1c06d85ae7b8b032bef47e42e4c08f9",
-    "/css/bootstrap.min.css": "/css/bootstrap.min.css?id=3f191eea832ecb096adf5cefafcef20f",
-    "/css/bootstrap.min.css.map": "/css/bootstrap.min.css.map?id=d5b312ecdcfa262a01ef35bbabf47e10",
-    "/css/bootstrap.css": "/css/bootstrap.css?id=02136e36d036dbd52759df65e79829e8",
-    "/css/bootstrap.css.map": "/css/bootstrap.css.map?id=30d2b429821c609dc05a4fa1afba6438"
+    "/css/bootstrap.min.css": "/css/bootstrap.min.css?id=2d897cf62c6fc266924585c00e9b779c",
+    "/css/bootstrap.min.css.map": "/css/bootstrap.min.css.map?id=324c08a0ffdb9a446479bbfb6b815ab5",
+    "/css/bootstrap.css": "/css/bootstrap.css?id=546fa6e2f2e5d630b69e488d8934389b",
+    "/css/bootstrap.css.map": "/css/bootstrap.css.map?id=ef15eb6cdeb6fe8c74f8a03340bf6257"
 }
