@@ -30,6 +30,7 @@ packages:
     di:
         display: DI
     entities:
+        deprecated: true
         has_v1: false
     event: ~
     facebook:
@@ -100,6 +101,7 @@ packages:
     profiler: ~
     registry: ~
     renderer:
+        deprecated: true
         stable: false
         has_v1: false
     router: ~
