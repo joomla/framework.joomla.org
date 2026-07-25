@@ -53,8 +53,17 @@ class StatusJsonView extends JsonView
     {
         $releases = $this->releaseModel->getLatestReleases($this->packageModel->getPackages());
         // Remove the ID and package ID for each item
-        foreach ($releases as $release) {
-            unset($release->id, $release->package->id);
+        foreach ($releases as $report) {
+            unset($report->package->id);
+
+            // Each report has a dynamically named property (e.g. `v1`, `v2`, ...) per major version release found
+            foreach (get_object_vars($report) as $key => $release) {
+                if ($key === 'package') {
+                    continue;
+                }
+
+                unset($release->id, $release->package_id);
+            }
         }
 
         $this->setData(['packages' => array_values($releases)]);
