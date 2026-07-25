@@ -111,8 +111,14 @@ class GitHubHelper
      */
     public function renderDocsFile(string $version, \stdClass $package, string $path): string
     {
-        $docsPath = JPATH_ROOT . '/docs/' . $version . '/' . $package->package . '/' . $path . '.md';
-        if (!file_exists($docsPath)) {
+        $basePath = JPATH_ROOT . '/docs/' . $version . '/' . $package->package;
+        $docsPath = $basePath . '/' . $path . '.md';
+
+        $realBasePath = realpath($basePath);
+        $realDocsPath = realpath($docsPath);
+
+        // Make sure the resolved file actually lives inside the package's docs directory to prevent path traversal
+        if ($realBasePath === false || $realDocsPath === false || strncmp($realDocsPath, $realBasePath . \DIRECTORY_SEPARATOR, \strlen($realBasePath) + 1) !== 0) {
             throw new \InvalidArgumentException(sprintf('No documentation found for `%s` in the `%2$s` package for version `%3$s`.', $path, $package->display, $version), 404);
         }
 
