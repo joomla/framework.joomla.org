@@ -88,7 +88,9 @@ class SyncCommand extends AbstractCommand
                 $response = $this->http->get($url);
                 $data     = json_decode((string) $response->getBody());
                 if (!isset($data->package)) {
-                    var_dump($data);
+                    $message = "Unexpected response from Packagist for the {$package->display} package";
+                    $this->getApplication()->getLogger()->warning($message, ['response' => $data]);
+                    $symfonyStyle->warning($message);
                 } else {
                     foreach ($data->package->versions as $versionData) {
                         // Skip non stable versions

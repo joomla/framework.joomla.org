@@ -131,7 +131,7 @@ class GitHubHelper
             $rendered    = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
             $routePrefix = $this->application->get('uri.base.path') . 'docs/' . $version . '/' . $package->package . '/';
             // Fix links - TODO: This should only change relative links for the docs files
-            $rendered = preg_replace('/href=\"(.*)\.md\"/', 'href="' . $routePrefix . '$1"', $rendered);
+            $rendered = preg_replace('/href="([^"]*)\.md"/', 'href="' . $routePrefix . '$1"', $rendered);
             $rendered = str_replace('<ul ', '<ul class="list-unstyled"', $rendered);
             $rendered = str_replace('<a ', '<a class="text-decoration-none px-3 py-2 d-block" ', $rendered);
             // Cache the result for 7 days

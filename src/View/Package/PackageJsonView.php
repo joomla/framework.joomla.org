@@ -70,7 +70,6 @@ class PackageJsonView extends JsonView
                 'releases' => $releases,
                 'package'  => $package,
             ]);
-        $this->setData(['releases' => $releases]);
         return parent::render();
     }
 
