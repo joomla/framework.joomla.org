@@ -88,7 +88,12 @@ class RedirectController extends AbstractController
 
                 break;
             case 'latest':
-                $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/4.x/{$package->package}/overview"));
+                if (!$package->has_v4) {
+                    $this->errorView->setError(sprintf('The %s package does not have a 4.x branch to document.', $package->display));
+                    $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
+                } else {
+                    $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/4.x/{$package->package}/overview"));
+                }
 
                 break;
             default:
