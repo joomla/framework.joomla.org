@@ -68,7 +68,6 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use TheIconic\Tracking\GoogleAnalytics\Analytics;
 
 /**
  * Application service provider
@@ -96,8 +95,6 @@ class ApplicationProvider implements ServiceProviderInterface
         /*
          * Application Helpers and Dependencies
          */
-        $container->alias(Analytics::class, 'analytics')
-            ->share('analytics', [$this, 'getAnalyticsService'], true);
         $container->alias(ContainerLoader::class, LoaderInterface::class)
             ->share(LoaderInterface::class, [$this, 'getCommandLoaderService'], true);
         // This service cannot be protected as it is decorated when the debug bar is available
@@ -176,18 +173,6 @@ class ApplicationProvider implements ServiceProviderInterface
             ->share('view.status.html', [$this, 'getViewStatusHtmlService'], true);
         $container->alias(StatusJsonView::class, 'view.status.json')
             ->share('view.status.json', [$this, 'getViewStatusJsonService'], true);
-    }
-
-    /**
-     * Get the Analytics class service
-     *
-     * @param   Container  $container  The DI container.
-     *
-     * @return  Analytics
-     */
-    public function getAnalyticsService(Container $container)
-    {
-        return new Analytics(true);
     }
 
     /**
@@ -321,9 +306,7 @@ class ApplicationProvider implements ServiceProviderInterface
      */
     public function getControllerApiPackageService(Container $container): PackageControllerGet
     {
-        $controller = new PackageControllerGet($container->get(PackageJsonView::class), $container->get(Analytics::class), $container->get(Input::class), $container->get(WebApplication::class));
-        $controller->setLogger($container->get(LoggerInterface::class));
-        return $controller;
+        return new PackageControllerGet($container->get(PackageJsonView::class), $container->get(Input::class), $container->get(WebApplication::class));
     }
 
     /**
@@ -655,16 +638,11 @@ class ApplicationProvider implements ServiceProviderInterface
      */
     public function getControllerApiStatusService(Container $container): StatusControllerGet
     {
-        $controller = new StatusControllerGet(
+        return new StatusControllerGet(
             $container->get(StatusJsonView::class),
-            $container->get(Analytics::class),
             $container->get(Input::class),
             $container->get(WebApplication::class)
         );
-
-        $controller->setLogger($container->get(LoggerInterface::class));
-
-        return $controller;
     }
 
 

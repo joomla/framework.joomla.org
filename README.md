@@ -56,9 +56,6 @@ The application's configuration is defined as follows:
     * `template.debug` - Flag to enable Twig's debug functionality, when enabled the caching functionality is not available
     * `template.cache.enabled` - Flag to enable Twig's caching functionality
     * `template.cache.path` - The path relative to the repo root where cached Twig files should be stored
-* Analytics - The API of this site supports sending basic data to Google Analytics
-    * `analytics.enabled` - Flag to enable this feature
-    * `analytics.account` - The UA code of the Analytics account to send data to
 * Logging - The `monolog/monolog` package is used for logging functionality
     * `log.level` - The default logging level to use for all application loggers, this defaults to the `ERROR` level
     * `log.application` - The logging level to use specifically for the `monolog.handler.application` logger; defaults to the `log.level` value
