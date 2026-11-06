@@ -21,6 +21,9 @@ if (!file_exists(JPATH_ROOT . '/vendor/autoload.php')) {
 
 require JPATH_ROOT . '/vendor/autoload.php';
 
+// Debug mode is disabled until the configuration has been loaded, so a broken configuration never exposes error details
+$debug = false;
+
 // Wrap in a try/catch so we can display an error if need be
 try {
     $container = (new Joomla\DI\Container())
@@ -35,8 +38,10 @@ try {
         ->registerServiceProvider(new Joomla\Preload\Service\PreloadProvider())
         ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider());
 
+    $debug = (bool) $container->get('config')->get('debug', false);
+
     // Conditionally include the DebugBar service provider based on the app being in debug mode
-    if ((bool) $container->get('config')->get('debug', false)) {
+    if ($debug) {
         $container->registerServiceProvider(new Joomla\FrameworkWebsite\Service\DebugBarProvider());
     }
 
@@ -61,8 +66,12 @@ try {
     error_log($e);
 
     header('HTTP/1.1 500 Internal Server Error', true, 500);
-    // Never expose the exception message, it may contain sensitive data or user input; the details are in the error log
-    echo '<html><head><title>Container Initialization Error</title></head><body><h1>Container Initialization Error</h1><p>An error occurred while creating the DI container.</p></body></html>';
+    header('Content-Type: text/html; charset=utf-8');
+
+    // Only expose the exception message in debug mode, it may contain sensitive data or user input; the details are always in the error log
+    $message = $debug ? ': ' . htmlspecialchars($e->getMessage(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') : '.';
+
+    echo '<html><head><title>Container Initialization Error</title></head><body><h1>Container Initialization Error</h1><p>An error occurred while creating the DI container' . $message . '</p></body></html>';
 
     exit(1);
 }
@@ -88,8 +97,10 @@ try {
         header('Content-Type: text/html; charset=utf-8');
     }
 
-    // Never expose the exception message, it may contain sensitive data or user input; the details are in the error log
-    echo '<html><head><title>Application Error</title></head><body><h1>Application Error</h1><p>An error occurred while executing the application.</p></body></html>';
+    // Only expose the exception message in debug mode, it may contain sensitive data or user input; the details are always in the error log
+    $message = $debug ? ': ' . htmlspecialchars($e->getMessage(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') : '.';
+
+    echo '<html><head><title>Application Error</title></head><body><h1>Application Error</h1><p>An error occurred while executing the application' . $message . '</p></body></html>';
 
     exit(1);
 }
