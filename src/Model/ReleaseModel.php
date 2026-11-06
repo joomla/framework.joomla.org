@@ -61,10 +61,9 @@ class ReleaseModel implements DatabaseModelInterface
     public function getLatestReleases(array $packages): array
     {
         $db       = $this->getDb();
-        $query = $db->getQuery(true)
+        $query    = $db->getQuery(true)
             ->select('*')
-            ->from($db->quoteName('#__releases'))
-            ->order('package_id ASC, version DESC');
+            ->from($db->quoteName('#__releases'));
         $releases = $db->setQuery($query)->loadObjectList();
         $reports  = [];
         // Loop through the releases and build the reports
@@ -75,14 +74,20 @@ class ReleaseModel implements DatabaseModelInterface
         }
 
         foreach ($releases as $release) {
-            $major = 'v' . substr($release->version, 0, 1);
-
-            // Skip if package is already included
+            // Skip releases of packages which aren't included in the report
             if (!isset($reports[$release->package_id])) {
                 continue;
             }
 
-            if (isset($reports[$release->package_id]->$major)) {
+            // Skip versions without a numeric major version
+            if (!preg_match('/^v?(\d+)/i', $release->version, $matches)) {
+                continue;
+            }
+
+            $major = 'v' . $matches[1];
+
+            // Keep the highest release per major version, the versions must be compared semantically as a string comparison sorts 1.9.0 above 1.10.0
+            if (isset($reports[$release->package_id]->$major) && $this->compareVersions($reports[$release->package_id]->$major->version, $release->version) >= 0) {
                 continue;
             }
 
@@ -108,8 +113,7 @@ class ReleaseModel implements DatabaseModelInterface
         $query = $db->getQuery(true)
             ->select('*')
             ->from($db->quoteName('#__releases'))
-            ->where($db->quoteName('package_id') . ' = :packageId')
-            ->order('version ASC');
+            ->where($db->quoteName('package_id') . ' = :packageId');
         $query->bind('packageId', $package->id, ParameterType::INTEGER);
         $releases = $db->setQuery($query)->loadObjectList();
         // Bail if we don't have any data for the given package
@@ -117,7 +121,28 @@ class ReleaseModel implements DatabaseModelInterface
             throw new \RuntimeException(sprintf('Unable to find release data for the `%s` package', $package->display), 404);
         }
 
+        // Sort the releases semantically, the database would sort the versions as strings
+        usort(
+            $releases,
+            function (\stdClass $a, \stdClass $b): int {
+                return $this->compareVersions($a->version, $b->version);
+            }
+        );
+
         return $releases;
+    }
+
+    /**
+     * Compare two version strings semantically
+     *
+     * @param   string  $a  The first version
+     * @param   string  $b  The second version
+     *
+     * @return  integer  A negative value if the first version is lower, 0 if both are equal, a positive value if the first version is higher
+     */
+    private function compareVersions(string $a, string $b): int
+    {
+        return version_compare(ltrim($a, 'vV'), ltrim($b, 'vV'));
     }
 
     /**
