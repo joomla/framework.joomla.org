@@ -61,7 +61,8 @@ try {
     error_log($e);
 
     header('HTTP/1.1 500 Internal Server Error', true, 500);
-    echo '<html><head><title>Container Initialization Error</title></head><body><h1>Container Initialization Error</h1><p>An error occurred while creating the DI container: ' . $e->getMessage() . '</p></body></html>';
+    // Never expose the exception message, it may contain sensitive data or user input; the details are in the error log
+    echo '<html><head><title>Container Initialization Error</title></head><body><h1>Container Initialization Error</h1><p>An error occurred while creating the DI container.</p></body></html>';
 
     exit(1);
 }
@@ -87,7 +88,8 @@ try {
         header('Content-Type: text/html; charset=utf-8');
     }
 
-    echo '<html><head><title>Application Error</title></head><body><h1>Application Error</h1><p>An error occurred while executing the application: ' . $e->getMessage() . '</p></body></html>';
+    // Never expose the exception message, it may contain sensitive data or user input; the details are in the error log
+    echo '<html><head><title>Application Error</title></head><body><h1>Application Error</h1><p>An error occurred while executing the application.</p></body></html>';
 
     exit(1);
 }
