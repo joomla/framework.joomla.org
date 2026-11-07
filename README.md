@@ -24,7 +24,6 @@ To seed the database with the Framework package data, the following steps should
 1. Run the `bin/framework package:sync` command, this will load the packages table based on the contents of the `packages.yml` file at the repository root
 2. Run the `bin/framework packagist:sync:releases` command, this will load the releases table with all stable releases that have been tagged based on the Packagist API response
 3. Run the `bin/framework packagist:sync:downloads` command, this will load the download counts for all packages into the database
-4. (NOT REQUIRED SINCE PAGE IS DISABLED) Run the `bin/framework github:contributors` command, this will query the GitHub API to get all code contributors for each package 
 
 ## Modifying Web Assets
 
