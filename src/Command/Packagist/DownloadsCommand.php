@@ -57,7 +57,14 @@ class DownloadsCommand extends AbstractCommand
     {
         $symfonyStyle = new SymfonyStyle($input, $output);
         $symfonyStyle->title('Sync Download Counts from Packagist');
-        $this->packagistHelper->syncDownloadCounts();
+        $failedPackages = $this->packagistHelper->syncDownloadCounts();
+
+        if ($failedPackages) {
+            $symfonyStyle->warning(sprintf('Could not fetch the download counts for the following packages: %s', implode(', ', $failedPackages)));
+
+            return 1;
+        }
+
         $symfonyStyle->success('Update completed.');
         return 0;
     }

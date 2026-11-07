@@ -51,20 +51,37 @@ class PackagistHelper
     /**
      * Fetch the download counts for all packages.
      *
-     * @return  array
+     * Packages for which the download count could not be determined are not included in the result.
+     *
+     * @param   string[]  $failedPackages  Receives the names of the packages for which the download count could not be fetched
+     *
+     * @return  integer[]  The download counts keyed by package name
      */
-    private function fetchDownloadCounts(): array
+    private function fetchDownloadCounts(array &$failedPackages = []): array
     {
         $counts = [];
         foreach (array_keys((array) $this->getPackages()->get('packages')) as $packageName) {
-            $url = "https://packagist.org/packages/joomla/$packageName.json";
+            // Array keys which look like integers are converted by PHP, but package names are always strings
+            $packageName = (string) $packageName;
+            $url         = "https://packagist.org/packages/joomla/$packageName.json";
             try {
-                $response             = $this->http->get($url);
-                $data                 = json_decode((string) $response->getBody());
-                $counts[$packageName] = $data->package->downloads->total;
+                $response = $this->http->get($url);
             } catch (\RuntimeException $exception) {
-                $counts[$packageName] = false;
+                $failedPackages[] = $packageName;
+
+                continue;
             }
+
+            $data = $response->getStatusCode() === 200 ? json_decode((string) $response->getBody()) : null;
+
+            // Only store valid counts, a failed request must not reset the count stored in the database
+            if (!isset($data->package->downloads->total) || !is_numeric($data->package->downloads->total)) {
+                $failedPackages[] = $packageName;
+
+                continue;
+            }
+
+            $counts[$packageName] = (int) $data->package->downloads->total;
         }
 
         return $counts;
@@ -73,16 +90,19 @@ class PackagistHelper
     /**
      * Fetch the download counts from Packagist and store them to the database
      *
-     * @return  void
+     * @return  string[]  The names of the packages for which the download count could not be updated
      *
      * @throws  ExecutionFailureException
      */
-    public function syncDownloadCounts(): void
+    public function syncDownloadCounts(): array
     {
+        $failedPackages = [];
+        $counts         = $this->fetchDownloadCounts($failedPackages);
+
         // Begin a transaction in case of error
         $this->database->transactionStart();
         try {
-            foreach ($this->fetchDownloadCounts() as $package => $count) {
+            foreach ($counts as $package => $count) {
                 $query = $this->database->getQuery(true)
                     ->update('#__packages')
                     ->set($this->database->quoteName('downloads') . ' = :downloads')
@@ -97,5 +117,7 @@ class PackagistHelper
             $this->database->transactionRollback();
             throw $exception;
         }
+
+        return $failedPackages;
     }
 }
