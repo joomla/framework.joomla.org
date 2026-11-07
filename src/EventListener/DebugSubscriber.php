@@ -17,7 +17,7 @@ use Joomla\Application\Event\ApplicationEvent;
 use Joomla\Event\Priority;
 use Joomla\Event\SubscriberInterface;
 use Laminas\Diactoros\Response\JsonResponse;
-use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\Response\XmlResponse;
 
 /**
  * Debug event subscriber
@@ -69,7 +69,11 @@ class DebugSubscriber implements SubscriberInterface
         $application = $event->getApplication();
         // Ensure responses are not cached
         $application->allowCache(false);
-        if (!($application->mimeType === 'application/json' || $application->getResponse() instanceof JsonResponse)) {
+        // The debug bar can only be injected into HTML pages, other formats get the data in the response headers
+        $isDataResponse = $application->mimeType === 'application/json' || $application->getResponse() instanceof JsonResponse
+            || $application->getResponse() instanceof XmlResponse;
+
+        if (!$isDataResponse) {
             $debugBarOutput = $this->debugBar->getJavascriptRenderer()->render();
             // Fetch the body
             $body = $application->getBody();
@@ -86,10 +90,8 @@ class DebugSubscriber implements SubscriberInterface
 
             // Reset the body
             $application->setBody($body);
-        } elseif ($application->mimeType === 'application/json' || $application->getResponse() instanceof JsonResponse) {
+        } else {
             $this->debugBar->sendDataInHeaders();
-        } elseif ($application->getResponse() instanceof RedirectResponse) {
-            $this->debugBar->stackData();
         }
     }
 
