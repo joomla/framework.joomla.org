@@ -130,8 +130,7 @@ class GitHubHelper
         } else {
             $rendered    = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
             $routePrefix = $this->application->get('uri.base.path') . 'docs/' . $version . '/' . $package->package . '/';
-            // Fix links - TODO: This should only change relative links for the docs files
-            $rendered = preg_replace('/href="([^"]*)\.md"/', 'href="' . $routePrefix . '$1"', $rendered);
+            $rendered    = $this->rewriteDocsLinks($rendered, $routePrefix);
             // Cache the result for 7 days
             $sevenDaysInSeconds = 60 * 60 * 24 * 7;
             $item->set($rendered);
@@ -140,6 +139,50 @@ class GitHubHelper
         }
 
         return $rendered;
+    }
+
+    /**
+     * Rewrite relative links to other documentation files to the routes of the rendered pages
+     *
+     * Only relative links to Markdown files are changed, absolute links (i.e. to a README.md file on GitHub) are kept as is.
+     *
+     * @param   string  $rendered     The rendered documentation file.
+     * @param   string  $routePrefix  The route prefix for the package's documentation pages.
+     *
+     * @return  string
+     */
+    private function rewriteDocsLinks(string $rendered, string $routePrefix): string
+    {
+        return preg_replace_callback(
+            '/href="([^"]*)"/',
+            static function (array $matches) use ($routePrefix): string {
+                $href = $matches[1];
+
+                // Skip absolute links (with a scheme or protocol relative), absolute paths and anchors on the same page
+                if ($href === '' || preg_match('#^(?:[a-z][a-z0-9+.\-]*:|/|\#)#i', $href)) {
+                    return $matches[0];
+                }
+
+                // Split off the query string and fragment so links to a section of another page keep working
+                if (!preg_match('/^([^?#]+)\.md((?:[?#].*)?)$/i', $href, $parts)) {
+                    return $matches[0];
+                }
+
+                $path = $parts[1];
+
+                while (strpos($path, './') === 0) {
+                    $path = substr($path, 2);
+                }
+
+                // Links leaving the docs directory can't be mapped to a documentation page
+                if (preg_match('#(?:^|/)\.\.(?:/|$)#', $path)) {
+                    return $matches[0];
+                }
+
+                return 'href="' . $routePrefix . $path . $parts[2] . '"';
+            },
+            $rendered
+        );
     }
 
     /**

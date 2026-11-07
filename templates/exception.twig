@@ -18,8 +18,8 @@
             {% if exception.previous %}
                 {% set _previous = exception.previous %}
                 <h3>Previous Exception</h3>
-                <h4><span class="badge badge-danger">{{ exception.code|default(0) }}</span> {{ exception|get_class }}</h4>
-                <p>{{ exception.message|strip_root_path }}</p>
+                <h4><span class="badge badge-danger">{{ _previous.code|default(0) }}</span> {{ _previous|get_class }}</h4>
+                <p>{{ _previous.message|strip_root_path }}</p>
             {% endif %}
         {% endif %}
     </section>
