@@ -34,10 +34,10 @@ final class ErrorSubscriberTest extends TestCase
         $internal = new \RuntimeException('SQLSTATE[HY000] [1045] Access denied for user "framework"@"localhost"', 1045);
 
         return [
-            'not found is public'               => [new RouteNotFoundException('Route `foo` not found', 404), false, 404, 'Route `foo` not found'],
-            'method not allowed is public'      => [new MethodNotAllowedException(['GET'], 'Method not allowed'), false, 405, 'Method not allowed'],
-            'internal error is hidden'          => [$internal, false, 500, 'An error occurred while processing this request.'],
-            'internal error is shown in debug'  => [$internal, true, 500, $internal->getMessage()],
+            'not found is public'              => [new RouteNotFoundException('Route `foo` not found', 404), false, 404, 'Route `foo` not found'],
+            'method not allowed is public'     => [new MethodNotAllowedException(['GET'], 'Method not allowed'), false, 405, 'Method not allowed'],
+            'internal error is hidden'         => [$internal, false, 500, 'An error occurred while processing this request.'],
+            'internal error is shown in debug' => [$internal, true, 500, $internal->getMessage()],
         ];
     }
 
