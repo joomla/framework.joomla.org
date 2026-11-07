@@ -41,7 +41,7 @@ jobs:
       - name: Check PHP code style
         env:
           PHP_CS_FIXER_IGNORE_ENV: true
-        run: vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/ bin/ www/
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff --show-progress=none
 
   phpstan:
     name: Run PHPstan

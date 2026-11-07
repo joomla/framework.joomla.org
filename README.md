@@ -37,6 +37,10 @@ The use of Vite requires [NPM](https://www.npmjs.com/) as hinted at in the Insta
 
 This site makes use of [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity), therefore the integrity hashes must be regenerated after compiling assets. This can be done by running the `bin/framework template:generate-sri` command.
 
+## Code Style
+
+The PHP code follows PSR-12 with a few additions, configured in `.php-cs-fixer.dist.php`. Check it with `vendor/bin/php-cs-fixer fix --dry-run --diff`, or fix all violations with `vendor/bin/php-cs-fixer fix`. The check runs on every push and pull request.
+
 ## Database Schema
 
 The database schema is managed through [Phinx](https://phinx.org/).  The `phinx.php` file at the root of this repo configures the Phinx environment.  Please see their documentation for more information.
