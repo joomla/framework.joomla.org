@@ -95,8 +95,6 @@ class GitHubHelper
             $rendered    = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
             $routePrefix = $this->application->get('uri.base.path') . 'docs/' . $version . '/' . $package->package . '/';
             $rendered    = $this->rewriteDocsLinks($rendered, $routePrefix);
-            $rendered    = str_replace('<ul ', '<ul class="list-unstyled"', $rendered);
-            $rendered    = str_replace('<a ', '<a class="text-decoration-none px-3 py-2 d-block" ', $rendered);
             // Cache the result for 7 days
             $sevenDaysInSeconds = 60 * 60 * 24 * 7;
             $item->set($rendered);
@@ -148,6 +146,35 @@ class GitHubHelper
                 return 'href="' . $routePrefix . $path . $parts[2] . '"';
             },
             $rendered
+        );
+    }
+
+    /**
+     * Render the sidebar (the index file) of a package's documentation
+     *
+     * @param   string     $version  The Framework version to fetch documentation for.
+     * @param   \stdClass  $package  The Framework package the documentation belongs to.
+     *
+     * @return  string
+     */
+    public function renderDocsSidebar(string $version, \stdClass $package): string
+    {
+        // Style the navigation lists and links, this must only be applied to the sidebar and not to the page contents
+        return preg_replace_callback(
+            '/<(ul|a)\b([^>]*)>/i',
+            static function (array $matches): string {
+                $classes = strtolower($matches[1]) === 'ul' ? 'list-unstyled' : 'text-decoration-none px-3 py-2 d-block';
+
+                // Merge with an existing class attribute, an element must not have the attribute twice
+                if (preg_match('/\sclass\s*=\s*"/i', $matches[2])) {
+                    $attributes = preg_replace('/(\sclass\s*=\s*")/i', '$1' . $classes . ' ', $matches[2], 1);
+                } else {
+                    $attributes = ' class="' . $classes . '"' . $matches[2];
+                }
+
+                return '<' . $matches[1] . $attributes . '>';
+            },
+            $this->renderDocsFile($version, $package, 'index')
         );
     }
 }
