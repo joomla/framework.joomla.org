@@ -61,7 +61,9 @@ jobs:
   deployment:
     name: Deployment to server
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    # Only deploy pushes to master, and only after all checks have passed
+    needs: [code-style-php, phpstan]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     steps:
       - name: Update server
         uses: appleboy/ssh-action@v1
