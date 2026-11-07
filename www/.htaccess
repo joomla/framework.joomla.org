@@ -174,8 +174,9 @@ RewriteRule ^(.*)$ https://framework.joomla.org/$1 [R=301,L,QSA]
 ###########################################
 # ======== Redirect removed pages =========
 
-RewriteCond %{REQUEST_URI} ^/about
-RewriteRule ^(.*)$ /contributors [R=301,L,QSA]
+# The about page was merged into the homepage, the contributors page has been removed
+# NE keeps the # of the fragment from being escaped
+RewriteRule ^about/?$ /#about [R=301,L,NE]
 
 ###########################################
 
