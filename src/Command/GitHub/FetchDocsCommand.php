@@ -46,6 +46,12 @@ class FetchDocsCommand extends AbstractCommand
          */
     private $fileCacheKeys = [];
     /**
+         * Flag tracking whether any part of the update failed
+         *
+         * @var  boolean
+         */
+    private $hasErrors = false;
+    /**
          * The GitHub API adapter
          *
          * @var  Github
@@ -108,7 +114,17 @@ class FetchDocsCommand extends AbstractCommand
         }
 
         $symfonyStyle->comment('Cleaning cache');
-        $this->cache->deleteItems($this->fileCacheKeys);
+
+        // Rendered files are validated against the source file when read, so a failure here only leaves orphaned items behind
+        if ($this->fileCacheKeys && !$this->cache->deleteItems(array_unique($this->fileCacheKeys))) {
+            $symfonyStyle->warning('Could not remove all outdated items from the cache pool, check the permissions of the cache directory.');
+        }
+
+        if ($this->hasErrors) {
+            $symfonyStyle->error('Update completed with errors, the documentation may be incomplete or outdated.');
+            return 1;
+        }
+
         $symfonyStyle->success('Update completed.');
         return 0;
     }
@@ -132,46 +148,62 @@ EOF
     }
 
     /**
-     * Processes a directory's contents from the repository.
+     * Processes the documentation of a repository branch.
      *
      * @param   string        $branch        The repository branch to process.
      * @param   string        $version       The Framework package version.
-     * @param   string        $directory     The directory within the repository.
      * @param   \stdClass     $package       The package record from the database.
      * @param   SymfonyStyle  $symfonyStyle  The I/O object
      *
      * @return  void
      */
-    private function processDirectory(string $branch, string $version, string $directory, \stdClass $package, SymfonyStyle $symfonyStyle): void
+    private function processBranch(string $branch, string $version, \stdClass $package, SymfonyStyle $symfonyStyle): void
     {
+        // Fetch the full file listing of the branch in a single request
         try {
-            $docsDirContents = $this->github->repositories->contents->get('joomla-framework', $package->repo, $directory, $branch);
+            $tree = $this->github->data->trees->getRecursively('joomla-framework', $package->repo, $branch);
         } catch (UnexpectedResponseException $exception) {
             if ($exception->getCode() === 404) {
-                $symfonyStyle->warning(sprintf('The `%1$s` package does not have documentation for the `%2$s` branch', $package->display, $branch));
+                $symfonyStyle->warning(sprintf('The `%1$s` package does not have a `%2$s` branch', $package->display, $branch));
             } else {
+                $this->hasErrors = true;
                 $symfonyStyle->error(sprintf('Error fetching data for the `%1$s` package\'s `%2$s` branch: %3$s', $package->display, $branch, $exception->getMessage()));
             }
 
             return;
         }
 
-        foreach ($docsDirContents as $file) {
-            switch ($file->type) {
-                case 'dir':
-                    $this->processDirectory($branch, $version, $file->path, $package, $symfonyStyle);
+        if (!isset($tree->tree) || !empty($tree->truncated)) {
+            $this->hasErrors = true;
+            $symfonyStyle->error(sprintf('Incomplete file listing for the `%1$s` package\'s `%2$s` branch.', $package->display, $branch));
 
-                    break;
-                case 'file':
-                    $this->processFile($branch, $version, $file->path, $package, $symfonyStyle);
-
-                    break;
-                default:
-                    $symfonyStyle->warning(sprintf('Unsupported file type `%1$s` while processing `%2$s` for the `%3$s` package `%4$s` branch.', $file->type, $file->path, $package->display, $branch));
-
-                    break;
-            }
+            return;
         }
+
+        $files = [];
+
+        foreach ($tree->tree as $entry) {
+            if (strncmp($entry->path, 'docs/', 5) !== 0 || $entry->type === 'tree') {
+                continue;
+            }
+
+            // Only regular files are supported, no symlinks or submodules
+            if ($entry->type !== 'blob' || $entry->mode === '120000') {
+                $symfonyStyle->warning(sprintf('Unsupported file type `%1$s` while processing `%2$s` for the `%3$s` package `%4$s` branch.', $entry->type, $entry->path, $package->display, $branch));
+
+                continue;
+            }
+
+            $path         = substr($entry->path, 5);
+            $files[$path] = true;
+            $this->processFile($branch, $version, $path, $entry->sha, $package, $symfonyStyle);
+        }
+
+        if (!$files) {
+            $symfonyStyle->warning(sprintf('The `%1$s` package does not have documentation for the `%2$s` branch', $package->display, $branch));
+        }
+
+        $this->removeObsoleteFiles($version, $files, $package, $symfonyStyle);
     }
 
     /**
@@ -179,17 +211,30 @@ EOF
      *
      * @param   string        $branch        The repository branch to process.
      * @param   string        $version       The Framework package version.
-     * @param   string        $path          The path to the file within the repository.
+     * @param   string        $path          The path to the file within the repository's docs directory.
+     * @param   string        $sha           The blob SHA of the file in the repository.
      * @param   \stdClass     $package       The package record from the database.
      * @param   SymfonyStyle  $symfonyStyle  The I/O object
      *
      * @return  void
      */
-    private function processFile(string $branch, string $version, string $path, \stdClass $package, SymfonyStyle $symfonyStyle): void
+    private function processFile(string $branch, string $version, string $path, string $sha, \stdClass $package, SymfonyStyle $symfonyStyle): void
     {
+        $docsPath = JPATH_ROOT . '/docs/' . $version . '/' . $package->package . '/' . $path;
+
+        // Skip the download if the local copy is identical to the file in the repository
+        if (is_file($docsPath)) {
+            $localContents = file_get_contents($docsPath);
+
+            if ($localContents !== false && sha1('blob ' . \strlen($localContents) . "\0" . $localContents) === $sha) {
+                return;
+            }
+        }
+
         try {
-            $file = $this->github->repositories->contents->get('joomla-framework', $package->repo, $path, $branch);
+            $file = $this->github->data->blobs->get('joomla-framework', $package->repo, $sha);
         } catch (UnexpectedResponseException $exception) {
+            $this->hasErrors = true;
             $symfonyStyle->error(sprintf('Error fetching data for the `%1$s` package\'s `%2$s` path on the  `%3$s` branch: %4$s', $package->display, $path, $branch, $exception->getMessage()));
             return;
         }
@@ -199,21 +244,91 @@ EOF
                 $fileContents = base64_decode($file->content);
 
                 break;
+            case 'utf-8':
+                $fileContents = $file->content;
+
+                break;
             default:
-                $symfonyStyle->warning(sprintf('Unsupported file encoding `%1$s` while processing `%2$s` for the `%3$s` package `%4$s` branch.', $file->encoding, $file->path, $package->display, $branch));
+                $symfonyStyle->warning(sprintf('Unsupported file encoding `%1$s` while processing `%2$s` for the `%3$s` package `%4$s` branch.', $file->encoding, $path, $package->display, $branch));
 
                 return;
         }
 
-        $docsPath = JPATH_ROOT . '/docs/' . $version . '/' . str_replace('docs/', $package->package . '/', $file->path);
         // Ensure folder exists
         Folder::create(\dirname($docsPath));
-        if (!file_put_contents($docsPath, $fileContents)) {
+        if (file_put_contents($docsPath, $fileContents) === false) {
+            $this->hasErrors = true;
             $symfonyStyle->error(sprintf('Could not write docs file to `%s`', $docsPath));
             return;
         }
 
-        $this->fileCacheKeys[] = $this->githubHelper->generateDocsFileCacheKey($version, $package, substr(str_replace('docs/', '', $file->path), 0, -3));
+        $this->addFileCacheKey($version, $package, $path);
+    }
+
+    /**
+     * Removes local documentation files which no longer exist in the repository.
+     *
+     * @param   string        $version       The Framework package version.
+     * @param   array         $files         The files in the repository, relative to its docs directory, as array keys.
+     * @param   \stdClass     $package       The package record from the database.
+     * @param   SymfonyStyle  $symfonyStyle  The I/O object
+     *
+     * @return  void
+     */
+    private function removeObsoleteFiles(string $version, array $files, \stdClass $package, SymfonyStyle $symfonyStyle): void
+    {
+        $basePath = JPATH_ROOT . '/docs/' . $version . '/' . $package->package;
+
+        if (!is_dir($basePath)) {
+            return;
+        }
+
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($basePath, \FilesystemIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        /** @var \SplFileInfo $item */
+        foreach ($iterator as $item) {
+            // Clean up directories which are empty now, this fails silently for the ones still in use
+            if ($item->isDir()) {
+                @rmdir($item->getPathname());
+
+                continue;
+            }
+
+            $path = str_replace('\\', '/', substr($item->getPathname(), \strlen($basePath) + 1));
+
+            if (isset($files[$path])) {
+                continue;
+            }
+
+            if (!@unlink($item->getPathname())) {
+                $this->hasErrors = true;
+                $symfonyStyle->error(sprintf('Could not remove obsolete docs file `%s`', $item->getPathname()));
+
+                continue;
+            }
+
+            $this->addFileCacheKey($version, $package, $path);
+        }
+    }
+
+    /**
+     * Registers the cache key of a rendered documentation file for removal.
+     *
+     * @param   string     $version  The Framework package version.
+     * @param   \stdClass  $package  The package record from the database.
+     * @param   string     $path     The path to the file within the package's docs directory.
+     *
+     * @return  void
+     */
+    private function addFileCacheKey(string $version, \stdClass $package, string $path): void
+    {
+        // Only Markdown files are rendered
+        if (substr($path, -3) === '.md') {
+            $this->fileCacheKeys[] = $this->githubHelper->generateDocsFileCacheKey($version, $package, substr($path, 0, -3));
+        }
     }
 
     /**
@@ -231,7 +346,7 @@ EOF
         $versions = ['3.x', '4.x'];
 
         foreach ($branches as $key => $branch) {
-            $this->processDirectory($branch, $versions[$key], 'docs', $package, $symfonyStyle);
+            $this->processBranch($branch, $versions[$key], $package, $symfonyStyle);
         }
     }
 }

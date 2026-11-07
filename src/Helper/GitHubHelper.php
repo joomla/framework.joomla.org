@@ -88,16 +88,22 @@ class GitHubHelper
 
         $key  = $this->generateDocsFileCacheKey($version, $package, $path);
         $item = $this->cache->getItem($key);
-        // Make sure we got a hit on the item, otherwise we'll have to re-cache
-        if ($item->isHit()) {
-            $rendered = $item->get();
+
+        // The cached copy is only valid for the version of the source file it was rendered from
+        clearstatcache(true, $realDocsPath);
+        $modified = filemtime($realDocsPath);
+        $cached   = $item->isHit() ? $item->get() : null;
+
+        // Make sure we got a hit on the item for the current file, otherwise we'll have to re-cache
+        if (\is_array($cached) && isset($cached['modified'], $cached['content']) && $cached['modified'] === $modified) {
+            $rendered = $cached['content'];
         } else {
             $rendered    = $this->github->markdown->render(file_get_contents($docsPath), 'gfm', 'joomla-framework/' . $package->repo);
             $routePrefix = $this->application->get('uri.base.path') . 'docs/' . $version . '/' . $package->package . '/';
             $rendered    = $this->rewriteDocsLinks($rendered, $routePrefix);
             // Cache the result for 7 days
             $sevenDaysInSeconds = 60 * 60 * 24 * 7;
-            $item->set($rendered);
+            $item->set(['modified' => $modified, 'content' => $rendered]);
             $item->expiresAfter($sevenDaysInSeconds);
             $this->cache->save($item);
         }
