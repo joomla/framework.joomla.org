@@ -27,13 +27,13 @@ To seed the database with the Framework package data, the following steps should
 
 ## Modifying Web Assets
 
-The web assets (CSS, JavaScript, and images) are compiled and processed with [Laravel Mix](https://github.com/JeffreyWay/laravel-mix) which is a wrapper around webpack. The primary source for all assets is the `assets` directory, running Mix will place production assets into the `www/media` directory.
+The web assets (CSS, JavaScript, and images) are compiled and processed with [Vite](https://vite.dev/). The primary source for all assets is the `assets` directory, the build is configured in `vite.config.mjs` and places the production assets into the `www/media` directory. It also writes `www/media/manifest.json`, which the application uses to add a cache busting version to the asset URLs.
 
-The use of Mix requires [NPM](https://www.npmjs.com/) as hinted at in the Installation section.  NPM 5+ and Node 8+ are required.  Three scripts are available:
+The use of Vite requires [NPM](https://www.npmjs.com/) as hinted at in the Installation section. Node 20.19+ or 22.12+ is required. Three scripts are available:
 
 * `npm run prod` will compile assets for production, which includes compression and minification; code must be committed to this repository with the production configuration
 * `npm run dev` will compile the assets without production optimizations
-* `npm run watch` is the same as the `dev` script but with the `--watch` flag passed
+* `npm run watch` is the same as the `dev` script but rebuilds the assets when a source file changes
 
 This site makes use of [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity), therefore the integrity hashes must be regenerated after compiling assets. This can be done by running the `bin/framework template:generate-sri` command.
 

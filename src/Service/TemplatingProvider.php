@@ -12,7 +12,7 @@ namespace Joomla\FrameworkWebsite\Service;
 use Joomla\Application\AbstractApplication;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
-use Joomla\FrameworkWebsite\Asset\MixPathPackage;
+use Joomla\FrameworkWebsite\Asset\ManifestPathPackage;
 use Joomla\FrameworkWebsite\Renderer\ApplicationContext;
 use Joomla\FrameworkWebsite\Renderer\FrameworkExtension;
 use Joomla\FrameworkWebsite\Renderer\FrameworkTwigRuntime;
@@ -85,13 +85,13 @@ class TemplatingProvider implements ServiceProviderInterface
     public function getAssetPackagesService(Container $container): Packages
     {
         /** @var AbstractApplication $app */
-        $app            = $container->get(AbstractApplication::class);
-        $context        = new ApplicationContext($app);
-        $mediaPath      = $app->get('uri.media.path', '/media/');
-        $defaultPackage = new PathPackage($mediaPath, new EmptyVersionStrategy(), $context);
-        $mixStrategy    = new MixPathPackage($defaultPackage, $mediaPath, new JsonManifestVersionStrategy(JPATH_ROOT . '/www/media/mix-manifest.json'), $context);
+        $app             = $container->get(AbstractApplication::class);
+        $context         = new ApplicationContext($app);
+        $mediaPath       = $app->get('uri.media.path', '/media/');
+        $defaultPackage  = new PathPackage($mediaPath, new EmptyVersionStrategy(), $context);
+        $manifestPackage = new ManifestPathPackage($defaultPackage, $mediaPath, new JsonManifestVersionStrategy(JPATH_ROOT . '/www/media/manifest.json'), $context);
         return new Packages($defaultPackage, [
-                'mix' => $mixStrategy,
+                'versioned' => $manifestPackage,
             ]);
     }
 
