@@ -34,6 +34,13 @@ class SyncPullsCommand extends AbstractCommand
     protected static $defaultName = 'package:sync:pulls';
 
     /**
+     * The number of pull requests to fetch per request, this is the maximum supported by the GitHub API
+     *
+     * @var  integer
+     */
+    private const PULLS_PER_PAGE = 100;
+
+    /**
      * The github object
      *
      * @var  Github
@@ -83,6 +90,8 @@ class SyncPullsCommand extends AbstractCommand
         $symfonyStyle->title('Sync Package Pulls Data');
         $packages   = $this->helper->getPackages()->extract('packages')->toArray();
 
+        $hasErrors = false;
+
         foreach ($packages as $name => $package) {
             $symfonyStyle->write('Retrieving PRs for ' . $name);
             try {
@@ -92,11 +101,13 @@ class SyncPullsCommand extends AbstractCommand
                     $symfonyStyle->write(' (' . $repoName . ')');
                 }
                 $symfonyStyle->write(': ');
-                $pulls     = $this->github->pulls->getList('joomla-framework', $repoName);
-                $pullcount = count($pulls);
+                $pullcount = $this->countOpenPulls($repoName);
             } catch (UnexpectedResponseException $exception) {
+                // Keep the stored count, an API error must not reset it
                 $symfonyStyle->error($exception->getMessage());
-                $pullcount = 0;
+                $hasErrors = true;
+
+                continue;
             }
             $query = $this->database->getQuery(true)
                 ->update('#__packages')
@@ -108,9 +119,40 @@ class SyncPullsCommand extends AbstractCommand
             $symfonyStyle->writeln($pullcount);
         }
 
+        if ($hasErrors) {
+            $symfonyStyle->error('Pull data synchronized with errors, the data of some packages could not be updated.');
+
+            return 1;
+        }
+
         $symfonyStyle->success('Pull data synchronized.');
 
         return 0;
+    }
+
+    /**
+     * Count the open pull requests of a repository
+     *
+     * The GitHub API returns paginated results, so all pages have to be fetched to get the full count.
+     *
+     * @param   string  $repoName  The repository name
+     *
+     * @return  integer
+     *
+     * @throws  UnexpectedResponseException
+     */
+    private function countOpenPulls(string $repoName): int
+    {
+        $count = 0;
+        $page  = 1;
+
+        do {
+            $pulls  = $this->github->pulls->getList('joomla-framework', $repoName, 'open', $page, self::PULLS_PER_PAGE);
+            $count += \count($pulls);
+            $page++;
+        } while (\count($pulls) === self::PULLS_PER_PAGE);
+
+        return $count;
     }
 
     /**
