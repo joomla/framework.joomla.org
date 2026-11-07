@@ -41,6 +41,12 @@ This site makes use of [Subresource Integrity (SRI)](https://developer.mozilla.o
 
 The PHP code follows PSR-12 with a few additions, configured in `.php-cs-fixer.dist.php`. Check it with `vendor/bin/php-cs-fixer fix --dry-run --diff`, or fix all violations with `vendor/bin/php-cs-fixer fix`. The check runs on every push and pull request.
 
+## Tests
+
+The unit tests are written with [PHPUnit](https://phpunit.de/) and live in the `tests` directory. Run them with `vendor/bin/phpunit`; they run on every push and pull request as well.
+
+The tests use an in-memory SQLite database (the `pdo_sqlite` extension is required) and a temporary directory as the application root, so they don't need a configured installation and never touch a local database or the `docs` directory. Besides the application code, they check that the SRI hashes in `www/media/sri-manifest.json` match the committed assets.
+
 ## Database Schema
 
 The database schema is managed through [Phinx](https://phinx.org/).  The `phinx.php` file at the root of this repo configures the Phinx environment.  Please see their documentation for more information.

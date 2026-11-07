@@ -1,0 +1,3 @@
+# Built assets must be checked out byte for byte, their SRI hashes and version IDs are calculated from the exact contents.
+# Without this, core.autocrlf on Windows converts them to CRLF and template:generate-sri produces hashes that don't match the deployed files.
+/www/media/** -text
