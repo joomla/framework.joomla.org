@@ -38,31 +38,31 @@ class GenerateSriCommand extends AbstractCommand
         $symfonyStyle = new SymfonyStyle($input, $output);
         $symfonyStyle->title('Generate SRI Information');
         $mediaDir        = JPATH_ROOT . '/www/media';
-        $mixManifestFile = $mediaDir . '/mix-manifest.json';
+        $manifestFile    = $mediaDir . '/manifest.json';
         $sriManifestFile = $mediaDir . '/sri-manifest.json';
-        if (!file_exists($mixManifestFile)) {
-            $symfonyStyle->error('The Mix manifest file is missing.');
+        if (!file_exists($manifestFile)) {
+            $symfonyStyle->error('The asset manifest file is missing, run `npm run prod` first.');
             return 1;
         }
 
-        $mixManifestData = file_get_contents($mixManifestFile);
-        if ($mixManifestData === false) {
-            $symfonyStyle->error('The Mix manifest file could not be read.');
+        $manifestData = file_get_contents($manifestFile);
+        if ($manifestData === false) {
+            $symfonyStyle->error('The asset manifest file could not be read.');
             return 1;
         }
 
-        $mixManifest = json_decode($mixManifestData, true);
+        $manifest    = json_decode($manifestData, true);
         $sriData     = [];
-        foreach (array_keys($mixManifest) as $file) {
+        foreach (array_keys($manifest) as $file) {
             $fullPath = $mediaDir . $file;
             if (!file_exists($fullPath)) {
-                $symfonyStyle->warning(sprintf('The Mix resource "%s" is missing.', $fullPath));
+                $symfonyStyle->warning(sprintf('The asset "%s" is missing.', $fullPath));
                 continue;
             }
 
             $fileContents = file_get_contents($fullPath);
             if ($fileContents === false) {
-                $symfonyStyle->warning(sprintf('The Mix resource "%s" could not be read.', $fullPath));
+                $symfonyStyle->warning(sprintf('The asset "%s" could not be read.', $fullPath));
                 continue;
             }
 
@@ -88,6 +88,6 @@ class GenerateSriCommand extends AbstractCommand
      */
     protected function configure(): void
     {
-        $this->setDescription('Generate SRI information for Mix generated assets');
+        $this->setDescription('Generate SRI information for the assets built by Vite');
     }
 }

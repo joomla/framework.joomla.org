@@ -4,8 +4,8 @@
         <!-- For Responsive -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.css', 'mix') }}" type="text/css"{{ sri('css/bootstrap.css') }}>
-        <link rel="stylesheet" href="{{ asset('css/template.css', 'mix') }}" type="text/css"{{ sri('css/template.css') }}>
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css', 'versioned') }}" type="text/css"{{ sri('css/bootstrap.css') }}>
+        <link rel="stylesheet" href="{{ asset('css/template.css', 'versioned') }}" type="text/css"{{ sri('css/template.css') }}>
         {% block stylesheets %}{% endblock %}
         {% if appDebug %}
             <link rel="stylesheet" href="{{ asset('css/debugbar.css') }}" type="text/css">
@@ -77,8 +77,8 @@
             {% endblock %}
         </footer>
 
-        <script src="{{ asset('js/template.js', 'mix') }}"{{ sri('js/template.js') }}></script>
-        <script src="{{ asset('js/bootstrap.bundle.js', 'mix') }}"{{ sri('js/bootstrap.bundle.js') }}></script>
+        <script src="{{ asset('js/template.js', 'versioned') }}"{{ sri('js/template.js') }}></script>
+        <script src="{{ asset('js/bootstrap.bundle.js', 'versioned') }}"{{ sri('js/bootstrap.bundle.js') }}></script>
         {% block bodyJavaScript %}{% endblock %}
         {% if appDebug %}
             <script src="{{ asset('js/debugbar.js') }}"></script>
