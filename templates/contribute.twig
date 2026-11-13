@@ -2,98 +2,132 @@
 
 {% block title %}Start contributing to the Joomla! Framework{% endblock %}
 
-{% block metaDescription %}Learn how to contribute to the Joomla! Framework{% endblock %}
+{% block metaDescription %}Learn how to contribute to the Joomla! Framework: reporting issues, supported branches, coding standards, tests, documentation and pull requests.{% endblock %}
 
 {% block content %}
 <section class="contribute container">
     <h1 class="text-center">Contributing to the Joomla! Framework</h1>
 
-    <h2 class="page-header">Repository Structure</h2>
-    <p>As of June 2017, the individual repositories in the <a href="https://github.com/joomla-framework">Joomla! Framework GitHub organization</a> are generally structured the same.</p>
+    <p class="lead">The Joomla! Framework is developed by volunteers, and every contribution helps, whether it is a bug report, a fix, a test, a piece of documentation or an answer to somebody else's question.</p>
 
-    <h3>Branches</h3>
-    <p>Most repositories have two branches representing the two major Framework versions; 1.x and 2.0. Except for the noted exceptions below, the <code>master</code> branch represents the stable 1.x branch and the <code>2.0-dev</code> branch represents the upcoming 2.0 release.</p>
+    <h2 class="page-header">Ways to Help</h2>
     <ul>
-        <li>The Crypt package uses the <code>master</code> for 2.0 and a <code>1.x-dev</code> branch for 1.x</li>
-        <li>The Log package has no 2.0 branch since this package was deprecated before work on the Framework 2.0 release began</li>
-        <li>The Console, Preload, and Renderer packages are not part of Framework 1.x, therefore their <code>master</code> branches represent the 2.0 release</li>
+        <li><a href="#reporting-issues">Report bugs</a> and suggest features in the package's repository.</li>
+        <li><a href="#pull-requests">Fix a bug or add a feature</a> with a pull request.</li>
+        <li><strong>Test pull requests</strong> of other contributors and report your results; every pull request lists testing instructions.</li>
+        <li><a href="#documentation">Improve the documentation</a>, which is maintained in each package's repository and published on this site.</li>
+        <li><strong>Answer questions</strong> in the Discussions of the package repositories or on the <a href="https://groups.google.com/g/joomla-dev-framework">Framework mailing list</a>.</li>
+        <li><strong>Sponsor the project</strong> through <a href="https://github.com/sponsors/joomla">GitHub Sponsors</a> or a <a href="https://community.joomla.org/sponsorship-campaigns.html">Joomla! sponsorship campaign</a>.</li>
     </ul>
 
-    <h3>Deprecated Packages</h3>
-    <p>Several packages have been deprecated and will not be supported in the Framework 2.0 release. Unless noted, work had been in progress to update all packages for the Framework 2.0 release, including internal refactoring, however as these packages are now deprecated their <code>2.0-dev</code> branches should be considered <strong><em>abandoned</em></strong>.</p>
-    <ul>
-        <li>Cache - Use any <a href="https://www.php-fig.org/psr/psr-6/">PSR-6</a> or <a href="https://www.php-fig.org/psr/psr-16/">PSR-16</a> compliant package instead</li>
-        <li>Compat</li>
-        <li>Date - Use the <a href="https://carbon.nesbot.com/">Carbon</a> library instead</li>
-        <li>Facebook</li>
-        <li>Google</li>
-        <li>Image</li>
-        <li>LDAP - Use the <a href="https://symfony.com/doc/current/components/ldap.html">Symfony LDAP Component</a> instead</li>
-        <li>LinkedIn</li>
-        <li>Log - Use any <a href="https://www.php-fig.org/psr/psr-3/">PSR-3</a> compliant package instead</li>
-        <li>OpenStreetMap</li>
-        <li>Twitter</li>
-    </ul>
+    <h2 class="page-header">Where Development Happens</h2>
+    <p>Every package has its own repository in the <a href="https://github.com/joomla-framework">Joomla! Framework GitHub organization</a>, for example <a href="https://github.com/joomla-framework/application">joomla-framework/application</a>. Issues, pull requests and discussions are handled in the repository of the package they concern. The <a href="{{ route('status') }}">package status page</a> lists all packages with their latest releases. Packages marked as abandoned are no longer maintained and their repositories are read-only.</p>
 
-    <h3>Abandoned Packages</h3>
-    <p>Below are packages which are deprecated and no longer supported by the Framework Working Group and Joomla! project. Their repositories are in a read-only state and all maintenance is discontinued.</p>
-    <ul>
-        <li>DateTime - Use the <a href="https://carbon.nesbot.com/">Carbon</a> library instead</li>
-        <li>Form</li>
-    </ul>
+    <h3 id="branches">Branches and Supported Versions</h3>
+    <p>The repositories share the same branch layout. Each major version is developed in its own branch:</p>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Branch</th>
+                    <th scope="col">Version</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>5.x-dev</code></td>
+                    <td>Framework 5</td>
+                    <td>Next major version, in development: new features that break backward compatibility</td>
+                </tr>
+                <tr>
+                    <td><code>4.x-dev</code></td>
+                    <td>Framework 4 (PHP 8.3+)</td>
+                    <td>Current version and default branch: new features, bug fixes and security fixes</td>
+                </tr>
+                <tr>
+                    <td><code>3.x-dev</code></td>
+                    <td>Framework 3</td>
+                    <td>Security fixes only</td>
+                </tr>
+                <tr>
+                    <td><code>2.0-dev</code></td>
+                    <td>Framework 2</td>
+                    <td>No longer supported</td>
+                </tr>
+                <tr>
+                    <td><code>1.x-dev</code></td>
+                    <td>Framework 1</td>
+                    <td>No longer supported</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>Pull requests, whether bug fixes or new features, should target <code>4.x-dev</code>. Changes that break backward compatibility go into <code>5.x-dev</code>. The <code>3.x-dev</code> branch only receives security fixes, which are handled through the <a href="#security-issues">Security Strike Team</a>.</p>
 
-    <h3>File Structure</h3>
-    <p>Joomla! Framework packages are <a href="https://www.php-fig.org/psr/psr-4/">PSR-4</a> compliant and follow a common filesystem structure.</p>
+    <h2 id="reporting-issues" class="page-header">Reporting Issues</h2>
+    <p>Open an issue in the repository of the affected package. Before you do, please check whether the issue has already been reported. The issue templates ask for the information we need:</p>
     <ul>
-        <li><code>.github</code> - GitHub repository metadata (contributing guidelines, issue and pull request templates)</li>
-        <li><code>.travis</code> - Configuration files for the Travis-CI platform</li>
-        <li><code>docs</code> - As part of the Framework 2.0 release, documentation is being added to each package; this directory is not present in the 1.x branches</li>
-        <li><code>src</code> - The production code for the package</li>
-        <li><code>tests</code> - The test suite for the package</li>
+        <li><strong>Bug reports:</strong> the steps to reproduce the issue, the expected and the actual result, and system information such as the PHP version and the package version.</li>
+        <li><strong>Feature requests:</strong> what you want to achieve and why the package should support it.</li>
     </ul>
-    <p><span class="badge badge-info">NOTE</span> The Crypt 1.x branch is still structured for <a href="http://www.php-fig.org/psr/psr-0/">PSR-0</a> support due to backward compatibility implications with migrating to PSR-4 and as such the branch has a slightly different repository structure. Additionally, the Session package's 1.x branch was not migrated to PSR-4 and still follows the PSR-0 structure.</p>
+    <p>For questions about using a package, please use the repository's Discussions or the <a href="https://groups.google.com/g/joomla-dev-framework">mailing list</a> instead of the issue tracker.</p>
 
-    <h2 class="page-header">Issues/Pull Requests</h2>
-    <p>Issue tracking and pull requests are managed via <a href="https://github.com">GitHub</a> in each package's repository. All of the Framework's packages are listed under the Joomla! Framework organization. You can find the documentation about how to fork a repository and start contributing to the Joomla! Framework at <a href="https://help.github.com/articles/fork-a-repo/">https://help.github.com/articles/fork-a-repo</a>.</p>
-    <p>All contributions are welcome to be submitted for review for inclusion in the Framework, but before they will be accepted, we ask that you follow these simple guidelines:</p>
-    <ul>
-        <li><a href="#versioning">Versioning</a></li>
-        <li><a href="#coding-standards">Coding Standards</a></li>
-        <li><a href="#unit-testing">Unit Testing</a></li>
-        <li><a href="#documentation">Documentation</a></li>
-    </ul>
-    <p>Please be patient as not all items will be tested or reviewed immediately by the <a href="https://volunteers.joomla.org/teams/framework-working-group">Framework team</a>. Also be receptive to feedback about your changes to the Framework. The maintainer team and other community members may make suggestions or ask questions about your change. This is part of the review process, and helps everyone to understand what is happening, why it is happening, and potentially optimize your code.</p>
-
-    <div class="alert alert-warning">
+    <div id="security-issues" class="alert alert-warning">
         <h4 class="alert-heading">Security Issues</h4>
-        <p>Security issues should be reported to the <a class="alert-link" href="https://developer.joomla.org/security.html">Joomla! Security Strike Team</a> by either filling out <a class="alert-link" href="https://developer.joomla.org/security/contact-the-team.html">the contact form</a> or emailing <a class="alert-link" href="mailto:security@joomla.org">security@joomla.org</a>.</p>
+        <p class="mb-0">Please do not report security issues in public issues or pull requests. Report them to the <a class="alert-link" href="https://developer.joomla.org/security.html">Joomla! Security Strike Team</a> through <a class="alert-link" href="https://developer.joomla.org/security/contact-the-team.html">the contact form</a>, with as much detail about the issue as possible.</p>
     </div>
 
-    <h2 id="versioning" class="page-header">Versioning</h2>
-    <p>When you add new classes, properties or methods, please use <code>__DEPLOY_VERSION__</code> in the <code>@since</code> tags in Docblocks. We'll replace that marker with the actual version the changes are deployed in.</p>
+    <h2 id="development-setup" class="page-header">Development Setup</h2>
+    <p>You need PHP 8.3 or newer, <a href="https://getcomposer.org/">Composer</a> and Git. <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">Fork the repository</a> on GitHub, then clone your fork, check out the branch you want to target and install the dependencies:</p>
+<pre><code>git clone https://github.com/&lt;your-username&gt;/application.git
+cd application
+git checkout 4.x-dev
+git checkout -b my-fix
+composer install</code></pre>
+    <p><code>composer install</code> also installs the tools used below: PHPUnit, PHP_CodeSniffer and PHPStan. Each repository has an <code>.editorconfig</code> file (4 spaces, LF line endings, UTF-8), which most editors pick up automatically.</p>
 
     <h2 id="coding-standards" class="page-header">Coding Standards</h2>
-    <p>All submitted code must be compliant with the Joomla! Coding Standards. This standard is documented at <a href="https://developer.joomla.org/coding-standards.html">https://developer.joomla.org/coding-standards.html</a>. There is a tool called <a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer</a> that allows you to validate your code against the Joomla! Coding Standards.</p>
+    <p>The packages follow <a href="https://www.php-fig.org/psr/psr-12/">PSR-12</a>, with no limit on the line length. The rules are defined in the <code>ruleset.xml</code> file of each repository and checked with <a href="https://github.com/PHPCSStandards/PHP_CodeSniffer">PHP_CodeSniffer</a>:</p>
+<pre><code># Fix what can be fixed automatically, then list the remaining issues
+composer style
 
-    <h3>Install & Use</h3>
-    <p>The Framework repositories are using version 2.x of the Joomla! Coding Standards which is based on the 2.x branch of PHP_CodeSniffer. PHP_CodeSniffer is installed as part of a <code>composer install</code>, helpful when you are cloning a package's git repository. Please see <a href="https://github.com/squizlabs/PHP_CodeSniffer">https://github.com/squizlabs/PHP_CodeSniffer</a> for more documentation on PHP_CodeSniffer.</p>
-    <p>Once PHP_CodeSniffer is installed and the Joomla! Coding Standards are downloaded, you can now check your code against the standard. The exact command to be run will vary based on whether the repository uses the base definition or has a custom ruleset due to rule exemptions for that package, therefore we suggest copying the command from the package's <code>.travis.yml</code> file.</p>
+# Run the same check as the CI
+vendor/bin/phpcs --standard=ruleset.xml src/</code></pre>
+    <p>Most IDEs, for example PhpStorm and Visual Studio Code, can run PHP_CodeSniffer with the repository's <code>ruleset.xml</code> and show violations directly in the editor.</p>
 
-    <h3>IDE Support</h3>
-    <p>Some editors support PHP_CodeSniffer as a plugin or a built in feature. It will allow you to see if your code matches the Joomla! standard directly in your editor. You can find configuration files for many editors from this repository: <a href="https://github.com/joomla/coding-standards/tree/master/Joomla/IDE">https://github.com/joomla/coding-standards/tree/master/Joomla/IDE</a>. Download the repository content via the Zip button and import the appropriate <code>.xml</code> file into your editor.</p>
+    <h3>Static Analysis</h3>
+    <p>The code is analysed with <a href="https://phpstan.org/">PHPStan</a>, using the configuration in <code>phpstan.neon</code>. Run it with <code>vendor/bin/phpstan</code>. Existing findings are recorded in <code>phpstan-baseline.neon</code>; new code should not add entries to the baseline.</p>
 
     <h2 id="unit-testing" class="page-header">Unit Testing</h2>
-    <p>Whether your pull request is a bug fix or introduces new classes or methods to the Framework, we ask that you include unit tests for your changes. We understand that not all users submitting pull requests will be proficient with PHPUnit. The maintainers and community as a whole are a helpful group and can help you with writing tests. PHPUnit, and any additional testing dependencies, is installed as part of a <code>composer install</code>, helpful when you are cloning a package's git repository. Please see <a href="https://phpunit.de/manual/current/en/index.html">https://phpunit.de/manual/current/en/index.html</a> for the full PHPUnit documentation.</p>
+    <p>Whether your pull request fixes a bug or adds a feature, please include unit tests for your change. The tests live in the <code>Tests</code> directory and use <a href="https://phpunit.de/">PHPUnit</a>:</p>
+<pre><code>composer test       # run the test suite
+composer testdox    # run it with readable test names
+composer coverage   # write an HTML coverage report to build/coverage</code></pre>
+    <p>The CI runs the tests on all supported PHP versions (currently 8.3, 8.4 and 8.5), and once more with the lowest dependency versions the package allows. If your change depends on a newer version of a dependency, raise the version constraint in <code>composer.json</code>; you can reproduce that run with <code>composer update --prefer-lowest</code>.</p>
+    <p>Not everyone is familiar with PHPUnit, and that's fine. Submit your pull request anyway and ask for help; the maintainers and the community will help you write the tests.</p>
 
     <h2 id="documentation" class="page-header">Documentation</h2>
-    <p>For Framework 1.x releases, documentation for each package can be found in the <code>README.md</code> file in the root of the repository. As of 2.0, each repository will have a dedicated <code>docs</code> directory.</p>
-    <p>The <code>docs</code> directory structure at a minimum uses the following format:</p>
+    <p>Each package documents itself in its <code>docs</code> directory, written in <a href="https://docs.github.com/en/get-started/writing-on-github">GitHub Flavored Markdown</a>. The documentation of the <code>3.x-dev</code>, <code>4.x-dev</code> and <code>5.x-dev</code> branches is published in the <a href="{{ route('docs') }}">documentation section of this site</a>, and updated automatically after changes are merged.</p>
     <ul>
-        <li><code>classes</code> - This directory contains documentation about the package's classes, interfaces, and traits, including summaries of the object's purpose and example uses</li>
-        <li><code>index.md</code> - This is a file which will be used as a navigational menu when the package documentation is integrated into this site</li>
-        <li><code>overview.md</code> - This is an overview of the package and its use</li>
-        <li><code>v1-to-v2-update.md</code> - This file will highlight backward compatibility breaking changes in each package while migrating from 1.x to 2.0</li>
+        <li><code>index.md</code> is the navigation of the package's documentation, it is shown as the sidebar on this site.</li>
+        <li><code>overview.md</code> introduces the package; it is the first page shown for a package.</li>
+        <li>Further pages cover topics such as getting started, configuration and the individual classes; some packages also include a tutorial.</li>
+        <li><code>v3-to-v4-update.md</code> (and the files for older versions) describe the changes that break backward compatibility between major versions.</li>
     </ul>
-    <p>The documentation files use  <a href="https://help.github.com/categories/writing-on-github/">GitHub Flavored Markdown</a>. When contributing new features to existing packages, please add notes about the new features to the existing <code>README.md</code> file in the packages you change or add new files to the <code>docs</code> directory (depending on the branch you are submitting the change to). When submitting new packages, documentation in the form of a <code>README.md</code> file will be required with your pull request. The package documentation should explain how a developer should should be able to get started using the code in the package. The documentation should give an explanation of the classes, interfaces, and/or traits, and provide several simple examples.</p>
+    <p>Links between documentation pages should be relative links to the Markdown files (for example <code>[Configuration](configuration.md)</code>); this site turns them into links to the corresponding pages.</p>
+    <p>When your pull request changes the behaviour of a package or adds a feature, please update the documentation in the same pull request. Changes that break backward compatibility must also be added to the update guide of the next major version.</p>
+
+    <h2 id="pull-requests" class="page-header">Pull Requests</h2>
+    <p>Before you submit a pull request, make sure that the coding standards check, PHPStan and the tests pass locally. They also run automatically on every pull request, and should pass before it is merged. The pull request template asks for:</p>
+    <ul>
+        <li>the issue the pull request fixes, if there is one,</li>
+        <li>a summary of the changes,</li>
+        <li>testing instructions, so other contributors can verify the change,</li>
+        <li>whether the documentation needs to be changed.</li>
+    </ul>
+    <p>New classes, methods and properties need a <code>@since</code> tag in their docblock with the version they will be released in, for example <code>@since 4.1.0</code>. If you're not sure which version that will be, mention it in the pull request and the maintainers will set it.</p>
+    <p>Please be patient, as not every pull request can be reviewed right away by the <a href="https://volunteers.joomla.org/teams/framework-working-group">Framework team</a>, and be open to feedback. Maintainers and other community members may suggest changes or ask questions about your change. This is part of the review process and helps everyone understand the change and improve the code.</p>
+    <p>All contributors are expected to follow the <a href="https://www.joomla.org/about-joomla/the-project/code-of-conduct.html">Joomla! Code of Conduct</a>. By contributing, you agree that your contribution is licensed under the <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GNU General Public License version 2 or later</a>, the license of the Framework.</p>
 </section>
 {% endblock %}
