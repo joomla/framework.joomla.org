@@ -49,6 +49,7 @@ The database schema is managed through [Phinx](https://phinx.org/).  The `phinx.
 
 The application's configuration is defined as follows:
 
+* Site URL - The `site_url` key sets the scheme and host used for absolute URLs in the pages (the `og:url` and canonical link, and the API base URL), e.g. `https://framework.joomla.org`; if it is empty, the host of the request is used, which should only be done for local development
 * Database - The `joomla/database` package is used to provide a database connection as required
     * `database.host` - The address of the database server
     * `database.user` - The user to connect to the database as

@@ -41,6 +41,7 @@ class FrameworkExtension extends AbstractExtension
     {
         return [
             new TwigFunction('asset', [Packages::class, 'getUrl']),
+            new TwigFunction('canonical_url', [FrameworkTwigRuntime::class, 'getCanonicalUrl']),
             new TwigFunction('preload', [FrameworkTwigRuntime::class, 'preloadAsset']),
             new TwigFunction('request_uri', [FrameworkTwigRuntime::class, 'getRequestUri']),
             new TwigFunction('route', [FrameworkTwigRuntime::class, 'getRouteUri']),
