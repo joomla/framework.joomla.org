@@ -21,6 +21,7 @@
         </thead>
         <tbody>
             {% set _totalDownloads = 0 %}
+            {% set _totalPulls = 0 %}
             {% for release in releases %}
                 <tr>
                     <th scope="row" data-label="Package">
@@ -64,6 +65,7 @@
                         {% endif %}
                     </td>
                     <td data-label="PRs">
+                        {% set _totalPulls = _totalPulls + release.package.pullcount %}
                         <a href="https://github.com/joomla-framework/{{ release.package.repo }}/pulls">{{ release.package.pullcount }}</a>
                     </td>
                 </tr>
@@ -71,9 +73,13 @@
         </tbody>
         <tfoot>
             <tr>
+                <td colspan="7"></td>
+            </tr>
+            <tr>
                 <td>Totals</td>
                 <td>{{ _totalDownloads|number_format }}</td>
-                <td colspan="5"></td>
+                <td colspan="4"></td>
+                <td>{{ _totalPulls|number_format }}</td>
             </tr>
         </tfoot>
     </table>
