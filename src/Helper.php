@@ -124,4 +124,16 @@ class Helper
     {
         return $this->getPackages()->get("packages.$package.has_v4", true);
     }
+
+    /**
+     * Utility method to retrieve whether a package has a 5.x branch
+     *
+     * @param   string  $package  Package name
+     *
+     * @return  boolean
+     */
+    public function getPackageHasVersion5(string $package): bool
+    {
+        return $this->getPackages()->get("packages.$package.has_v5", true);
+    }
 }

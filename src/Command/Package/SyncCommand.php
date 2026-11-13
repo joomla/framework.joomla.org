@@ -87,7 +87,8 @@ class SyncCommand extends AbstractCommand
                     $this->helper->getPackageHasVersion1($packageName),
                     $this->helper->getPackageHasVersion2($packageName),
                     $this->helper->getPackageHasVersion3($packageName),
-                    $this->helper->getPackageHasVersion4($packageName)
+                    $this->helper->getPackageHasVersion4($packageName),
+                    $this->helper->getPackageHasVersion5($packageName)
                 );
                 $symfonyStyle->comment("Updated $displayName package data.");
             } else {
@@ -101,7 +102,8 @@ class SyncCommand extends AbstractCommand
                     $this->helper->getPackageHasVersion1($packageName),
                     $this->helper->getPackageHasVersion2($packageName),
                     $this->helper->getPackageHasVersion3($packageName),
-                    $this->helper->getPackageHasVersion4($packageName)
+                    $this->helper->getPackageHasVersion4($packageName),
+                    $this->helper->getPackageHasVersion5($packageName)
                 );
                 $symfonyStyle->comment("$displayName package added to the database.");
             }

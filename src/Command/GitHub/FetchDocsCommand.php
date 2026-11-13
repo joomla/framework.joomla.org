@@ -348,8 +348,8 @@ EOF
     private function processPackage(\stdClass $package, SymfonyStyle $symfonyStyle): void
     {
         // Set docs branches
-        $branches = ['3.x-dev', '4.x-dev'];
-        $versions = ['3.x', '4.x'];
+        $branches = ['3.x-dev', '4.x-dev', '5.x-dev'];
+        $versions = ['3.x', '4.x', '5.x'];
 
         foreach ($branches as $key => $branch) {
             $this->processBranch($branch, $versions[$key], $package, $symfonyStyle);
