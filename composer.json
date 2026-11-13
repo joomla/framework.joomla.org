@@ -43,7 +43,8 @@
         "friendsofphp/php-cs-fixer": "^3.59",
         "php-debugbar/php-debugbar": "^v2.2.4",
         "phpstan/phpstan": "^2.1.19",
-        "phpstan/phpstan-deprecation-rules": "^2.0.3"
+        "phpstan/phpstan-deprecation-rules": "^2.0.3",
+        "phpunit/phpunit": "^12.0"
     },
     "replace": {
         "paragonie/random_compat": "*"
@@ -51,6 +52,11 @@
     "autoload": {
         "psr-4": {
             "Joomla\\FrameworkWebsite\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Joomla\\FrameworkWebsite\\Tests\\": "tests/"
         }
     },
     "config": {

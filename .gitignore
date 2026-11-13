@@ -19,6 +19,7 @@
 
 # Unit Testing #
 /phpunit.xml
+/.phpunit.cache/
 
 # Node modules should be local
 node_modules/
