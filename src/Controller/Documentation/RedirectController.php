@@ -87,6 +87,15 @@ class RedirectController extends AbstractController
                 }
 
                 break;
+            case '5.x':
+                if (!$package->has_v5) {
+                    $this->errorView->setError(sprintf('The %s package does not have a 5.x branch to document.', $package->display));
+                    $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
+                } else {
+                    $this->getApplication()->setResponse(new RedirectResponse($this->getApplication()->get('uri.base.path') . "docs/$version/{$package->package}/overview"));
+                }
+
+                break;
             case 'latest':
                 if (!$package->has_v4) {
                     $this->errorView->setError(sprintf('The %s package does not have a 4.x branch to document.', $package->display));
