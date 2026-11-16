@@ -9,6 +9,7 @@
 
 namespace Joomla\FrameworkWebsite\View\Documentation;
 
+use Joomla\FrameworkWebsite\Helper\DocumentationHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\Renderer\RendererInterface;
 use Joomla\View\HtmlView;
@@ -24,6 +25,12 @@ class PageHtmlView extends HtmlView
      * @var  string
      */
     private $contents = '';
+    /**
+     * The documentation helper.
+     *
+     * @var  DocumentationHelper
+     */
+    private $documentationHelper;
     /**
          * The active package.
          *
@@ -45,13 +52,15 @@ class PageHtmlView extends HtmlView
     /**
          * Instantiate the view.
          *
-         * @param   PackageModel       $packageModel  The package model object.
-         * @param   RendererInterface  $renderer      The renderer object.
+         * @param   PackageModel         $packageModel         The package model object.
+         * @param   DocumentationHelper  $documentationHelper  The documentation helper.
+         * @param   RendererInterface    $renderer             The renderer object.
          */
-    public function __construct(PackageModel $packageModel, RendererInterface $renderer)
+    public function __construct(PackageModel $packageModel, DocumentationHelper $documentationHelper, RendererInterface $renderer)
     {
         parent::__construct($renderer);
-        $this->packageModel = $packageModel;
+        $this->documentationHelper = $documentationHelper;
+        $this->packageModel        = $packageModel;
     }
 
     /**
@@ -65,6 +74,7 @@ class PageHtmlView extends HtmlView
                 'activePackage'   => $this->package,
                 'contents'        => $this->contents,
                 'packages'        => $this->packageModel->getSortedPackages(),
+                'packageSummary'  => $this->documentationHelper->getPackageSummary($this->package),
                 'sidebarContents' => $this->sidebarContents,
                 'route'           => 'docs',
             ]);

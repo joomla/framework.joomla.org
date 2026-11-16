@@ -42,6 +42,7 @@ use Joomla\FrameworkWebsite\Controller\PageController;
 use Joomla\FrameworkWebsite\Controller\StatusController;
 use Joomla\FrameworkWebsite\Controller\WrongCmsController;
 use Joomla\FrameworkWebsite\Helper;
+use Joomla\FrameworkWebsite\Helper\DocumentationHelper;
 use Joomla\FrameworkWebsite\Helper\GitHubHelper;
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
@@ -102,6 +103,8 @@ class ApplicationProvider implements ServiceProviderInterface
             ->share(ControllerResolverInterface::class, [$this, 'getControllerResolverService']);
         $container->alias(Helper::class, 'application.helper')
             ->share('application.helper', [$this, 'getApplicationHelperService'], true);
+        $container->alias(DocumentationHelper::class, 'application.helper.documentation')
+            ->share('application.helper.documentation', [$this, 'getApplicationHelperDocumentationService'], true);
         $container->alias(GitHubHelper::class, 'application.helper.github')
             ->share('application.helper.github', [$this, 'getApplicationHelperGithubService'], true);
         $container->alias(PackagistHelper::class, 'application.helper.packagist')
@@ -584,6 +587,18 @@ class ApplicationProvider implements ServiceProviderInterface
         return new StatusJsonView($container->get('model.package'), $container->get('model.release'));
     }
     /**
+     * Get the `application.helper.documentation` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  DocumentationHelper
+     */
+    public function getApplicationHelperDocumentationService(Container $container): DocumentationHelper
+    {
+        return new DocumentationHelper(JPATH_ROOT . '/docs');
+    }
+
+    /**
      * Get the `application.helper.github` service
      *
      * @param   Container  $container  The DI container.
@@ -744,6 +759,8 @@ class ApplicationProvider implements ServiceProviderInterface
     {
         $view = new IndexHtmlView(
             $container->get('model.package'),
+            $container->get('model.release'),
+            $container->get(DocumentationHelper::class),
             $container->get('renderer')
         );
 
@@ -763,6 +780,7 @@ class ApplicationProvider implements ServiceProviderInterface
     {
         $view = new PageHtmlView(
             $container->get('model.package'),
+            $container->get(DocumentationHelper::class),
             $container->get('renderer')
         );
 

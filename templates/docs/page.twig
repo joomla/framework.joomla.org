@@ -2,6 +2,8 @@
 
 {% block title %}Joomla! Framework Documentation - {{ activePackage.display }} Package{% endblock %}
 
+{% block metaDescription %}{{ packageSummary ?: 'Documentation of the ' ~ activePackage.display ~ ' package of the Joomla! Framework.' }}{% endblock %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ preload(asset('css/code.css', 'versioned'), 'preload', {'as': 'style'}) }}" type="text/css"{{ sri('css/code.css') }}>
 {% endblock %}

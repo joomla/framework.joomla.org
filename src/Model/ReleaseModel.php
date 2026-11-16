@@ -38,16 +38,18 @@ class ReleaseModel implements DatabaseModelInterface
      * @param   \stdClass  $package      The package to add the release for
      * @param   string     $version      The package's release version
      * @param   \DateTime  $releaseDate  The date this release was created
+     * @param   string     $php          The PHP version constraint of the release, null if unknown
      *
      * @return  void
      */
-    public function addRelease(\stdClass $package, string $version, \DateTime $releaseDate): void
+    public function addRelease(\stdClass $package, string $version, \DateTime $releaseDate, ?string $php = null): void
     {
         $db   = $this->getDb();
         $data = (object) [
             'package_id'   => $package->id,
             'version'      => $version,
             'release_date' => $releaseDate->format('Y-m-d'),
+            'php'          => $php,
         ];
         $db->insertObject('#__releases', $data);
     }
@@ -205,10 +207,11 @@ class ReleaseModel implements DatabaseModelInterface
      * @param   \stdClass  $package      The package to update the release for
      * @param   string     $version      The package's release version
      * @param   \DateTime  $releaseDate  The date this release was created
+     * @param   string     $php          The PHP version constraint of the release, null keeps the stored constraint
      *
      * @return  void
      */
-    public function updateRelease(int $releaseId, \stdClass $package, string $version, \DateTime $releaseDate): void
+    public function updateRelease(int $releaseId, \stdClass $package, string $version, \DateTime $releaseDate, ?string $php = null): void
     {
         $db   = $this->getDb();
         $data = (object) [
@@ -216,6 +219,7 @@ class ReleaseModel implements DatabaseModelInterface
             'package_id'   => $package->id,
             'version'      => $version,
             'release_date' => $releaseDate->format('Y-m-d'),
+            'php'          => $php,
         ];
         $db->updateObject('#__releases', $data, ['id']);
     }

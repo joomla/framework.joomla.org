@@ -167,7 +167,7 @@ class PackageModel implements DatabaseModelInterface
         usort(
             $packages,
             function ($a, $b) {
-                return strcmp($a->display, $b->display);
+                return strcasecmp($a->display, $b->display);
             }
         );
 

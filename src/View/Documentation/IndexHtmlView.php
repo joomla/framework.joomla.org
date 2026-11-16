@@ -9,7 +9,9 @@
 
 namespace Joomla\FrameworkWebsite\View\Documentation;
 
+use Joomla\FrameworkWebsite\Helper\DocumentationHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
+use Joomla\FrameworkWebsite\Model\ReleaseModel;
 use Joomla\Renderer\RendererInterface;
 use Joomla\View\HtmlView;
 
@@ -19,21 +21,40 @@ use Joomla\View\HtmlView;
 class IndexHtmlView extends HtmlView
 {
     /**
-     * The contributor model object.
+     * The documentation helper.
+     *
+     * @var  DocumentationHelper
+     */
+    private $documentationHelper;
+
+    /**
+     * The package model object.
      *
      * @var  PackageModel
      */
     private $packageModel;
+
     /**
-         * Instantiate the view.
-         *
-         * @param   PackageModel       $packageModel  The package model object.
-         * @param   RendererInterface  $renderer      The renderer object.
-         */
-    public function __construct(PackageModel $packageModel, RendererInterface $renderer)
+     * The release model object.
+     *
+     * @var  ReleaseModel
+     */
+    private $releaseModel;
+
+    /**
+     * Instantiate the view.
+     *
+     * @param   PackageModel         $packageModel         The package model object.
+     * @param   ReleaseModel         $releaseModel         The release model object.
+     * @param   DocumentationHelper  $documentationHelper  The documentation helper.
+     * @param   RendererInterface    $renderer             The renderer object.
+     */
+    public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, DocumentationHelper $documentationHelper, RendererInterface $renderer)
     {
         parent::__construct($renderer);
-        $this->packageModel = $packageModel;
+        $this->documentationHelper = $documentationHelper;
+        $this->packageModel        = $packageModel;
+        $this->releaseModel        = $releaseModel;
     }
 
     /**
@@ -43,10 +64,71 @@ class IndexHtmlView extends HtmlView
      */
     public function render()
     {
+        $packages = $this->packageModel->getSortedPackages();
+
         $this->setData([
-                'packages' => $this->packageModel->getSortedPackages(),
-                'route'    => 'docs',
+                'documentedPackages' => $this->getDocumentedPackages($packages),
+                'packages'           => $packages,
+                'route'              => 'docs',
             ]);
         return parent::render();
+    }
+
+    /**
+     * Get the packages listed on the index, with their summary and latest release
+     *
+     * Like the package list in the sidebar, only stable packages are listed. Packages without documentation for the version the `latest` routes point to are
+     * left out, the links to their documentation would fail.
+     *
+     * @param   \stdClass[]  $packages  The packages, sorted by name.
+     *
+     * @return  \stdClass[]
+     */
+    private function getDocumentedPackages(array $packages): array
+    {
+        $packages = array_filter(
+            $packages,
+            fn (\stdClass $package): bool => $package->stable && !$package->abandoned && $this->documentationHelper->hasDocumentation($package)
+        );
+
+        $reports = [];
+
+        foreach ($this->releaseModel->getLatestReleases($packages) as $report) {
+            $reports[$report->package->id] = $report;
+        }
+
+        $entries = [];
+
+        foreach ($packages as $package) {
+            $entries[] = (object) [
+                'package'       => $package,
+                'summary'       => $this->documentationHelper->getPackageSummary($package),
+                'latestRelease' => $this->getNewestRelease($reports[$package->id] ?? null),
+            ];
+        }
+
+        return $entries;
+    }
+
+    /**
+     * Get the release of the highest major version from a package's release report
+     *
+     * @param   \stdClass|null  $report  The report from ReleaseModel::getLatestReleases(), with a `vN` property per major version.
+     *
+     * @return  \stdClass|null
+     */
+    private function getNewestRelease(?\stdClass $report): ?\stdClass
+    {
+        $newest = null;
+        $major  = -1;
+
+        foreach (get_object_vars($report ?? new \stdClass()) as $key => $release) {
+            if (preg_match('/^v(\d+)$/', $key, $matches) && (int) $matches[1] > $major) {
+                $major  = (int) $matches[1];
+                $newest = $release;
+            }
+        }
+
+        return $newest;
     }
 }
