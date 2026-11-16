@@ -11,6 +11,7 @@ namespace Joomla\FrameworkWebsite\Model;
 
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\ParameterType;
+use Joomla\FrameworkWebsite\Model\Exception\ReleaseNotFoundException;
 use Joomla\Model\DatabaseModelInterface;
 use Joomla\Model\DatabaseModelTrait;
 
@@ -152,6 +153,8 @@ class ReleaseModel implements DatabaseModelInterface
      * @param   string     $version  The version to check for
      *
      * @return  \stdClass
+     *
+     * @throws  ReleaseNotFoundException  If the package has no release at the given version
      */
     public function getRelease(\stdClass $package, string $version): \stdClass
     {
@@ -163,7 +166,14 @@ class ReleaseModel implements DatabaseModelInterface
             ->where($db->quoteName('version') . ' = :version')
             ->bind('packageId', $package->id, ParameterType::INTEGER)
             ->bind('version', $version, ParameterType::STRING);
-        return $db->setQuery($query)->loadObject();
+
+        $release = $db->setQuery($query)->loadObject();
+
+        if (!$release) {
+            throw new ReleaseNotFoundException(sprintf('Unable to find release `%1$s` of the `%2$s` package', $version, $package->package), 404);
+        }
+
+        return $release;
     }
 
     /**

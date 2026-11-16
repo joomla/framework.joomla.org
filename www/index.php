@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Status Application
  *

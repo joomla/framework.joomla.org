@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+
 /**
  * Joomla! Framework Status Application
  *
@@ -8,59 +9,54 @@
  */
 
 // Application constants
-define('JPATH_ROOT',      dirname(__DIR__));
+define('JPATH_ROOT', dirname(__DIR__));
 define('JPATH_TEMPLATES', JPATH_ROOT . '/templates');
 
 // Ensure we've initialized Composer
-if (!file_exists(JPATH_ROOT . '/vendor/autoload.php'))
-{
+if (!file_exists(JPATH_ROOT . '/vendor/autoload.php')) {
     fwrite(STDOUT, "\nComposer is not set up properly, please run `composer install`\n");
 
-	exit(1);
+    exit(1);
 }
 
 require JPATH_ROOT . '/vendor/autoload.php';
 
 // Wrap in a try/catch so we can display an error if need be
-try
-{
-	$container = (new Joomla\DI\Container)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\CacheProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
-		->registerServiceProvider(new Joomla\Database\Service\DatabaseProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\EventProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
-		->registerServiceProvider(new Joomla\Preload\Service\PreloadProvider)
-		->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
+try {
+    $container = (new Joomla\DI\Container())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\CacheProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
+        ->registerServiceProvider(new Joomla\Database\Service\DatabaseProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\EventProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider())
+        ->registerServiceProvider(new Joomla\Preload\Service\PreloadProvider())
+        ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider());
 
-	// Alias the CLI application to Joomla's base application class as this is the primary application for the environment
-	$container->alias(Joomla\Application\AbstractApplication::class, Joomla\Console\Application::class);
+    // Alias the CLI application to Joomla's base application class as this is the primary application for the environment
+    $container->alias(Joomla\Application\AbstractApplication::class, Joomla\Console\Application::class);
 
     // Alias the CLI logger to the PSR-3 interface as this is the primary logger for the environment
-	$container->alias(Monolog\Logger::class, 'monolog.logger.application.cli')
-		->alias(Psr\Log\LoggerInterface::class, 'monolog.logger.application.cli');
+    $container->alias(Monolog\Logger::class, 'monolog.logger.application.cli')
+        ->alias(Psr\Log\LoggerInterface::class, 'monolog.logger.application.cli');
 
     // Force error reporting to maximum
     error_reporting(-1);
     ini_set('display_errors', true);
-}
-catch (\Throwable $e)
-{
-	error_log($e);
+} catch (\Throwable $e) {
+    error_log($e);
 
     fwrite(STDOUT, "\nAn error occurred while creating the DI container: " . $e->getMessage() . "\n");
-   	fwrite(STDOUT, "\n" . $e->getTraceAsString() . "\n");
+    fwrite(STDOUT, "\n" . $e->getTraceAsString() . "\n");
 
-   	if ($prev = $e->getPrevious())
-   	{
-   		fwrite(STDOUT, "\n\nPrevious Exception: " . $prev->getMessage() . "\n");
-   		fwrite(STDOUT, "\n" . $prev->getTraceAsString() . "\n");
-   	}
+    if ($prev = $e->getPrevious()) {
+        fwrite(STDOUT, "\n\nPrevious Exception: " . $prev->getMessage() . "\n");
+        fwrite(STDOUT, "\n" . $prev->getTraceAsString() . "\n");
+    }
 
-   	exit(1);
+    exit(1);
 }
 
 // Execute the application

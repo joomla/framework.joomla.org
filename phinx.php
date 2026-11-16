@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Joomla! Framework Status Application
  *
@@ -10,17 +11,17 @@
 define('JPATH_ROOT', __DIR__);
 define('JPATH_TEMPLATES', JPATH_ROOT . '/templates');
 
-$container = (new Joomla\DI\Container)
-	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider)
-	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\CacheProvider)
-	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
-	->registerServiceProvider(new Joomla\Database\Service\DatabaseProvider)
-	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\EventProvider)
-	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider)
-	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider)
-	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider)
-	->registerServiceProvider(new Joomla\Preload\Service\PreloadProvider)
-	->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider);
+$container = (new Joomla\DI\Container())
+    ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ApplicationProvider())
+    ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\CacheProvider())
+    ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\ConfigurationProvider(JPATH_ROOT . '/etc/config.json'))
+    ->registerServiceProvider(new Joomla\Database\Service\DatabaseProvider())
+    ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\EventProvider())
+    ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\GitHubProvider())
+    ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\HttpProvider())
+    ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\LoggingProvider())
+    ->registerServiceProvider(new Joomla\Preload\Service\PreloadProvider())
+    ->registerServiceProvider(new Joomla\FrameworkWebsite\Service\TemplatingProvider());
 
 // Alias the CLI application to Joomla's base application class as this is the primary application for the environment
 $container->alias(Joomla\Application\AbstractApplication::class, Joomla\Console\Application::class);
@@ -35,15 +36,15 @@ $db = $container->get(Joomla\Database\DatabaseInterface::class);
 $db->connect();
 
 return [
-	'paths'        => [
-		'migrations' => '%%PHINX_CONFIG_DIR%%/etc/migrations',
-	],
-	'environments' => [
-		'default_environment' => 'application',
-		'application'         => [
-			'name'         => $config->get('database.database'),
-			'connection'   => $db->getConnection(),
-			'table_prefix' => $config->get('database.prefix'),
-		],
-	],
+    'paths' => [
+        'migrations' => '%%PHINX_CONFIG_DIR%%/etc/migrations',
+    ],
+    'environments' => [
+        'default_environment' => 'application',
+        'application'         => [
+            'name'         => $config->get('database.database'),
+            'connection'   => $db->getConnection(),
+            'table_prefix' => $config->get('database.prefix'),
+        ],
+    ],
 ];
