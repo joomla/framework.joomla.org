@@ -39,6 +39,7 @@ use Joomla\FrameworkWebsite\Controller\Documentation\RedirectController;
 use Joomla\FrameworkWebsite\Controller\HomepageController;
 use Joomla\FrameworkWebsite\Controller\PackageController;
 use Joomla\FrameworkWebsite\Controller\PageController;
+use Joomla\FrameworkWebsite\Controller\SitemapController;
 use Joomla\FrameworkWebsite\Controller\StatusController;
 use Joomla\FrameworkWebsite\Controller\WrongCmsController;
 use Joomla\FrameworkWebsite\Helper;
@@ -149,6 +150,8 @@ class ApplicationProvider implements ServiceProviderInterface
             ->share('controller.package', [$this, 'getControllerPackageService'], true);
         $container->alias(PageController::class, 'controller.page')
             ->share('controller.page', [$this, 'getControllerPageService'], true);
+        $container->alias(SitemapController::class, 'controller.sitemap')
+            ->share('controller.sitemap', [$this, 'getControllerSitemapService'], true);
         $container->alias(StatusController::class, 'controller.status')
             ->share('controller.status', [$this, 'getControllerStatusService'], true);
         $container->alias(WrongCmsController::class, 'controller.wrong.cms')
@@ -240,6 +243,7 @@ class ApplicationProvider implements ServiceProviderInterface
         $router->get('/docs', IndexController::class);
         $router->get('/docs/:version/:package', RedirectController::class);
         $router->get('/docs/:version/:package/:filename', DocumentationPageController::class, ['filename' => '.*']);
+        $router->get('/sitemap.xml', SitemapController::class);
         $router->get('/status', StatusController::class);
         $router->get('/:view', PageController::class);
         $router->get('/status/:package', PackageController::class);
@@ -355,6 +359,23 @@ class ApplicationProvider implements ServiceProviderInterface
     public function getControllerResolverService(Container $container): ControllerResolverInterface
     {
         return new ContainerControllerResolver($container);
+    }
+
+    /**
+     * Get the `controller.sitemap` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  SitemapController
+     */
+    public function getControllerSitemapService(Container $container): SitemapController
+    {
+        return new SitemapController(
+            $container->get(PackageModel::class),
+            JPATH_ROOT . '/docs',
+            $container->get(Input::class),
+            $container->get(WebApplication::class)
+        );
     }
 
     /**
