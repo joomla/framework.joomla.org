@@ -44,7 +44,7 @@ class DebugWebApplication extends WebApplication
      * @param   ResponseInterface            $response            An optional argument to provide dependency injection for the application's
      *                                                            response object.
      */
-    public function __construct(DebugBar $debugBar, ControllerResolverInterface $controllerResolver, RouterInterface $router, Input $input = null, Registry $config = null, WebClient $client = null, ResponseInterface $response = null)
+    public function __construct(DebugBar $debugBar, ControllerResolverInterface $controllerResolver, RouterInterface $router, ?Input $input = null, ?Registry $config = null, ?WebClient $client = null, ?ResponseInterface $response = null)
     {
         $this->debugBar = $debugBar;
 

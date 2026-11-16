@@ -33,7 +33,7 @@ class ManifestPathPackage extends PathPackage
      * @param   VersionStrategyInterface  $versionStrategy   The version strategy
      * @param   ContextInterface          $context           The context
      */
-    public function __construct(Package $decoratedPackage, string $basePath, VersionStrategyInterface $versionStrategy, ContextInterface $context = null)
+    public function __construct(Package $decoratedPackage, string $basePath, VersionStrategyInterface $versionStrategy, ?ContextInterface $context = null)
     {
         parent::__construct($basePath, $versionStrategy, $context);
         $this->decoratedPackage = $decoratedPackage;
