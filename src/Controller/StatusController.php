@@ -37,7 +37,7 @@ class StatusController extends AbstractController
      * @param   Input                $input  The input object.
      * @param   AbstractApplication  $app    The application object.
      */
-    public function __construct(StatusHtmlView $view, Input $input = null, AbstractApplication $app = null)
+    public function __construct(StatusHtmlView $view, ?Input $input = null, ?AbstractApplication $app = null)
     {
         parent::__construct($input, $app);
         $this->view = $view;
