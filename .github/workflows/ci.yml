@@ -41,7 +41,7 @@ jobs:
       - name: Check PHP code style
         env:
           PHP_CS_FIXER_IGNORE_ENV: true
-        run: vendor/bin/phpcs -p --report=full --extensions=php --standard=ruleset.xml src/ bin/ www/
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff --show-progress=none
 
   phpstan:
     name: Run PHPstan
@@ -61,7 +61,9 @@ jobs:
   deployment:
     name: Deployment to server
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    # Only deploy pushes to master, and only after all checks have passed
+    needs: [code-style-php, phpstan]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     steps:
       - name: Update server
         uses: appleboy/ssh-action@v1

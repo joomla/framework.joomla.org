@@ -81,49 +81,82 @@ class SyncCommand extends AbstractCommand
         $updateReleases  = $input->getOption('update');
         $addedReleases   = 0;
         $updatedReleases = 0;
+        $failedPackages  = [];
         foreach ($this->packageModel->getPackages() as $package) {
             $symfonyStyle->comment(sprintf('Processing <info>%s</info> package', $package->display));
             $url = "https://packagist.org/packages/joomla/{$package->package}.json";
             try {
                 $response = $this->http->get($url);
                 $data     = json_decode((string) $response->getBody());
-                if (!isset($data->package)) {
-                    $message = "Unexpected response from Packagist for the {$package->display} package";
-                    $this->getApplication()->getLogger()->warning($message, ['response' => $data]);
-                    $symfonyStyle->warning($message);
-                } else {
-                    foreach ($data->package->versions as $versionData) {
-                        // Skip non stable versions
-                        if (!$this->versionIsStable($versionData->version)) {
-                            continue;
-                        }
-
-                        // Make sure this release is logged, or update if specified
-                        if ($this->releaseModel->hasRelease($package, $versionData->version)) {
-                            if (!$updateReleases) {
-                                continue;
-                            }
-
-                            $record = $this->releaseModel->getRelease($package, $versionData->version);
-                            $this->releaseModel->updateRelease($record->id, $package, $versionData->version, new \DateTime($versionData->time));
-                            $updatedReleases++;
-                            $symfonyStyle->comment(sprintf('Updated <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
-                        } else {
-                            // Add the release
-                            $this->releaseModel->addRelease($package, $versionData->version, new \DateTime($versionData->time));
-                            $addedReleases++;
-                            $symfonyStyle->comment(sprintf('Added <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
-                        }
-                    }
-                }
             } catch (\RuntimeException $exception) {
                 $message = "Could not fetch release data for {$package->display} from Packagist";
                 $this->getApplication()->getLogger()->warning($message, ['exception' => $exception]);
                 $symfonyStyle->error($message);
+                $failedPackages[] = $package->display;
+                continue;
+            }
+
+            if (!isset($data->package->versions)) {
+                $message = "Unexpected response from Packagist for the {$package->display} package";
+                $this->getApplication()->getLogger()->warning($message, ['response' => $data]);
+                $symfonyStyle->warning($message);
+                $failedPackages[] = $package->display;
+                continue;
+            }
+
+            foreach ($data->package->versions as $versionData) {
+                // Skip non stable versions
+                if (!isset($versionData->version) || !$this->versionIsStable($versionData->version)) {
+                    continue;
+                }
+
+                // Make sure this release is logged, or update if specified
+                $hasRelease = $this->releaseModel->hasRelease($package, $versionData->version);
+                if ($hasRelease && !$updateReleases) {
+                    continue;
+                }
+
+                if (empty($versionData->time)) {
+                    $message = sprintf('Missing release date for the %1$s package at version %2$s', $package->display, $versionData->version);
+                    $this->getApplication()->getLogger()->warning($message);
+                    $symfonyStyle->warning($message);
+                    $failedPackages[] = $package->display;
+                    continue;
+                }
+
+                // A malformed release date must not abort the synchronisation of the other releases
+                try {
+                    $releaseDate = new \DateTime($versionData->time);
+                } catch (\Exception $exception) {
+                    $message = sprintf('Invalid release date for the %1$s package at version %2$s', $package->display, $versionData->version);
+                    $this->getApplication()->getLogger()->warning($message, ['exception' => $exception]);
+                    $symfonyStyle->warning($message);
+                    $failedPackages[] = $package->display;
+                    continue;
+                }
+
+                if ($hasRelease) {
+                    $record = $this->releaseModel->getRelease($package, $versionData->version);
+                    $this->releaseModel->updateRelease($record->id, $package, $versionData->version, $releaseDate);
+                    $updatedReleases++;
+                    $symfonyStyle->comment(sprintf('Updated <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
+                } else {
+                    // Add the release
+                    $this->releaseModel->addRelease($package, $versionData->version, $releaseDate);
+                    $addedReleases++;
+                    $symfonyStyle->comment(sprintf('Added <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
+                }
             }
         }
 
-        $symfonyStyle->success(sprintf('Update completed; %1$d releases added and %2$d releases updated.', $addedReleases, $updatedReleases));
+        $summary = sprintf('%1$d releases added and %2$d releases updated.', $addedReleases, $updatedReleases);
+
+        if ($failedPackages !== []) {
+            $symfonyStyle->error(sprintf('Update completed with errors; %1$s Failed packages: %2$s', $summary, implode(', ', array_unique($failedPackages))));
+            return 1;
+        }
+
+        $symfonyStyle->success('Update completed; ' . $summary);
         return 0;
     }
 
@@ -159,22 +192,7 @@ EOF
      */
     private function versionIsStable(string $version): bool
     {
-        if (strpos($version, 'dev') !== false) {
-            return false;
-        }
-
-        if (strpos($version, 'alpha') !== false) {
-            return false;
-        }
-
-        if (strpos($version, 'beta') !== false) {
-            return false;
-        }
-
-        if (strpos($version, 'rc') !== false) {
-            return false;
-        }
-
-        return true;
+        // Packagist reports the version as tagged, so the stability suffix may be in any case (e.g. `2.0.0-RC1` or `1.0-Beta`)
+        return preg_match('/dev|alpha|beta|rc/i', $version) !== 1;
     }
 }

@@ -165,6 +165,9 @@ EOF
         } catch (UnexpectedResponseException $exception) {
             if ($exception->getCode() === 404) {
                 $symfonyStyle->warning(sprintf('The `%1$s` package does not have a `%2$s` branch', $package->display, $branch));
+
+                // The branch (or the repository) is gone, so documentation fetched from it earlier must not stay online
+                $this->removeObsoleteFiles($version, [], $package, $symfonyStyle);
             } else {
                 $this->hasErrors = true;
                 $symfonyStyle->error(sprintf('Error fetching data for the `%1$s` package\'s `%2$s` branch: %3$s', $package->display, $branch, $exception->getMessage()));
@@ -312,6 +315,9 @@ EOF
 
             $this->addFileCacheKey($version, $package, $path);
         }
+
+        // Remove the package's docs directory as well if no files are left, this fails silently if it is still in use
+        @rmdir($basePath);
     }
 
     /**
