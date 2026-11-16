@@ -96,6 +96,7 @@ class PageController extends AbstractController
                     $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
                 } else {
                     $this->pageView->setActivePackage($package);
+                    $this->pageView->setPage($version, $filename);
                     $this->pageView->setPageContent($this->githubHelper->renderDocsFile($version, $package, $filename));
                     $this->pageView->setSidebarContent($this->githubHelper->renderDocsSidebar($version, $package));
                     $this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));
@@ -108,6 +109,7 @@ class PageController extends AbstractController
                     $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
                 } else {
                     $this->pageView->setActivePackage($package);
+                    $this->pageView->setPage($version, $filename);
                     $this->pageView->setPageContent($this->githubHelper->renderDocsFile($version, $package, $filename));
                     $this->pageView->setSidebarContent($this->githubHelper->renderDocsSidebar($version, $package));
                     $this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));
@@ -120,6 +122,7 @@ class PageController extends AbstractController
                     $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
                 } else {
                     $this->pageView->setActivePackage($package);
+                    $this->pageView->setPage($version, $filename);
                     $this->pageView->setPageContent($this->githubHelper->renderDocsFile($version, $package, $filename));
                     $this->pageView->setSidebarContent($this->githubHelper->renderDocsSidebar($version, $package));
                     $this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));
