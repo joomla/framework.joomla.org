@@ -28,8 +28,33 @@
         <main class="col_main container">
             <div class="row">
                 <div class="col">
+                    {% if versionInfo and versionInfo.versions|length > 1 %}
+                        <nav class="d-flex justify-content-end align-items-center gap-2 mb-3" aria-label="Documentation versions">
+                            <span class="text-body-secondary small">Version</span>
+                            <div class="btn-group btn-group-sm">
+                                {% for entry in versionInfo.versions %}
+                                    <a href="{{ route('docs/' ~ entry.version ~ '/' ~ activePackage.package ~ '/' ~ entry.page) }}" class="btn {{ entry.current ? 'btn-primary' : 'btn-outline-primary' }}"{% if entry.current %} aria-current="page"{% endif %}>
+                                        {{ entry.version }}{% if not entry.stable %} <span class="visually-hidden">(in development)</span><span aria-hidden="true">dev</span>{% endif %}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </nav>
+                    {% endif %}
+                    {% if versionInfo and not versionInfo.stable %}
+                        <div class="alert alert-warning" role="note">
+                            This is the documentation of the <strong>{{ versionInfo.current }}</strong> branch, which is still in development and not released yet. It may change at any time.
+                            {% if versionInfo.stableVersion %}
+                                For the current release, read the <a class="alert-link" href="{{ route('docs/' ~ versionInfo.stableVersion ~ '/' ~ activePackage.package ~ '/' ~ versionInfo.stablePage) }}">{{ versionInfo.stableVersion }} documentation</a>.
+                            {% endif %}
+                        </div>
+                    {% endif %}
                     <h1 class="centered-title">Framework Documentation - {{ activePackage.display }} Package</h1>
                     {{ contents|raw }}
+                    {% if versionInfo %}
+                        <p class="border-top mt-5 pt-3 small">
+                            <a href="{{ versionInfo.editUrl }}"><span class="fab fa-github" aria-hidden="true"></span> Edit this page on GitHub</a>
+                        </p>
+                    {% endif %}
                 </div>
             </div>
         </main>

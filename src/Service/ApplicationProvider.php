@@ -45,6 +45,7 @@ use Joomla\FrameworkWebsite\Controller\WrongCmsController;
 use Joomla\FrameworkWebsite\Helper;
 use Joomla\FrameworkWebsite\Helper\GitHubHelper;
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
+use Joomla\FrameworkWebsite\Helper\VersionHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
 use Joomla\FrameworkWebsite\View\Documentation\ErrorHtmlView;
@@ -107,6 +108,8 @@ class ApplicationProvider implements ServiceProviderInterface
             ->share('application.helper.github', [$this, 'getApplicationHelperGithubService'], true);
         $container->alias(PackagistHelper::class, 'application.helper.packagist')
             ->share('application.helper.packagist', [$this, 'getApplicationHelperPackagistService'], true);
+        $container->alias(VersionHelper::class, 'application.helper.version')
+            ->share('application.helper.version', [$this, 'getApplicationHelperVersionService'], true);
         $container->share('application.packages', [$this, 'getApplicationPackagesService'], true);
         $container->share(WebClient::class, [$this, 'getWebClientService'], true);
         // This service cannot be protected as it is decorated when the debug bar is available
@@ -204,6 +207,18 @@ class ApplicationProvider implements ServiceProviderInterface
         $helper = new PackagistHelper($container->get(Http::class), $container->get(DatabaseInterface::class));
         $helper->setPackages($container->get('application.packages'));
         return $helper;
+    }
+
+    /**
+     * Get the `application.helper.version` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  VersionHelper
+     */
+    public function getApplicationHelperVersionService(Container $container): VersionHelper
+    {
+        return new VersionHelper(JPATH_ROOT . '/docs');
     }
 
     /**
@@ -788,6 +803,7 @@ class ApplicationProvider implements ServiceProviderInterface
         );
 
         $view->setLayout('docs/page.twig');
+        $view->setVersionHelper($container->get(VersionHelper::class));
 
         return $view;
     }

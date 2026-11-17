@@ -96,6 +96,7 @@ class PageController extends AbstractController
                     $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
                 } else {
                     $this->pageView->setActivePackage($package);
+                    $this->pageView->setPage($version, $filename);
                     $this->pageView->setPageContent($this->githubHelper->renderDocsFile($version, $package, $filename));
                     $this->pageView->setSidebarContent($this->githubHelper->renderDocsSidebar($version, $package));
                     $this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));
@@ -108,6 +109,20 @@ class PageController extends AbstractController
                     $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
                 } else {
                     $this->pageView->setActivePackage($package);
+                    $this->pageView->setPage($version, $filename);
+                    $this->pageView->setPageContent($this->githubHelper->renderDocsFile($version, $package, $filename));
+                    $this->pageView->setSidebarContent($this->githubHelper->renderDocsSidebar($version, $package));
+                    $this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));
+                }
+
+                break;
+            case '5.x':
+                if (!$package->has_v5) {
+                    $this->errorView->setError(sprintf('The %s package does not have a 5.x branch to document.', $package->display));
+                    $this->getApplication()->setResponse(new HtmlResponse($this->errorView->render(), 404));
+                } else {
+                    $this->pageView->setActivePackage($package);
+                    $this->pageView->setPage($version, $filename);
                     $this->pageView->setPageContent($this->githubHelper->renderDocsFile($version, $package, $filename));
                     $this->pageView->setSidebarContent($this->githubHelper->renderDocsSidebar($version, $package));
                     $this->getApplication()->setResponse(new HtmlResponse($this->pageView->render()));

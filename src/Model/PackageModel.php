@@ -43,6 +43,9 @@ class PackageModel implements DatabaseModelInterface
      * @param   boolean  $isAbandoned   Flag indicating the package is abandoned
      * @param   boolean  $hasV1         Flag indicating the package has a 1.x branch
      * @param   boolean  $hasV2         Flag indicating the package has a 2.x branch
+     * @param   boolean  $hasV3         Flag indicating the package has a 3.x branch
+     * @param   boolean  $hasV4         Flag indicating the package has a 4.x branch
+     * @param   boolean  $hasV5         Flag indicating the package has a 5.x branch
      *
      * @return  void
      */
@@ -56,7 +59,8 @@ class PackageModel implements DatabaseModelInterface
         bool $hasV1,
         bool $hasV2,
         bool $hasV3,
-        bool $hasV4
+        bool $hasV4,
+        bool $hasV5
     ): void {
         $db   = $this->getDb();
 
@@ -71,6 +75,7 @@ class PackageModel implements DatabaseModelInterface
             'has_v2'     => (int) $hasV2,
             'has_v3'     => (int) $hasV3,
             'has_v4'     => (int) $hasV4,
+            'has_v5'     => (int) $hasV5,
         ];
 
         $db->insertObject('#__packages', $data);
@@ -187,6 +192,8 @@ class PackageModel implements DatabaseModelInterface
      * @param   boolean  $hasV1         Flag indicating the package has a 1.x branch
      * @param   boolean  $hasV2         Flag indicating the package has a 2.x branch
      * @param   boolean  $hasV3         Flag indicating the package has a 3.x branch
+     * @param   boolean  $hasV4         Flag indicating the package has a 4.x branch
+     * @param   boolean  $hasV5         Flag indicating the package has a 5.x branch
      *
      * @return  void
      */
@@ -201,7 +208,8 @@ class PackageModel implements DatabaseModelInterface
         bool $hasV1,
         bool $hasV2,
         bool $hasV3,
-        bool $hasV4
+        bool $hasV4,
+        bool $hasV5
     ): void {
         $db   = $this->getDb();
 
@@ -217,6 +225,7 @@ class PackageModel implements DatabaseModelInterface
             'has_v2'     => (int) $hasV2,
             'has_v3'     => (int) $hasV3,
             'has_v4'     => (int) $hasV4,
+            'has_v5'     => (int) $hasV5,
         ];
 
         $db->updateObject('#__packages', $data, 'id');
