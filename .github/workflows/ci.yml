@@ -79,6 +79,54 @@ jobs:
     needs: [code-style-php, phpstan, tests]
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     steps:
+      # Fail with a clear message instead of an error from deep inside the SSH action
+      - name: Check the deployment secrets
+        env:
+          WIREGUARD_CONFIG: ${{ secrets.WIREGUARD_CONFIG }}
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          KEY: ${{ secrets.KEY }}
+        run: |
+          missing=""
+          for name in WIREGUARD_CONFIG HOST USERNAME KEY; do
+            [ -n "${!name}" ] || missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing deployment secrets:$missing"
+            exit 1
+          fi
+
+      - name: Install WireGuard
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq wireguard-tools
+
+      # The server is only reachable through its WireGuard network. WIREGUARD_CONFIG is a complete wg-quick configuration
+      # for the runner's peer, its AllowedIPs should only contain the tunnel network, so the rest of the job isn't routed through it.
+      - name: Connect to the WireGuard network
+        env:
+          WIREGUARD_CONFIG: ${{ secrets.WIREGUARD_CONFIG }}
+        run: |
+          sudo install -m 600 /dev/null /etc/wireguard/wg0.conf
+          printf '%s\n' "$WIREGUARD_CONFIG" | sudo tee /etc/wireguard/wg0.conf > /dev/null
+          sudo wg-quick up wg0
+
+      # Only the time of the latest handshake is printed, the output of `wg show` would reveal the server's endpoint in the public log
+      - name: Check that the server is reachable through the tunnel
+        env:
+          HOST: ${{ secrets.HOST }}
+          PORT: ${{ secrets.PORT }}
+        run: |
+          for attempt in 1 2 3 4 5 6; do
+            if nc -z -w 5 "$HOST" "${PORT:-22}"; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Latest handshake (UNIX time, 0 = none): $(sudo wg show wg0 latest-handshakes | awk '{print $2}')"
+          echo "::error::The SSH port of the server isn't reachable through the WireGuard tunnel"
+          exit 1
+
       - name: Update server
         uses: appleboy/ssh-action@v1
         with:
@@ -86,6 +134,11 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
+          fingerprint: ${{ secrets.HOST_FINGERPRINT }}
           script: |
             cd /home/fwjoomla/siteData
             bin/framework update:server
+
+      - name: Disconnect from the WireGuard network
+        if: always()
+        run: sudo wg-quick down wg0 || true
