@@ -11,6 +11,7 @@ namespace Joomla\FrameworkWebsite\Renderer;
 
 use Joomla\Application\AbstractApplication;
 use Joomla\Preload\PreloadManager;
+use Joomla\Uri\Uri;
 
 /**
  * Twig runtime class
@@ -62,11 +63,28 @@ class FrameworkTwigRuntime
     /**
      * Retrieves the current URI
      *
+     * The scheme and host are taken from the `site_url` configuration when it is set, so the
+     * `Host` header of the request can't inject a foreign host into the rendered page.
+     *
      * @return  string
      */
     public function getRequestUri(): string
     {
-        return $this->app->get('uri.request');
+        $uri = new Uri($this->app->get('uri.request'));
+
+        return $this->getSiteHost() . $uri->toString(['path', 'query', 'fragment']);
+    }
+
+    /**
+     * Retrieves the canonical URL of the current page, without the query string
+     *
+     * @return  string
+     */
+    public function getCanonicalUrl(): string
+    {
+        $uri = new Uri($this->app->get('uri.request'));
+
+        return $this->getSiteHost() . $uri->toString(['path']);
     }
 
     /**
@@ -90,7 +108,25 @@ class FrameworkTwigRuntime
      */
     public function getRouteUrl(string $route = ''): string
     {
-        return $this->app->get('uri.base.host') . $this->getRouteUri($route);
+        return $this->getSiteHost() . $this->getRouteUri($route);
+    }
+
+    /**
+     * Get the scheme, host and port to use for absolute URLs
+     *
+     * Uses the `site_url` configuration value if set, otherwise falls back to the host detected from the request.
+     *
+     * @return  string
+     */
+    private function getSiteHost(): string
+    {
+        $siteUrl = trim((string) $this->app->get('site_url', ''));
+
+        if ($siteUrl === '') {
+            return $this->app->get('uri.base.host');
+        }
+
+        return (new Uri($siteUrl))->toString(['scheme', 'user', 'pass', 'host', 'port']);
     }
 
     /**
