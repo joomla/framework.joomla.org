@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
+        <meta charset="utf-8">
         <!-- For Responsive -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="stylesheet" href="{{ asset('css/bootstrap.css', 'versioned') }}" type="text/css"{{ sri('css/bootstrap.css') }}>
         <link rel="stylesheet" href="{{ asset('css/template.css', 'versioned') }}" type="text/css"{{ sri('css/template.css') }}>
         {% block stylesheets %}{% endblock %}
@@ -14,7 +14,6 @@
 
         <!-- For SEO -->
         <title>{% block title %}Joomla! Framework, a framework for developing PHP applications{% endblock %}</title>
-        <meta charset="utf-8">
         <meta name="description" content="{% block metaDescription %}The Joomla! Framework provides a structurally sound foundation on which to build applications in PHP, which is easy to adapt and extend. Let's find out more!{% endblock %}">
         <meta name="generator" content="Joomla! Framework" />
         <link rel="canonical" href="{{ canonical_url() }}" />
@@ -42,7 +41,7 @@
         {% block bodyNavigation %}
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Joomla Framework</a>
+                    <a class="navbar-brand" href="{{ route() }}">Joomla Framework</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>

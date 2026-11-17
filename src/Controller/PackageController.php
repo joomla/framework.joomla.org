@@ -37,7 +37,7 @@ class PackageController extends AbstractController
      * @param   Input                $input  The input object.
      * @param   AbstractApplication  $app    The application object.
      */
-    public function __construct(PackageHtmlView $view, Input $input = null, AbstractApplication $app = null)
+    public function __construct(PackageHtmlView $view, ?Input $input = null, ?AbstractApplication $app = null)
     {
         parent::__construct($input, $app);
         $this->view = $view;
