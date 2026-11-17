@@ -7,6 +7,11 @@
 {% block content %}
 <section class="status container">
     <h1 class="centered-title">Release Data for {{ package.display }} Package <a href="https://github.com/joomla-framework/{{ package.repo }}"><span class="fab fa-github" aria-hidden="true"></span><span class="visually-hidden">Open {{ package.display }} on GitHub</span></a></h1>
+    {% if not package.abandoned %}
+        <p class="text-center">
+            <a href="https://github.com/joomla-framework/{{ package.repo }}/actions/workflows/ci.yml"><img src="https://github.com/joomla-framework/{{ package.repo }}/actions/workflows/ci.yml/badge.svg" alt="Build status of the default branch"></a>
+        </p>
+    {% endif %}
     {% if package.abandoned %}
         <div class="alert alert-danger">
             <h4>Abandoned Package</h4>
@@ -23,7 +28,6 @@
             <tr>
                 <th scope="col">Version</th>
                 <th scope="col">Release Date</th>
-                <th scope="col">Build Status</th>
             </tr>
         </thead>
         <tbody>
@@ -31,15 +35,6 @@
                 <tr>
                     <td data-label="Version">{{ release.version }}</td>
                     <td data-label="Release Date">{{ release.release_date }}</td>
-                    <td data-label="Build Status">
-                        {% if package.repo in ['test'] %}
-                            N/A
-                        {% else %}
-                            <a href="https://ci.joomla.org/joomla-framework/{{ package.repo }}">
-                                <img src="https://ci.joomla.org/api/badges/joomla-framework/{{ package.repo }}/status.svg?ref=refs/tags/{{ release.version }}" alt="Build Status">
-                            </a>
-                        {% endif %}
-                    </td>
                 </tr>
             {% endfor %}
         </tbody>
