@@ -10,6 +10,13 @@
     <div class="d-flex">
         <button class="btn btn-dark d-md-none sidebartoggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-expanded="false" aria-label="Toggle mainnavigation">Show Navigation</button>
         <div id="sidebar" class="col_sidebar p-4 bg-light bg-gradient border-end flex-lg-shrink-0 sticky-lg-top overflow-auto">
+            <form action="{{ route('docs/search') }}" method="get" role="search" class="mb-4">
+                <label class="visually-hidden" for="sidebar-search">Search the documentation</label>
+                <div class="input-group input-group-sm">
+                    <input type="search" id="sidebar-search" name="q" class="form-control" placeholder="Search the documentation" required>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
             <nav>
                 <span class="text-uppercase fw-bolder fs-6">Package Index</span>
                     {{ sidebarContents|raw }}
