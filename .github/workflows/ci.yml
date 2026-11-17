@@ -58,11 +58,25 @@ jobs:
         run: |
           ./vendor/bin/phpstan --error-format=github
 
+  tests:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.4
+    needs: [composer]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache/restore@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Run PHPUnit
+        run: ./vendor/bin/phpunit
+
   deployment:
     name: Deployment to server
     runs-on: ubuntu-latest
     # Only deploy pushes to master, and only after all checks have passed
-    needs: [code-style-php, phpstan]
+    needs: [code-style-php, phpstan, tests]
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     steps:
       - name: Update server

@@ -50,7 +50,7 @@ class WebApplication extends AbstractWebApplication
      * @param   ResponseInterface            $response            An optional argument to provide dependency injection for the application's
      *                                                            response object.
      */
-    public function __construct(ControllerResolverInterface $controllerResolver, RouterInterface $router, Input $input = null, Registry $config = null, WebClient $client = null, ResponseInterface $response = null)
+    public function __construct(ControllerResolverInterface $controllerResolver, RouterInterface $router, ?Input $input = null, ?Registry $config = null, ?WebClient $client = null, ?ResponseInterface $response = null)
     {
         $this->controllerResolver = $controllerResolver;
         $this->router             = $router;

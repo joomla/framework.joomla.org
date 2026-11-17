@@ -45,7 +45,7 @@ class PageController extends AbstractController
      * @param   Input                $input     The input object.
      * @param   AbstractApplication  $app       The application object.
      */
-    public function __construct(RendererInterface $renderer, Input $input = null, AbstractApplication $app = null)
+    public function __construct(RendererInterface $renderer, ?Input $input = null, ?AbstractApplication $app = null)
     {
         parent::__construct($input, $app);
         $this->renderer = $renderer;

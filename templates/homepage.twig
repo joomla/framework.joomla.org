@@ -3,7 +3,7 @@
 {% block bodyNavigation %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-scroll-header>
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Joomla Framework</a>
+        <a class="navbar-brand" href="{{ route() }}">Joomla Framework</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -26,10 +26,6 @@
             </ul>
         </div>
     </div>
-
-    <ul>
-
-    </ul>
 </nav>
 {% endblock %}
 
@@ -46,28 +42,24 @@
     </div>
 </section>
 
+<main>
 <hr id="about" />
 
 <section class="about container">
     <span class="fas fa-info-circle marker" aria-hidden="true"></span>
     <h3 class="centered-title">What is the Joomla! Framework?</h3>
-    <p>The Joomla! Framework&#8482 is a new PHP framework (a collection of software libraries/packages) for writing web and command line applications in PHP, without the features and corresponding overhead found in the Joomla! Content Management System (CMS). It provides a structurally sound foundation, which is easy to adapt and easy to extend.</p>
+    <p>The Joomla! Framework&#8482 is a PHP framework (a collection of software libraries/packages) for writing web and command line applications in PHP, without the features and corresponding overhead found in the Joomla! Content Management System (CMS). It provides a structurally sound foundation, which is easy to adapt and easy to extend.</p>
     <p>The Joomla! Framework is free and open source software, distributed under the GNU General Public License version 2 or later; and is comprised of code originally developed for the Joomla! CMS&#8482.</p>
     <p>The Joomla! Framework should not be confused with the hugely popular Joomla! CMS. It is important to remember that you do not need to install the Joomla! Framework to use the CMS, nor do you need to install the Joomla! CMS to use the Framework.</p>
     <img class="img-fluid mx-auto structure" src="{{ asset('images/FrameworkDiagram-712x350.png') }}" alt="The versatility and structure of the Joomla! Framework" />
 
     <h4>Getting Started</h4>
-    <p>The new Joomla! Framework is now available to install via Composer and you can find the list of packages on <a href="https://packagist.org/packages/joomla/">Packagist.org</a>. There are plenty of avenues you can explore to get started on working with the Framework.</p>
-    <p>For the official docs, check out the <code>README.md</code> file found in each package. You can also review the <a href="https://github.com/joomla-framework">Joomla! Framework organization on GitHub</a>.</p>
+    <p>The Joomla! Framework packages are installed with <a href="https://getcomposer.org">Composer</a>. You can find the list of packages on <a href="https://packagist.org/packages/joomla/">Packagist.org</a>. Each package is installed on its own, for example <code>composer require joomla/application</code>.</p>
+    <p>Every package is documented in the <a href="{{ route('docs') }}">documentation section</a> of this site. The source code of all packages is in the <a href="https://github.com/joomla-framework">Joomla! Framework organization on GitHub</a>.</p>
 
-    <h4>Get the Sample Application</h4>
-    <p>One of the easiest ways to get to know the Joomla! Framework is to start with looking at a sample application. This site is powered by the Joomla! Framework and serves as a great example of using the Framework.</p>
-    <ol>
-        <li>Install Composer.</li>
-        <li>Download this <a href="https://github.com/joomla/framework.joomla.org">website application</a> repository from GitHub.</li>
-        <li>Run <code>composer install</code>.</li>
-        <li>View in your browser.</li>
-    </ol>
+    <h4>Build Your First Application</h4>
+    <p>The easiest way to get to know the Joomla! Framework is to build an application with it. The <a href="{{ route('docs/4.x/application/tutorial/index') }}">tutorial of the Application package</a> walks you through a complete application step by step: project setup, dependency injection and configuration, routing, database access, templating, sessions and authentication, events and error handling, and console commands.</p>
+    <p>This website is built with the Joomla! Framework too; its <a href="https://github.com/joomla/framework.joomla.org">source code is on GitHub</a>.</p>
 
     <h4>Why build the Joomla! Framework?</h4>
     <p>Separating the framework from the CMS was a big deal, and in retrospect, a smart decision. By separating the two code bases Joomla!&reg; can now offer the stability the CMS requires while still taking advantage of current and modern trends in PHP development.</p>
@@ -102,7 +94,7 @@
     <p>The Joomla! Framework is available using Composer. This allows you to build projects from the many packages included in the Joomla! Framework as well as packages that best fit your needs from any of the other PHP frameworks that use Composer.</p>
 
     <h4>I am a Joomla! CMS User. How will I be affected?</h4>
-    <p>The Joomla! CMS and the Joomla! Framework are currently developed independently and, thus, the Framework's launch will not have an immediate impact for you. However, there are already parts of the Framework integrated into the CMS (e.g. the Dependency Injection package, added in Joomla! 3.2), and more is coming. Expect to see some great extensions made available to you, built using the Framework!</p>
+    <p>You are already using it: the Joomla! CMS is built on the Joomla! Framework. Packages such as Application, Database, DI, Event, Input, Registry, Router and Session form the base of the CMS, so improvements to the Framework directly benefit the CMS.</p>
     <p>The Joomla! Framework aims at getting the latest in PHP developments and features into Joomla! at the framework level. This allows the CMS to better focus its aims on providing the best features for its end users and staying ahead of the game.</p>
     <p>Bottom line, you can rest assured that your favorite CMS will continue to have a strong, up-to-date and robust base that can evolve with the web.</p>
 </section>
@@ -170,6 +162,7 @@
         </div>
     </aside>
 </section>
+</main>
 {% endblock %}
 
 {% block footerContent %}
@@ -180,7 +173,7 @@
         <p><a href="https://packagist.org/packages/joomla/">Packagist</a></p>
         <p><a href="https://getcomposer.org/download/">Download Composer</a></p>
         <p><a href="https://github.com/joomla-framework">GitHub Organization</a></p>
-        <p><a href="https://developer.joomla.org/framework/documentation.html">Documentation</a></p>
+        <p><a href="{{ route('docs') }}">Documentation</a></p>
         <p><a href="https://groups.google.com/group/joomla-dev-framework">Official Group</a></p>
         <p><a href="https://www.joomla.org/sponsor.html">Support via OSM</a></p>
         <p><a href="{{ route('contribute') }}">Contributing to the Framework</a></p>
@@ -190,10 +183,10 @@
     <div class="footer-area subscribe">
         <h3>Subscribe</h3>
         <p>Subscribe to the Google Group mailing list.</p>
-        <form action="https://groups.google.com/group/joomla-dev-framework/boxsubscribe" class="form-inline row row-cols-lg-auto g-3 signup" role="form">
+        <form action="https://groups.google.com/group/joomla-dev-framework/boxsubscribe" class="row row-cols-lg-auto g-3 signup" role="form">
             <div class="col-9">
                 <label class="visually-hidden" for="email">Email address</label>
-                <input type="email" id="email" name="email" placeholder="Email Address" class="form-control mr-sm-2" required>
+                <input type="email" id="email" name="email" placeholder="Email Address" class="form-control" required>
             </div>
             <div class="col-3">
                 <button type="submit" class="btn btn-primary" name="sub">Subscribe</button>
