@@ -137,12 +137,12 @@ class SyncCommand extends AbstractCommand
 
                 if ($hasRelease) {
                     $record = $this->releaseModel->getRelease($package, $versionData->version);
-                    $this->releaseModel->updateRelease($record->id, $package, $versionData->version, $releaseDate);
+                    $this->releaseModel->updateRelease($record->id, $package, $versionData->version, $releaseDate, $this->getPhpRequirement($versionData));
                     $updatedReleases++;
                     $symfonyStyle->comment(sprintf('Updated <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
                 } else {
                     // Add the release
-                    $this->releaseModel->addRelease($package, $versionData->version, $releaseDate);
+                    $this->releaseModel->addRelease($package, $versionData->version, $releaseDate, $this->getPhpRequirement($versionData));
                     $addedReleases++;
                     $symfonyStyle->comment(sprintf('Added <info>%1$s</info> package at version <info>%2$s</info>', $package->display, $versionData->version));
                 }
@@ -181,6 +181,20 @@ data, you can pass the <info>--update</info> option.
 <info>php %command.full_name% --update</info>
 EOF
         );
+    }
+
+    /**
+     * Get the PHP version constraint a release requires
+     *
+     * @param   \stdClass  $versionData  The release data from Packagist
+     *
+     * @return  string|null  The constraint, null if the release doesn't declare one
+     */
+    private function getPhpRequirement(\stdClass $versionData): ?string
+    {
+        $php = $versionData->require->php ?? null;
+
+        return \is_string($php) && $php !== '' ? $php : null;
     }
 
     /**

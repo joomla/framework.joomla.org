@@ -2,6 +2,8 @@
 
 {% block title %}Joomla! Framework Documentation{% endblock %}
 
+{% block metaDescription %}Documentation of the Joomla! Framework packages: what each package does, how to install it with Composer, and which PHP version it requires.{% endblock %}
+
 {% block content %}
     <div class="d-flex">
         <button class="btn btn-dark d-md-none sidebartoggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-expanded="false" aria-label="Toggle mainnavigation">Show Navigation</button>
@@ -22,7 +24,32 @@
         <main class="col_main container">
             <div class="row">
                 <div class="col">
-                    From this index you can browse the documentation for each of the Framework's packages.
+                    <h1 class="centered-title">Framework Documentation</h1>
+                    <p class="lead">The Joomla! Framework is a collection of independent packages. Each package is installed on its own with Composer and has its own documentation. If you are new to the Framework, start with the <a href="{{ route('docs/4.x/application/tutorial/index') }}">tutorial of the Application package</a>.</p>
+                    <div class="row row-cols-1 row-cols-lg-2 g-4 mb-4">
+                        {% for entry in documentedPackages %}
+                            <div class="col">
+                                <section class="card h-100">
+                                    <div class="card-body">
+                                        <h2 class="card-title h4">
+                                            <a href="{{ route('docs/latest/' ~ entry.package.package) }}" class="text-decoration-none">{{ entry.package.display }}</a>
+                                            {% if entry.package.deprecated %}<span class="badge text-bg-warning fs-6 align-middle">Deprecated</span>{% endif %}
+                                        </h2>
+                                        {% if entry.summary %}
+                                            <p class="card-text">{{ entry.summary }}</p>
+                                        {% endif %}
+                                        <pre class="mb-0"><code>composer require joomla/{{ entry.package.package }}</code></pre>
+                                    </div>
+                                    {% if entry.latestRelease %}
+                                        <div class="card-footer text-body-secondary small">
+                                            Latest release {{ entry.latestRelease.version }}
+                                            {% if entry.latestRelease.php %} &middot; Requires PHP {{ entry.latestRelease.php }}{% endif %}
+                                        </div>
+                                    {% endif %}
+                                </section>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </main>
