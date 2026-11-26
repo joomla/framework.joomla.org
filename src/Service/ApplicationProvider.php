@@ -36,6 +36,7 @@ use Joomla\FrameworkWebsite\Controller\Api\StatusControllerGet;
 use Joomla\FrameworkWebsite\Controller\Documentation\IndexController;
 use Joomla\FrameworkWebsite\Controller\Documentation\PageController as DocumentationPageController;
 use Joomla\FrameworkWebsite\Controller\Documentation\RedirectController;
+use Joomla\FrameworkWebsite\Controller\Documentation\SearchController;
 use Joomla\FrameworkWebsite\Controller\HomepageController;
 use Joomla\FrameworkWebsite\Controller\PackageController;
 use Joomla\FrameworkWebsite\Controller\PageController;
@@ -47,9 +48,11 @@ use Joomla\FrameworkWebsite\Helper\GitHubHelper;
 use Joomla\FrameworkWebsite\Helper\PackagistHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
+use Joomla\FrameworkWebsite\Search\DocumentationSearch;
 use Joomla\FrameworkWebsite\View\Documentation\ErrorHtmlView;
 use Joomla\FrameworkWebsite\View\Documentation\IndexHtmlView;
 use Joomla\FrameworkWebsite\View\Documentation\PageHtmlView;
+use Joomla\FrameworkWebsite\View\Documentation\SearchHtmlView;
 use Joomla\FrameworkWebsite\View\Package\PackageHtmlView;
 use Joomla\FrameworkWebsite\View\Package\PackageJsonView;
 use Joomla\FrameworkWebsite\View\Status\StatusHtmlView;
@@ -144,6 +147,8 @@ class ApplicationProvider implements ServiceProviderInterface
             ->share('controller.documentation.page', [$this, 'getControllerDocumentationPageService'], true);
         $container->alias(RedirectController::class, 'controller.documentation.redirect')
             ->share('controller.documentation.redirect', [$this, 'getControllerDocumentationRedirectService'], true);
+        $container->alias(SearchController::class, 'controller.documentation.search')
+            ->share('controller.documentation.search', [$this, 'getControllerDocumentationSearchService'], true);
         $container->alias(HomepageController::class, 'controller.homepage')
             ->share('controller.homepage', [$this, 'getControllerHomepageService'], true);
         $container->alias(PackageController::class, 'controller.package')
@@ -161,6 +166,8 @@ class ApplicationProvider implements ServiceProviderInterface
             ->share('model.package', [$this, 'getModelPackageService'], true);
         $container->alias(ReleaseModel::class, 'model.release')
             ->share('model.release', [$this, 'getModelReleaseService'], true);
+        $container->alias(DocumentationSearch::class, 'documentation.search')
+            ->share('documentation.search', [$this, 'getDocumentationSearchService'], true);
         // Views
         $container->alias(ErrorHtmlView::class, 'view.documentation.error.html')
             ->share('view.documentation.error.html', [$this, 'getViewDocumentationErrorHtmlService'], true);
@@ -168,6 +175,8 @@ class ApplicationProvider implements ServiceProviderInterface
             ->share('view.documentation.index.html', [$this, 'getViewDocumentationIndexHtmlService'], true);
         $container->alias(PageHtmlView::class, 'view.documentation.page.html')
             ->share('view.documentation.page.html', [$this, 'getViewDocumentationPageHtmlService'], true);
+        $container->alias(SearchHtmlView::class, 'view.documentation.search.html')
+            ->share('view.documentation.search.html', [$this, 'getViewDocumentationSearchHtmlService'], true);
         $container->alias(PackageHtmlView::class, 'view.package.html')
             ->share('view.package.html', [$this, 'getViewPackageHtmlService'], true);
         $container->alias(PackageJsonView::class, 'view.package.json')
@@ -241,6 +250,7 @@ class ApplicationProvider implements ServiceProviderInterface
          */
         $router->addRoute(new Route(['GET', 'HEAD'], '/', HomepageController::class));
         $router->get('/docs', IndexController::class);
+        $router->get('/docs/search', SearchController::class);
         $router->get('/docs/:version/:package', RedirectController::class);
         $router->get('/docs/:version/:package/:filename', DocumentationPageController::class, ['filename' => '.*']);
         $router->get('/sitemap.xml', SitemapController::class);
@@ -491,6 +501,18 @@ class ApplicationProvider implements ServiceProviderInterface
     }
 
     /**
+     * Get the `documentation.search` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  DocumentationSearch
+     */
+    public function getDocumentationSearchService(Container $container): DocumentationSearch
+    {
+        return new DocumentationSearch(JPATH_ROOT . '/docs');
+    }
+
+    /**
      * Get the PackageSyncCommand service
      *
      * @param   Container  $container  The DI container.
@@ -719,6 +741,22 @@ class ApplicationProvider implements ServiceProviderInterface
     }
 
     /**
+     * Get the `controller.documentation.search` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  SearchController
+     */
+    public function getControllerDocumentationSearchService(Container $container): SearchController
+    {
+        return new SearchController(
+            $container->get(SearchHtmlView::class),
+            $container->get(Input::class),
+            $container->get(WebApplication::class)
+        );
+    }
+
+    /**
      * Get the FetchDocsCommand service
      *
      * @param   Container  $container  The DI container.
@@ -788,6 +826,26 @@ class ApplicationProvider implements ServiceProviderInterface
         );
 
         $view->setLayout('docs/page.twig');
+
+        return $view;
+    }
+
+    /**
+     * Get the `view.documentation.search.html` service
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  SearchHtmlView
+     */
+    public function getViewDocumentationSearchHtmlService(Container $container): SearchHtmlView
+    {
+        $view = new SearchHtmlView(
+            $container->get('model.package'),
+            $container->get(DocumentationSearch::class),
+            $container->get('renderer')
+        );
+
+        $view->setLayout('docs/search.twig');
 
         return $view;
     }

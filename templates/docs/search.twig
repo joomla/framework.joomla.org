@@ -1,0 +1,76 @@
+{% extends 'index.twig' %}
+
+{% block title %}{% if query %}Search for "{{ query }}" - {% endif %}Joomla! Framework Documentation{% endblock %}
+
+{% block metaDescription %}Search the documentation of the Joomla! Framework packages.{% endblock %}
+
+{% block metadata %}
+    <meta name="robots" content="noindex, follow" />
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex">
+        <button class="btn btn-dark d-md-none sidebartoggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-expanded="false" aria-label="Toggle mainnavigation">Show Navigation</button>
+        <div id="sidebar" class="col_sidebar p-4 bg-light bg-gradient border-end flex-lg-shrink-0 sticky-lg-top overflow-auto">
+            <nav>
+                <h3>Package List</h3>
+                <ul class="list-unstyled">
+                    {% for package in packages %}
+                        {% if package.stable %}
+                            <li>
+                                <a class="text-decoration-none px-3 py-2 d-block" href="{{ route('docs/latest/' ~ package.package) }}">{{ package.display }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+        <main class="col_main container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="centered-title">Search the Documentation</h1>
+                    <form action="{{ route('docs/search') }}" method="get" role="search" class="row g-2 mb-4">
+                        <div class="col-12 col-md">
+                            <label class="visually-hidden" for="docs-search-query">Search terms</label>
+                            <input type="search" id="docs-search-query" name="q" value="{{ query }}" class="form-control" placeholder="For example: middleware, loadArray or __construct" required>
+                        </div>
+                        {% if versions|length > 1 %}
+                            <div class="col-auto">
+                                <label class="visually-hidden" for="docs-search-version">Version</label>
+                                <select id="docs-search-version" name="version" class="form-select">
+                                    {% for entry in versions %}
+                                        <option value="{{ entry }}"{% if entry == version %} selected{% endif %}>{{ entry }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+
+                    {% if query %}
+                        {% if results is empty %}
+                            <p>No pages in the {{ version }} documentation contain all of the terms "{{ query }}".</p>
+                        {% else %}
+                            {% if results|length >= 50 %}
+                                <p class="text-body-secondary">The 50 best matching pages in the {{ version }} documentation. Add more terms to narrow the search.</p>
+                            {% else %}
+                                <p class="text-body-secondary">{{ results|length }} {{ results|length == 1 ? 'page' : 'pages' }} in the {{ version }} documentation.</p>
+                            {% endif %}
+                            <ol class="list-unstyled">
+                                {% for result in results %}
+                                    <li class="mb-4">
+                                        <div class="small text-body-secondary">{{ result.package.display }}</div>
+                                        <h2 class="h5 mb-1"><a href="{{ route('docs/' ~ version ~ '/' ~ result.package.package ~ '/' ~ result.page) }}">{{ result.title }}</a></h2>
+                                        <p class="mb-0">{% for part in result.snippet %}{% if part.match %}<mark>{{ part.text }}</mark>{% else %}{{ part.text }}{% endif %}{% endfor %}</p>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
