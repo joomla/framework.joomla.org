@@ -122,10 +122,6 @@ packages:
     router: ~
     session: ~
     string: ~
-    'symfony-event-dispatcher-bridge':
-        display: 'Symfony Event Dispatcher Bridge'
-        stable: false
-        has_v1: false
     test: ~
     twitter:
         repo: twitter-api
