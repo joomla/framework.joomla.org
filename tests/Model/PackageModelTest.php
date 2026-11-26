@@ -46,4 +46,37 @@ final class PackageModelTest extends DatabaseTestCase
 
         $this->assertSame(['Application', 'DI', 'Session'], array_column($packages, 'display'));
     }
+
+    public function testAddAndUpdatePackageStoreAllBranchFlags(): void
+    {
+        $model = new PackageModel($this->db);
+        $model->addPackage('di', 'DI', 'di', true, false, false, false, true, true, true, false);
+
+        $package = $model->getPackage('di');
+        $this->assertSame(
+            ['has_v1' => 0, 'has_v2' => 1, 'has_v3' => 1, 'has_v4' => 1, 'has_v5' => 0],
+            $this->getBranchFlags($package)
+        );
+
+        $model->updatePackage((int) $package->id, 'di', 'DI', 'di', true, false, false, false, false, true, true, true);
+
+        $this->assertSame(
+            ['has_v1' => 0, 'has_v2' => 0, 'has_v3' => 1, 'has_v4' => 1, 'has_v5' => 1],
+            $this->getBranchFlags($model->getPackage('di'))
+        );
+    }
+
+    /**
+     * @return  array<string, int>
+     */
+    private function getBranchFlags(\stdClass $package): array
+    {
+        $flags = [];
+
+        foreach (['has_v1', 'has_v2', 'has_v3', 'has_v4', 'has_v5'] as $column) {
+            $flags[$column] = (int) $package->$column;
+        }
+
+        return $flags;
+    }
 }
