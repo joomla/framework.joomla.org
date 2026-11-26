@@ -55,6 +55,27 @@ final class PackagistHelperTest extends DatabaseTestCase
         );
     }
 
+    public function testSyncDownloadCountsSkipsAbandonedPackages(): void
+    {
+        $this->addPackage('application', ['downloads' => 100]);
+        $this->addPackage('cve-api', ['downloads' => 0, 'abandoned' => 1]);
+
+        $http = $this->createMock(Http::class);
+        $http->expects($this->once())
+            ->method('get')
+            ->with('https://packagist.org/packages/joomla/application.json')
+            ->willReturn(self::response(200, ['package' => ['downloads' => ['total' => 200]]]));
+
+        $helper = new PackagistHelper($http, $this->db);
+        $helper->setPackages(new Registry(['packages' => ['application' => null, 'cve-api' => ['abandoned' => true]]]));
+
+        $this->assertSame([], $helper->syncDownloadCounts());
+
+        $downloads = $this->db->setQuery('SELECT package, downloads FROM packages')->loadAssocList('package', 'downloads');
+
+        $this->assertEquals(['application' => 200, 'cve-api' => 0], $downloads);
+    }
+
     private static function response(int $status, array|string $body): Response
     {
         $contents = \is_array($body) ? json_encode($body) : $body;
