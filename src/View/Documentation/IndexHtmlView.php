@@ -12,13 +12,13 @@ namespace Joomla\FrameworkWebsite\View\Documentation;
 use Joomla\FrameworkWebsite\Helper\DocumentationHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
-use Joomla\Renderer\RendererInterface;
-use Joomla\View\HtmlView;
+use Joomla\FrameworkWebsite\View\TwigHtmlView;
+use Twig\Environment;
 
 /**
  * Documentation index HTML view class for the application
  */
-class IndexHtmlView extends HtmlView
+class IndexHtmlView extends TwigHtmlView
 {
     /**
      * The documentation helper.
@@ -47,11 +47,11 @@ class IndexHtmlView extends HtmlView
      * @param   PackageModel         $packageModel         The package model object.
      * @param   ReleaseModel         $releaseModel         The release model object.
      * @param   DocumentationHelper  $documentationHelper  The documentation helper.
-     * @param   RendererInterface    $renderer             The renderer object.
+     * @param   Environment          $twig                 The Twig environment.
      */
-    public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, DocumentationHelper $documentationHelper, RendererInterface $renderer)
+    public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, DocumentationHelper $documentationHelper, Environment $twig)
     {
-        parent::__construct($renderer);
+        parent::__construct($twig);
         $this->documentationHelper = $documentationHelper;
         $this->packageModel        = $packageModel;
         $this->releaseModel        = $releaseModel;

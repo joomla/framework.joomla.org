@@ -64,8 +64,6 @@ use Joomla\Github\Github;
 use Joomla\Http\Http;
 use Joomla\Input\Input;
 use Joomla\Registry\Registry;
-use Joomla\Renderer\RendererInterface;
-use Joomla\Renderer\TwigRenderer;
 use Joomla\Router\Command\DebugRouterCommand;
 use Joomla\Router\Route;
 use Joomla\Router\Router;
@@ -74,6 +72,7 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Twig\Environment;
 
 /**
  * Application service provider
@@ -350,7 +349,7 @@ class ApplicationProvider implements ServiceProviderInterface
      */
     public function getControllerHomepageService(Container $container): HomepageController
     {
-        return new HomepageController($container->get(RendererInterface::class), $container->get(Input::class), $container->get(WebApplication::class));
+        return new HomepageController($container->get(Environment::class), $container->get(Input::class), $container->get(WebApplication::class));
     }
 
     /**
@@ -374,7 +373,7 @@ class ApplicationProvider implements ServiceProviderInterface
      */
     public function getControllerPageService(Container $container): PageController
     {
-        return new PageController($container->get(RendererInterface::class), $container->get(Input::class), $container->get(WebApplication::class));
+        return new PageController($container->get(Environment::class), $container->get(Input::class), $container->get(WebApplication::class));
     }
 
     /**
@@ -578,7 +577,7 @@ class ApplicationProvider implements ServiceProviderInterface
      */
     public function getResetCacheCommandService(Container $container): ResetCacheCommand
     {
-        return new ResetCacheCommand($container->get(TwigRenderer::class), $container->get('config'));
+        return new ResetCacheCommand($container->get(Environment::class), $container->get('config'));
     }
 
     /**
@@ -602,7 +601,7 @@ class ApplicationProvider implements ServiceProviderInterface
      */
     public function getViewPackageHtmlService(Container $container): PackageHtmlView
     {
-        $view = new PackageHtmlView($container->get('model.package'), $container->get('model.release'), $container->get('renderer'));
+        $view = new PackageHtmlView($container->get('model.package'), $container->get('model.release'), $container->get('twig.environment'));
         $view->setLayout('package.twig');
         return $view;
     }
@@ -628,7 +627,7 @@ class ApplicationProvider implements ServiceProviderInterface
      */
     public function getViewStatusHtmlService(Container $container): StatusHtmlView
     {
-        $view = new StatusHtmlView($container->get('model.package'), $container->get('model.release'), $container->get('renderer'));
+        $view = new StatusHtmlView($container->get('model.package'), $container->get('model.release'), $container->get('twig.environment'));
         $view->setLayout('status.twig');
         return $view;
     }
@@ -814,7 +813,7 @@ class ApplicationProvider implements ServiceProviderInterface
     {
         $view = new ErrorHtmlView(
             $container->get('model.package'),
-            $container->get('renderer')
+            $container->get('twig.environment')
         );
 
         $view->setLayout('docs/error.twig');
@@ -835,7 +834,7 @@ class ApplicationProvider implements ServiceProviderInterface
             $container->get('model.package'),
             $container->get('model.release'),
             $container->get(DocumentationHelper::class),
-            $container->get('renderer')
+            $container->get('twig.environment')
         );
 
         $view->setLayout('docs/index.twig');
@@ -855,7 +854,7 @@ class ApplicationProvider implements ServiceProviderInterface
         $view = new PageHtmlView(
             $container->get('model.package'),
             $container->get(DocumentationHelper::class),
-            $container->get('renderer')
+            $container->get('twig.environment')
         );
 
         $view->setLayout('docs/page.twig');
@@ -876,7 +875,7 @@ class ApplicationProvider implements ServiceProviderInterface
         $view = new SearchHtmlView(
             $container->get('model.package'),
             $container->get(DocumentationSearch::class),
-            $container->get('renderer')
+            $container->get('twig.environment')
         );
 
         $view->setLayout('docs/search.twig');

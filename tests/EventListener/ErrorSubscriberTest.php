@@ -12,7 +12,6 @@ namespace Joomla\FrameworkWebsite\Tests\EventListener;
 use Joomla\Application\Event\ApplicationErrorEvent;
 use Joomla\FrameworkWebsite\EventListener\ErrorSubscriber;
 use Joomla\FrameworkWebsite\Tests\Stub\TestWebApplication;
-use Joomla\Renderer\RendererInterface;
 use Joomla\Router\Exception\MethodNotAllowedException;
 use Joomla\Router\Exception\RouteNotFoundException;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -20,6 +19,8 @@ use Laminas\Diactoros\Response\JsonResponse;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 /**
  * Tests for the error subscriber
@@ -72,15 +73,11 @@ final class ErrorSubscriberTest extends TestCase
 
     public function testHtmlErrorPageIsRenderedWithStatusCode(): void
     {
-        $error    = new RouteNotFoundException('Not found', 404);
-        $renderer = $this->createMock(RendererInterface::class);
-        $renderer->expects($this->once())
-            ->method('render')
-            ->with('exception.twig', ['exception' => $error])
-            ->willReturn('<h1>Not found</h1>');
+        $error = new RouteNotFoundException('Not found', 404);
+        $twig  = new Environment(new ArrayLoader(['exception.twig' => '<h1>{{ exception.message }}</h1>']));
 
         $app = new TestWebApplication();
-        $this->createSubscriber($renderer)->handleWebError(new ApplicationErrorEvent($error, $app));
+        $this->createSubscriber($twig)->handleWebError(new ApplicationErrorEvent($error, $app));
 
         $response = $app->getResponse();
         $this->assertInstanceOf(HtmlResponse::class, $response);
@@ -107,14 +104,11 @@ final class ErrorSubscriberTest extends TestCase
         $this->assertSame(500, $app->getResponse()->getStatusCode());
     }
 
-    private function createSubscriber(?RendererInterface $renderer = null): ErrorSubscriber
+    private function createSubscriber(?Environment $twig = null): ErrorSubscriber
     {
-        if ($renderer === null) {
-            $renderer = $this->createStub(RendererInterface::class);
-            $renderer->method('render')->willReturn('error page');
-        }
+        $twig ??= new Environment(new ArrayLoader(['exception.twig' => 'error page']));
 
-        $subscriber = new ErrorSubscriber($renderer);
+        $subscriber = new ErrorSubscriber($twig);
         $subscriber->setLogger(new NullLogger());
 
         return $subscriber;

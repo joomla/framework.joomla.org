@@ -12,8 +12,8 @@ namespace Joomla\FrameworkWebsite\Controller;
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\Input\Input;
-use Joomla\Renderer\RendererInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Twig\Environment;
 
 /**
  * Controller handling the site's homepage
@@ -24,23 +24,23 @@ use Laminas\Diactoros\Response\HtmlResponse;
 class HomepageController extends AbstractController
 {
     /**
-     * The template renderer.
+     * The Twig environment.
      *
-     * @var  RendererInterface
+     * @var  Environment
      */
-    private $renderer;
+    private $twig;
 
     /**
      * Constructor.
      *
-     * @param   RendererInterface    $renderer  The template renderer.
+     * @param   Environment          $twig      The Twig environment.
      * @param   Input                $input     The input object.
      * @param   AbstractApplication  $app       The application object.
      */
-    public function __construct(RendererInterface $renderer, ?Input $input = null, ?AbstractApplication $app = null)
+    public function __construct(Environment $twig, ?Input $input = null, ?AbstractApplication $app = null)
     {
         parent::__construct($input, $app);
-        $this->renderer = $renderer;
+        $this->twig = $twig;
     }
 
     /**
@@ -52,7 +52,7 @@ class HomepageController extends AbstractController
     {
         // Enable browser caching
         $this->getApplication()->allowCache(true);
-        $this->getApplication()->setResponse(new HtmlResponse($this->renderer->render('homepage.twig')));
+        $this->getApplication()->setResponse(new HtmlResponse($this->twig->render('homepage.twig')));
         return true;
     }
 }

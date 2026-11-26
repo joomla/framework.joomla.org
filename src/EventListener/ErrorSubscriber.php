@@ -15,13 +15,13 @@ use Joomla\Console\ConsoleEvents;
 use Joomla\Console\Event\ApplicationErrorEvent as ConsoleApplicationErrorEvent;
 use Joomla\Event\SubscriberInterface;
 use Joomla\FrameworkWebsite\WebApplication;
-use Joomla\Renderer\RendererInterface;
 use Joomla\Router\Exception\MethodNotAllowedException;
 use Joomla\Router\Exception\RouteNotFoundException;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Twig\Environment;
 
 /**
  * Error handling event subscriber
@@ -31,20 +31,20 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
     use LoggerAwareTrait;
 
     /**
-     * Layout renderer
+     * The Twig environment
      *
-     * @var  RendererInterface
+     * @var  Environment
      */
-    private $renderer;
+    private $twig;
 
     /**
      * Event subscriber constructor.
      *
-     * @param   RendererInterface  $renderer  Layout renderer
+     * @param   Environment        $twig      The Twig environment
      */
-    public function __construct(RendererInterface $renderer)
+    public function __construct(Environment $twig)
     {
-        $this->renderer = $renderer;
+        $this->twig = $twig;
     }
 
     /**
@@ -164,7 +164,7 @@ class ErrorSubscriber implements SubscriberInterface, LoggerAwareInterface
 
                 break;
             default:
-                $response = new HtmlResponse($this->renderer->render('exception.twig', ['exception' => $event->getError()]));
+                $response = new HtmlResponse($this->twig->render('exception.twig', ['exception' => $event->getError()]));
 
                 break;
         }

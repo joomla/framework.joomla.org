@@ -11,14 +11,14 @@ namespace Joomla\FrameworkWebsite\View\Documentation;
 
 use Joomla\FrameworkWebsite\Helper\DocumentationHelper;
 use Joomla\FrameworkWebsite\Model\PackageModel;
-use Joomla\Renderer\RendererInterface;
-use Joomla\View\HtmlView;
+use Joomla\FrameworkWebsite\View\TwigHtmlView;
+use Twig\Environment;
 use Joomla\FrameworkWebsite\Helper\VersionHelper;
 
 /**
  * Documentation page HTML view class for the application
  */
-class PageHtmlView extends HtmlView
+class PageHtmlView extends TwigHtmlView
 {
     /**
      * The page contents for display.
@@ -73,11 +73,11 @@ class PageHtmlView extends HtmlView
          *
          * @param   PackageModel         $packageModel         The package model object.
          * @param   DocumentationHelper  $documentationHelper  The documentation helper.
-         * @param   RendererInterface    $renderer             The renderer object.
+         * @param   Environment          $twig                 The Twig environment.
          */
-    public function __construct(PackageModel $packageModel, DocumentationHelper $documentationHelper, RendererInterface $renderer)
+    public function __construct(PackageModel $packageModel, DocumentationHelper $documentationHelper, Environment $twig)
     {
-        parent::__construct($renderer);
+        parent::__construct($twig);
         $this->documentationHelper = $documentationHelper;
         $this->packageModel        = $packageModel;
     }
