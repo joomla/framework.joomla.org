@@ -18,7 +18,11 @@ packages:
         has_v1: false
     controller: ~
     crypt: ~
-    cve-api: ~
+    cve-api:
+        abandoned: true
+        display: CVE API
+        has_v1: false
+        has_v5: false
     data: ~
     database: ~
     date:

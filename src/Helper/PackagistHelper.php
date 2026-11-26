@@ -63,7 +63,13 @@ class PackagistHelper
         foreach (array_keys((array) $this->getPackages()->get('packages')) as $packageName) {
             // Array keys which look like integers are converted by PHP, but package names are always strings
             $packageName = (string) $packageName;
-            $url         = "https://packagist.org/packages/joomla/$packageName.json";
+
+            // Abandoned packages get no new downloads worth tracking, and some of them were never published on Packagist
+            if ($this->getPackages()->get("packages.$packageName.abandoned", false)) {
+                continue;
+            }
+
+            $url = "https://packagist.org/packages/joomla/$packageName.json";
             try {
                 $response = $this->http->get($url);
             } catch (\RuntimeException $exception) {

@@ -83,6 +83,11 @@ class SyncCommand extends AbstractCommand
         $updatedReleases = 0;
         $failedPackages  = [];
         foreach ($this->packageModel->getPackages() as $package) {
+            // Abandoned packages get no new releases, and some of them were never published on Packagist
+            if ($package->abandoned) {
+                continue;
+            }
+
             $symfonyStyle->comment(sprintf('Processing <info>%s</info> package', $package->display));
             $url = "https://packagist.org/packages/joomla/{$package->package}.json";
             try {
