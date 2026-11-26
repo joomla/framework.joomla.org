@@ -36,33 +36,40 @@ abstract class DatabaseTestCase extends TestCase
 
         $this->db = new SqliteDriver(['driver' => 'sqlite', 'database' => ':memory:', 'prefix' => '']);
 
-        // Columns as created by the migrations in etc/migrations
+        // SQLite only enforces foreign keys when they are enabled for the connection, MySQL always does
+        $this->db->setQuery('PRAGMA foreign_keys = ON')->execute();
+
+        // The schema as created by the migrations in etc/migrations, with the same nullability and defaults
         $this->db->setQuery(
             'CREATE TABLE packages (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 package TEXT NOT NULL,
                 display TEXT NOT NULL,
                 repo TEXT NOT NULL,
-                stable INTEGER NOT NULL DEFAULT 0,
+                stable INTEGER NOT NULL DEFAULT 1,
                 deprecated INTEGER NOT NULL DEFAULT 0,
-                downloads INTEGER NOT NULL DEFAULT 0,
-                has_v1 INTEGER NOT NULL DEFAULT 0,
-                has_v2 INTEGER NOT NULL DEFAULT 0,
-                has_v3 INTEGER NOT NULL DEFAULT 0,
-                has_v4 INTEGER NOT NULL DEFAULT 0,
+                downloads INTEGER NULL DEFAULT 0,
+                has_v1 INTEGER NOT NULL DEFAULT 1,
+                has_v2 INTEGER NOT NULL DEFAULT 1,
                 abandoned INTEGER NOT NULL DEFAULT 0,
-                pullcount INTEGER NOT NULL DEFAULT 0
+                has_v3 INTEGER NOT NULL DEFAULT 1,
+                pullcount INTEGER NOT NULL DEFAULT 0,
+                has_v4 INTEGER NOT NULL DEFAULT 1,
+                has_v5 INTEGER NOT NULL DEFAULT 1
             )'
         )->execute();
 
         $this->db->setQuery(
             'CREATE TABLE releases (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                package_id INTEGER NOT NULL,
+                package_id INTEGER NOT NULL REFERENCES packages (id) ON DELETE CASCADE,
                 version TEXT NOT NULL,
-                release_date TEXT NULL
+                release_date TEXT NULL,
+                php TEXT NULL DEFAULT NULL
             )'
         )->execute();
+
+        $this->db->setQuery('CREATE UNIQUE INDEX package_release ON releases (package_id, version)')->execute();
     }
 
     /**

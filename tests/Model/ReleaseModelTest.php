@@ -9,6 +9,7 @@
 
 namespace Joomla\FrameworkWebsite\Tests\Model;
 
+use Joomla\Database\Exception\ExecutionFailureException;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
 use Joomla\FrameworkWebsite\Tests\DatabaseTestCase;
 
@@ -103,5 +104,39 @@ final class ReleaseModelTest extends DatabaseTestCase
         $model->updateRelease((int) $release->id, $package, '1.0.0', new \DateTime('2022-03-04'));
 
         $this->assertSame('2022-03-04', $model->getRelease($package, '1.0.0')->release_date);
+    }
+
+    public function testPhpRequirementIsStoredAndKeptWhenUpdatedWithoutOne(): void
+    {
+        $package = $this->addPackage('di');
+        $model   = new ReleaseModel($this->db);
+
+        $model->addRelease($package, '4.0.0', new \DateTime('2025-01-01'), '^8.3.0');
+
+        $release = $model->getRelease($package, '4.0.0');
+        $this->assertSame('^8.3.0', $release->php);
+
+        $model->updateRelease((int) $release->id, $package, '4.0.0', new \DateTime('2025-01-02'));
+
+        $this->assertSame('^8.3.0', $model->getRelease($package, '4.0.0')->php);
+    }
+
+    public function testReleaseCanOnlyBeAddedOncePerPackage(): void
+    {
+        $package = $this->addPackage('di');
+        $model   = new ReleaseModel($this->db);
+
+        $model->addRelease($package, '1.0.0', new \DateTime('2021-02-03'));
+
+        $this->expectException(ExecutionFailureException::class);
+
+        $model->addRelease($package, '1.0.0', new \DateTime('2021-02-03'));
+    }
+
+    public function testReleasesRequireAnExistingPackage(): void
+    {
+        $this->expectException(ExecutionFailureException::class);
+
+        (new ReleaseModel($this->db))->addRelease((object) ['id' => 999], '1.0.0', new \DateTime('2021-02-03'));
     }
 }
