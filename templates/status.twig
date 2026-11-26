@@ -16,6 +16,7 @@
                 <th scope="col">2.x Series</th>
                 <th scope="col">3.x Series</th>
                 <th scope="col">4.x Series</th>
+                <th scope="col">5.x Series</th>
                 <th scope="col">PRs</th>
             </tr>
         </thead>
@@ -64,6 +65,14 @@
                             <a href="https://github.com/joomla-framework/{{ release.package.repo }}"><img src="https://github.com/joomla-framework/{{ release.package.repo }}/actions/workflows/ci.yml/badge.svg?branch=4.x-dev" alt="Build Status" /></a>
                         {% endif %}
                     </td>
+                    <td data-label="5.x Series">
+                        {% if not release.package.has_v5 %}
+                            N/A
+                        {% else %}
+                            {{ release.v5.version|default('In development') }}
+                            <a href="https://github.com/joomla-framework/{{ release.package.repo }}"><img src="https://github.com/joomla-framework/{{ release.package.repo }}/actions/workflows/ci.yml/badge.svg?branch=5.x-dev" alt="Build Status" /></a>
+                        {% endif %}
+                    </td>
                     <td data-label="PRs">
                         {% set _totalPulls = _totalPulls + release.package.pullcount %}
                         <a href="https://github.com/joomla-framework/{{ release.package.repo }}/pulls">{{ release.package.pullcount }}</a>
@@ -73,12 +82,12 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="7"></td>
+                <td colspan="8"></td>
             </tr>
             <tr>
                 <td>Totals</td>
                 <td>{{ _totalDownloads|number_format }}</td>
-                <td colspan="4"></td>
+                <td colspan="5"></td>
                 <td>{{ _totalPulls|number_format }}</td>
             </tr>
         </tfoot>
