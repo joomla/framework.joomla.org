@@ -11,13 +11,13 @@ namespace Joomla\FrameworkWebsite\View\Documentation;
 
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Search\DocumentationSearch;
-use Joomla\Renderer\RendererInterface;
-use Joomla\View\HtmlView;
+use Joomla\FrameworkWebsite\View\TwigHtmlView;
+use Twig\Environment;
 
 /**
  * Documentation search HTML view class for the application
  */
-class SearchHtmlView extends HtmlView
+class SearchHtmlView extends TwigHtmlView
 {
     /**
      * The version which is searched when no or an unknown version is requested, the version the `latest` documentation routes point to
@@ -59,11 +59,11 @@ class SearchHtmlView extends HtmlView
      *
      * @param   PackageModel         $packageModel         The package model object.
      * @param   DocumentationSearch  $documentationSearch  The documentation search.
-     * @param   RendererInterface    $renderer             The renderer object.
+     * @param   Environment          $twig                 The Twig environment.
      */
-    public function __construct(PackageModel $packageModel, DocumentationSearch $documentationSearch, RendererInterface $renderer)
+    public function __construct(PackageModel $packageModel, DocumentationSearch $documentationSearch, Environment $twig)
     {
-        parent::__construct($renderer);
+        parent::__construct($twig);
         $this->documentationSearch = $documentationSearch;
         $this->packageModel        = $packageModel;
     }

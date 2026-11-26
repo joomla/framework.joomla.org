@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7347d48b7dbac6544c6bbb3abfa6b45",
+    "content-hash": "10853721368424ca25aecb3811e6c952",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -1368,75 +1368,6 @@
                 "source": "https://github.com/joomla-framework/registry/tree/4.0.1"
             },
             "time": "2026-08-24T19:58:10+00:00"
-        },
-        {
-            "name": "joomla/renderer",
-            "version": "dev-4.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/joomla-framework/renderer.git",
-                "reference": "581896f007ad93bbf3b460c5cf68c012ee379150"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/renderer/zipball/581896f007ad93bbf3b460c5cf68c012ee379150",
-                "reference": "581896f007ad93bbf3b460c5cf68c012ee379150",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.3.0"
-            },
-            "require-dev": {
-                "illuminate/events": "^12.20.0",
-                "illuminate/filesystem": "^12.20.0",
-                "illuminate/view": "^12.20.0",
-                "joomla/test": "^4.0",
-                "league/plates": "^3.0",
-                "mustache/mustache": "^3.0",
-                "phpstan/phpstan": "^2.1.17",
-                "phpstan/phpstan-deprecation-rules": "^2.0.3",
-                "phpunit/phpunit": "^12.2.7",
-                "squizlabs/php_codesniffer": "^3.7.2",
-                "symfony/templating": "^6.4",
-                "twig/twig": "^3.19.0"
-            },
-            "suggest": {
-                "illuminate/view": "Install ^12.0 if you are using Laravel's Blade template engine.",
-                "league/plates": "Install ^3.0 if you are using the Plates template engine.",
-                "mustache/mustache": "Install ^3.0 if you are using the Mustache template engine.",
-                "symfony/templating": "Install ^6.4 if you are using Symfony's PHP template component.",
-                "twig/twig": "Install ^3.19.0 if you are using the Twig template engine."
-            },
-            "type": "joomla-package",
-            "extra": {
-                "branch-alias": {
-                    "dev-2.0-dev": "2.0-dev",
-                    "dev-3.x-dev": "3.0-dev",
-                    "dev-4.x-dev": "4.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Joomla\\Renderer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1-or-later"
-            ],
-            "description": "Joomla Renderer Package",
-            "homepage": "https://github.com/joomla-framework/renderer",
-            "keywords": [
-                "framework",
-                "joomla",
-                "renderer"
-            ],
-            "support": {
-                "issues": "https://github.com/joomla-framework/renderer/issues",
-                "source": "https://github.com/joomla-framework/renderer/tree/4.x-dev"
-            },
-            "abandoned": true,
-            "time": "2026-04-22T11:35:53+00:00"
         },
         {
             "name": "joomla/router",
@@ -7906,9 +7837,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "joomla/renderer": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

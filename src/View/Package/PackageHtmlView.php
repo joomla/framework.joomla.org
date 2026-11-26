@@ -11,13 +11,13 @@ namespace Joomla\FrameworkWebsite\View\Package;
 
 use Joomla\FrameworkWebsite\Model\PackageModel;
 use Joomla\FrameworkWebsite\Model\ReleaseModel;
-use Joomla\Renderer\RendererInterface;
-use Joomla\View\HtmlView;
+use Joomla\FrameworkWebsite\View\TwigHtmlView;
+use Twig\Environment;
 
 /**
  * Package HTML view class for the application
  */
-class PackageHtmlView extends HtmlView
+class PackageHtmlView extends TwigHtmlView
 {
     /**
      * The active package
@@ -45,11 +45,11 @@ class PackageHtmlView extends HtmlView
      *
      * @param   PackageModel       $packageModel     The package model object.
      * @param   ReleaseModel       $releaseModel     The release model object.
-     * @param   RendererInterface  $renderer         The renderer object.
+     * @param   Environment        $twig             The Twig environment.
      */
-    public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, RendererInterface $renderer)
+    public function __construct(PackageModel $packageModel, ReleaseModel $releaseModel, Environment $twig)
     {
-        parent::__construct($renderer);
+        parent::__construct($twig);
         $this->packageModel = $packageModel;
         $this->releaseModel = $releaseModel;
     }

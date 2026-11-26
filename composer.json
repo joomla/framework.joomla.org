@@ -22,7 +22,6 @@
         "joomla/model": "^4.0",
         "joomla/preload": "^4.0",
         "joomla/registry": "^4.0",
-        "joomla/renderer": "dev-4.x-dev",
         "joomla/router": "^4.0",
         "joomla/string": "^4.0",
         "joomla/uri": "^4.0",

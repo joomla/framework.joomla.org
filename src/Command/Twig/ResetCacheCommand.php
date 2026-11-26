@@ -12,10 +12,10 @@ namespace Joomla\FrameworkWebsite\Command\Twig;
 use Joomla\Console\Command\AbstractCommand;
 use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
-use Joomla\Renderer\TwigRenderer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Twig\Environment;
 use Twig\Error\Error as TwigError;
 
 /**
@@ -31,11 +31,11 @@ class ResetCacheCommand extends AbstractCommand
     protected static $defaultName = 'twig:reset-cache';
 
     /**
-     * The template renderer
+     * The Twig environment
      *
-     * @var  TwigRenderer
+     * @var  Environment
      */
-    private $renderer;
+    private $twig;
 
     /**
      * The application configuration registry
@@ -47,13 +47,13 @@ class ResetCacheCommand extends AbstractCommand
     /**
      * Instantiate the command.
      *
-     * @param   TwigRenderer  $renderer  The template renderer
-     * @param   Registry      $config    The application configuration registry
+     * @param   Environment  $twig    The Twig environment
+     * @param   Registry     $config  The application configuration registry
      */
-    public function __construct(TwigRenderer $renderer, Registry $config)
+    public function __construct(Environment $twig, Registry $config)
     {
-        $this->renderer = $renderer;
-        $this->config   = $config;
+        $this->twig   = $twig;
+        $this->config = $config;
         parent::__construct();
     }
 
@@ -87,12 +87,11 @@ class ResetCacheCommand extends AbstractCommand
         // Now get a list of all the templates
         $files = Folder::files(JPATH_TEMPLATES, '.twig', true, true);
         // Load each template now
-        $engine       = $this->renderer->getRenderer();
-        $errorFiles   = [];
+        $errorFiles = [];
         foreach ($files as $file) {
             $template = str_replace(JPATH_TEMPLATES . '/', '', $file);
             try {
-                $engine->load($template);
+                $this->twig->load($template);
             } catch (TwigError $e) {
                 $errorFiles[] = $file;
             }

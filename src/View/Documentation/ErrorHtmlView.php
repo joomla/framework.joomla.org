@@ -10,13 +10,13 @@
 namespace Joomla\FrameworkWebsite\View\Documentation;
 
 use Joomla\FrameworkWebsite\Model\PackageModel;
-use Joomla\Renderer\RendererInterface;
-use Joomla\View\HtmlView;
+use Joomla\FrameworkWebsite\View\TwigHtmlView;
+use Twig\Environment;
 
 /**
  * Documentation error HTML view class for the application
  */
-class ErrorHtmlView extends HtmlView
+class ErrorHtmlView extends TwigHtmlView
 {
     /**
      * The error message for display.
@@ -34,11 +34,11 @@ class ErrorHtmlView extends HtmlView
          * Instantiate the view.
          *
          * @param   PackageModel       $packageModel  The package model object.
-         * @param   RendererInterface  $renderer      The renderer object.
+         * @param   Environment        $twig          The Twig environment.
          */
-    public function __construct(PackageModel $packageModel, RendererInterface $renderer)
+    public function __construct(PackageModel $packageModel, Environment $twig)
     {
-        parent::__construct($renderer);
+        parent::__construct($twig);
         $this->packageModel = $packageModel;
     }
 

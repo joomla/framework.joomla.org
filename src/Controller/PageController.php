@@ -12,9 +12,9 @@ namespace Joomla\FrameworkWebsite\Controller;
 use Joomla\Application\AbstractApplication;
 use Joomla\Controller\AbstractController;
 use Joomla\Input\Input;
-use Joomla\Renderer\RendererInterface;
 use Joomla\Router\Exception\RouteNotFoundException;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Twig\Environment;
 
 /**
  * Controller handling the site's simple text pages
@@ -32,23 +32,23 @@ class PageController extends AbstractController
     private const EXCLUDED_LAYOUTS = ['exception', 'homepage', 'index', 'macros', 'package', 'status'];
 
     /**
-     * The template renderer.
+     * The Twig environment.
      *
-     * @var  RendererInterface
+     * @var  Environment
      */
-    private $renderer;
+    private $twig;
 
     /**
      * Constructor.
      *
-     * @param   RendererInterface    $renderer  The template renderer.
+     * @param   Environment          $twig      The Twig environment.
      * @param   Input                $input     The input object.
      * @param   AbstractApplication  $app       The application object.
      */
-    public function __construct(RendererInterface $renderer, ?Input $input = null, ?AbstractApplication $app = null)
+    public function __construct(Environment $twig, ?Input $input = null, ?AbstractApplication $app = null)
     {
         parent::__construct($input, $app);
-        $this->renderer = $renderer;
+        $this->twig = $twig;
     }
 
     /**
@@ -64,11 +64,11 @@ class PageController extends AbstractController
         $layout = "$view.twig";
 
         // Since this is a catch-all route, if the layout doesn't exist, or is an excluded layout, treat this as a 404
-        if (!$this->renderer->pathExists($layout) || \in_array($view, self::EXCLUDED_LAYOUTS, true)) {
+        if (!$this->twig->getLoader()->exists($layout) || \in_array($view, self::EXCLUDED_LAYOUTS, true)) {
             throw new RouteNotFoundException(sprintf('Unable to handle request for route `%s`.', $this->getApplication()->get('uri.route')), 404);
         }
 
-        $this->getApplication()->setResponse(new HtmlResponse($this->renderer->render($layout)));
+        $this->getApplication()->setResponse(new HtmlResponse($this->twig->render($layout)));
         return true;
     }
 }

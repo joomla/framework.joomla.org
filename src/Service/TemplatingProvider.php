@@ -17,8 +17,6 @@ use Joomla\FrameworkWebsite\Renderer\ApplicationContext;
 use Joomla\FrameworkWebsite\Renderer\FrameworkExtension;
 use Joomla\FrameworkWebsite\Renderer\FrameworkTwigRuntime;
 use Joomla\Preload\PreloadManager;
-use Joomla\Renderer\RendererInterface;
-use Joomla\Renderer\TwigRenderer;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Asset\PathPackage;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
@@ -50,9 +48,6 @@ class TemplatingProvider implements ServiceProviderInterface
     {
         $container->alias(Packages::class, 'asset.packages')
             ->share('asset.packages', [$this, 'getAssetPackagesService'], true);
-        $container->alias(RendererInterface::class, 'renderer')
-            ->alias(TwigRenderer::class, 'renderer')
-            ->share('renderer', [$this, 'getRendererService'], true);
         $container->alias(CacheInterface::class, 'twig.cache')
             ->share('twig.cache', [$this, 'getTwigCacheService'], true);
         $container->alias(Environment::class, 'twig.environment')
@@ -93,18 +88,6 @@ class TemplatingProvider implements ServiceProviderInterface
         return new Packages($defaultPackage, [
                 'versioned' => $manifestPackage,
             ]);
-    }
-
-    /**
-     * Get the `renderer` service
-     *
-     * @param   Container  $container  The DI container.
-     *
-     * @return  RendererInterface
-     */
-    public function getRendererService(Container $container): RendererInterface
-    {
-        return new TwigRenderer($container->get('twig.environment'));
     }
 
     /**
