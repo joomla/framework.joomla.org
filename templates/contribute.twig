@@ -36,6 +36,11 @@
             </thead>
             <tbody>
                 <tr>
+                    <td><code>5.x-dev</code></td>
+                    <td>Framework 5</td>
+                    <td>Next major version, in development: new features that break backward compatibility</td>
+                </tr>
+                <tr>
                     <td><code>4.x-dev</code></td>
                     <td>Framework 4 (PHP 8.3+)</td>
                     <td>Current version and default branch: new features, bug fixes and security fixes</td>
@@ -58,7 +63,7 @@
             </tbody>
         </table>
     </div>
-    <p>Pull requests, whether bug fixes or new features, should target <code>4.x-dev</code>. The <code>3.x-dev</code> branch only receives security fixes, which are handled through the <a href="#security-issues">Security Strike Team</a>.</p>
+    <p>Pull requests, whether bug fixes or new features, should target <code>4.x-dev</code>. Changes that break backward compatibility go into <code>5.x-dev</code>. The <code>3.x-dev</code> branch only receives security fixes, which are handled through the <a href="#security-issues">Security Strike Team</a>.</p>
 
     <h2 id="reporting-issues" class="page-header">Reporting Issues</h2>
     <p>Open an issue in the repository of the affected package. Before you do, please check whether the issue has already been reported. The issue templates ask for the information we need:</p>
@@ -103,7 +108,7 @@ composer coverage   # write an HTML coverage report to build/coverage</code></pr
     <p>Not everyone is familiar with PHPUnit, and that's fine. Submit your pull request anyway and ask for help; the maintainers and the community will help you write the tests.</p>
 
     <h2 id="documentation" class="page-header">Documentation</h2>
-    <p>Each package documents itself in its <code>docs</code> directory, written in <a href="https://docs.github.com/en/get-started/writing-on-github">GitHub Flavored Markdown</a>. The documentation of the <code>3.x-dev</code> and <code>4.x-dev</code> branches is published in the <a href="{{ route('docs') }}">documentation section of this site</a>, and updated automatically after changes are merged.</p>
+    <p>Each package documents itself in its <code>docs</code> directory, written in <a href="https://docs.github.com/en/get-started/writing-on-github">GitHub Flavored Markdown</a>. The documentation of the <code>3.x-dev</code>, <code>4.x-dev</code> and <code>5.x-dev</code> branches is published in the <a href="{{ route('docs') }}">documentation section of this site</a>, and updated automatically after changes are merged.</p>
     <ul>
         <li><code>index.md</code> is the navigation of the package's documentation, it is shown as the sidebar on this site.</li>
         <li><code>overview.md</code> introduces the package; it is the first page shown for a package.</li>
