@@ -1,11 +1,11 @@
 {
     "/js/template.js": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-BXN479Rj4i1NWxBWmca6p4o/jYhim22ESLBszRg9VZX/xZ3C9+ErCaHBmAeMcif2"
+        "integrity": "sha384-77afKXDVagf95ebEPL+RGfH8Aqs+FR6C0vgI+IZZTCj4mMUMo8CDFjKjXzsgdMVM"
     },
     "/css/template.css": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-WCNSaZPbWfC3pdHMMvt/hnezM6slGY4qkUxnZtDd+NIxiOpXoiCamm3E3f5mdBZt"
+        "integrity": "sha384-g4hYMWy+78xj8mYWi+LLTt/LFJMzC9BgqsHAEieEBD8Whd8Wiqy0+EKwGQVA7MJu"
     },
     "/css/code.css": {
         "crossorigin": "anonymous",
@@ -13,14 +13,14 @@
     },
     "/css/bootstrap.css": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-6qOMjEs/dk1B8DWuMdvpXhSoFK8G0LAZAgA0WCuiPYo4zOpviuNw5/7W4qLc2EdE"
+        "integrity": "sha384-HKss4tJcELgATGPR44wYyTqRtHM13LTPeM/sEhWTynQCFG3YlXfALOyWdrjKnS00"
     },
     "/css/bootstrap.min.css": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        "integrity": "sha384-yEPZ7jP9S0QKiUQ0m3jjsO4ProIW7wvR9gXkI7JOGa2XVsw53Yke2bsdkBbjmmiX"
     },
     "/js/bootstrap.bundle.js": {
         "crossorigin": "anonymous",
-        "integrity": "sha384-DXQlBty/lBVDkqL4VKQIlPyuBHCumaxsqVbwsQWRGh0NFBAkAAnOo7qlcR2x+hP9"
+        "integrity": "sha384-OS80m0SMIEzSUani8ai9olIDXueTIYe+++Jsa7wsKA3x2BCMX69df6ucacs5LvcN"
     }
 }
