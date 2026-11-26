@@ -64,7 +64,7 @@ class PackagistHelper
             // Array keys which look like integers are converted by PHP, but package names are always strings
             $packageName = (string) $packageName;
 
-            // Abandoned packages get no new downloads worth tracking, and some of them were never published on Packagist
+            // Abandoned packages are no longer tracked, and not all of them use their key as Packagist name
             if ($this->getPackages()->get("packages.$packageName.abandoned", false)) {
                 continue;
             }

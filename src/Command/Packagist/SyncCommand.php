@@ -83,7 +83,7 @@ class SyncCommand extends AbstractCommand
         $updatedReleases = 0;
         $failedPackages  = [];
         foreach ($this->packageModel->getPackages() as $package) {
-            // Abandoned packages get no new releases, and some of them were never published on Packagist
+            // Abandoned packages get no new releases, and not all of them use their key as Packagist name
             if ($package->abandoned) {
                 continue;
             }

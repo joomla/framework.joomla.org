@@ -18,6 +18,7 @@ packages:
         has_v1: false
     controller: ~
     crypt: ~
+    # Published on Packagist as joomla/cve, the site only knows it by its repository name
     cve-api:
         abandoned: true
         display: CVE API
